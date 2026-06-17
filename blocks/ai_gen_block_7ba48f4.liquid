@@ -363,10 +363,9 @@
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(cents / 100);
   }
 
-  // Aciona o radio nativo do Horizon pelo valor da opção
-  function triggerNativeRadio(optionName, optionValue) {
+  function triggerNativeRadio(optionValue) {
     const radios = document.querySelectorAll(
-      `.variant-picker input[type="radio"][aria-label="${optionValue}"], 
+      `.variant-picker input[type="radio"][aria-label="${optionValue}"],
        .variant-picker input[type="radio"][value="${optionValue}"]`
     );
     radios.forEach(radio => {
@@ -374,14 +373,33 @@
         radio.checked = true;
         radio.dispatchEvent(new Event('change', { bubbles: true }));
         radio.dispatchEvent(new Event('input', { bubbles: true }));
-        radio.click();
       }
     });
   }
 
-  // Atualiza cards de quantidade conforme sabor selecionado
+  function applyQuantitySelection(variantId) {
+    document.querySelectorAll(`.ai-quantity-card-${id}`).forEach(c => {
+      const isSelected = parseInt(c.dataset.variantId) === variantId;
+      c.classList.toggle('selected', isSelected);
+      c.style.borderColor = isSelected
+        ? '{{ block.settings.quantity_card_selected_border_color }}'
+        : '{{ block.settings.quantity_card_border_color }}';
+      c.style.background = isSelected
+        ? '{{ block.settings.quantity_card_selected_background }}'
+        : '{{ block.settings.quantity_card_background }}';
+      const radioEl = c.querySelector('.q-radio');
+      if (radioEl) {
+        radioEl.style.borderColor = isSelected
+          ? '{{ block.settings.radio_selected_border_color }}'
+          : '{{ block.settings.radio_border_color }}';
+        radioEl.style.background = isSelected ? '{{ block.settings.radio_selected_background }}' : '#fff';
+        radioEl.style.boxShadow = isSelected ? 'inset 0 0 0 3px #fff' : 'none';
+      }
+    });
+  }
+
   function updateQuantityCards(flavor) {
-    const grid = document.querySelector(`[data-quantity-grid]`);
+    const grid = document.querySelector('[data-quantity-grid]');
     if (!grid) return;
 
     grid.innerHTML = '';
@@ -402,36 +420,27 @@
       }
 
       const card = document.createElement('div');
-      card.className = `ai-quantity-card-${id}${variant.id === selectedVariant.id ? ' selected' : ''}`;
+      card.className = `ai-quantity-card-${id}`;
       card.dataset.variantId = variant.id;
       card.dataset.option1 = variant.option1;
       card.dataset.option2 = variant.option2 || '';
-      card.style.cssText = 'position:relative; padding:16px 10px; border:1.5px solid #e0e0e0; border-radius:12px; background:#fff; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:6px; margin-top:12px; transition:all 0.2s;';
-
-      if (variant.id === selectedVariant.id) {
-        card.style.borderColor = '{{ block.settings.quantity_card_selected_border_color }}';
-        card.style.background = '{{ block.settings.quantity_card_selected_background }}';
-      }
+      card.style.cssText = 'position:relative;padding:16px 10px;border:1.5px solid {{ block.settings.quantity_card_border_color }};border-radius:12px;background:{{ block.settings.quantity_card_background }};cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:12px;transition:all 0.2s;';
 
       let html = '';
       if (discountPct > 0) {
         html += `<div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:{{ block.settings.discount_badge_background }};color:{{ block.settings.discount_badge_text }};font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;z-index:1;">${discountPct}% OFF</div>`;
       }
-
-      const radioBg = variant.id === selectedVariant.id ? '{{ block.settings.radio_selected_background }}' : '#fff';
-      const radioBorder = variant.id === selectedVariant.id ? '{{ block.settings.radio_selected_border_color }}' : '#ccc';
-      html += `<div style="width:18px;height:18px;border-radius:50%;border:2px solid ${radioBorder};background:${radioBg};box-shadow:${variant.id === selectedVariant.id ? 'inset 0 0 0 3px #fff' : 'none'};flex-shrink:0;"></div>`;
+      html += `<div class="q-radio" style="width:18px;height:18px;border-radius:50%;border:2px solid {{ block.settings.radio_border_color }};background:#fff;flex-shrink:0;transition:all 0.2s;"></div>`;
       html += `<div style="font-size:{{ block.settings.quantity_title_font_size }}px;font-weight:{{ block.settings.quantity_title_font_weight }};color:{{ block.settings.quantity_title_color }};text-align:center;">${qty}</div>`;
-
       if (unitPrice > 0) {
         html += `<div style="font-size:{{ block.settings.quantity_price_font_size }}px;font-weight:{{ block.settings.quantity_price_font_weight }};color:{{ block.settings.quantity_price_color }};text-align:center;">${formatMoney(unitPrice)}/cada</div>`;
       }
 
       card.innerHTML = html;
-
-      card.addEventListener('click', () => selectQuantity(card));
       grid.appendChild(card);
     });
+
+    if (selectedVariant) applyQuantitySelection(selectedVariant.id);
   }
 
   function selectFlavor(card) {
@@ -439,45 +448,47 @@
     card.classList.add('selected');
 
     const flavor = card.dataset.option1;
-
-    const titleEl = document.querySelector(`[data-flavor-title]`);
+    const titleEl = document.querySelector('[data-flavor-title]');
     if (titleEl) titleEl.textContent = flavor;
 
-    // Aciona o radio nativo do sabor
-    triggerNativeRadio('Sabor', flavor);
+    triggerNativeRadio(flavor);
 
-    // Atualiza cards de quantidade
-    updateQuantityCards(flavor);
+    // Aguarda Horizon atualizar input[name="id"] antes de reconstruir os cards
+    setTimeout(() => {
+      updateQuantityCards(flavor);
+      const firstCard = document.querySelector(`.ai-quantity-card-${id}`);
+      if (firstCard) triggerNativeRadio(firstCard.dataset.option2);
+    }, 0);
   }
 
   function selectQuantity(card) {
-  // Remove seleção visual de todos (classe + estilos inline)
-  document.querySelectorAll(`.ai-quantity-card-${id}`).forEach(c => {
-    c.classList.remove('selected');
-    c.style.borderColor = '#e0e0e0';
-    c.style.background = '#fff';
-  });
+    const variantId = parseInt(card.dataset.variantId);
+    applyQuantitySelection(variantId);
+    triggerNativeRadio(card.dataset.option2);
+    // Re-sincroniza visual após qualquer atualização assíncrona do Horizon
+    requestAnimationFrame(() => applyQuantitySelection(variantId));
+  }
 
-  // Aplica seleção no card clicado (classe + estilos inline)
-  card.classList.add('selected');
-  card.style.borderColor = '{{ block.settings.quantity_card_selected_border_color }}';
-  card.style.background = '{{ block.settings.quantity_card_selected_background }}';
-
-  const option2 = card.dataset.option2;
-  triggerNativeRadio('Quantidade', option2);
-}
-
-
-  // Setup inicial
-  document.addEventListener('DOMContentLoaded', () => {
+  function setup() {
     document.querySelectorAll(`.ai-flavor-card-${id}`).forEach(card => {
       card.addEventListener('click', () => selectFlavor(card));
     });
 
-    document.querySelectorAll(`.ai-quantity-card-${id}`).forEach(card => {
-      card.addEventListener('click', () => selectQuantity(card));
-    });
-  });
+    // Event delegation no grid — persiste após reconstrução dos cards
+    const grid = document.querySelector('[data-quantity-grid]');
+    if (grid) {
+      grid.addEventListener('click', e => {
+        const card = e.target.closest(`.ai-quantity-card-${id}`);
+        if (card) selectQuantity(card);
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setup);
+  } else {
+    setup();
+  }
 })();
 </script>
 

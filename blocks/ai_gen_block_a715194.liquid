@@ -1,0 +1,412 @@
+{% doc %}
+  @prompt
+    quero 2 campos com "drop down" editáveis e que eu possa também incluir textos dentro do dropdown
+    , na verdade quero que seja um menu de texto, onde ele fica fechado até o usuário clicar nele e abre o texto
+    Exemplo: Ingredientes 
+    Quando o usuário clicar em ingredientes, vai se abrir o dropdown com o texto com os ingredientes, queria ter a pção de colocar imagem também
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-accordion-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-accordion__container-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.item_spacing }}px;
+  }
+
+  .ai-accordion__item-{{ ai_gen_id }} {
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    background-color: {{ block.settings.background_color }};
+    overflow: hidden;
+  }
+
+  .ai-accordion__header-{{ ai_gen_id }} {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: {{ block.settings.padding }}px;
+    background-color: {{ block.settings.header_background }};
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-accordion__header-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.header_hover_background }};
+  }
+
+  .ai-accordion__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: {{ block.settings.title_weight }};
+    color: {{ block.settings.title_color }};
+    margin: 0;
+  }
+
+  .ai-accordion__icon-{{ ai_gen_id }} {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    color: {{ block.settings.icon_color }};
+  }
+
+  .ai-accordion__item-{{ ai_gen_id }}.active .ai-accordion__icon-{{ ai_gen_id }} {
+    transform: rotate(180deg);
+  }
+
+  .ai-accordion__content-{{ ai_gen_id }} {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .ai-accordion__content-inner-{{ ai_gen_id }} {
+    padding: 0 {{ block.settings.padding }}px {{ block.settings.padding }}px;
+    font-size: {{ block.settings.content_size }}px;
+    line-height: 1.6;
+    color: {{ block.settings.content_color }};
+  }
+
+  .ai-accordion__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 12px;
+    border-radius: {{ block.settings.image_border_radius }}px;
+  }
+
+  .ai-accordion__item-{{ ai_gen_id }}.active .ai-accordion__content-{{ ai_gen_id }} {
+    max-height: 2000px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-accordion-{{ ai_gen_id }} {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<accordion-menu-{{ ai_gen_id }}
+  class="ai-accordion-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-accordion__container-{{ ai_gen_id }}">
+    <div class="ai-accordion__item-{{ ai_gen_id }}" data-accordion-item>
+      <button
+        class="ai-accordion__header-{{ ai_gen_id }}"
+        aria-expanded="false"
+        type="button"
+      >
+        <h3 class="ai-accordion__title-{{ ai_gen_id }}">{{ block.settings.title_1 }}</h3>
+        <svg
+          class="ai-accordion__icon-{{ ai_gen_id }}"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="ai-accordion__content-{{ ai_gen_id }}">
+        <div class="ai-accordion__content-inner-{{ ai_gen_id }}">
+          {% if block.settings.image_1 %}
+            <img
+              src="{{ block.settings.image_1 | image_url: width: 800 }}"
+              alt="{{ block.settings.image_1.alt | escape }}"
+              class="ai-accordion__image-{{ ai_gen_id }}"
+              loading="lazy"
+              width="{{ block.settings.image_1.width }}"
+              height="{{ block.settings.image_1.height }}"
+            >
+          {% endif %}
+          {{ block.settings.content_1 }}
+        </div>
+      </div>
+    </div>
+
+    <div class="ai-accordion__item-{{ ai_gen_id }}" data-accordion-item>
+      <button
+        class="ai-accordion__header-{{ ai_gen_id }}"
+        aria-expanded="false"
+        type="button"
+      >
+        <h3 class="ai-accordion__title-{{ ai_gen_id }}">{{ block.settings.title_2 }}</h3>
+        <svg
+          class="ai-accordion__icon-{{ ai_gen_id }}"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="ai-accordion__content-{{ ai_gen_id }}">
+        <div class="ai-accordion__content-inner-{{ ai_gen_id }}">
+          {% if block.settings.image_2 %}
+            <img
+              src="{{ block.settings.image_2 | image_url: width: 800 }}"
+              alt="{{ block.settings.image_2.alt | escape }}"
+              class="ai-accordion__image-{{ ai_gen_id }}"
+              loading="lazy"
+              width="{{ block.settings.image_2.width }}"
+              height="{{ block.settings.image_2.height }}"
+            >
+          {% endif %}
+          {{ block.settings.content_2 }}
+        </div>
+      </div>
+    </div>
+  </div>
+</accordion-menu-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AccordionMenu{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.items = this.querySelectorAll('[data-accordion-item]');
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.items.forEach((item) => {
+          const header = item.querySelector('.ai-accordion__header-{{ ai_gen_id }}');
+          const content = item.querySelector('.ai-accordion__content-{{ ai_gen_id }}');
+
+          header.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+
+            if (isActive) {
+              item.classList.remove('active');
+              header.setAttribute('aria-expanded', 'false');
+            } else {
+              item.classList.add('active');
+              header.setAttribute('aria-expanded', 'true');
+            }
+          });
+        });
+      }
+    }
+
+    customElements.define('accordion-menu-{{ ai_gen_id }}', AccordionMenu{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Menu acordeão",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Primeiro item"
+    },
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "Título",
+      "default": "Ingredientes"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Imagem"
+    },
+    {
+      "type": "richtext",
+      "id": "content_1",
+      "label": "Conteúdo",
+      "default": "<p>Proteína isolada de soro de leite, água, aroma natural, acidulante ácido cítrico, conservante sorbato de potássio, edulcorantes sucralose e acessulfame de potássio.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Segundo item"
+    },
+    {
+      "type": "text",
+      "id": "title_2",
+      "label": "Título",
+      "default": "Informações nutricionais"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Imagem"
+    },
+    {
+      "type": "richtext",
+      "id": "content_2",
+      "label": "Conteúdo",
+      "default": "<p>Porção de 60ml<br>Valor energético: 50 kcal<br>Proteínas: 12g<br>Carboidratos: 0g<br>Gorduras totais: 0g</p>"
+    },
+    {
+      "type": "header",
+      "content": "Estilo"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Largura no desktop",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "item_spacing",
+      "label": "Espaçamento entre itens",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Espaçamento interno",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Cor de fundo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Largura da borda",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Cor da borda",
+      "default": "#e6e6e6"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Raio da borda",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Cabeçalho"
+    },
+    {
+      "type": "color",
+      "id": "header_background",
+      "label": "Cor de fundo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "header_hover_background",
+      "label": "Cor de fundo ao passar o mouse",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamanho do título",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_weight",
+      "label": "Peso do título",
+      "min": 400,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Cor do título",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Cor do ícone",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Conteúdo"
+    },
+    {
+      "type": "range",
+      "id": "content_size",
+      "label": "Tamanho do texto",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "content_color",
+      "label": "Cor do texto",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Raio da borda da imagem",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Menu acordeão"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1225 @@
+{% doc %}
+  @prompt
+    Seletor de sabores e quantidades para o tema Horizon da Shopify.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-variant-selector-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+  }
+
+  .ai-flavor-section-{{ ai_gen_id }} {
+    margin-bottom: {{ block.settings.section_spacing }}px;
+  }
+
+  .ai-flavor-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.flavor_title_font_size }}px;
+    font-weight: {{ block.settings.flavor_title_font_weight }};
+    color: {{ block.settings.flavor_title_color }};
+    margin-bottom: {{ block.settings.flavor_title_spacing }}px;
+  }
+
+  .ai-flavor-label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.flavor_label_font_size }}px;
+    font-weight: {{ block.settings.flavor_label_font_weight }};
+    color: {{ block.settings.flavor_label_color }};
+    margin-bottom: {{ block.settings.flavor_label_spacing }}px;
+    display: {% if block.settings.show_flavor_label %}block{% else %}none{% endif %};
+  }
+
+  .ai-flavor-grid-{{ ai_gen_id }} {
+    display: flex;
+    gap: {{ block.settings.flavor_grid_gap }}px;
+    flex-wrap: wrap;
+  }
+
+  .ai-flavor-card-{{ ai_gen_id }} {
+    position: relative;
+    width: {{ block.settings.flavor_thumbnail_size }}px;
+    height: {{ block.settings.flavor_thumbnail_size }}px;
+    border: {{ block.settings.flavor_border_width }}px solid {{ block.settings.flavor_border_color }};
+    border-radius: {{ block.settings.flavor_border_radius }}px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .ai-flavor-card-{{ ai_gen_id }}:hover {
+    border-color: {{ block.settings.flavor_hover_border_color }};
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-flavor-card-{{ ai_gen_id }}.selected {
+    border-color: {{ block.settings.flavor_selected_border_color }};
+    border-width: {{ block.settings.flavor_selected_border_width }}px;
+  }
+
+  .ai-flavor-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-flavor-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: {{ block.settings.overlay_background }};
+    color: {{ block.settings.overlay_text_color }};
+    padding: 6px;
+    font-size: {{ block.settings.overlay_font_size }}px;
+    text-align: center;
+    display: {% if block.settings.show_flavor_overlay %}block{% else %}none{% endif %};
+  }
+
+  .ai-flavor-checkmark-{{ ai_gen_id }} {
+    position: absolute;
+    top: {{ block.settings.checkmark_position }}px;
+    right: {{ block.settings.checkmark_position }}px;
+    width: {{ block.settings.checkmark_size }}px;
+    height: {{ block.settings.checkmark_size }}px;
+    background-color: {{ block.settings.checkmark_background }};
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-flavor-card-{{ ai_gen_id }}.selected .ai-flavor-checkmark-{{ ai_gen_id }} {
+    display: flex;
+  }
+
+  .ai-flavor-checkmark-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    fill: {{ block.settings.checkmark_icon_color }};
+  }
+
+  .ai-quantity-section-{{ ai_gen_id }} {
+    margin-top: {{ block.settings.section_spacing }}px;
+  }
+
+  .ai-quantity-label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.quantity_label_font_size }}px;
+    font-weight: {{ block.settings.quantity_label_font_weight }};
+    color: {{ block.settings.quantity_label_color }};
+    margin-bottom: {{ block.settings.quantity_label_spacing }}px;
+    display: {% if block.settings.show_quantity_label %}block{% else %}none{% endif %};
+  }
+
+  .ai-quantity-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: {{ block.settings.quantity_grid_gap }}px;
+  }
+
+  .ai-quantity-card-{{ ai_gen_id }} {
+    position: relative;
+    padding: {{ block.settings.quantity_card_padding }}px;
+    border: {{ block.settings.quantity_card_border_width }}px solid {{ block.settings.quantity_card_border_color }};
+    border-radius: {{ block.settings.quantity_card_border_radius }}px;
+    background-color: {{ block.settings.quantity_card_background }};
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ai-quantity-card-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.quantity_card_hover_background }};
+    border-color: {{ block.settings.quantity_card_hover_border_color }};
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .ai-quantity-card-{{ ai_gen_id }}.selected {
+    background-color: {{ block.settings.quantity_card_selected_background }};
+    border-color: {{ block.settings.quantity_card_selected_border_color }};
+    border-width: {{ block.settings.quantity_card_selected_border_width }}px;
+  }
+
+  .ai-quantity-radio-{{ ai_gen_id }} {
+    width: {{ block.settings.radio_size }}px;
+    height: {{ block.settings.radio_size }}px;
+    border: {{ block.settings.radio_border_width }}px solid {{ block.settings.radio_border_color }};
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .ai-quantity-card-{{ ai_gen_id }}.selected .ai-quantity-radio-{{ ai_gen_id }} {
+    border-color: {{ block.settings.radio_selected_border_color }};
+    background-color: {{ block.settings.radio_selected_background }};
+  }
+
+  .ai-quantity-card-{{ ai_gen_id }}.selected .ai-quantity-radio-{{ ai_gen_id }}::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    background-color: {{ block.settings.radio_selected_dot_color }};
+    border-radius: 50%;
+  }
+
+  .ai-quantity-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.quantity_title_font_size }}px;
+    font-weight: {{ block.settings.quantity_title_font_weight }};
+    color: {{ block.settings.quantity_title_color }};
+    text-align: center;
+  }
+
+  .ai-quantity-price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.quantity_price_font_size }}px;
+    font-weight: {{ block.settings.quantity_price_font_weight }};
+    color: {{ block.settings.quantity_price_color }};
+    text-align: center;
+  }
+
+  .ai-quantity-badge-{{ ai_gen_id }} {
+    position: absolute;
+    top: -{{ block.settings.badge_offset }}px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 10px;
+    border-radius: {{ block.settings.badge_border_radius }}px;
+    font-size: {{ block.settings.badge_font_size }}px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .ai-quantity-discount-badge-{{ ai_gen_id }} {
+    background-color: {{ block.settings.discount_badge_background }};
+    color: {{ block.settings.discount_badge_text }};
+  }
+
+  .ai-quantity-shipping-badge-{{ ai_gen_id }} {
+    background-color: {{ block.settings.shipping_badge_background }};
+    color: {{ block.settings.shipping_badge_text }};
+    margin-top: 4px;
+    padding: 3px 8px;
+    font-size: {{ block.settings.shipping_badge_font_size }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-flavor-card-{{ ai_gen_id }} {
+      width: {{ block.settings.mobile_flavor_thumbnail_size }}px;
+      height: {{ block.settings.mobile_flavor_thumbnail_size }}px;
+    }
+
+    .ai-flavor-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.mobile_flavor_title_font_size }}px;
+    }
+
+    .ai-quantity-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.mobile_columns }}, 1fr);
+      gap: {{ block.settings.mobile_quantity_grid_gap }}px;
+    }
+
+    .ai-quantity-card-{{ ai_gen_id }} {
+      padding: {{ block.settings.mobile_quantity_card_padding }}px;
+    }
+
+    .ai-quantity-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.mobile_quantity_title_font_size }}px;
+    }
+
+    .ai-quantity-price-{{ ai_gen_id }} {
+      font-size: {{ block.settings.mobile_quantity_price_font_size }}px;
+    }
+  }
+{% endstyle %}
+
+<variant-selector-{{ ai_gen_id }}
+  class="ai-variant-selector-{{ ai_gen_id }}"
+  data-product-id="{{ product.id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-flavor-section-{{ ai_gen_id }}">
+    {% if block.settings.flavor_label_text != blank %}
+      <div class="ai-flavor-label-{{ ai_gen_id }}">{{ block.settings.flavor_label_text }}</div>
+    {% endif %}
+
+    <div class="ai-flavor-title-{{ ai_gen_id }}" data-flavor-title>
+      {{ product.selected_or_first_available_variant.option1 | default: 'Selecione um sabor' }}
+    </div>
+
+    <div class="ai-flavor-grid-{{ ai_gen_id }}">
+      {% assign flavors_added = '' %}
+      {% for variant in product.variants %}
+        {% assign variant_options = variant.title | split: ' / ' %}
+        {% assign flavor = variant_options[0] %}
+
+        {% unless flavors_added contains flavor %}
+          {% assign flavors_added = flavors_added | append: flavor | append: ',' %}
+
+          <div
+            class="ai-flavor-card-{{ ai_gen_id }} {% if variant.option1 == product.selected_or_first_available_variant.option1 %}selected{% endif %}"
+            data-flavor="{{ flavor }}"
+            data-variant-id="{{ variant.id }}"
+          >
+            {% if variant.featured_image %}
+              <img
+                src="{{ variant.featured_image | image_url: width: 200 }}"
+                alt="{{ flavor }}"
+                class="ai-flavor-image-{{ ai_gen_id }}"
+                loading="lazy"
+              >
+            {% elsif product.featured_image %}
+              <img
+                src="{{ product.featured_image | image_url: width: 200 }}"
+                alt="{{ flavor }}"
+                class="ai-flavor-image-{{ ai_gen_id }}"
+                loading="lazy"
+              >
+            {% endif %}
+
+            <div class="ai-flavor-overlay-{{ ai_gen_id }}">{{ flavor }}</div>
+
+            <div class="ai-flavor-checkmark-{{ ai_gen_id }}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+              </svg>
+            </div>
+          </div>
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="ai-quantity-section-{{ ai_gen_id }}">
+    {% if block.settings.quantity_label_text != blank %}
+      <div class="ai-quantity-label-{{ ai_gen_id }}">{{ block.settings.quantity_label_text }}</div>
+    {% endif %}
+
+    <div class="ai-quantity-grid-{{ ai_gen_id }}" data-quantity-grid>
+      {% assign current_variant = product.selected_or_first_available_variant %}
+      {% assign current_options = current_variant.title | split: ' / ' %}
+      {% assign current_flavor = current_options[0] %}
+
+      {% for variant in product.variants %}
+        {% assign variant_options = variant.title | split: ' / ' %}
+        {% assign variant_flavor = variant_options[0] %}
+        {% assign variant_quantity = variant_options[1] | default: variant_options[0] %}
+
+        {% if variant_flavor == current_flavor %}
+          {% assign quantity_number = variant_quantity | remove: ' unidades' | remove: 'unidades' | strip | times: 1 %}
+          {% assign unit_price = 0 %}
+
+          {% if quantity_number > 0 %}
+            {% assign unit_price = variant.price | divided_by: quantity_number %}
+          {% endif %}
+
+          {% assign discount_percent = 0 %}
+          {% if variant.compare_at_price > variant.price %}
+            {% assign price_diff = variant.compare_at_price | minus: variant.price %}
+            {% assign discount_percent = price_diff | times: 100.0 | divided_by: variant.compare_at_price | round %}
+          {% endif %}
+
+          <div
+            class="ai-quantity-card-{{ ai_gen_id }} {% if variant.id == current_variant.id %}selected{% endif %}"
+            data-variant-id="{{ variant.id }}"
+            data-quantity="{{ variant_quantity }}"
+          >
+            {% if discount_percent > 0 %}
+              <div class="ai-quantity-badge-{{ ai_gen_id }} ai-quantity-discount-badge-{{ ai_gen_id }}">
+                {{ discount_percent }}% OFF
+              </div>
+            {% endif %}
+
+            <div class="ai-quantity-radio-{{ ai_gen_id }}"></div>
+
+            <div class="ai-quantity-title-{{ ai_gen_id }}">
+              {{ variant_quantity }}
+            </div>
+
+            {% if unit_price > 0 %}
+              <div class="ai-quantity-price-{{ ai_gen_id }}">
+                {{ unit_price | money }}/cada
+              </div>
+            {% endif %}
+
+            {% if variant.metafields.custom.free_shipping == true %}
+              <div class="ai-quantity-badge-{{ ai_gen_id }} ai-quantity-shipping-badge-{{ ai_gen_id }}">
+                FRETE GRÁTIS
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</variant-selector-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class VariantSelector{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.flavorCards = this.querySelectorAll('.ai-flavor-card-{{ ai_gen_id }}');
+        this.quantityCards = this.querySelectorAll('.ai-quantity-card-{{ ai_gen_id }}');
+        this.flavorTitle = this.querySelector('[data-flavor-title]');
+        this.quantityGrid = this.querySelector('[data-quantity-grid]');
+        this.variantInput = document.querySelector('input[name="id"]');
+        this.productVariants = {{ product.variants | json }};
+      }
+
+      connectedCallback() {
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.flavorCards.forEach((card) => {
+          card.addEventListener('click', () => {
+            this.selectFlavor(card);
+          });
+        });
+
+        this.quantityCards.forEach((card) => {
+          card.addEventListener('click', () => {
+            this.selectQuantity(card);
+          });
+        });
+      }
+
+      selectFlavor(selectedCard) {
+        this.flavorCards.forEach((card) => {
+          card.classList.remove('selected');
+        });
+
+        selectedCard.classList.add('selected');
+
+        const flavor = selectedCard.getAttribute('data-flavor');
+
+        if (this.flavorTitle) {
+          this.flavorTitle.textContent = flavor;
+        }
+
+        this.updateQuantityOptions(flavor);
+      }
+
+      updateQuantityOptions(flavor) {
+        const flavorVariants = this.productVariants.filter(v => {
+          const options = v.title.split(' / ');
+          return options[0] === flavor;
+        });
+
+        if (!this.quantityGrid) return;
+
+        this.quantityGrid.innerHTML = '';
+
+        const currentVariantId = this.variantInput ? this.variantInput.value : null;
+        let selectedVariantId = currentVariantId;
+
+        const currentVariant = this.productVariants.find(v => v.id == currentVariantId);
+        if (currentVariant) {
+          const currentOptions = currentVariant.title.split(' / ');
+          if (currentOptions[0] !== flavor) {
+            selectedVariantId = flavorVariants[0]?.id;
+          }
+        } else {
+          selectedVariantId = flavorVariants[0]?.id;
+        }
+
+        flavorVariants.forEach(variant => {
+          const options = variant.title.split(' / ');
+          const quantity = options[1] || options[0];
+          const quantityNumber = parseInt(quantity.replace(/[^0-9]/g, '')) || 0;
+          const unitPrice = quantityNumber > 0 ? variant.price / quantityNumber : 0;
+
+          let discountPercent = 0;
+          if (variant.compare_at_price > variant.price) {
+            const priceDiff = variant.compare_at_price - variant.price;
+            discountPercent = Math.round((priceDiff / variant.compare_at_price) * 100);
+          }
+
+          const card = document.createElement('div');
+          card.className = 'ai-quantity-card-{{ ai_gen_id }}';
+          if (variant.id == selectedVariantId) {
+            card.classList.add('selected');
+          }
+          card.setAttribute('data-variant-id', variant.id);
+          card.setAttribute('data-quantity', quantity);
+
+          let cardHTML = '';
+
+          if (discountPercent > 0) {
+            cardHTML += `<div class="ai-quantity-badge-{{ ai_gen_id }} ai-quantity-discount-badge-{{ ai_gen_id }}">${discountPercent}% OFF</div>`;
+          }
+
+          cardHTML += `<div class="ai-quantity-radio-{{ ai_gen_id }}"></div>`;
+          cardHTML += `<div class="ai-quantity-title-{{ ai_gen_id }}">${quantity}</div>`;
+
+          if (unitPrice > 0) {
+            cardHTML += `<div class="ai-quantity-price-{{ ai_gen_id }}">${this.formatMoney(unitPrice)}/cada</div>`;
+          }
+
+          card.innerHTML = cardHTML;
+
+          card.addEventListener('click', () => {
+            this.selectQuantity(card);
+          });
+
+          this.quantityGrid.appendChild(card);
+        });
+
+        if (selectedVariantId) {
+          this.updateVariant(selectedVariantId);
+        }
+      }
+
+      selectQuantity(selectedCard) {
+        const allQuantityCards = this.querySelectorAll('.ai-quantity-card-{{ ai_gen_id }}');
+        allQuantityCards.forEach((card) => {
+          card.classList.remove('selected');
+        });
+
+        selectedCard.classList.add('selected');
+
+        const variantId = selectedCard.getAttribute('data-variant-id');
+        if (variantId) {
+          this.updateVariant(variantId);
+        }
+      }
+
+      async updateVariant(variantId) {
+        const variant = this.productVariants.find(v => v.id == variantId);
+        if (!variant) return;
+
+        // Atualiza input hidden
+        if (this.variantInput) {
+          this.variantInput.value = variantId;
+          this.variantInput.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+
+        // Atualiza URL
+        this.updateURL(variantId);
+
+        // Busca dados reais da variante via API
+        try {
+          const res = await fetch(`/variants/${variantId}.js`);
+          const liveVariant = await res.json();
+
+          const hasDiscount = liveVariant.compare_at_price && liveVariant.compare_at_price > liveVariant.price;
+
+          // Atualiza preço atual (price = o menor, com desconto)
+          document.querySelectorAll('.price-item--sale').forEach(el => {
+            el.innerHTML = this.formatMoney(liveVariant.price);
+          });
+
+          // Atualiza preço riscado (compare_at_price = o maior, original)
+          document.querySelectorAll('.price-item--regular').forEach(el => {
+            if (hasDiscount) {
+              el.innerHTML = this.formatMoney(liveVariant.compare_at_price);
+            }
+          });
+
+          // Controla visibilidade dos containers price__regular / price__sale
+          document.querySelectorAll('[ref="priceContainer"], product-price').forEach(container => {
+            const regularBlock = container.querySelector('.price__regular');
+            const saleBlock = container.querySelector('.price__sale');
+            if (hasDiscount) {
+              if (regularBlock) regularBlock.style.display = 'none';
+              if (saleBlock) saleBlock.style.display = 'block';
+            } else {
+              // Sem desconto: mostra price__regular com o preço atual
+              if (regularBlock) {
+                regularBlock.style.display = 'block';
+                const regularPrice = regularBlock.querySelector('.price-item--regular');
+                if (regularPrice) regularPrice.innerHTML = this.formatMoney(liveVariant.price);
+              }
+              if (saleBlock) saleBlock.style.display = 'none';
+            }
+          });
+
+          // Atualiza título do produto
+          document.querySelectorAll('.product__title, h1.title, [data-product-title]').forEach(el => {
+            if (liveVariant.name) el.textContent = liveVariant.name;
+          });
+
+          // Atualiza botão de compra (disponibilidade)
+          const buyButton = document.querySelector('[name="add"], .product-form__submit');
+          if (buyButton) {
+            buyButton.disabled = !liveVariant.available;
+            buyButton.textContent = liveVariant.available ? 'Adicionar ao carrinho' : 'Esgotado';
+          }
+
+        } catch(e) {
+          console.warn('Shotz variant fetch error:', e);
+        }
+
+        // Dispara evento do tema como fallback
+        document.dispatchEvent(new CustomEvent('variant:changed', {
+          bubbles: true,
+          detail: { variant, variantId }
+        }));
+      }
+
+      updateURL(variantId) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('variant', variantId);
+        window.history.replaceState({}, '', url.toString());
+      }
+
+      formatMoney(cents) {
+        return new Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL'
+        }).format(cents / 100);
+      }
+    }
+
+    customElements.define('variant-selector-{{ ai_gen_id }}', VariantSelector{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Seletor de variantes",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Seletor de sabores e quantidades em um único bloco."
+    },
+    {
+      "type": "range",
+      "id": "section_spacing",
+      "label": "Espaçamento entre seções",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Sabores - Label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_flavor_label",
+      "label": "Mostrar label",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "flavor_label_text",
+      "label": "Texto da label",
+      "default": "Sabor"
+    },
+    {
+      "type": "color",
+      "id": "flavor_label_color",
+      "label": "Cor",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "flavor_label_font_size",
+      "label": "Tamanho da fonte",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "flavor_label_font_weight",
+      "label": "Peso da fonte",
+      "min": 400,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "flavor_label_spacing",
+      "label": "Espaçamento inferior",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Sabores - Título"
+    },
+    {
+      "type": "color",
+      "id": "flavor_title_color",
+      "label": "Cor",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "flavor_title_font_size",
+      "label": "Tamanho da fonte",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "mobile_flavor_title_font_size",
+      "label": "Tamanho (mobile)",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "flavor_title_font_weight",
+      "label": "Peso da fonte",
+      "min": 400,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "flavor_title_spacing",
+      "label": "Espaçamento inferior",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Sabores - Miniaturas"
+    },
+    {
+      "type": "range",
+      "id": "flavor_thumbnail_size",
+      "label": "Tamanho",
+      "min": 60,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "mobile_flavor_thumbnail_size",
+      "label": "Tamanho (mobile)",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "flavor_grid_gap",
+      "label": "Espaçamento",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "flavor_border_radius",
+      "label": "Arredondamento",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "flavor_border_width",
+      "label": "Espessura da borda",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "flavor_selected_border_width",
+      "label": "Borda selecionado",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "color",
+      "id": "flavor_border_color",
+      "label": "Cor da borda",
+      "default": "#e6e6e6"
+    },
+    {
+      "type": "color",
+      "id": "flavor_hover_border_color",
+      "label": "Borda ao passar mouse",
+      "default": "#1D9E75"
+    },
+    {
+      "type": "color",
+      "id": "flavor_selected_border_color",
+      "label": "Borda selecionado",
+      "default": "#1D9E75"
+    },
+    {
+      "type": "header",
+      "content": "Sabores - Overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_flavor_overlay",
+      "label": "Mostrar nome do sabor",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "overlay_background",
+      "label": "Fundo",
+      "default": "#000000cc"
+    },
+    {
+      "type": "color",
+      "id": "overlay_text_color",
+      "label": "Cor do texto",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "overlay_font_size",
+      "label": "Tamanho da fonte",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Sabores - Checkmark"
+    },
+    {
+      "type": "range",
+      "id": "checkmark_size",
+      "label": "Tamanho",
+      "min": 20,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "checkmark_position",
+      "label": "Posição",
+      "min": 4,
+      "max": 12,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "color",
+      "id": "checkmark_background",
+      "label": "Fundo",
+      "default": "#1D9E75"
+    },
+    {
+      "type": "color",
+      "id": "checkmark_icon_color",
+      "label": "Cor do ícone",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Quantidade - Label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity_label",
+      "label": "Mostrar label",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "quantity_label_text",
+      "label": "Texto da label",
+      "default": "Quantidade"
+    },
+    {
+      "type": "color",
+      "id": "quantity_label_color",
+      "label": "Cor",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "quantity_label_font_size",
+      "label": "Tamanho da fonte",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "quantity_label_font_weight",
+      "label": "Peso da fonte",
+      "min": 400,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "quantity_label_spacing",
+      "label": "Espaçamento inferior",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Quantidade - Layout"
+    },
+    {
+      "type": "range",
+      "id": "quantity_grid_gap",
+      "label": "Espaçamento",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "mobile_quantity_grid_gap",
+      "label": "Espaçamento (mobile)",
+      "min": 6,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "quantity_card_padding",
+      "label": "Padding dos cards",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_quantity_card_padding",
+      "label": "Padding (mobile)",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "quantity_card_border_radius",
+      "label": "Arredondamento",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "quantity_card_border_width",
+      "label": "Espessura da borda",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "quantity_card_selected_border_width",
+      "label": "Borda selecionado",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Colunas no mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "header",
+      "content": "Quantidade - Cores"
+    },
+    {
+      "type": "color",
+      "id": "quantity_card_background",
+      "label": "Fundo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "quantity_card_border_color",
+      "label": "Borda",
+      "default": "#e6e6e6"
+    },
+    {
+      "type": "color",
+      "id": "quantity_card_hover_background",
+      "label": "Fundo ao passar mouse",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "quantity_card_hover_border_color",
+      "label": "Borda ao passar mouse",
+      "default": "#1D9E75"
+    },
+    {
+      "type": "color",
+      "id": "quantity_card_selected_background",
+      "label": "Fundo selecionado",
+      "default": "#E1F5EE"
+    },
+    {
+      "type": "color",
+      "id": "quantity_card_selected_border_color",
+      "label": "Borda selecionado",
+      "default": "#1D9E75"
+    },
+    {
+      "type": "header",
+      "content": "Quantidade - Radio"
+    },
+    {
+      "type": "range",
+      "id": "radio_size",
+      "label": "Tamanho",
+      "min": 16,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "radio_border_width",
+      "label": "Espessura da borda",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "radio_border_color",
+      "label": "Borda",
+      "default": "#cccccc"
+    },
+    {
+      "type": "color",
+      "id": "radio_selected_border_color",
+      "label": "Borda selecionado",
+      "default": "#1D9E75"
+    },
+    {
+      "type": "color",
+      "id": "radio_selected_background",
+      "label": "Fundo selecionado",
+      "default": "#1D9E75"
+    },
+    {
+      "type": "color",
+      "id": "radio_selected_dot_color",
+      "label": "Ponto interno",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Quantidade - Texto"
+    },
+    {
+      "type": "color",
+      "id": "quantity_title_color",
+      "label": "Cor do título",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "quantity_title_font_size",
+      "label": "Tamanho do título",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_quantity_title_font_size",
+      "label": "Tamanho (mobile)",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "quantity_title_font_weight",
+      "label": "Peso do título",
+      "min": 400,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "color",
+      "id": "quantity_price_color",
+      "label": "Cor do preço",
+      "default": "#1D9E75"
+    },
+    {
+      "type": "range",
+      "id": "quantity_price_font_size",
+      "label": "Tamanho do preço",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "mobile_quantity_price_font_size",
+      "label": "Tamanho (mobile)",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "quantity_price_font_weight",
+      "label": "Peso do preço",
+      "min": 400,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "header",
+      "content": "Badges"
+    },
+    {
+      "type": "range",
+      "id": "badge_border_radius",
+      "label": "Arredondamento",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "label": "Tamanho da fonte",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "badge_offset",
+      "label": "Distância do topo",
+      "min": 8,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "discount_badge_background",
+      "label": "Fundo desconto",
+      "default": "#1D9E75"
+    },
+    {
+      "type": "color",
+      "id": "discount_badge_text",
+      "label": "Texto desconto",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "shipping_badge_font_size",
+      "label": "Tamanho frete grátis",
+      "min": 8,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "shipping_badge_background",
+      "label": "Fundo frete grátis",
+      "default": "#1D9E75"
+    },
+    {
+      "type": "color",
+      "id": "shipping_badge_text",
+      "label": "Texto frete grátis",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Seletor de variantes"
+    }
+  ]
+}
+{% endschema %}

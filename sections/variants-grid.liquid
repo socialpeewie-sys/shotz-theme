@@ -1,0 +1,599 @@
+{% comment %}
+  Section: Variants Grid v3
+  - Seleção de variantes por bloco
+  - Imagem sem corte configurável
+  - Cores, fontes e botão editáveis no editor
+{% endcomment %}
+
+<section class="variants-grid-section" id="variants-grid-{{ section.id }}">
+  <div class="page-width">
+
+    {% if section.settings.title != blank %}
+      <h2 class="variants-grid__title">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    {% assign product = all_products[section.settings.product] %}
+
+    {% if product != blank %}
+
+      {% assign selected_ids = '' %}
+      {% for block in section.blocks %}
+        {% if block.type == 'variant_item' and block.settings.variant_id != blank %}
+          {% assign selected_ids = selected_ids | append: block.settings.variant_id | append: ',' %}
+        {% endif %}
+      {% endfor %}
+
+      <div class="variants-grid__grid">
+        {% for variant in product.variants %}
+          {% if selected_ids == '' or selected_ids contains variant.id %}
+
+            {% assign variant_image = variant.image | default: product.featured_image %}
+            <div class="variants-grid__card">
+
+              <a href="{{ product.url }}?variant={{ variant.id }}" class="variants-grid__image-link">
+                {% if variant_image %}
+                  <img
+                    src="{{ variant_image | image_url: width: 600 }}"
+                    alt="{{ variant_image.alt | default: variant.title | escape }}"
+                    width="600"
+                    height="600"
+                    loading="lazy"
+                    class="variants-grid__image"
+                  >
+                {% endif %}
+              </a>
+
+              <div class="variants-grid__info">
+                <p class="variants-grid__product-title">{{ product.title }}</p>
+                <p class="variants-grid__variant-title">{{ variant.title }}</p>
+                <p class="variants-grid__price">
+                  {% if variant.compare_at_price > variant.price %}
+                    <span class="variants-grid__price--compare">{{ variant.compare_at_price | money }}</span>
+                  {% endif %}
+                  <span class="variants-grid__price--current">{{ variant.price | money }}</span>
+                </p>
+
+                {% if variant.available %}
+                  <form action="/cart/add" method="post">
+                    <input type="hidden" name="id" value="{{ variant.id }}">
+                    <input type="hidden" name="quantity" value="1">
+                    <button type="submit" class="variants-grid__btn">
+                      {{ section.settings.button_label }}
+                    </button>
+                  </form>
+                {% else %}
+                  <button class="variants-grid__btn variants-grid__btn--disabled" disabled>
+                    {{ section.settings.button_label_soldout }}
+                  </button>
+                {% endif %}
+              </div>
+
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+    {% else %}
+      <p>Selecione um produto no editor de tema.</p>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+  #variants-grid-{{ section.id }} {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.section_bg_color }};
+  }
+  #variants-grid-{{ section.id }} .variants-grid__title {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: {{ section.settings.title_font_size }}px;
+    color: {{ section.settings.title_color }};
+    font-family: {{ section.settings.title_font_family }};
+    font-weight: {{ section.settings.title_font_weight }};
+  }
+  #variants-grid-{{ section.id }} .variants-grid__grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+    gap: {{ section.settings.card_gap }}px;
+  }
+  @media (max-width: 768px) {
+    #variants-grid-{{ section.id }} .variants-grid__grid {
+      grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr);
+    }
+  }
+  #variants-grid-{{ section.id }} .variants-grid__card {
+    border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+    border-radius: {{ section.settings.card_border_radius }}px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: {{ section.settings.card_bg_color }};
+    transition: box-shadow 0.2s;
+  }
+  #variants-grid-{{ section.id }} .variants-grid__card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+  #variants-grid-{{ section.id }} .variants-grid__image-link {
+    display: block;
+    background: {{ section.settings.image_bg_color }};
+    height: {{ section.settings.image_height }}px;
+  }
+  #variants-grid-{{ section.id }} .variants-grid__image {
+    width: 100%;
+    height: 100%;
+    object-fit: {{ section.settings.image_fit }};
+    object-position: center;
+    display: block;
+  }
+  #variants-grid-{{ section.id }} .variants-grid__info {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+  }
+  #variants-grid-{{ section.id }} .variants-grid__product-title {
+    font-size: {{ section.settings.product_title_font_size }}px;
+    color: {{ section.settings.product_title_color }};
+    margin: 0;
+    font-family: {{ section.settings.body_font_family }};
+  }
+  #variants-grid-{{ section.id }} .variants-grid__variant-title {
+    font-size: {{ section.settings.variant_title_font_size }}px;
+    font-weight: 600;
+    color: {{ section.settings.variant_title_color }};
+    margin: 0;
+    font-family: {{ section.settings.body_font_family }};
+  }
+  #variants-grid-{{ section.id }} .variants-grid__price {
+    margin: 0;
+    font-family: {{ section.settings.body_font_family }};
+  }
+  #variants-grid-{{ section.id }} .variants-grid__price--compare {
+    text-decoration: line-through;
+    color: {{ section.settings.compare_price_color }};
+    margin-right: 0.4rem;
+    font-size: 0.9rem;
+  }
+  #variants-grid-{{ section.id }} .variants-grid__price--current {
+    font-weight: 700;
+    color: {{ section.settings.price_color }};
+    font-size: {{ section.settings.price_font_size }}px;
+  }
+  #variants-grid-{{ section.id }} .variants-grid__btn {
+    margin-top: 0.8rem;
+    padding: {{ section.settings.button_padding_v }}px {{ section.settings.button_padding_h }}px;
+    background: {{ section.settings.button_bg_color }};
+    color: {{ section.settings.button_text_color }};
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }};
+    border-radius: {{ section.settings.button_border_radius }}px;
+    cursor: pointer;
+    font-size: {{ section.settings.button_font_size }}px;
+    font-family: {{ section.settings.body_font_family }};
+    font-weight: {{ section.settings.button_font_weight }};
+    width: 100%;
+    transition: background 0.2s, color 0.2s;
+    text-transform: {{ section.settings.button_text_transform }};
+    letter-spacing: {{ section.settings.button_letter_spacing }}px;
+  }
+  #variants-grid-{{ section.id }} .variants-grid__btn:hover {
+    background: {{ section.settings.button_bg_hover_color }};
+    color: {{ section.settings.button_text_hover_color }};
+  }
+  #variants-grid-{{ section.id }} .variants-grid__btn--disabled {
+    background: {{ section.settings.button_disabled_bg_color }};
+    color: {{ section.settings.button_disabled_text_color }};
+    cursor: not-allowed;
+    border-color: transparent;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Grade de Variantes",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título da seção",
+      "default": "Nossos Produtos"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Produto"
+    },
+
+    {
+      "type": "header",
+      "content": "🎨 Cores gerais"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Fundo da seção",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Fundo do card",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Cor da borda do card",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Espessura da borda do card (px)",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Arredondamento do card (px)",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "default": 8
+    },
+
+    {
+      "type": "header",
+      "content": "🖼️ Imagem"
+    },
+    {
+      "type": "color",
+      "id": "image_bg_color",
+      "label": "Fundo da imagem",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Altura da imagem (px)",
+      "min": 150,
+      "max": 600,
+      "step": 10,
+      "default": 280
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Ajuste da imagem",
+      "options": [
+        { "value": "contain", "label": "Mostrar inteira (contain)" },
+        { "value": "cover", "label": "Preencher (cover)" }
+      ],
+      "default": "contain"
+    },
+
+    {
+      "type": "header",
+      "content": "✏️ Tipografia"
+    },
+    {
+      "type": "select",
+      "id": "title_font_family",
+      "label": "Fonte do título da seção",
+      "options": [
+        { "value": "inherit", "label": "Padrão do tema" },
+        { "value": "sans-serif", "label": "Sans-serif" },
+        { "value": "serif", "label": "Serif" },
+        { "value": "monospace", "label": "Monospace" }
+      ],
+      "default": "inherit"
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Peso do título da seção",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra-bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Tamanho do título da seção (px)",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "body_font_family",
+      "label": "Fonte dos textos dos cards",
+      "options": [
+        { "value": "inherit", "label": "Padrão do tema" },
+        { "value": "sans-serif", "label": "Sans-serif" },
+        { "value": "serif", "label": "Serif" },
+        { "value": "monospace", "label": "Monospace" }
+      ],
+      "default": "inherit"
+    },
+    {
+      "type": "range",
+      "id": "product_title_font_size",
+      "label": "Tamanho do nome do produto (px)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "variant_title_font_size",
+      "label": "Tamanho do nome da variante (px)",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "price_font_size",
+      "label": "Tamanho do preço (px)",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "default": 16
+    },
+
+    {
+      "type": "header",
+      "content": "🎨 Cores dos textos"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Cor do título da seção",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "product_title_color",
+      "label": "Cor do nome do produto",
+      "default": "#888888"
+    },
+    {
+      "type": "color",
+      "id": "variant_title_color",
+      "label": "Cor do nome da variante",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Cor do preço",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "compare_price_color",
+      "label": "Cor do preço riscado",
+      "default": "#999999"
+    },
+
+    {
+      "type": "header",
+      "content": "🛒 Botão"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto do botão",
+      "default": "Adicionar ao carrinho"
+    },
+    {
+      "type": "text",
+      "id": "button_label_soldout",
+      "label": "Texto quando esgotado",
+      "default": "Esgotado"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Cor de fundo do botão",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Cor do texto do botão",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_hover_color",
+      "label": "Cor de fundo (hover)",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_text_hover_color",
+      "label": "Cor do texto (hover)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Cor da borda do botão",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Espessura da borda do botão (px)",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Arredondamento do botão (px)",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Tamanho da fonte do botão (px)",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Peso da fonte do botão",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "button_text_transform",
+      "label": "Capitalização do botão",
+      "options": [
+        { "value": "none", "label": "Normal" },
+        { "value": "uppercase", "label": "MAIÚSCULAS" },
+        { "value": "capitalize", "label": "Primeira Letra Maiúscula" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "button_letter_spacing",
+      "label": "Espaçamento entre letras (px)",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "button_padding_v",
+      "label": "Padding vertical do botão (px)",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_padding_h",
+      "label": "Padding horizontal do botão (px)",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "button_disabled_bg_color",
+      "label": "Cor de fundo (esgotado)",
+      "default": "#cccccc"
+    },
+    {
+      "type": "color",
+      "id": "button_disabled_text_color",
+      "label": "Cor do texto (esgotado)",
+      "default": "#666666"
+    },
+
+    {
+      "type": "header",
+      "content": "📐 Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Colunas (desktop)",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Colunas (mobile)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Espaço entre cards (px)",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaçamento superior (px)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaçamento inferior (px)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "variant_item",
+      "name": "Variante",
+      "settings": [
+        {
+          "type": "text",
+          "id": "variant_id",
+          "label": "ID da variante",
+          "info": "Cole o ID numérico da variante. Encontre em Admin → Produtos → [Produto] → URL da variante."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Grade de Variantes"
+    }
+  ]
+}
+{% endschema %}

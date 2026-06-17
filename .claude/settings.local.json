@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\joaop\\\\shotz-theme\" -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object -ExpandProperty FullName | ForEach-Object { $_.Replace\\(\"C:\\\\Users\\\\joaop\\\\shotz-theme\\\\\", \"\"\\) })"
+    ]
+  }
+}

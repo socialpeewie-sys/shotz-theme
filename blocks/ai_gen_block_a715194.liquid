@@ -173,6 +173,43 @@
         </div>
       </div>
     </div>
+
+    <div class="ai-accordion__item-{{ ai_gen_id }}" data-accordion-item>
+      <button
+        class="ai-accordion__header-{{ ai_gen_id }}"
+        aria-expanded="false"
+        type="button"
+      >
+        <h3 class="ai-accordion__title-{{ ai_gen_id }}">{{ block.settings.title_3 }}</h3>
+        <svg
+          class="ai-accordion__icon-{{ ai_gen_id }}"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="ai-accordion__content-{{ ai_gen_id }}">
+        <div class="ai-accordion__content-inner-{{ ai_gen_id }}">
+          {% if block.settings.image_3 %}
+            <img
+              src="{{ block.settings.image_3 | image_url: width: 800 }}"
+              alt="{{ block.settings.image_3.alt | escape }}"
+              class="ai-accordion__image-{{ ai_gen_id }}"
+              loading="lazy"
+              width="{{ block.settings.image_3.width }}"
+              height="{{ block.settings.image_3.height }}"
+            >
+          {% endif %}
+          {{ block.settings.content_3 }}
+        </div>
+      </div>
+    </div>
   </div>
 </accordion-menu-{{ ai_gen_id }}>
 
@@ -258,6 +295,27 @@
       "id": "content_2",
       "label": "Conteúdo",
       "default": "<p>Porção de 60ml<br>Valor energético: 50 kcal<br>Proteínas: 12g<br>Carboidratos: 0g<br>Gorduras totais: 0g</p>"
+    },
+    {
+      "type": "header",
+      "content": "Terceiro item"
+    },
+    {
+      "type": "text",
+      "id": "title_3",
+      "label": "Título",
+      "default": "Descrição do produto"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Imagem"
+    },
+    {
+      "type": "richtext",
+      "id": "content_3",
+      "label": "Conteúdo",
+      "default": "<p>Insira aqui a descrição do produto.</p>"
     },
     {
       "type": "header",

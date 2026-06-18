@@ -1,0 +1,252 @@
+<style>
+  .shotz-benefits {
+    position: relative;
+    background-color: #0d0d0d;
+    padding: 80px 20px;
+    overflow: hidden;
+  }
+
+  .shotz-benefits__bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    pointer-events: none;
+  }
+
+  .shotz-benefits__bg img {
+    width: 33.33%;
+    max-width: 320px;
+    object-fit: contain;
+    opacity: 0.35;
+    filter: brightness(0.8);
+  }
+
+  .shotz-benefits__content {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .shotz-benefits__eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 12px;
+  }
+
+  .shotz-benefits__heading {
+    font-size: clamp(26px, 4vw, 50px);
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 14px;
+    line-height: 1.1;
+  }
+
+  .shotz-benefits__sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 50px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .shotz-benefits__cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .shotz-benefits__card {
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: left;
+  }
+
+  .shotz-benefits__icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .shotz-benefits__card-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+
+  .shotz-benefits__card-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .shotz-benefits__cards {
+      grid-template-columns: 1fr;
+    }
+    .shotz-benefits__bg {
+      display: none;
+    }
+  }
+</style>
+
+<section class="shotz-benefits">
+
+  {% if section.settings.bg_image_1 or section.settings.bg_image_2 or section.settings.bg_image_3 %}
+    <div class="shotz-benefits__bg">
+      {% if section.settings.bg_image_1 %}
+        <img src="{{ section.settings.bg_image_1 | image_url: width: 400 }}" alt="" loading="lazy">
+      {% endif %}
+      {% if section.settings.bg_image_2 %}
+        <img src="{{ section.settings.bg_image_2 | image_url: width: 400 }}" alt="" loading="lazy">
+      {% endif %}
+      {% if section.settings.bg_image_3 %}
+        <img src="{{ section.settings.bg_image_3 | image_url: width: 400 }}" alt="" loading="lazy">
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="shotz-benefits__content">
+    {% if section.settings.eyebrow != blank %}
+      <p class="shotz-benefits__eyebrow">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    {% if section.settings.heading != blank %}
+      <h2 class="shotz-benefits__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.subheading != blank %}
+      <p class="shotz-benefits__sub">{{ section.settings.subheading }}</p>
+    {% endif %}
+
+    <div class="shotz-benefits__cards">
+      {% for block in section.blocks %}
+        <div class="shotz-benefits__card" {{ block.shopify_attributes }}>
+          {% if block.settings.icon != blank %}
+            <div class="shotz-benefits__icon">{{ block.settings.icon }}</div>
+          {% endif %}
+          {% if block.settings.title != blank %}
+            <p class="shotz-benefits__card-title">{{ block.settings.title }}</p>
+          {% endif %}
+          {% if block.settings.text != blank %}
+            <p class="shotz-benefits__card-text">{{ block.settings.text }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Shotz – Benefits",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Texto eyebrow",
+      "default": "A ciência por trás"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "O que faz o Shotz funcionar."
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "Tudo o que você precisa. Em uma única dose."
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_1",
+      "label": "Produto esquerda (fundo)"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_2",
+      "label": "Produto centro (fundo)"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_3",
+      "label": "Produto direita (fundo)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card de benefício",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Ícone (emoji)",
+          "default": "⚡"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título do card"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Descrição"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shotz – Benefits",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "icon": "⚡",
+            "title": "Proteína instantânea",
+            "text": "Alta biodisponibilidade. Sem o processo lento do pó diluído."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "🦴",
+            "title": "Colágeno Completo",
+            "text": "Tipos I, II e III. Para pele, articulações e recuperação muscular."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "🚫",
+            "title": "Zero açúcar",
+            "text": "Sem pico de glicose. Sem crash. Energia limpa o dia todo."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

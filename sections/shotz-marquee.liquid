@@ -125,11 +125,12 @@
     width: max-content;
     animation: shotz-marquee-scroll var(--sm-speed) linear infinite;
     will-change: transform;
+    transition: animation-duration 0.6s ease;
   }
 
   @media (hover: hover) {
     .shotz-marquee__viewport:hover .shotz-marquee__track {
-      animation-play-state: paused;
+      animation-duration: calc(var(--sm-speed) * 4);
     }
   }
 
@@ -345,14 +346,22 @@
       "name": "Card",
       "settings": [
         {
+          "type": "header",
+          "content": "Imagem do card"
+        },
+        {
           "type": "image_picker",
           "id": "image",
-          "label": "Imagem"
+          "label": "Selecionar imagem"
+        },
+        {
+          "type": "header",
+          "content": "Texto"
         },
         {
           "type": "text",
           "id": "label",
-          "label": "Label",
+          "label": "Label (barra inferior)",
           "default": "Sabor"
         }
       ]

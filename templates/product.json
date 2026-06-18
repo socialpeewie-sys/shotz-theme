@@ -1187,28 +1187,28 @@
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/WhatsApp_Image_2026-05-25_at_16.50.22.jpg",
-            "label": "Sabor 1"
+            "label": "VIAGEM"
           }
         },
         "card_qUWEbC": {
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/teste.png",
-            "label": "Sabor 2"
+            "label": "ACADEMIA"
           }
         },
         "card_PWJmCR": {
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0518_1.jpg",
-            "label": "Sabor 3"
+            "label": "ALIMENTAÇÃO"
           }
         },
         "card_tHBbjG": {
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/teste_1.png",
-            "label": "Sabor 4"
+            "label": "Corrida"
           }
         },
         "card_HfnAUP": {
@@ -1239,7 +1239,7 @@
         "gap": 16,
         "label_font_size": 13,
         "speed": 16,
-        "padding_top": 48,
+        "padding_top": 20,
         "padding_bottom": 48
       }
     },

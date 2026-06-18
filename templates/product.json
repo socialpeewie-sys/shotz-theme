@@ -568,7 +568,7 @@
       "settings": {
         "color_scheme": "",
         "section_width": "full-width",
-        "thickness": 1,
+        "thickness": 0.5,
         "corner_radius": "square",
         "width_percent": 100,
         "alignment_horizontal": "center",

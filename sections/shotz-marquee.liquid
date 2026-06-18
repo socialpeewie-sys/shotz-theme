@@ -202,25 +202,42 @@
     var track = viewport.querySelector('.shotz-marquee__track');
     if (!track) return;
 
-    var section = viewport.closest('[class*="shotz-marquee-"]');
+    var section = viewport.closest('[class*="shotz-marquee-"]') || viewport;
     var baseSpeed = parseFloat(
-      getComputedStyle(section || viewport).getPropertyValue('--sm-speed')
+      getComputedStyle(section).getPropertyValue('--sm-speed')
     ) || 28;
-    var slowSpeed = baseSpeed * 5;
+
     var current = baseSpeed;
     var target = baseSpeed;
     var raf = null;
 
+    // Change speed WITHOUT jumping position.
+    // Reads current translateX, computes fraction through one cycle,
+    // then sets animationDelay so the new duration starts at the same visual spot.
+    function setSpeed(newDuration) {
+      var transformStr = getComputedStyle(track).transform;
+      if (transformStr && transformStr !== 'none') {
+        var tx = new DOMMatrix(transformStr).m41; // current translateX in px
+        var halfWidth = track.offsetWidth * 0.5;  // one full cycle = 50% of track
+        if (halfWidth > 0) {
+          var frac = ((-tx) % halfWidth) / halfWidth;
+          if (frac < 0) frac += 1;
+          track.style.animationDelay = -(frac * newDuration) + 's';
+        }
+      }
+      track.style.animationDuration = newDuration + 's';
+    }
+
     function tick() {
       var diff = target - current;
-      if (Math.abs(diff) < 0.04) {
+      if (Math.abs(diff) < 0.05) {
         current = target;
-        track.style.animationDuration = current + 's';
+        setSpeed(current);
         raf = null;
         return;
       }
-      current += diff * 0.07;
-      track.style.animationDuration = current + 's';
+      current += diff * 0.06; // ease factor: smooth but not too slow
+      setSpeed(current);
       raf = requestAnimationFrame(tick);
     }
 
@@ -230,7 +247,7 @@
     }
 
     viewport.addEventListener('mouseenter', function () {
-      target = slowSpeed;
+      target = baseSpeed * 5;
       start();
     });
 

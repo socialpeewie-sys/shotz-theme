@@ -265,7 +265,7 @@
               "settings": {
                 "section_spacing": 16,
                 "show_flavor_label": true,
-                "flavor_label_text": "Sabor:",
+                "flavor_label_text": "Sabores:",
                 "flavor_label_color": "#666666",
                 "flavor_label_font_size": 17,
                 "flavor_label_font_weight": 600,
@@ -284,7 +284,7 @@
                 "flavor_border_color": "#d7ccbc",
                 "flavor_hover_border_color": "#0a84ff",
                 "flavor_selected_border_color": "#0a84ff",
-                "show_flavor_overlay": false,
+                "show_flavor_overlay": true,
                 "overlay_background": "#d7ccbc",
                 "overlay_text_color": "#000000",
                 "overlay_font_size": 10,

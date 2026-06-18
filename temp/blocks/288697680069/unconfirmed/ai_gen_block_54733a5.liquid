@@ -1,6 +1,166 @@
+{% doc %}
+  @prompt
+    Um título com efeito de brilho animado
+{% enddoc %}
+{%- comment -%}
+  Animated Shimmer Heading Block
+  Bloco de título com efeito de brilho animado
+{%- endcomment -%}
+
+{%- liquid
+  assign heading_tag = block.settings.heading_tag | default: 'h2'
+  assign heading_text = block.settings.heading_text | default: 'Título com Brilho'
+  assign text_align = block.settings.text_align | default: 'center'
+  assign shimmer_color = block.settings.shimmer_color | default: '#0a84ff'
+  assign shimmer_speed = block.settings.shimmer_speed | default: 3
+  assign shimmer_width = block.settings.shimmer_width | default: 30
+-%}
+
+<div class="shimmer-heading-wrapper" style="text-align: {{ text_align }};">
+  <{{ heading_tag }} class="shimmer-heading {{ heading_tag }}" {{ block.shopify_attributes }}>
+    {{ heading_text }}
+  </{{ heading_tag }}>
+</div>
+
+<style>
+  .shimmer-heading-wrapper {
+    padding: 2rem 1rem;
+  }
+
+  .shimmer-heading {
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(
+      90deg,
+      currentColor 0%,
+      currentColor 40%,
+      {{ shimmer_color }} 50%,
+      currentColor 60%,
+      currentColor 100%
+    );
+    background-size: {{ shimmer_width }}% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer {{ shimmer_speed }}s infinite linear;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -{{ shimmer_width }}% 0;
+    }
+    100% {
+      background-position: {{ shimmer_width | times: 2 }}% 0;
+    }
+  }
+
+  /* Fallback para navegadores sem suporte */
+  @supports not (background-clip: text) {
+    .shimmer-heading {
+      background: none;
+      -webkit-text-fill-color: currentColor;
+      color: currentColor;
+    }
+  }
+
+  /* Responsivo */
+  @media (max-width: 749px) {
+    .shimmer-heading-wrapper {
+      padding: 1.5rem 1rem;
+    }
+  }
+</style>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Título com Brilho",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Texto do título",
+      "default": "Título com Brilho"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Tamanho do título",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1 (Extra Grande)"
+        },
+        {
+          "value": "h2",
+          "label": "H2 (Grande)"
+        },
+        {
+          "value": "h3",
+          "label": "H3 (Médio)"
+        },
+        {
+          "value": "h4",
+          "label": "H4 (Pequeno)"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alinhamento",
+      "options": [
+        {
+          "value": "left",
+          "label": "Esquerda"
+        },
+        {
+          "value": "center",
+          "label": "Centro"
+        },
+        {
+          "value": "right",
+          "label": "Direita"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color",
+      "id": "shimmer_color",
+      "label": "Cor do brilho",
+      "default": "#0a84ff",
+      "info": "Cor que aparece no efeito de brilho"
+    },
+    {
+      "type": "range",
+      "id": "shimmer_speed",
+      "label": "Velocidade da animação",
+      "min": 1,
+      "max": 10,
+      "step": 0.5,
+      "unit": "s",
+      "default": 3,
+      "info": "Duração de cada ciclo de brilho"
+    },
+    {
+      "type": "range",
+      "id": "shimmer_width",
+      "label": "Largura do brilho",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "%",
+      "default": 30,
+      "info": "Largura do efeito de brilho"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Título com Brilho"
+    }
+  ]
+}
 {% endschema %}

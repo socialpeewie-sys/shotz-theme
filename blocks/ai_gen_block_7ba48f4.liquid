@@ -30,16 +30,20 @@
   }
 
   .ai-flavor-title-{{ ai_gen_id }} {
-    font-size: {{ block.settings.flavor_title_font_size }}px;
-    font-weight: {{ block.settings.flavor_title_font_weight }};
-    color: {{ block.settings.flavor_title_color }};
-    margin-bottom: {{ block.settings.flavor_title_spacing }}px;
+    display: none;
   }
 
   .ai-flavor-grid-{{ ai_gen_id }} {
     display: flex;
     gap: {{ block.settings.flavor_grid_gap }}px;
     flex-wrap: wrap;
+  }
+
+  .ai-flavor-item-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
   }
 
   .ai-flavor-card-{{ ai_gen_id }} {
@@ -71,15 +75,11 @@
   }
 
   .ai-flavor-overlay-{{ ai_gen_id }} {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: {{ block.settings.overlay_background }};
-    color: {{ block.settings.overlay_text_color }};
-    padding: 6px;
     font-size: {{ block.settings.overlay_font_size }}px;
+    color: {{ block.settings.overlay_text_color }};
     text-align: center;
+    width: {{ block.settings.flavor_thumbnail_size }}px;
+    word-break: break-word;
     display: {% if block.settings.show_flavor_overlay %}block{% else %}none{% endif %};
   }
 
@@ -226,8 +226,8 @@
       height: {{ block.settings.mobile_flavor_thumbnail_size }}px;
     }
 
-    .ai-flavor-title-{{ ai_gen_id }} {
-      font-size: {{ block.settings.mobile_flavor_title_font_size }}px;
+    .ai-flavor-overlay-{{ ai_gen_id }} {
+      width: {{ block.settings.mobile_flavor_thumbnail_size }}px;
     }
 
     .ai-quantity-grid-{{ ai_gen_id }} {
@@ -271,22 +271,24 @@
         {% assign flavor = variant_options[0] %}
         {% unless flavors_added contains flavor %}
           {% assign flavors_added = flavors_added | append: flavor | append: ',' %}
-          <div
-            class="ai-flavor-card-{{ ai_gen_id }} {% if variant.option1 == product.selected_or_first_available_variant.option1 %}selected{% endif %}"
-            data-flavor="{{ flavor }}"
-            data-option1="{{ flavor }}"
-          >
-            {% if variant.featured_image %}
-              <img src="{{ variant.featured_image | image_url: width: 200 }}" alt="{{ flavor }}" class="ai-flavor-image-{{ ai_gen_id }}" loading="lazy">
-            {% elsif product.featured_image %}
-              <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ flavor }}" class="ai-flavor-image-{{ ai_gen_id }}" loading="lazy">
-            {% endif %}
-            <div class="ai-flavor-overlay-{{ ai_gen_id }}">{{ flavor }}</div>
-            <div class="ai-flavor-checkmark-{{ ai_gen_id }}">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
-              </svg>
+          <div class="ai-flavor-item-{{ ai_gen_id }}">
+            <div
+              class="ai-flavor-card-{{ ai_gen_id }} {% if variant.option1 == product.selected_or_first_available_variant.option1 %}selected{% endif %}"
+              data-flavor="{{ flavor }}"
+              data-option1="{{ flavor }}"
+            >
+              {% if variant.featured_image %}
+                <img src="{{ variant.featured_image | image_url: width: 200 }}" alt="{{ flavor }}" class="ai-flavor-image-{{ ai_gen_id }}" loading="lazy">
+              {% elsif product.featured_image %}
+                <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ flavor }}" class="ai-flavor-image-{{ ai_gen_id }}" loading="lazy">
+              {% endif %}
+              <div class="ai-flavor-checkmark-{{ ai_gen_id }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+              </div>
             </div>
+            <div class="ai-flavor-overlay-{{ ai_gen_id }}">{{ flavor }}</div>
           </div>
         {% endunless %}
       {% endfor %}

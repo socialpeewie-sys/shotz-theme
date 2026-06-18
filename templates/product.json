@@ -1186,30 +1186,35 @@
         "card_b8BBjQ": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-05-25_at_16.50.22.jpg",
             "label": "Sabor 1"
           }
         },
         "card_qUWEbC": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/teste.png",
             "label": "Sabor 2"
           }
         },
         "card_PWJmCR": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0518_1.jpg",
             "label": "Sabor 3"
           }
         },
         "card_tHBbjG": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/teste_1.png",
             "label": "Sabor 4"
           }
         },
         "card_HfnAUP": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0519_7df20aea-440b-4f22-aadc-ddc57051edae.jpg",
             "label": "Sabor 5"
           }
         }

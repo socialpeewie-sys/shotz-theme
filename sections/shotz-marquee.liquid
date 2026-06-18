@@ -1,0 +1,374 @@
+{% style %}
+  .shotz-marquee-{{ section.id }} {
+    --sm-bg: {{ section.settings.background_color }};
+    --sm-accent: {{ section.settings.accent_color }};
+    --sm-speed: {{ section.settings.speed }}s;
+    --sm-card-w: {{ section.settings.card_width }}px;
+    --sm-card-h: {{ section.settings.card_height }}px;
+    --sm-radius: {{ section.settings.card_radius }}px;
+    --sm-gap: {{ section.settings.gap }}px;
+    --sm-label-color: {{ section.settings.label_text_color }};
+    --sm-label-size: {{ section.settings.label_font_size }}px;
+    background-color: var(--sm-bg);
+    padding-block-start: {{ section.settings.padding_top }}px;
+    padding-block-end: {{ section.settings.padding_bottom }}px;
+  }
+{% endstyle %}
+
+<div class="shotz-marquee shotz-marquee-{{ section.id }}" {{ section.shopify_attributes }}>
+
+  {%- if section.settings.eyebrow_text != blank or section.settings.heading != blank -%}
+    <div class="shotz-marquee__header page-width">
+      {%- if section.settings.eyebrow_text != blank -%}
+        <p class="shotz-marquee__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="shotz-marquee__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="shotz-marquee__viewport" aria-label="{{ section.settings.heading | escape }}">
+      <div class="shotz-marquee__track">
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'card' -%}
+            <div class="shotz-marquee__card" {{ block.shopify_attributes }}>
+              <div class="shotz-marquee__img-wrap">
+                {%- if block.settings.image != blank -%}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 600 }}"
+                    alt="{{ block.settings.image.alt | escape | default: block.settings.label }}"
+                    class="shotz-marquee__img"
+                    width="{{ block.settings.image.width }}"
+                    height="{{ block.settings.image.height }}"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <div class="shotz-marquee__img shotz-marquee__img--placeholder">
+                    {{- 'image' | placeholder_svg_tag: 'placeholder-svg' -}}
+                  </div>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.label != blank -%}
+                <span class="shotz-marquee__label">{{ block.settings.label | escape }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'card' -%}
+            <div class="shotz-marquee__card" aria-hidden="true">
+              <div class="shotz-marquee__img-wrap">
+                {%- if block.settings.image != blank -%}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 600 }}"
+                    alt=""
+                    class="shotz-marquee__img"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <div class="shotz-marquee__img shotz-marquee__img--placeholder">
+                    {{- 'image' | placeholder_svg_tag: 'placeholder-svg' -}}
+                  </div>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.label != blank -%}
+                <span class="shotz-marquee__label">{{ block.settings.label | escape }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+      </div>
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% stylesheet %}
+  .shotz-marquee {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .shotz-marquee__header {
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .shotz-marquee__eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin: 0 0 8px;
+  }
+
+  .shotz-marquee__heading {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .shotz-marquee__viewport {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .shotz-marquee__track {
+    display: flex;
+    gap: var(--sm-gap);
+    width: max-content;
+    animation: shotz-marquee-scroll var(--sm-speed) linear infinite;
+    will-change: transform;
+  }
+
+  @media (hover: hover) {
+    .shotz-marquee__viewport:hover .shotz-marquee__track {
+      animation-play-state: paused;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shotz-marquee__track {
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes shotz-marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .shotz-marquee__card {
+    position: relative;
+    flex: 0 0 var(--sm-card-w);
+    width: var(--sm-card-w);
+    height: var(--sm-card-h);
+    border-radius: var(--sm-radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .shotz-marquee__img-wrap {
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+
+  .shotz-marquee__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .shotz-marquee__card:hover .shotz-marquee__img {
+    transform: scale(1.04);
+  }
+
+  .shotz-marquee__img--placeholder {
+    width: 100%;
+    height: 100%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .shotz-marquee__img--placeholder .placeholder-svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .shotz-marquee__label {
+    flex: 0 0 auto;
+    display: block;
+    background-color: var(--sm-accent);
+    color: var(--sm-label-color);
+    font-size: var(--sm-label-size);
+    font-weight: 600;
+    text-align: center;
+    padding: 8px 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Shotz Marquee",
+  "tag": "section",
+  "class": "shotz-marquee-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Cabeçalho"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow (texto acima do título)",
+      "default": "Nossos sabores"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Explore a coleção"
+    },
+    {
+      "type": "header",
+      "content": "Cores"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Cor de fundo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Cor de destaque (barra do label)",
+      "default": "#0a84ff"
+    },
+    {
+      "type": "color",
+      "id": "label_text_color",
+      "label": "Cor do texto do label",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "label": "Largura dos cards",
+      "min": 140,
+      "max": 420,
+      "step": 10,
+      "unit": "px",
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "label": "Altura dos cards",
+      "min": 140,
+      "max": 520,
+      "step": 10,
+      "unit": "px",
+      "default": 290
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Arredondamento das bordas",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Espaçamento entre cards",
+      "min": 4,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "label_font_size",
+      "label": "Tamanho da fonte do label",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "header",
+      "content": "Animação"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Velocidade (quanto menor = mais rápido)",
+      "min": 8,
+      "max": 80,
+      "step": 4,
+      "unit": "s",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaço acima",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaço abaixo",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Sabor"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shotz Marquee",
+      "blocks": [
+        { "type": "card", "settings": { "label": "Sabor 1" } },
+        { "type": "card", "settings": { "label": "Sabor 2" } },
+        { "type": "card", "settings": { "label": "Sabor 3" } },
+        { "type": "card", "settings": { "label": "Sabor 4" } },
+        { "type": "card", "settings": { "label": "Sabor 5" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

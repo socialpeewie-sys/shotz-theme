@@ -125,13 +125,6 @@
     width: max-content;
     animation: shotz-marquee-scroll var(--sm-speed) linear infinite;
     will-change: transform;
-    transition: animation-duration 0.6s ease;
-  }
-
-  @media (hover: hover) {
-    .shotz-marquee__viewport:hover .shotz-marquee__track {
-      animation-duration: calc(var(--sm-speed) * 4);
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -202,6 +195,62 @@
     text-overflow: ellipsis;
   }
 {% endstylesheet %}
+
+<script>
+(function () {
+  function initMarquee(viewport) {
+    var track = viewport.querySelector('.shotz-marquee__track');
+    if (!track) return;
+
+    var section = viewport.closest('[class*="shotz-marquee-"]');
+    var baseSpeed = parseFloat(
+      getComputedStyle(section || viewport).getPropertyValue('--sm-speed')
+    ) || 28;
+    var slowSpeed = baseSpeed * 5;
+    var current = baseSpeed;
+    var target = baseSpeed;
+    var raf = null;
+
+    function tick() {
+      var diff = target - current;
+      if (Math.abs(diff) < 0.04) {
+        current = target;
+        track.style.animationDuration = current + 's';
+        raf = null;
+        return;
+      }
+      current += diff * 0.07;
+      track.style.animationDuration = current + 's';
+      raf = requestAnimationFrame(tick);
+    }
+
+    function start() {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(tick);
+    }
+
+    viewport.addEventListener('mouseenter', function () {
+      target = slowSpeed;
+      start();
+    });
+
+    viewport.addEventListener('mouseleave', function () {
+      target = baseSpeed;
+      start();
+    });
+  }
+
+  function setup() {
+    document.querySelectorAll('.shotz-marquee__viewport').forEach(initMarquee);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setup);
+  } else {
+    setup();
+  }
+})();
+</script>
 
 {% schema %}
 {

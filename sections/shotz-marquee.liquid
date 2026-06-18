@@ -32,55 +32,59 @@
     <div class="shotz-marquee__viewport" aria-label="{{ section.settings.heading | escape }}">
       <div class="shotz-marquee__track">
 
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'card' -%}
-            <div class="shotz-marquee__card" {{ block.shopify_attributes }}>
-              <div class="shotz-marquee__img-wrap">
-                {%- if block.settings.image != blank -%}
-                  <img
-                    src="{{ block.settings.image | image_url: width: 600 }}"
-                    alt="{{ block.settings.image.alt | escape | default: block.settings.label }}"
-                    class="shotz-marquee__img"
-                    width="{{ block.settings.image.width }}"
-                    height="{{ block.settings.image.height }}"
-                    loading="lazy"
-                  >
-                {%- else -%}
-                  <div class="shotz-marquee__img shotz-marquee__img--placeholder">
-                    {{- 'image' | placeholder_svg_tag: 'placeholder-svg' -}}
-                  </div>
+        <div class="shotz-marquee__set">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'card' -%}
+              <div class="shotz-marquee__card" {{ block.shopify_attributes }}>
+                <div class="shotz-marquee__img-wrap">
+                  {%- if block.settings.image != blank -%}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 600 }}"
+                      alt="{{ block.settings.image.alt | escape | default: block.settings.label }}"
+                      class="shotz-marquee__img"
+                      width="{{ block.settings.image.width }}"
+                      height="{{ block.settings.image.height }}"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    <div class="shotz-marquee__img shotz-marquee__img--placeholder">
+                      {{- 'image' | placeholder_svg_tag: 'placeholder-svg' -}}
+                    </div>
+                  {%- endif -%}
+                </div>
+                {%- if block.settings.label != blank -%}
+                  <span class="shotz-marquee__label">{{ block.settings.label | escape }}</span>
                 {%- endif -%}
               </div>
-              {%- if block.settings.label != blank -%}
-                <span class="shotz-marquee__label">{{ block.settings.label | escape }}</span>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
 
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'card' -%}
-            <div class="shotz-marquee__card" aria-hidden="true">
-              <div class="shotz-marquee__img-wrap">
-                {%- if block.settings.image != blank -%}
-                  <img
-                    src="{{ block.settings.image | image_url: width: 600 }}"
-                    alt=""
-                    class="shotz-marquee__img"
-                    loading="lazy"
-                  >
-                {%- else -%}
-                  <div class="shotz-marquee__img shotz-marquee__img--placeholder">
-                    {{- 'image' | placeholder_svg_tag: 'placeholder-svg' -}}
-                  </div>
+        <div class="shotz-marquee__set" aria-hidden="true">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'card' -%}
+              <div class="shotz-marquee__card">
+                <div class="shotz-marquee__img-wrap">
+                  {%- if block.settings.image != blank -%}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 600 }}"
+                      alt=""
+                      class="shotz-marquee__img"
+                      loading="lazy"
+                    >
+                  {%- else -%}
+                    <div class="shotz-marquee__img shotz-marquee__img--placeholder">
+                      {{- 'image' | placeholder_svg_tag: 'placeholder-svg' -}}
+                    </div>
+                  {%- endif -%}
+                </div>
+                {%- if block.settings.label != blank -%}
+                  <span class="shotz-marquee__label">{{ block.settings.label | escape }}</span>
                 {%- endif -%}
               </div>
-              {%- if block.settings.label != blank -%}
-                <span class="shotz-marquee__label">{{ block.settings.label | escape }}</span>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
 
       </div>
     </div>
@@ -121,10 +125,15 @@
 
   .shotz-marquee__track {
     display: flex;
-    gap: var(--sm-gap);
     width: max-content;
     animation: shotz-marquee-scroll var(--sm-speed) linear infinite;
     will-change: transform;
+  }
+
+  .shotz-marquee__set {
+    display: flex;
+    gap: var(--sm-gap);
+    padding-right: var(--sm-gap);
   }
 
   @media (prefers-reduced-motion: reduce) {

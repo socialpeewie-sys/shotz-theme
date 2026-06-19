@@ -47,6 +47,16 @@
   }
 }
 
+/* --- PDP: impede o espaço em branco abaixo da galeria no desktop ---
+   O grid tem align-items: stretch por padrão, fazendo .product-information__media
+   crescer até a altura do painel de detalhes (que é muito mais alto).
+   align-self: start faz a coluna de mídia ocupar apenas a altura natural da galeria. */
+@media screen and (min-width: 750px) {
+  .product-information__media {
+    align-self: start;
+  }
+}
+
 /* --- Scroll reveal (estado inicial aplicado via JS, para garantir fallback) --- */
 section.shopify-section.shotz-hidden {
   opacity: 0;

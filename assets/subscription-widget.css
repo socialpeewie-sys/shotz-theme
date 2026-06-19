@@ -1,5 +1,5 @@
 /* ============================================================
-   Subscription Widget — Premium Card Style
+   Subscription Widget — Teal/Mint Card Style
    Scoped entirely to [id*="subscriptions_app_block"]
    All styling hooks come from data-sub-* attrs injected by
    subscription-widget.js — no hardcoded text or content.
@@ -36,16 +36,16 @@
   margin-bottom: 0;
 }
 
-/* ---- Unselected: slightly muted ---- */
+/* ---- Unselected: slightly muted (one-time purchase) ---- */
 [id*="subscriptions_app_block"] [data-sub-card]:not([data-sub-selected]) {
-  opacity: 0.78;
+  opacity: 0.75;
 }
 
-/* ---- Selected: highlighted ---- */
+/* ---- Selected: teal/mint highlight (subscribe & save) ---- */
 [id*="subscriptions_app_block"] [data-sub-card][data-sub-selected] {
-  border-color: #0a84ff;
-  background: #f4f8ff;
-  box-shadow: 0 0 0 1px #0a84ff22;
+  border-color: #1DC9B7;
+  background: #E0FAF7;
+  box-shadow: 0 0 0 1px #1DC9B722;
   opacity: 1;
 }
 
@@ -63,7 +63,7 @@
 }
 
 [id*="subscriptions_app_block"] [data-sub-selected] .sub-widget-checkmark {
-  color: #0a84ff;
+  color: #1DC9B7;
   transform: scale(1.1);
 }
 
@@ -85,7 +85,7 @@
 [id*="subscriptions_app_block"] [class*="selling-plan"] select,
 [id*="subscriptions_app_block"] [class*="SellingPlan"] select {
   width: 100%;
-  border: 1.5px solid #d7ccbc;
+  border: 1.5px solid #1DC9B7;
   border-radius: 8px;
   padding: 9px 12px;
   font-size: 14px;
@@ -105,7 +105,7 @@
 [id*="subscriptions_app_block"] [class*="tag"],
 [id*="subscriptions_app_block"] [class*="Tag"] {
   display: inline-block;
-  background: #0a84ff;
+  background: #1DC9B7;
   color: #fff;
   border-radius: 20px;
   padding: 2px 10px;
@@ -122,7 +122,7 @@
 
 [id*="subscriptions_app_block"] [data-sub-selected] [class*="price"],
 [id*="subscriptions_app_block"] [data-sub-selected] [class*="Price"] {
-  color: #0a84ff;
+  color: #0d9e8f;
 }
 
 /* ---- Title / label text ---- */

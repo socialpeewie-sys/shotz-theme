@@ -257,6 +257,7 @@
 {% endif %}
 
 {% if template == 'product' or template.name == 'product' or request.page_type == 'product' %}
+  <script src="{{ 'shotz-animations.js' | asset_url }}" defer></script>
   <script src="{{ 'subscription-widget.js' | asset_url }}" defer></script>
   <script
     src="{{ 'fly-to-cart.js' | asset_url }}"

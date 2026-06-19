@@ -1,0 +1,61 @@
+/* =============================================================
+   SHOTZ — Animações & Micro-interações
+   ============================================================= */
+
+/* --- Keyframes --- */
+@keyframes shotz-fade-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shotz-pop-in {
+  0%   { opacity: 0; transform: scale(0.68); }
+  65%  { transform: scale(1.09); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shotz-pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 148, 246, 0); }
+  50%       { box-shadow: 0 0 0 8px rgba(0, 148, 246, 0.2); }
+}
+
+@keyframes shotz-select-bounce {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(0.94); }
+  100% { transform: scale(1); }
+}
+
+/* --- PDP hero: painel de detalhes sobe ao carregar --- */
+@media (prefers-reduced-motion: no-preference) {
+  #shopify-section-main .product-details {
+    animation: shotz-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+  }
+
+  /* Badges "Zero" entram em cascata */
+  .shotz-claims span {
+    opacity: 0;
+    animation: shotz-pop-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  .shotz-claims span:nth-child(1) { animation-delay: 0.25s; }
+  .shotz-claims span:nth-child(2) { animation-delay: 0.38s; }
+  .shotz-claims span:nth-child(3) { animation-delay: 0.51s; }
+  .shotz-claims span:nth-child(4) { animation-delay: 0.64s; }
+
+  /* Botão de compra: glow pulsante suave */
+  .add-to-cart-button {
+    animation: shotz-pulse-glow 3s ease-in-out 1.8s infinite;
+  }
+}
+
+/* --- Scroll reveal (estado inicial aplicado via JS, para garantir fallback) --- */
+section.shopify-section.shotz-hidden {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+section.shopify-section.shotz-hidden.shotz-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

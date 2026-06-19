@@ -54,13 +54,15 @@
     border-radius: {{ block.settings.flavor_border_radius }}px;
     overflow: hidden;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.22s ease,
+                border-color 0.18s ease;
   }
 
   .ai-flavor-card-{{ ai_gen_id }}:hover {
     border-color: {{ block.settings.flavor_hover_border_color }};
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px) scale(1.06);
+    box-shadow: 0 10px 24px rgba(0, 148, 246, 0.2);
   }
 
   .ai-flavor-card-{{ ai_gen_id }}.selected {
@@ -124,6 +126,12 @@
     gap: {{ block.settings.quantity_grid_gap }}px;
   }
 
+  @keyframes ai-select-bounce-{{ ai_gen_id }} {
+    0%   { transform: scale(1); }
+    35%  { transform: scale(0.93); }
+    100% { transform: scale(1); }
+  }
+
   .ai-quantity-card-{{ ai_gen_id }} {
     position: relative;
     padding: {{ block.settings.quantity_card_padding }}px;
@@ -131,7 +139,9 @@
     border-radius: {{ block.settings.quantity_card_border_radius }}px;
     background-color: {{ block.settings.quantity_card_background }};
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -142,12 +152,14 @@
   .ai-quantity-card-{{ ai_gen_id }}:hover {
     background-color: {{ block.settings.quantity_card_hover_background }};
     border-color: {{ block.settings.quantity_card_hover_border_color }};
+    box-shadow: 0 4px 12px rgba(0, 148, 246, 0.1);
   }
 
   .ai-quantity-card-{{ ai_gen_id }}.selected {
     background-color: {{ block.settings.quantity_card_selected_background }};
     border-color: {{ block.settings.quantity_card_selected_border_color }};
     border-width: {{ block.settings.quantity_card_selected_border_width }}px;
+    animation: ai-select-bounce-{{ ai_gen_id }} 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .ai-quantity-radio-{{ ai_gen_id }} {

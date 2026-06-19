@@ -352,11 +352,11 @@
               "type": "shopify://apps/subscriptions/blocks/app-block/a3bfe9ec-96f8-4508-a003-df608a36d2ad",
               "settings": {
                 "widget_style": "card",
-                "widget_style_card_selector": "radio_button",
+                "widget_style_card_selector": "dropdown",
                 "subscription_policy_url": "",
-                "color_text_body": "#6D7175",
-                "dividers_color": "#8F8D8D",
-                "background_color": "#FFFFFF",
+                "color_text_body": "#6d7175",
+                "dividers_color": "#FBF7F3",
+                "background_color": "#ffffff",
                 "border_thickness": 0.5,
                 "border_radius": 0,
                 "product": "{{closest.product}}"

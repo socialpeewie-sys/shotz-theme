@@ -212,9 +212,38 @@
   width: auto !important;
 }
 
-/* Frequency text ("Entrega a cada 4 semanas...") — hide */
+/* Frequency text: hidden by default */
 [id*="subscriptions_app_block"] .subscription_group:has(.group_name) .group_list_item .title_and_price_wrapper > span {
   display: none !important;
+}
+
+/* Frequency pill: shown as styled badge when subscribe card is selected.
+   Absolutely positioned at the bottom of the group_list_item overlay (which = bottom of card).
+   subscribe card padding-bottom is extended below to create the space. */
+[id*="subscriptions_app_block"] .subscription_group:has(.group_name):has([data-sub-selected]) .group_list_item .title_and_price_wrapper > span {
+  display: block !important;
+  position: absolute !important;
+  bottom: 16px !important;
+  left: 20px !important;
+  right: 20px !important;
+  background: #ffffff url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.75 0.75L4.75 4.75L8.75 0.75' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat calc(100% - 16px) center !important;
+  border: 1px solid rgb(184, 232, 245) !important;
+  border-radius: 20px !important;
+  padding: 10px 36px 10px 16px !important;
+  font-size: 13px !important;
+  color: var(--sub-navy) !important;
+  font-weight: 400 !important;
+  text-align: left;
+  box-sizing: border-box;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Extend subscribe card height to accommodate the pill below the price row */
+[id*="subscriptions_app_block"] .subscription_group:has(.group_name):has([data-sub-selected]) {
+  padding-bottom: 68px !important;
 }
 
 /* ============================================================
@@ -302,5 +331,15 @@
 
   [id*="subscriptions_app_block"] .subscription_group:has(.group_name):has([data-sub-selected]) .group_dropdown {
     padding: 9px 14px !important;
+  }
+
+  [id*="subscriptions_app_block"] .subscription_group:has(.group_name):has([data-sub-selected]) {
+    padding-bottom: 64px !important;
+  }
+
+  [id*="subscriptions_app_block"] .subscription_group:has(.group_name):has([data-sub-selected]) .group_list_item .title_and_price_wrapper > span {
+    bottom: 14px !important;
+    left: 16px !important;
+    right: 16px !important;
   }
 }

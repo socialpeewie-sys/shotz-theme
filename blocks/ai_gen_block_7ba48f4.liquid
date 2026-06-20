@@ -514,6 +514,9 @@
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(cents / 100);
   }
 
+  // Flag to prevent MutationObserver from re-triggering when we inject our own <small>
+  let isOurUpdate = false;
+
   function updateSubWidgetPrices(variant) {
     if (!variant) return;
 
@@ -534,6 +537,7 @@
 
     function setUnit(el, text) {
       if (!el) return;
+      isOurUpdate = true;
       let small = el.querySelector('[data-sub-unit-price]');
       if (!small) {
         small = document.createElement('small');
@@ -542,10 +546,16 @@
         el.appendChild(small);
       }
       small.textContent = text;
+      isOurUpdate = false;
     }
 
     setUnit(onetimeEl, fmt(onetimeCents));
     setUnit(subscribeEl, fmt(subscribeCents));
+  }
+
+  function getCurrentVariantId() {
+    const input = document.querySelector('input[name="id"]');
+    return input ? parseInt(input.value) : null;
   }
 
   function handleVariantId(id) {
@@ -553,51 +563,63 @@
     updateSubWidgetPrices(variant);
   }
 
-  // Horizon theme dispatches variant:changed on document
+  // Horizon's variant:changed event (if dispatched)
   document.addEventListener('variant:changed', function(e) {
     const v = e.detail && e.detail.variant;
     if (v) { updateSubWidgetPrices(v); return; }
-    const input = document.querySelector('input[name="id"]');
-    if (input) handleVariantId(parseInt(input.value));
+    const id = getCurrentVariantId();
+    if (id) handleVariantId(id);
   });
 
-  // Fallback: change event on the hidden variant input (fires if Horizon dispatches it)
+  // Fallback: change event on the hidden variant input
   document.addEventListener('change', function(e) {
     if (e.target && e.target.name === 'id') {
       handleVariantId(parseInt(e.target.value));
     }
   });
 
-  // Direct trigger: quantity card clicks in our custom selector.
-  // After click, Horizon updates input[name="id"] — read it after a tick.
+  // Direct trigger on quantity card clicks (use data-variant-id attr, not class)
   function setupGridListener() {
     const grid = document.querySelector('[data-quantity-grid]');
     if (!grid) return;
     grid.addEventListener('click', function(e) {
-      const card = e.target.closest('.ai-quantity-card-{{ ai_gen_id }}');
+      const card = e.target.closest('[data-variant-id]');
       if (!card) return;
-      // Use both a fast tick and a slower fallback to cover Horizon update timing
-      setTimeout(function() {
-        const variantId = parseInt(card.dataset.variantId);
-        if (variantId) handleVariantId(variantId);
-      }, 0);
-      setTimeout(function() {
-        const input = document.querySelector('input[name="id"]');
-        if (input && input.value) handleVariantId(parseInt(input.value));
-      }, 200);
+      const variantId = parseInt(card.dataset.variantId);
+      if (!variantId) return;
+      setTimeout(function() { handleVariantId(variantId); }, 0);
+      setTimeout(function() { handleVariantId(variantId); }, 400);
     });
   }
 
+  // MutationObserver: re-inject unit prices whenever the subscription widget
+  // updates its own DOM (e.g. price text change after variant switch).
+  function setupWidgetObserver() {
+    const widget = document.querySelector('[id*="subscriptions_app_block"]');
+    if (!widget) return;
+    let debounceTimer = null;
+    const obs = new MutationObserver(function() {
+      if (isOurUpdate) return; // skip mutations we caused ourselves
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(function() {
+        const id = getCurrentVariantId();
+        if (id) handleVariantId(id);
+      }, 80);
+    });
+    obs.observe(widget, { childList: true, subtree: true, characterData: true });
+  }
+
   function init() {
-    const input = document.querySelector('input[name="id"]');
-    if (input && input.value) handleVariantId(parseInt(input.value));
+    const id = getCurrentVariantId();
+    if (id) handleVariantId(id);
     setupGridListener();
+    setupWidgetObserver();
   }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
-    setTimeout(init, 600); // subscription widget may load async
+    setTimeout(init, 600);
   }
 })();
 </script>

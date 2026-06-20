@@ -514,8 +514,9 @@
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(cents / 100);
   }
 
-  // Flag to prevent MutationObserver from re-triggering when we inject our own <small>
-  let isOurUpdate = false;
+  // WeakSet tracks <small> elements we injected so the MutationObserver
+  // can distinguish our mutations from the subscription widget's own updates.
+  const ourSmalls = new WeakSet();
 
   function updateSubWidgetPrices(variant) {
     if (!variant) return;
@@ -527,7 +528,7 @@
     const allocation = variant.selling_plan_allocations && variant.selling_plan_allocations[0];
     const subscribeCents = allocation ? allocation.price / qty : onetimeCents;
 
-    const fmt = c => formatMoney(c) + ' / unidade';
+    const fmt = function(c) { return formatMoney(c) + ' / unidade'; };
 
     const widget = document.querySelector('[id*="subscriptions_app_block"]');
     if (!widget) return;
@@ -537,16 +538,14 @@
 
     function setUnit(el, text) {
       if (!el) return;
-      isOurUpdate = true;
       let small = el.querySelector('[data-sub-unit-price]');
       if (!small) {
         small = document.createElement('small');
         small.dataset.subUnitPrice = '1';
-        small.style.cssText = 'display:block;font-size:10px;font-weight:400;opacity:0.65;margin-top:2px;white-space:nowrap;';
+        ourSmalls.add(small); // mark as ours before appending
         el.appendChild(small);
       }
       small.textContent = text;
-      isOurUpdate = false;
     }
 
     setUnit(onetimeEl, fmt(onetimeCents));
@@ -559,15 +558,15 @@
   }
 
   function handleVariantId(id) {
-    const variant = productVariants.find(v => v.id === id);
+    const variant = productVariants.find(function(v) { return v.id === id; });
     updateSubWidgetPrices(variant);
   }
 
-  // Horizon's variant:changed event (if dispatched)
+  // Horizon's variant:changed event
   document.addEventListener('variant:changed', function(e) {
-    const v = e.detail && e.detail.variant;
+    var v = e.detail && e.detail.variant;
     if (v) { updateSubWidgetPrices(v); return; }
-    const id = getCurrentVariantId();
+    var id = getCurrentVariantId();
     if (id) handleVariantId(id);
   });
 
@@ -578,39 +577,58 @@
     }
   });
 
-  // Direct trigger on quantity card clicks (use data-variant-id attr, not class)
+  // Grid click: inject at multiple delays to survive any async subscription widget updates
   function setupGridListener() {
-    const grid = document.querySelector('[data-quantity-grid]');
+    var grid = document.querySelector('[data-quantity-grid]');
     if (!grid) return;
     grid.addEventListener('click', function(e) {
-      const card = e.target.closest('[data-variant-id]');
+      var card = e.target.closest('[data-variant-id]');
       if (!card) return;
-      const variantId = parseInt(card.dataset.variantId);
+      var variantId = parseInt(card.dataset.variantId);
       if (!variantId) return;
-      setTimeout(function() { handleVariantId(variantId); }, 0);
-      setTimeout(function() { handleVariantId(variantId); }, 400);
+      [0, 150, 400, 800, 1500].forEach(function(d) {
+        setTimeout(function() { handleVariantId(variantId); }, d);
+      });
     });
   }
 
-  // MutationObserver: re-inject unit prices whenever the subscription widget
-  // updates its own DOM (e.g. price text change after variant switch).
+  // MutationObserver: re-inject whenever the subscription widget's own JS
+  // updates prices (which removes our <small> elements).
+  // Uses WeakSet to skip mutations we caused ourselves.
   function setupWidgetObserver() {
-    const widget = document.querySelector('[id*="subscriptions_app_block"]');
+    var widget = document.querySelector('[id*="subscriptions_app_block"]');
     if (!widget) return;
-    let debounceTimer = null;
-    const obs = new MutationObserver(function() {
-      if (isOurUpdate) return; // skip mutations we caused ourselves
+    var debounceTimer = null;
+
+    var obs = new MutationObserver(function(mutations) {
+      var allOurs = mutations.every(function(m) {
+        // Mutation on our <small> element itself (e.g. textContent update)
+        if (ourSmalls.has(m.target)) return true;
+        // Mutation on the text node inside our <small>
+        if (m.target.parentNode && ourSmalls.has(m.target.parentNode)) return true;
+        // We added our <small> (childList, no removals, only our nodes added)
+        if (m.type === 'childList' && m.removedNodes.length === 0) {
+          return Array.from(m.addedNodes).every(function(n) { return ourSmalls.has(n); });
+        }
+        return false;
+      });
+      if (allOurs) return; // all mutations are from our own injections — ignore
+
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(function() {
-        const id = getCurrentVariantId();
-        if (id) handleVariantId(id);
-      }, 80);
+        var id = getCurrentVariantId();
+        if (!id) return;
+        handleVariantId(id);
+        // Second pass 300ms later in case widget does a delayed second update
+        setTimeout(function() { handleVariantId(id); }, 300);
+      }, 50);
     });
+
     obs.observe(widget, { childList: true, subtree: true, characterData: true });
   }
 
   function init() {
-    const id = getCurrentVariantId();
+    var id = getCurrentVariantId();
     if (id) handleVariantId(id);
     setupGridListener();
     setupWidgetObserver();

@@ -524,7 +524,7 @@
     const allocation = variant.selling_plan_allocations && variant.selling_plan_allocations[0];
     const subscribeCents = allocation ? allocation.price / qty : onetimeCents;
 
-    const fmt = c => formatMoney(c) + ' / Stick';
+    const fmt = c => formatMoney(c) + ' / unidade';
 
     const widget = document.querySelector('[id*="subscriptions_app_block"]');
     if (!widget) return;
@@ -561,16 +561,37 @@
     if (input) handleVariantId(parseInt(input.value));
   });
 
-  // Fallback: change event on the hidden variant input
+  // Fallback: change event on the hidden variant input (fires if Horizon dispatches it)
   document.addEventListener('change', function(e) {
     if (e.target && e.target.name === 'id') {
       handleVariantId(parseInt(e.target.value));
     }
   });
 
+  // Direct trigger: quantity card clicks in our custom selector.
+  // After click, Horizon updates input[name="id"] — read it after a tick.
+  function setupGridListener() {
+    const grid = document.querySelector('[data-quantity-grid]');
+    if (!grid) return;
+    grid.addEventListener('click', function(e) {
+      const card = e.target.closest('.ai-quantity-card-{{ ai_gen_id }}');
+      if (!card) return;
+      // Use both a fast tick and a slower fallback to cover Horizon update timing
+      setTimeout(function() {
+        const variantId = parseInt(card.dataset.variantId);
+        if (variantId) handleVariantId(variantId);
+      }, 0);
+      setTimeout(function() {
+        const input = document.querySelector('input[name="id"]');
+        if (input && input.value) handleVariantId(parseInt(input.value));
+      }, 200);
+    });
+  }
+
   function init() {
     const input = document.querySelector('input[name="id"]');
     if (input && input.value) handleVariantId(parseInt(input.value));
+    setupGridListener();
   }
 
   if (document.readyState === 'loading') {

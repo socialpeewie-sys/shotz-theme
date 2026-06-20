@@ -100,26 +100,27 @@
   padding: 16px 20px !important;
 }
 
-/* ---- Card 1: one-time ---- */
+/* ---- Card 1: one-time — neutral by default ---- */
 [id*="subscriptions_app_block"] .subscription_group:has(.one_time_purchase_option_app_block) {
   display: flex !important;
   align-items: center !important;
-  background: rgb(224, 244, 248) !important;
-  border: 0.8px solid rgb(184, 232, 245) !important;
+  background: rgb(255, 255, 255) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
 }
 
-/* ---- Card 2: subscribe ---- */
+/* ---- Card 2: subscribe — neutral by default ---- */
 [id*="subscriptions_app_block"] .subscription_group:has(.group_name) {
   display: flex !important;
   flex-direction: column !important;
   align-items: stretch !important;
   background: rgb(255, 255, 255) !important;
-  border: 0.8px solid rgba(0, 0, 0, 0.12) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
   position: relative !important;
 }
 
-/* ---- Selected: blue border on the active card ---- */
+/* ---- Selected: blue fill + blue border — applies to whichever card is active ---- */
 [id*="subscriptions_app_block"] .subscription_group:has([data-sub-selected]) {
+  background: rgb(224, 244, 248) !important;
   border: 2px solid rgb(10, 132, 255) !important;
 }
 

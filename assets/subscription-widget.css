@@ -1,23 +1,19 @@
 /* ============================================================
    Subscription Widget — Teal/Mint Card Style
-   Scoped entirely to [id*="subscriptions_app_block"]
-
-   Color tokens:
-     --sub-accent       solid teal  (#1DC9B7 by default)
-     --sub-accent-rgb   rgb triplet for opacity variants
-     --sub-accent-bg    light mint card fill
+   Seletores baseados no DOM real do Shopify Subscriptions app:
+     .plan_card · .subscription_group · .title_and_price_wrapper
+     .in_widget_price · .group_name · .group_dropdown · .group_list
    ============================================================ */
 
+/* ---- Token único para o teal (mude aqui e muda tudo) ---- */
 [id*="subscriptions_app_block"] {
-  --sub-accent:     #1DC9B7;
-  --sub-accent-rgb: 29, 201, 183;
-  --sub-accent-bg:  rgba(var(--sub-accent-rgb), 0.13);
-
+  --sub-accent:    #1DC9B7;
+  --sub-accent-bg: rgba(29, 201, 183, 0.11);
   width: 100%;
   font-family: inherit;
 }
 
-/* ---- Hide native radio ---- */
+/* ---- Esconde o radio nativo ---- */
 [id*="subscriptions_app_block"] input[type="radio"] {
   position: absolute;
   opacity: 0;
@@ -27,128 +23,112 @@
 }
 
 /* ============================================================
-   CARD BASE — shared by both options
+   .plan_card — wrapper externo: remove borda/bg do app
    ============================================================ */
-[id*="subscriptions_app_block"] [data-sub-card] {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  border: 1.5px solid rgb(var(--color-foreground-rgb, 0 0 0) / 0.12);
-  border-radius: 12px;
-  padding: 14px 16px;
-  margin-bottom: 10px;
-  background: var(--color-background, #fff);
+[id*="subscriptions_app_block"] .plan_card {
+  border: none !important;
+  background: transparent !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px;
+}
+
+/* ============================================================
+   .subscription_group — card visual de cada opção
+   ============================================================ */
+[id*="subscriptions_app_block"] .subscription_group {
+  border:        1.5px solid rgba(0, 0, 0, 0.10) !important;
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.10) !important;
+  border-radius: 12px !important;
+  background:    var(--color-background, #fff) !important;
+  color:         var(--color-foreground, #6d7175) !important;
+  padding:       14px 16px !important;
+  margin:        0 !important;
   cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-  overflow: hidden;
+  transition: border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
 }
 
-[id*="subscriptions_app_block"] [data-sub-card]:last-child {
-  margin-bottom: 0;
-}
-
-/* ---- Unselected card (one-time when subscribe is active, or vice-versa) ---- */
-[id*="subscriptions_app_block"] [data-sub-card]:not([data-sub-selected]) {
-  border-color: rgb(var(--color-foreground-rgb, 0 0 0) / 0.10);
-  background: var(--color-background, #fff);
-  opacity: 0.80;
-}
-
-/* ---- Selected card — teal/mint highlight ---- */
-[id*="subscriptions_app_block"] [data-sub-card][data-sub-selected] {
-  border-color: var(--sub-accent);
-  background: var(--sub-accent-bg);
-  box-shadow: 0 0 0 1px rgba(var(--sub-accent-rgb), 0.18);
+/* ---- Card selecionado: fundo teal/mint ---- */
+[id*="subscriptions_app_block"] .subscription_group:has([data-sub-selected]) {
+  border-color: var(--sub-accent) !important;
+  background:   var(--sub-accent-bg) !important;
   opacity: 1;
 }
 
-/* ============================================================
-   HEADER ROW — label left, price right
-   Targets the always-visible direct-child div (not the body)
-   ============================================================ */
-
-/* Direct-child wrapper that isn't the collapsible body or the checkmark */
-[id*="subscriptions_app_block"] [data-sub-card] > div:not([data-sub-body]),
-[id*="subscriptions_app_block"] [data-sub-card] > label:not([data-sub-body]) {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
+/* ---- Card não selecionado: levemente apagado ---- */
+[id*="subscriptions_app_block"] .subscription_group:not(:has([data-sub-selected])) {
+  opacity: 0.75;
 }
 
 /* ============================================================
-   LABEL / NAME — left side, bold dark
+   .title_and_price_wrapper — linha do header (label ← → preço)
    ============================================================ */
-[id*="subscriptions_app_block"] [class*="name"],
-[id*="subscriptions_app_block"] [class*="Name"],
-[id*="subscriptions_app_block"] [class*="title"],
-[id*="subscriptions_app_block"] [class*="Title"],
-[id*="subscriptions_app_block"] [class*="heading"],
-[id*="subscriptions_app_block"] [class*="Heading"],
-[id*="subscriptions_app_block"] [class*="label"],
-[id*="subscriptions_app_block"] [class*="Label"] {
+[id*="subscriptions_app_block"] .title_and_price_wrapper {
+  display:         flex !important;
+  justify-content: space-between !important;
+  align-items:     center !important;
+  gap:             12px;
+  width:           100% !important;
+}
+
+/* ============================================================
+   .group_name — label da opção (esquerda, bold, escuro)
+   ============================================================ */
+[id*="subscriptions_app_block"] .group_name {
   font-weight: 700;
-  font-size: 13px;
+  font-size:   13px;
   line-height: 1.3;
-  color: var(--color-foreground-heading, #181818);
-  flex: 1 1 auto;
+  color:       var(--color-foreground-heading, #181818);
+  margin:      0 !important;
 }
 
 /* ============================================================
-   PRICE AREA — right side
+   .in_widget_price — PREÇO (direita)
+
+   IMPORTANTE: o subscription-widget.js marca este <p> como
+   [data-sub-body] porque vem depois do radio no DOM, o que o
+   colapsa com max-height:0. Os !important abaixo corrigem isso.
    ============================================================ */
-[id*="subscriptions_app_block"] [class*="price"],
-[id*="subscriptions_app_block"] [class*="Price"] {
-  text-align: right;
+[id*="subscriptions_app_block"] .in_widget_price {
+  /* Desfaz o colapso do [data-sub-body] */
+  max-height:  none !important;
+  opacity:     1 !important;
+  overflow:    visible !important;
+  transition:  none !important;
+  margin-top:  0 !important;
+
+  /* Layout */
   flex-shrink: 0;
+  text-align:  right;
+  white-space: nowrap;
+
+  /* Tipografia */
+  font-weight: 700 !important;
+  font-size:   15px !important;
+  color:       var(--color-foreground-heading, #181818) !important;
+  margin:      0 !important;
+  padding:     0 !important;
 }
 
-/* Main / sale price */
-[id*="subscriptions_app_block"] [class*="price"]:not([class*="compare"]):not([class*="Compare"]):not([class*="unit"]):not([class*="Unit"]):not([class*="per"]):not([class*="Per"]),
-[id*="subscriptions_app_block"] [class*="Price"]:not([class*="compare"]):not([class*="Compare"]):not([class*="unit"]):not([class*="Unit"]):not([class*="per"]):not([class*="Per"]) {
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--color-foreground-heading, #181818);
+/* ---- Preço em teal quando o card está selecionado ---- */
+[id*="subscriptions_app_block"] .subscription_group:has([data-sub-selected]) .in_widget_price {
+  color: #0d9e8f !important;
 }
 
-/* Strikethrough compare price (subscribe card) */
-[id*="subscriptions_app_block"] [class*="compare"],
-[id*="subscriptions_app_block"] [class*="Compare"],
+/* ============================================================
+   Preço riscado (original do subscribe)
+   ============================================================ */
 [id*="subscriptions_app_block"] s,
 [id*="subscriptions_app_block"] del {
   text-decoration: line-through;
-  font-weight: 400;
-  font-size: 13px;
-  opacity: 0.55;
-  margin-inline-end: 4px;
-}
-
-/* Per-unit / smaller sub-label price */
-[id*="subscriptions_app_block"] [class*="unit"],
-[id*="subscriptions_app_block"] [class*="Unit"],
-[id*="subscriptions_app_block"] [class*="per-"],
-[id*="subscriptions_app_block"] [class*="-per"],
-[id*="subscriptions_app_block"] [class*="Per"] {
-  display: block;
-  font-size: 11px;
-  font-weight: 400;
-  color: var(--color-foreground, #6d6d6d);
-  opacity: 0.75;
-  text-align: right;
-  margin-top: 2px;
-}
-
-/* Teal price color when card is selected */
-[id*="subscriptions_app_block"] [data-sub-selected] [class*="price"]:not([class*="compare"]):not([class*="Compare"]),
-[id*="subscriptions_app_block"] [data-sub-selected] [class*="Price"]:not([class*="compare"]):not([class*="Compare"]) {
-  color: color-mix(in srgb, var(--sub-accent) 85%, #000);
+  font-weight:     400 !important;
+  font-size:       0.875em;
+  opacity:         0.55;
+  margin-inline-end: 3px;
 }
 
 /* ============================================================
-   DISCOUNT / SAVE BADGES
+   Badges de desconto / save
    ============================================================ */
 [id*="subscriptions_app_block"] [class*="badge"],
 [id*="subscriptions_app_block"] [class*="Badge"],
@@ -158,86 +138,80 @@
 [id*="subscriptions_app_block"] [class*="Discount"],
 [id*="subscriptions_app_block"] [class*="tag"],
 [id*="subscriptions_app_block"] [class*="Tag"] {
-  display: inline-block;
-  background: var(--sub-accent);
-  color: #fff;
+  display:       inline-block;
+  background:    var(--sub-accent);
+  color:         #fff;
   border-radius: 20px;
-  padding: 2px 9px;
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1.6;
+  padding:       2px 9px;
+  font-size:     11px;
+  font-weight:   700;
+  line-height:   1.6;
 }
 
 /* ============================================================
-   COLLAPSIBLE BODY (selling plan / frequency selector)
+   .group_dropdown — seletor de frequência
    ============================================================ */
-[id*="subscriptions_app_block"] [data-sub-body] {
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  margin-top: 0;
-  transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.2s ease;
-}
-
-[id*="subscriptions_app_block"] [data-sub-selected] [data-sub-body] {
-  max-height: 500px;
-  opacity: 1;
-  margin-top: 10px;
+[id*="subscriptions_app_block"] .group_dropdown {
+  border:        1.5px solid var(--sub-accent) !important;
+  border-radius: 8px !important;
+  padding:       8px 32px 8px 12px !important;
+  font-size:     13px;
+  background-color: #fff;
+  margin-top:    10px;
+  width:         100%;
 }
 
 /* ============================================================
-   SELLING PLAN SELECT
+   .group_list — lista de benefícios
    ============================================================ */
-[id*="subscriptions_app_block"] [data-sub-body] select,
-[id*="subscriptions_app_block"] [class*="selling-plan"] select,
-[id*="subscriptions_app_block"] [class*="SellingPlan"] select {
-  width: 100%;
-  border: 1.5px solid var(--sub-accent);
-  border-radius: 8px;
-  padding: 9px 12px;
-  font-size: 13px;
-  background: #fff;
-  cursor: pointer;
-  appearance: auto;
+[id*="subscriptions_app_block"] .group_list {
+  list-style: none !important;
+  padding:    0 0 0 0.25em !important;
+  margin-top: 8px;
+}
+
+[id*="subscriptions_app_block"] .group_list_item {
+  font-size: 12px;
+  color:     var(--color-foreground, #6d7175);
 }
 
 /* ============================================================
-   CHECKMARK ICON
+   Checkmark (injetado pelo subscription-widget.js)
    ============================================================ */
 .sub-widget-checkmark {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 20px;
-  height: 20px;
-  color: rgb(var(--color-foreground-rgb, 0 0 0) / 0.20);
+  position:       absolute;
+  top:            14px;
+  right:          14px;
+  width:          20px;
+  height:         20px;
+  color:          rgba(0, 0, 0, 0.20);
   pointer-events: none;
-  flex-shrink: 0;
-  transition: color 0.2s ease, transform 0.2s ease;
+  flex-shrink:    0;
+  transition:     color 0.2s ease, transform 0.2s ease;
 }
 
 [id*="subscriptions_app_block"] [data-sub-selected] .sub-widget-checkmark {
-  color: var(--sub-accent);
+  color:     var(--sub-accent);
   transform: scale(1.1);
 }
 
 /* ============================================================
-   MOBILE
+   Mobile
    ============================================================ */
 @media screen and (max-width: 749px) {
-  [id*="subscriptions_app_block"] [data-sub-card] {
-    padding: 12px 14px;
-    border-radius: 10px;
+  [id*="subscriptions_app_block"] .subscription_group {
+    padding:       12px 14px !important;
+    border-radius: 10px !important;
+  }
+
+  [id*="subscriptions_app_block"] .in_widget_price {
+    font-size: 14px !important;
   }
 
   .sub-widget-checkmark {
-    top: 12px;
+    top:   12px;
     right: 12px;
     width: 18px;
     height: 18px;
-  }
-
-  [id*="subscriptions_app_block"] [class*="price"]:not([class*="compare"]):not([class*="Compare"]) {
-    font-size: 14px;
   }
 }

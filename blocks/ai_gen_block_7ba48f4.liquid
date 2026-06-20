@@ -506,6 +506,81 @@
 })();
 </script>
 
+<script>
+(function() {
+  const productVariants = {{ product.variants | json }};
+
+  function formatMoney(cents) {
+    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(cents / 100);
+  }
+
+  function updateSubWidgetPrices(variant) {
+    if (!variant) return;
+
+    const qtyStr = variant.option2 || '';
+    const qty = parseInt(qtyStr.replace(/[^0-9]/g, '')) || 1;
+
+    const onetimeCents = variant.price / qty;
+    const allocation = variant.selling_plan_allocations && variant.selling_plan_allocations[0];
+    const subscribeCents = allocation ? allocation.price / qty : onetimeCents;
+
+    const fmt = c => formatMoney(c) + ' / Stick';
+
+    const widget = document.querySelector('[id*="subscriptions_app_block"]');
+    if (!widget) return;
+
+    const onetimeEl = widget.querySelector('.subscription_group:has(.one_time_purchase_option_app_block) .in_widget_price');
+    const subscribeEl = widget.querySelector('.subscription_group:has(.group_name) .in_widget_price');
+
+    function setUnit(el, text) {
+      if (!el) return;
+      let small = el.querySelector('[data-sub-unit-price]');
+      if (!small) {
+        small = document.createElement('small');
+        small.dataset.subUnitPrice = '1';
+        small.style.cssText = 'display:block;font-size:10px;font-weight:400;opacity:0.65;margin-top:2px;white-space:nowrap;';
+        el.appendChild(small);
+      }
+      small.textContent = text;
+    }
+
+    setUnit(onetimeEl, fmt(onetimeCents));
+    setUnit(subscribeEl, fmt(subscribeCents));
+  }
+
+  function handleVariantId(id) {
+    const variant = productVariants.find(v => v.id === id);
+    updateSubWidgetPrices(variant);
+  }
+
+  // Horizon theme dispatches variant:changed on document
+  document.addEventListener('variant:changed', function(e) {
+    const v = e.detail && e.detail.variant;
+    if (v) { updateSubWidgetPrices(v); return; }
+    const input = document.querySelector('input[name="id"]');
+    if (input) handleVariantId(parseInt(input.value));
+  });
+
+  // Fallback: change event on the hidden variant input
+  document.addEventListener('change', function(e) {
+    if (e.target && e.target.name === 'id') {
+      handleVariantId(parseInt(e.target.value));
+    }
+  });
+
+  function init() {
+    const input = document.querySelector('input[name="id"]');
+    if (input && input.value) handleVariantId(parseInt(input.value));
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    setTimeout(init, 600); // subscription widget may load async
+  }
+})();
+</script>
+
 {% schema %}
 {
   "name": "Seletor de variantes",

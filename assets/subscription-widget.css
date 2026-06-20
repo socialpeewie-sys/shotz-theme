@@ -1,5 +1,5 @@
 /* ============================================================
-   Subscription Widget — Teal/Mint Card Style
+   Subscription Widget — Navy/Light-Blue Card Style
    Seletores baseados no DOM real do Shopify Subscriptions app:
      .plan_card · .subscription_group · .title_and_price_wrapper
      .in_widget_price · .group_name · .group_dropdown · .group_list
@@ -7,13 +7,16 @@
 
 /* ---- Tokens — ajuste aqui para mudar cores e fontes ---- */
 [id*="subscriptions_app_block"] {
-  /* Cor teal */
-  --sub-accent:    #1DC9B7;
-  --sub-accent-bg: rgba(29, 201, 183, 0.11);
+  /* Blue accent for UI elements (checkmark, dropdown border, badges) */
+  --sub-accent:    #2a6fa8;
+  /* Selected card fill — light blue/cyan */
+  --sub-accent-bg: #e0f4f8;
+  /* Dark navy for all text */
+  --sub-navy:      #0a2540;
 
   /* Tamanhos de fonte — edite à vontade */
-  --sub-label-size: 13px;   /* label da opção (ex: "Compra única") */
-  --sub-price-size: 15px;   /* preço principal */
+  --sub-label-size: 13px;   /* label da opção */
+  --sub-price-size: 17px;   /* preço principal */
   --sub-small-size: 11px;   /* badges, benefícios, preço por unidade */
 
   width: 100%;
@@ -44,27 +47,26 @@
    .subscription_group — card visual de cada opção
    ============================================================ */
 [id*="subscriptions_app_block"] .subscription_group {
-  border:        1.5px solid rgba(0, 0, 0, 0.10) !important;
-  border-bottom: 1.5px solid rgba(0, 0, 0, 0.10) !important;
+  border:        1.5px solid rgba(0, 0, 0, 0.12) !important;
   border-radius: 12px !important;
-  background:    var(--color-background, #fff) !important;
-  color:         var(--color-foreground, #6d7175) !important;
-  padding:       14px 16px !important;
+  background:    #fff !important;
+  color:         var(--sub-navy, #0a2540) !important;
+  padding:       16px 20px !important;
   margin:        0 !important;
   cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
-/* ---- Card selecionado: fundo teal/mint ---- */
+/* ---- Card selecionado: fundo azul claro, sem borda visível ---- */
 [id*="subscriptions_app_block"] .subscription_group:has([data-sub-selected]) {
-  border-color: var(--sub-accent) !important;
-  background:   var(--sub-accent-bg) !important;
+  border-color: #b8e8f5 !important;
+  background:   var(--sub-accent-bg, #e0f4f8) !important;
   opacity: 1;
 }
 
-/* ---- Card não selecionado: levemente apagado ---- */
+/* ---- Card não selecionado: branco, totalmente visível ---- */
 [id*="subscriptions_app_block"] .subscription_group:not(:has([data-sub-selected])) {
-  opacity: 0.75;
+  opacity: 1;
 }
 
 /* ============================================================
@@ -79,13 +81,13 @@
 }
 
 /* ============================================================
-   .group_name — label da opção (esquerda, bold, escuro)
+   .group_name — label da opção (esquerda, bold, navy escuro)
    ============================================================ */
 [id*="subscriptions_app_block"] .group_name {
   font-weight: 700;
   font-size:   var(--sub-label-size);
   line-height: 1.3;
-  color:       var(--color-foreground-heading, #181818);
+  color:       var(--sub-navy, #0a2540);
   margin:      0 !important;
 }
 
@@ -112,14 +114,14 @@
   /* Tipografia */
   font-weight: 700 !important;
   font-size:   var(--sub-price-size) !important;
-  color:       var(--color-foreground-heading, #181818) !important;
+  color:       var(--sub-navy, #0a2540) !important;
   margin:      0 !important;
   padding:     0 !important;
 }
 
-/* ---- Preço em teal quando o card está selecionado ---- */
+/* ---- Preço em navy quando o card está selecionado ---- */
 [id*="subscriptions_app_block"] .subscription_group:has([data-sub-selected]) .in_widget_price {
-  color: #0d9e8f !important;
+  color: var(--sub-navy, #0a2540) !important;
 }
 
 /* ============================================================
@@ -197,8 +199,8 @@
   transition:     color 0.2s ease, transform 0.2s ease;
 }
 
-[id*="subscriptions_app_block"] [data-sub-selected] .sub-widget-checkmark {
-  color:     var(--sub-accent);
+[id*="subscriptions_app_block"] .subscription_group:has([data-sub-selected]) .sub-widget-checkmark {
+  color:     var(--sub-accent, #2a6fa8);
   transform: scale(1.1);
 }
 
@@ -207,7 +209,7 @@
    ============================================================ */
 @media screen and (max-width: 749px) {
   [id*="subscriptions_app_block"] .subscription_group {
-    padding:       12px 14px !important;
+    padding:       14px 16px !important;
     border-radius: 10px !important;
   }
 

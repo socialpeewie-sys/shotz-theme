@@ -11,15 +11,17 @@
          div.in_widget_price.shopify_subscriptions_app_block--hidden
 
    Card 2 — Subscribe:
-     .subscription_group [position:relative]
+     .subscription_group [flex-direction:column, position:relative]
        div.title_and_price_wrapper
          span.group_name  ← "Assine e ganhe 5% OFF"
-       ul.group_list [position:absolute, inset:0 — overlay trick]
+       ul.group_list [position:absolute, inset:0 — overlay; price top-right via flex-start]
          li
-           label.group_list_item.custom_radio_button[data-sub-card][data-sub-selected?]
+           label.group_list_item[data-sub-card][data-sub-selected?]
              div.title_and_price_wrapper
                span  ← frequency text (hidden)
-               div.in_widget_price.shopify_subscriptions_app_block--hidden
+               div.in_widget_price
+       [select|div].group_dropdown  ← z-index:2, visible only when [data-sub-selected]
+   .shopify_subscriptions_app_policy  ← visible below subscribe card
    ============================================================ */
 
 /* ---- CSS tokens ---- */
@@ -54,9 +56,12 @@
   content: none !important;
 }
 
-/* Renewal policy text — hide */
+/* Renewal policy text */
 [id*="subscriptions_app_block"] .shopify_subscriptions_app_policy {
-  display: none !important;
+  font-size: 12px !important;
+  color: #6d7175 !important;
+  margin-top: 8px !important;
+  text-align: center;
 }
 
 /* Frequency dropdown — hide */
@@ -106,7 +111,8 @@
 /* ---- Card 2: subscribe ---- */
 [id*="subscriptions_app_block"] .subscription_group:has(.group_name) {
   display: flex !important;
-  align-items: center !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
   background: rgb(255, 255, 255) !important;
   border: 0.8px solid rgba(0, 0, 0, 0.12) !important;
   position: relative !important;
@@ -155,13 +161,13 @@
    so it appears visually on top but lets clicks pass through.
    ============================================================ */
 
-/* group_name row: in flow, defines card height, non-interactive */
+/* group_name row: defines header height, non-interactive */
 [id*="subscriptions_app_block"] .subscription_group:has(.group_name) > .title_and_price_wrapper {
   position: relative;
   z-index: 1;
   pointer-events: none;
-  flex: 1;
-  min-width: 0;
+  flex: none;
+  width: 100%;
   display: flex !important;
   align-items: center !important;
 }
@@ -186,12 +192,12 @@
   padding: 0 !important;
 }
 
-/* label inside group_list: stretch to fill card, price on right */
+/* label inside group_list: covers full card, price anchored top-right */
 [id*="subscriptions_app_block"] .subscription_group:has(.group_name) .group_list_item {
   position: absolute !important;
   inset: 0 !important;
   display: flex !important;
-  align-items: center !important;
+  align-items: flex-start !important;
   justify-content: flex-end !important;
   padding: 16px 20px !important;
   cursor: pointer;
@@ -245,6 +251,40 @@
 }
 
 /* ============================================================
+   Frequency dropdown — visible when subscribe card is selected
+   z-index:2 ensures it paints above the absolute group_list overlay
+   ============================================================ */
+[id*="subscriptions_app_block"] .subscription_group:has(.group_name):has([data-sub-selected]) .group_dropdown {
+  display: block !important;
+  position: relative !important;
+  z-index: 2 !important;
+  margin-top: 8px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: #ffffff !important;
+  border: 1px solid rgb(184, 232, 245) !important;
+  border-radius: 20px !important;
+  padding: 10px 16px !important;
+  font-size: 13px !important;
+  color: var(--sub-navy) !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+}
+
+/* If group_dropdown is a wrapper div, style the select inside it */
+[id*="subscriptions_app_block"] .group_dropdown select {
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  padding: 10px 16px !important;
+  font-size: 13px !important;
+  color: var(--sub-navy) !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+}
+
+/* ============================================================
    Mobile
    ============================================================ */
 @media screen and (max-width: 749px) {
@@ -258,5 +298,9 @@
 
   [id*="subscriptions_app_block"] .in_widget_price {
     font-size: 14px !important;
+  }
+
+  [id*="subscriptions_app_block"] .subscription_group:has(.group_name):has([data-sub-selected]) .group_dropdown {
+    padding: 9px 14px !important;
   }
 }

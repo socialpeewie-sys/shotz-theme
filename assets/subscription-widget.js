@@ -45,7 +45,8 @@
       }
     }
 
-    // 2. Fallback: mark direct children that don't contain the radio as body
+    // 2. Fallback: mark direct children that don't contain the radio as body.
+    // Skip price elements — they must always stay visible in the card header.
     const radio = card.querySelector('input[type="radio"]');
     const children = Array.from(card.children);
     let pastHeader = false;
@@ -54,7 +55,10 @@
         pastHeader = true;
         return;
       }
-      if (pastHeader) child.setAttribute(BODY_ATTR, '');
+      if (!pastHeader) return;
+      const cls = child.className || '';
+      const isPriceEl = /price|Price|amount|Amount/i.test(cls);
+      if (!isPriceEl) child.setAttribute(BODY_ATTR, '');
     });
   }
 

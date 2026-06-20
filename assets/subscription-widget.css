@@ -5,10 +5,17 @@
      .in_widget_price · .group_name · .group_dropdown · .group_list
    ============================================================ */
 
-/* ---- Token único para o teal (mude aqui e muda tudo) ---- */
+/* ---- Tokens — ajuste aqui para mudar cores e fontes ---- */
 [id*="subscriptions_app_block"] {
+  /* Cor teal */
   --sub-accent:    #1DC9B7;
   --sub-accent-bg: rgba(29, 201, 183, 0.11);
+
+  /* Tamanhos de fonte — edite à vontade */
+  --sub-label-size: 13px;   /* label da opção (ex: "Compra única") */
+  --sub-price-size: 15px;   /* preço principal */
+  --sub-small-size: 11px;   /* badges, benefícios, preço por unidade */
+
   width: 100%;
   font-family: inherit;
 }
@@ -76,7 +83,7 @@
    ============================================================ */
 [id*="subscriptions_app_block"] .group_name {
   font-weight: 700;
-  font-size:   13px;
+  font-size:   var(--sub-label-size);
   line-height: 1.3;
   color:       var(--color-foreground-heading, #181818);
   margin:      0 !important;
@@ -104,7 +111,7 @@
 
   /* Tipografia */
   font-weight: 700 !important;
-  font-size:   15px !important;
+  font-size:   var(--sub-price-size) !important;
   color:       var(--color-foreground-heading, #181818) !important;
   margin:      0 !important;
   padding:     0 !important;
@@ -143,7 +150,7 @@
   color:         #fff;
   border-radius: 20px;
   padding:       2px 9px;
-  font-size:     11px;
+  font-size:     var(--sub-small-size);
   font-weight:   700;
   line-height:   1.6;
 }
@@ -171,7 +178,7 @@
 }
 
 [id*="subscriptions_app_block"] .group_list_item {
-  font-size: 12px;
+  font-size: var(--sub-small-size);
   color:     var(--color-foreground, #6d7175);
 }
 

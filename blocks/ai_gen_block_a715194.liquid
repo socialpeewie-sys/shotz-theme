@@ -12,61 +12,69 @@
     display: block;
     width: {{ block.settings.desktop_width_percent }}%;
     max-width: 100%;
+    font-family: var(--font-paragraph--family, 'Outfit', sans-serif);
   }
 
-  /* ---- Tab navigation bar ---- */
+  /* ---- Segmented control container ---- */
   .ai-tabs__nav-{{ ai_gen_id }} {
     display: flex;
     flex-direction: row;
-    border-bottom: 2px solid {{ block.settings.border_color }};
-    gap: 0;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: var(--style-border-radius-buttons-primary, 14px);
+    padding: 4px;
+    gap: 2px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    margin-bottom: 16px;
   }
 
   .ai-tabs__nav-{{ ai_gen_id }}::-webkit-scrollbar {
     display: none;
   }
 
+  /* ---- Each tab = pill button ---- */
   .ai-tabs__tab-{{ ai_gen_id }} {
-    flex-shrink: 0;
-    padding: {{ block.settings.padding }}px {{ block.settings.padding | plus: 6 }}px;
-    background: none;
+    flex: 1;
+    min-width: 0;
+    padding: 9px 16px;
+    background: transparent;
     border: none;
-    border-bottom: 3px solid transparent;
-    margin-bottom: -2px;
+    border-radius: calc(var(--style-border-radius-buttons-primary, 14px) - 2px);
     cursor: pointer;
     text-align: center;
     white-space: nowrap;
+    font-family: var(--font-paragraph--family, 'Outfit', sans-serif);
     font-size: {{ block.settings.title_size }}px;
     font-weight: {{ block.settings.title_weight }};
-    color: {{ block.settings.title_color }};
-    opacity: 0.55;
-    transition: opacity 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    color: var(--color-foreground, {{ block.settings.title_color }});
+    letter-spacing: 0.01em;
+    transition: background 0.18s ease, box-shadow 0.18s ease, color 0.18s ease;
   }
 
-  .ai-tabs__tab-{{ ai_gen_id }}:hover {
-    background-color: {{ block.settings.header_hover_background }};
-    opacity: 0.8;
+  .ai-tabs__tab-{{ ai_gen_id }}:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.45);
   }
 
   .ai-tabs__tab-{{ ai_gen_id }}.active {
-    border-bottom-color: {{ block.settings.title_color }};
-    opacity: 1;
+    background: #ffffff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.14), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+    color: {{ block.settings.title_color }};
+    font-weight: {{ block.settings.title_weight | plus: 100 }};
   }
 
   /* ---- Content panels ---- */
   .ai-tabs__panel-{{ ai_gen_id }} {
     display: none;
     padding: {{ block.settings.padding }}px;
+    font-family: var(--font-paragraph--family, 'Outfit', sans-serif);
     font-size: {{ block.settings.content_size }}px;
-    line-height: 1.6;
+    line-height: 1.7;
     color: {{ block.settings.content_color }};
     background-color: {{ block.settings.background_color }};
-    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
-    border-top: none;
-    border-radius: 0 0 {{ block.settings.border_radius }}px {{ block.settings.border_radius }}px;
+    border: {{ block.settings.border_width }}px solid rgba(0, 0, 0, 0.07);
+    border-radius: var(--style-border-radius-buttons-primary, 14px);
   }
 
   .ai-tabs__panel-{{ ai_gen_id }}.active {
@@ -87,8 +95,8 @@
     }
 
     .ai-tabs__tab-{{ ai_gen_id }} {
-      padding: {{ block.settings.padding | minus: 4 }}px {{ block.settings.padding }}px;
       font-size: {{ block.settings.title_size | minus: 1 }}px;
+      padding: 8px 12px;
     }
   }
 {% endstyle %}

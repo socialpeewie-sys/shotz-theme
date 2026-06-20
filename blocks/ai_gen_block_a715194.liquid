@@ -36,8 +36,7 @@
 
   /* ---- Each tab = pill button ---- */
   .ai-tabs__tab-{{ ai_gen_id }} {
-    flex: 1;
-    min-width: 0;
+    flex: none;
     padding: 9px 16px;
     background: transparent;
     border: none;
@@ -94,9 +93,15 @@
       width: 100%;
     }
 
+    /* Scroll horizontal suave — abas nunca quebram linha */
+    .ai-tabs__nav-{{ ai_gen_id }} {
+      flex-wrap: nowrap;
+      border-radius: 12px;
+    }
+
     .ai-tabs__tab-{{ ai_gen_id }} {
       font-size: {{ block.settings.title_size | minus: 1 }}px;
-      padding: 8px 12px;
+      padding: 8px 14px;
     }
   }
 {% endstyle %}

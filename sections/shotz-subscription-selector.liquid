@@ -1,0 +1,592 @@
+{% comment %}
+╔══════════════════════════════════════════════════════════════╗
+║  shotz-subscription-selector.liquid                          ║
+║  Caminho: sections/shotz-subscription-selector.liquid        ║
+║                                                              ║
+║  UI de seleção de plano — Shotz                              ║
+║  • Card 1: Assinatura Mensal (neon, dropdown c/ benefícios)  ║
+║  • Card 2: Compra Única (simples, borda cinza)               ║
+║                                                              ║
+║  Integração: ao clicar num card, dispara o radio do app      ║
+║  de assinaturas da Shopify (mantido oculto no DOM).          ║
+║  Preços: puxados de product.variants e selling_plan_alloc.   ║
+╚══════════════════════════════════════════════════════════════╝
+{% endcomment %}
+
+{%- liquid
+  assign variant    = product.selected_or_first_available_variant
+  assign sub_alloc  = variant.selling_plan_allocations | first
+  assign one_price  = variant.price
+
+  assign qty_raw = variant.option2 | default: variant.option1 | default: '1'
+  assign qty     = qty_raw | remove: ' unidades' | remove: 'unidades' | remove: ' cápsulas' | remove: 'cápsulas' | strip | plus: 0
+  if qty == 0
+    assign qty = 1
+  endif
+
+  assign unit_one = one_price | divided_by: qty
+
+  if sub_alloc
+    assign sub_price       = sub_alloc.price
+    assign unit_sub        = sub_price | divided_by: qty
+    assign monthly_savings = one_price | minus: sub_price
+    assign annual_savings  = monthly_savings | times: 12
+  else
+    assign sub_price      = one_price
+    assign unit_sub       = unit_one
+    assign annual_savings = 0
+  endif
+
+  assign badge_parts = ''
+  if section.settings.extra_discount_pct > 0
+    assign badge_parts = '+' | append: section.settings.extra_discount_pct | append: '% extra'
+  endif
+  if section.settings.show_free_shipping
+    if badge_parts != ''
+      assign badge_parts = badge_parts | append: ' + Frete Grátis'
+    else
+      assign badge_parts = 'Frete Grátis'
+    endif
+  endif
+-%}
+
+{% style %}
+/* ================================================================
+   Shotz Subscription Selector — #sss-{{ section.id }}
+   Todas as regras são escopadas ao container para evitar conflitos.
+   ================================================================ */
+
+#sss-{{ section.id }} {
+  --neon:      #CBFF00;
+  --neon-dim:  rgba(203, 255, 0, 0.10);
+  --neon-glow: 0 0 0 3px rgba(203, 255, 0, 0.30), 0 6px 24px rgba(203, 255, 0, 0.18);
+  --dark:      #0D0D0D;
+  --muted:     rgba(13, 13, 13, 0.52);
+  --border:    rgba(0, 0, 0, 0.12);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  font-family: inherit;
+}
+
+/* ── Cards ──────────────────────────────────────────────────── */
+#sss-{{ section.id }} .sss-card {
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* Card Assinatura */
+#sss-{{ section.id }} .sss-card.sub {
+  border: 2px solid var(--neon);
+  background: var(--neon-dim);
+}
+#sss-{{ section.id }} .sss-card.sub.selected {
+  box-shadow: var(--neon-glow);
+}
+
+/* Card Compra Única */
+#sss-{{ section.id }} .sss-card.onetime {
+  border: 1.5px solid var(--border);
+  background: #fff;
+}
+#sss-{{ section.id }} .sss-card.onetime:hover {
+  border-color: rgba(0, 0, 0, 0.22);
+}
+#sss-{{ section.id }} .sss-card.onetime.selected {
+  border-color: rgba(0, 0, 0, 0.38);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+}
+
+/* ── Header (sempre visível) ────────────────────────────────── */
+#sss-{{ section.id }} .sss-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  user-select: none;
+}
+
+/* Radio indicator */
+#sss-{{ section.id }} .sss-radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.22);
+  flex-shrink: 0;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+#sss-{{ section.id }} .sss-card.sub .sss-radio {
+  border-color: rgba(0, 0, 0, 0.45);
+}
+#sss-{{ section.id }} .sss-card.selected .sss-radio {
+  background: var(--dark);
+  border-color: var(--dark);
+  box-shadow: inset 0 0 0 3px #fff;
+}
+#sss-{{ section.id }} .sss-card.sub.selected .sss-radio {
+  box-shadow: inset 0 0 0 3px var(--neon-dim);
+}
+
+/* Título */
+#sss-{{ section.id }} .sss-title {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dark);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+/* Bloco de preço (lado direito do header) */
+#sss-{{ section.id }} .sss-price-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+#sss-{{ section.id }} .sss-price {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dark);
+  white-space: nowrap;
+  line-height: 1.1;
+}
+#sss-{{ section.id }} .sss-price em {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--muted);
+}
+#sss-{{ section.id }} .sss-unit {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* Chevron */
+#sss-{{ section.id }} .sss-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+  opacity: 0.55;
+}
+#sss-{{ section.id }} .sss-card.expanded .sss-arrow {
+  transform: rotate(180deg);
+}
+
+/* ── Dropdown body ──────────────────────────────────────────── */
+#sss-{{ section.id }} .sss-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#sss-{{ section.id }} .sss-card.expanded .sss-body {
+  max-height: 600px;
+}
+#sss-{{ section.id }} .sss-body-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 18px 18px;
+}
+
+/* Divisor */
+#sss-{{ section.id }} .sss-divider {
+  height: 1px;
+  background: rgba(203, 255, 0, 0.45);
+  margin-bottom: 2px;
+}
+
+/* Economize */
+#sss-{{ section.id }} .sss-savings {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--dark);
+  line-height: 1.4;
+}
+
+/* Badge neon */
+#sss-{{ section.id }} .sss-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--neon);
+  color: var(--dark);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 5px 14px;
+  border-radius: 100px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  width: fit-content;
+  line-height: 1;
+}
+
+/* Lista de benefícios */
+#sss-{{ section.id }} .sss-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#sss-{{ section.id }} .sss-benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--dark);
+  line-height: 1.4;
+}
+#sss-{{ section.id }} .sss-check {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: var(--neon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Link "Ver todos" */
+#sss-{{ section.id }} .sss-link {
+  font-size: 12px;
+  color: var(--dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.62;
+  transition: opacity 0.15s;
+  display: inline-block;
+}
+#sss-{{ section.id }} .sss-link:hover { opacity: 1; }
+
+/* ── Mobile ─────────────────────────────────────────────────── */
+@media (max-width: 749px) {
+  #sss-{{ section.id }} .sss-header     { padding: 12px 14px; }
+  #sss-{{ section.id }} .sss-body-inner { padding: 4px 14px 14px; }
+  #sss-{{ section.id }} .sss-price      { font-size: 14px; }
+  #sss-{{ section.id }} .sss-badge      { font-size: 10px; padding: 4px 12px; }
+  #sss-{{ section.id }} .sss-benefit    { font-size: 12px; }
+}
+{% endstyle %}
+
+<div id="sss-{{ section.id }}" data-sss-root>
+
+  {%- comment -%} ══ CARD 1 — ASSINATURA MENSAL ══ {%- endcomment -%}
+  <div class="sss-card sub expanded selected" data-card="sub">
+
+    <div class="sss-header">
+      <div class="sss-radio"></div>
+      <div class="sss-title">Assinatura Mensal</div>
+      <div class="sss-price-block">
+        <div class="sss-price" data-sss-price="sub">
+          {{ sub_price | money }}<em>/mês</em>
+        </div>
+        <div class="sss-unit" data-sss-unit="sub">
+          {{ unit_sub | money }}/unidade
+        </div>
+      </div>
+      <div class="sss-arrow" aria-hidden="true">
+        <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+          <path d="M1 1.5L6 6.5L11 1.5" stroke="#0D0D0D" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="sss-body">
+      <div class="sss-body-inner">
+
+        <div class="sss-divider"></div>
+
+        {%- comment -%} Economize R$ X,XX por ano {%- endcomment -%}
+        <div class="sss-savings" data-sss-savings {% if annual_savings <= 0 %}style="display:none"{% endif %}>
+          <span aria-hidden="true">💚</span>
+          <span>Economize <strong data-sss-savings-val>{{ annual_savings | money }}</strong> por ano</span>
+        </div>
+
+        {%- comment -%} Badge neon (schema: extra_discount_pct + show_free_shipping) {%- endcomment -%}
+        {% if badge_parts != blank %}
+          <div>
+            <span class="sss-badge">{{ badge_parts }}</span>
+          </div>
+        {% endif %}
+
+        {%- comment -%} Benefícios — blocks editáveis no Shopify Admin {%- endcomment -%}
+        {% assign has_benefits = false %}
+        {% for block in section.blocks %}
+          {% if block.type == 'benefit' and block.settings.text != blank %}
+            {% assign has_benefits = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+
+        {% if has_benefits %}
+          <ul class="sss-benefits">
+            {% for block in section.blocks %}
+              {% if block.type == 'benefit' and block.settings.text != blank %}
+                <li class="sss-benefit" {{ block.shopify_attributes }}>
+                  <span class="sss-check" aria-hidden="true">
+                    <svg width="8" height="6" viewBox="0 0 8 6" fill="none">
+                      <path d="M1 3L3 5.2L7 1" stroke="#0D0D0D" stroke-width="1.6"
+                            stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span>{{ block.settings.text }}</span>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {%- comment -%} Link "Ver todos os benefícios" (schema: benefits_link_text + url) {%- endcomment -%}
+        {% if section.settings.benefits_link_text != blank %}
+          <a class="sss-link"
+             href="{{ section.settings.benefits_link_url | default: '#' }}">
+            {{ section.settings.benefits_link_text }} →
+          </a>
+        {% endif %}
+
+      </div>
+    </div>
+
+  </div>
+
+  {%- comment -%} ══ CARD 2 — COMPRA ÚNICA ══ {%- endcomment -%}
+  <div class="sss-card onetime" data-card="onetime">
+    <div class="sss-header">
+      <div class="sss-radio"></div>
+      <div class="sss-title">Compra Única</div>
+      <div class="sss-price-block">
+        <div class="sss-price" data-sss-price="one">{{ one_price | money }}</div>
+        <div class="sss-unit" data-sss-unit="one">{{ unit_one | money }}/unidade</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var root = document.querySelector('[data-sss-root]');
+  if (!root) return;
+
+  var variants = {{ product.variants | json }};
+
+  /* ── Formata centavos → "R$ X,XX" ──────────────────────── */
+  function money(cents) {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency', currency: 'BRL'
+    }).format(cents / 100);
+  }
+
+  /* ── Quantidade a partir das opções da variante ─────────── */
+  function getQty(v) {
+    var s = (v.option2 || v.option1 || '1').replace(/[^0-9]/g, '');
+    return parseInt(s) || 1;
+  }
+
+  /* ── Atualiza preços em tempo real ──────────────────────── */
+  function updatePrices(variant) {
+    if (!variant) return;
+    var q      = getQty(variant);
+    var allocs = variant.selling_plan_allocations || [];
+    var alloc  = allocs[0] || null;
+    var oneP   = variant.price;
+    var subP   = alloc ? alloc.price : oneP;
+
+    /* Compra única */
+    root.querySelectorAll('[data-sss-price="one"]').forEach(function (el) {
+      el.textContent = money(oneP);
+    });
+    root.querySelectorAll('[data-sss-unit="one"]').forEach(function (el) {
+      el.textContent = money(oneP / q) + '/unidade';
+    });
+
+    /* Assinatura */
+    root.querySelectorAll('[data-sss-price="sub"]').forEach(function (el) {
+      el.innerHTML = money(subP) + '<em>/mês</em>';
+    });
+    root.querySelectorAll('[data-sss-unit="sub"]').forEach(function (el) {
+      el.textContent = money(subP / q) + '/unidade';
+    });
+
+    /* Economize X por ano */
+    var savingsRow = root.querySelector('[data-sss-savings]');
+    if (savingsRow) {
+      var annual = (oneP - subP) * 12;
+      if (annual > 0) {
+        var val = savingsRow.querySelector('[data-sss-savings-val]');
+        if (val) val.textContent = money(annual);
+        savingsRow.style.display = '';
+      } else {
+        savingsRow.style.display = 'none';
+      }
+    }
+  }
+
+  /* ── Dispara o radio oculto do app de assinaturas ───────── */
+  function triggerRadio(selector) {
+    var widget = document.querySelector('[id*="subscriptions_app_block"]');
+    if (!widget) return;
+    var radio = widget.querySelector(selector);
+    if (radio && !radio.checked) {
+      radio.checked = true;
+      radio.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+
+  function triggerSub() {
+    triggerRadio(
+      '.subscription_group:not(:has(.one_time_purchase_option_app_block)) input[type="radio"]'
+    );
+  }
+
+  function triggerOnetime() {
+    triggerRadio(
+      '.subscription_group:has(.one_time_purchase_option_app_block) input[type="radio"]'
+    );
+  }
+
+  /* ── Interação dos cards ─────────────────────────────────── */
+  var subCard = root.querySelector('[data-card="sub"]');
+  var oneCard = root.querySelector('[data-card="onetime"]');
+
+  function selectCard(card) {
+    root.querySelectorAll('.sss-card').forEach(function (c) {
+      c.classList.remove('selected');
+    });
+    card.classList.add('selected');
+  }
+
+  if (subCard) {
+    subCard.addEventListener('click', function () {
+      if (!subCard.classList.contains('selected')) {
+        selectCard(subCard);
+        subCard.classList.add('expanded');
+        triggerSub();
+      } else {
+        /* já selecionado — abre/fecha o dropdown */
+        subCard.classList.toggle('expanded');
+      }
+    });
+  }
+
+  if (oneCard) {
+    oneCard.addEventListener('click', function () {
+      selectCard(oneCard);
+      if (subCard) subCard.classList.remove('expanded');
+      triggerOnetime();
+    });
+  }
+
+  /* ── Mudança de variante ─────────────────────────────────── */
+  function currentVariant() {
+    var input = document.querySelector('input[name="id"]');
+    if (!input) return null;
+    var id = parseInt(input.value);
+    return variants.find(function (v) { return v.id === id; }) || null;
+  }
+
+  document.addEventListener('variant:changed', function (e) {
+    updatePrices((e.detail && e.detail.variant) || currentVariant());
+  });
+
+  document.addEventListener('change', function (e) {
+    if (e.target && e.target.name === 'id') {
+      var id = parseInt(e.target.value);
+      updatePrices(variants.find(function (v) { return v.id === id; }) || null);
+    }
+  });
+
+  /* ── Init ────────────────────────────────────────────────── */
+  updatePrices(currentVariant());
+  triggerSub(); /* assinatura selecionada por padrão */
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Shotz — Seletor de Plano",
+  "tag": "div",
+  "class": "shotz-subscription-selector",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Badge de vantagens"
+    },
+    {
+      "type": "range",
+      "id": "extra_discount_pct",
+      "label": "Desconto extra (%)",
+      "info": "Exibido no badge neon. Ex: 15 → '+15% extra'. Use 0 para ocultar.",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "checkbox",
+      "id": "show_free_shipping",
+      "label": "Mostrar 'Frete Grátis' no badge",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Link de benefícios"
+    },
+    {
+      "type": "text",
+      "id": "benefits_link_text",
+      "label": "Texto do link",
+      "default": "Ver todos os benefícios",
+      "info": "Deixe em branco para ocultar o link."
+    },
+    {
+      "type": "url",
+      "id": "benefits_link_url",
+      "label": "URL de destino"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefício",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Descrição do benefício"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shotz — Seletor de Plano",
+      "blocks": [
+        { "type": "benefit", "settings": { "text": "Preço fixo garantido" } },
+        { "type": "benefit", "settings": { "text": "Cancele quando quiser, sem taxas" } },
+        { "type": "benefit", "settings": { "text": "Entrega automática todo mês" } },
+        { "type": "benefit", "settings": { "text": "Frete grátis em todas as entregas" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -507,126 +507,332 @@
 </script>
 
 <script>
-(function() {
-  const productVariants = {{ product.variants | json }};
+(function () {
+  /* ── Config do Admin (editável no Shopify) ──────────────── */
+  var EXTRA_DISCOUNT = {{ block.settings.sub_extra_discount | default: 15 }};
+  var FREE_SHIPPING  = {{ block.settings.sub_free_shipping }};
+  var BENEFITS = [
+    {{ block.settings.sub_benefit_1 | json }},
+    {{ block.settings.sub_benefit_2 | json }},
+    {{ block.settings.sub_benefit_3 | json }},
+    {{ block.settings.sub_benefit_4 | json }}
+  ].filter(function (b) { return b && b.trim(); });
+  var LINK_TEXT = {{ block.settings.sub_benefits_link_text | json }};
+  var LINK_URL  = {{ block.settings.sub_benefits_link_url | default: '#' | json }};
 
-  function formatMoney(cents) {
-    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(cents / 100);
+  var productVariants = {{ product.variants | json }};
+
+  /* ── Utilitários ─────────────────────────────────────────── */
+  function money(cents) {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency', currency: 'BRL'
+    }).format(cents / 100);
   }
 
-  // WeakSet tracks <small> elements we injected so the MutationObserver
-  // can distinguish our mutations from the subscription widget's own updates.
-  const ourSmalls = new WeakSet();
+  function getQty(variant) {
+    var s = (variant.option2 || variant.option1 || '1').replace(/[^0-9]/g, '');
+    return parseInt(s) || 1;
+  }
 
-  function updateSubWidgetPrices(variant) {
-    if (!variant) return;
+  /* Nodes que injetamos — o MutationObserver ignora essas mutações */
+  var ourNodes = new WeakSet();
 
-    const qtyStr = variant.option2 || '';
-    const qty = parseInt(qtyStr.replace(/[^0-9]/g, '')) || 1;
+  function isOurNode(node) {
+    var el = node;
+    while (el && el !== document.body) {
+      if (ourNodes.has(el)) return true;
+      el = el.parentNode;
+    }
+    return false;
+  }
 
-    const onetimeCents = variant.price / qty;
-    const allocation = variant.selling_plan_allocations && variant.selling_plan_allocations[0];
-    const subscribeCents = allocation ? allocation.price / qty : onetimeCents;
+  /* ── Injeta a UI neon no card de assinatura ─────────────── */
+  var injected = false;
 
-    const fmt = function(c) { return formatMoney(c) + ' / unidade'; };
+  function buildBadgeText() {
+    var parts = [];
+    if (EXTRA_DISCOUNT > 0) parts.push('+' + EXTRA_DISCOUNT + '% extra');
+    if (FREE_SHIPPING)       parts.push('Frete Grátis');
+    return parts.join(' + ');
+  }
 
-    const widget = document.querySelector('[id*="subscriptions_app_block"]');
-    if (!widget) return;
+  function injectSubUI(widget) {
+    if (injected) return;
+    var subGroup = widget.querySelector('.subscription_group:has(.group_name)');
+    if (!subGroup) return;
+    injected = true;
 
-    const onetimeEl = widget.querySelector('.subscription_group:has(.one_time_purchase_option_app_block) .in_widget_price');
-    const subscribeEl = widget.querySelector('.subscription_group:has(.group_name) .in_widget_price');
+    /* 1. Header: preço espelhado + chevron */
+    var header = subGroup.querySelector(':scope > .title_and_price_wrapper');
+    if (header) {
+      var hPriceWrap = document.createElement('div');
+      ourNodes.add(hPriceWrap);
+      hPriceWrap.innerHTML =
+        '<div class="sss-header-price" data-sss-hp>' +
+          '<span data-sss-hp-price></span><em>/mês</em>' +
+          '<span class="sss-header-unit" data-sss-hp-unit></span>' +
+        '</div>';
+      header.appendChild(hPriceWrap);
 
-    function setUnit(el, text) {
-      if (!el) return;
-      let small = el.querySelector('[data-sub-unit-price]');
-      if (!small) {
-        small = document.createElement('small');
-        small.dataset.subUnitPrice = '1';
-        ourSmalls.add(small); // mark as ours before appending
-        el.appendChild(small);
-      }
-      small.textContent = text;
+      var chevron = document.createElement('div');
+      chevron.className = 'sss-chevron';
+      chevron.innerHTML =
+        '<svg width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">' +
+          '<path d="M1 1.5L6 6.5L11 1.5" stroke="#0D0D0D" stroke-width="1.8"' +
+                ' stroke-linecap="round" stroke-linejoin="round"/>' +
+        '</svg>';
+      ourNodes.add(chevron);
+      header.appendChild(chevron);
+
+      /* Accordion toggle no header (sem mudar seleção do app) */
+      header.style.cursor = 'pointer';
+      header.addEventListener('click', function (e) {
+        if (e.target.closest('.group_list_item')) return;
+        subGroup.classList.toggle('sss-expanded');
+      });
     }
 
-    setUnit(onetimeEl, fmt(onetimeCents));
-    setUnit(subscribeEl, fmt(subscribeCents));
+    /* 2. Corpo expansível: savings + badge + benefícios + link */
+    var body = document.createElement('div');
+    body.className = 'sss-body';
+    ourNodes.add(body);
+
+    var inner = document.createElement('div');
+    inner.className = 'sss-body-inner';
+    body.appendChild(inner);
+
+    /* Divisor */
+    var div = document.createElement('div');
+    div.className = 'sss-divider';
+    inner.appendChild(div);
+
+    /* Economize */
+    var savRow = document.createElement('div');
+    savRow.className = 'sss-savings';
+    savRow.setAttribute('data-sss-savings', '');
+    savRow.style.display = 'none';
+    savRow.innerHTML =
+      '<span aria-hidden="true">💚</span>' +
+      '<span>Economize <strong data-sss-savings-val></strong> por ano</span>';
+    ourNodes.add(savRow);
+    inner.appendChild(savRow);
+
+    /* Badge neon */
+    var badgeText = buildBadgeText();
+    if (badgeText) {
+      var badgeWrap = document.createElement('div');
+      var badge = document.createElement('span');
+      badge.className = 'sss-neon-badge';
+      badge.textContent = badgeText;
+      ourNodes.add(badge);
+      ourNodes.add(badgeWrap);
+      badgeWrap.appendChild(badge);
+      inner.appendChild(badgeWrap);
+    }
+
+    /* Benefícios */
+    if (BENEFITS.length > 0) {
+      var ul = document.createElement('ul');
+      ul.className = 'sss-benefits';
+      ourNodes.add(ul);
+      BENEFITS.forEach(function (text) {
+        var li = document.createElement('li');
+        li.className = 'sss-benefit';
+        li.innerHTML =
+          '<span class="sss-check" aria-hidden="true">' +
+            '<svg width="8" height="6" viewBox="0 0 8 6" fill="none">' +
+              '<path d="M1 3L3 5.2L7 1" stroke="#0D0D0D" stroke-width="1.6"' +
+                   ' stroke-linecap="round" stroke-linejoin="round"/>' +
+            '</svg>' +
+          '</span>' +
+          '<span>' + text + '</span>';
+        ul.appendChild(li);
+      });
+      inner.appendChild(ul);
+    }
+
+    /* Link */
+    if (LINK_TEXT && LINK_TEXT.trim()) {
+      var link = document.createElement('a');
+      link.className = 'sss-link';
+      link.href = LINK_URL || '#';
+      link.textContent = LINK_TEXT + ' →';
+      ourNodes.add(link);
+      inner.appendChild(link);
+    }
+
+    subGroup.appendChild(body);
+
+    /* Começa expandido */
+    subGroup.classList.add('sss-expanded');
   }
 
+  /* ── Preço por unidade em cada in_widget_price ──────────── */
+  function setUnit(priceEl, text) {
+    if (!priceEl) return;
+    var small = priceEl.querySelector('[data-sub-unit-price]');
+    if (!small) {
+      small = document.createElement('small');
+      small.dataset.subUnitPrice = '1';
+      ourNodes.add(small);
+      priceEl.appendChild(small);
+    }
+    small.textContent = text;
+  }
+
+  /* ── Badge de desconto por plano ────────────────────────── */
+  function setPlanDiscount(itemEl, pct) {
+    if (!itemEl) return;
+    var tw = itemEl.querySelector('.title_and_price_wrapper');
+    if (!tw) return;
+    var badge = itemEl.querySelector('[data-sub-plan-discount]');
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.dataset.subPlanDiscount = '1';
+      ourNodes.add(badge);
+      var priceEl = tw.querySelector('.in_widget_price');
+      if (priceEl) tw.insertBefore(badge, priceEl);
+      else tw.appendChild(badge);
+    }
+    if (pct > 0) {
+      badge.textContent = '-' + pct + '% OFF';
+      badge.style.display = 'inline-block';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  /* ── Atualiza todos os preços ───────────────────────────── */
+  function updatePrices(variant) {
+    if (!variant) return;
+
+    var widget = document.querySelector('[id*="subscriptions_app_block"]');
+    if (!widget) return;
+
+    injectSubUI(widget);
+
+    var qty    = getQty(variant);
+    var allocs = variant.selling_plan_allocations || [];
+    var fmt    = function (c) { return money(c) + '/unidade'; };
+
+    /* Compra única — preço por unidade */
+    var oneEl = widget.querySelector(
+      '.subscription_group:has(.one_time_purchase_option_app_block) .in_widget_price'
+    );
+    setUnit(oneEl, fmt(variant.price / qty));
+
+    /* Assinatura — cada plano mapeia para sua allocation */
+    var items = widget.querySelectorAll(
+      '.subscription_group:has(.group_name) .group_list_item'
+    );
+    items.forEach(function (item, i) {
+      var alloc = null;
+      var radio = item.querySelector('input[type="radio"]');
+      if (radio) {
+        var planId = parseInt(radio.value);
+        alloc = allocs.find(function (a) { return a.selling_plan_id === planId; });
+      }
+      if (!alloc) alloc = allocs[i] || allocs[0];
+      if (!alloc) return;
+
+      setUnit(item.querySelector('.in_widget_price'), fmt(alloc.price / qty));
+
+      var pct = variant.price > 0
+        ? Math.round((variant.price - alloc.price) / variant.price * 100)
+        : 0;
+      setPlanDiscount(item, pct);
+    });
+
+    /* Preço espelhado no header */
+    var firstAlloc = allocs[0] || null;
+    var hpPrice = widget.querySelector('[data-sss-hp-price]');
+    var hpUnit  = widget.querySelector('[data-sss-hp-unit]');
+    if (firstAlloc) {
+      if (hpPrice) hpPrice.textContent = money(firstAlloc.price);
+      if (hpUnit)  hpUnit.textContent  = fmt(firstAlloc.price / qty);
+    }
+
+    /* Economize X por ano */
+    var savRow = widget.querySelector('[data-sss-savings]');
+    if (savRow && firstAlloc) {
+      var annual = (variant.price - firstAlloc.price) * 12;
+      if (annual > 0) {
+        var valEl = savRow.querySelector('[data-sss-savings-val]');
+        if (valEl) valEl.textContent = money(annual);
+        savRow.style.display = '';
+      } else {
+        savRow.style.display = 'none';
+      }
+    }
+  }
+
+  /* ── Variante atual ─────────────────────────────────────── */
   function getCurrentVariantId() {
-    const input = document.querySelector('input[name="id"]');
+    var input = document.querySelector('input[name="id"]');
     return input ? parseInt(input.value) : null;
   }
 
   function handleVariantId(id) {
-    const variant = productVariants.find(function(v) { return v.id === id; });
-    updateSubWidgetPrices(variant);
+    var v = productVariants.find(function (v) { return v.id === id; });
+    updatePrices(v);
   }
 
-  // Horizon's variant:changed event
-  document.addEventListener('variant:changed', function(e) {
+  /* ── Eventos de mudança de variante ─────────────────────── */
+  document.addEventListener('variant:changed', function (e) {
     var v = e.detail && e.detail.variant;
-    if (v) { updateSubWidgetPrices(v); return; }
+    if (v) { updatePrices(v); return; }
     var id = getCurrentVariantId();
     if (id) handleVariantId(id);
   });
 
-  // Fallback: change event on the hidden variant input
-  document.addEventListener('change', function(e) {
+  document.addEventListener('change', function (e) {
     if (e.target && e.target.name === 'id') {
       handleVariantId(parseInt(e.target.value));
     }
   });
 
-  // Grid click: inject at multiple delays to survive any async subscription widget updates
+  /* Clique no grid de quantidade */
   function setupGridListener() {
     var grid = document.querySelector('[data-quantity-grid]');
     if (!grid) return;
-    grid.addEventListener('click', function(e) {
+    grid.addEventListener('click', function (e) {
       var card = e.target.closest('[data-variant-id]');
       if (!card) return;
-      var variantId = parseInt(card.dataset.variantId);
-      if (!variantId) return;
-      [0, 150, 400, 800, 1500].forEach(function(d) {
-        setTimeout(function() { handleVariantId(variantId); }, d);
+      var vid = parseInt(card.dataset.variantId);
+      if (!vid) return;
+      [0, 150, 400, 800, 1500].forEach(function (d) {
+        setTimeout(function () { handleVariantId(vid); }, d);
       });
     });
   }
 
-  // MutationObserver: re-inject whenever the subscription widget's own JS
-  // updates prices (which removes our <small> elements).
-  // Uses WeakSet to skip mutations we caused ourselves.
+  /* MutationObserver — re-injeta se o app remover nossos elementos */
   function setupWidgetObserver() {
     var widget = document.querySelector('[id*="subscriptions_app_block"]');
     if (!widget) return;
-    var debounceTimer = null;
+    var debounce = null;
 
-    var obs = new MutationObserver(function(mutations) {
-      var allOurs = mutations.every(function(m) {
-        // Mutation on our <small> element itself (e.g. textContent update)
-        if (ourSmalls.has(m.target)) return true;
-        // Mutation on the text node inside our <small>
-        if (m.target.parentNode && ourSmalls.has(m.target.parentNode)) return true;
-        // We added our <small> (childList, no removals, only our nodes added)
-        if (m.type === 'childList' && m.removedNodes.length === 0) {
-          return Array.from(m.addedNodes).every(function(n) { return ourSmalls.has(n); });
-        }
-        return false;
+    var obs = new MutationObserver(function (mutations) {
+      var allOurs = mutations.every(function (m) {
+        return isOurNode(m.target) ||
+          (m.type === 'childList' && m.removedNodes.length === 0 &&
+            Array.from(m.addedNodes).every(function (n) { return isOurNode(n); }));
       });
-      if (allOurs) return; // all mutations are from our own injections — ignore
+      if (allOurs) return;
 
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(function() {
+      clearTimeout(debounce);
+      debounce = setTimeout(function () {
         var id = getCurrentVariantId();
         if (!id) return;
         handleVariantId(id);
-        // Second pass 300ms later in case widget does a delayed second update
-        setTimeout(function() { handleVariantId(id); }, 300);
+        setTimeout(function () { handleVariantId(id); }, 300);
       }, 50);
     });
 
     obs.observe(widget, { childList: true, subtree: true, characterData: true });
   }
 
+  /* ── Init ────────────────────────────────────────────────── */
   function init() {
     var id = getCurrentVariantId();
     if (id) handleVariantId(id);
@@ -1254,6 +1460,61 @@
       "id": "shipping_badge_text",
       "label": "Texto frete grátis",
       "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Assinatura — Neon UI"
+    },
+    {
+      "type": "range",
+      "id": "sub_extra_discount",
+      "label": "Desconto extra (%)",
+      "info": "Exibido no badge neon. Ex: 15 → '+15% extra'. Use 0 para ocultar.",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "default": 15
+    },
+    {
+      "type": "checkbox",
+      "id": "sub_free_shipping",
+      "label": "Mostrar 'Frete Grátis' no badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sub_benefit_1",
+      "label": "Benefício 1",
+      "default": "Preço fixo garantido"
+    },
+    {
+      "type": "text",
+      "id": "sub_benefit_2",
+      "label": "Benefício 2",
+      "default": "Cancele quando quiser"
+    },
+    {
+      "type": "text",
+      "id": "sub_benefit_3",
+      "label": "Benefício 3",
+      "default": "Entrega automática todo mês"
+    },
+    {
+      "type": "text",
+      "id": "sub_benefit_4",
+      "label": "Benefício 4",
+      "default": "Frete grátis em todas as entregas"
+    },
+    {
+      "type": "text",
+      "id": "sub_benefits_link_text",
+      "label": "Texto 'Ver todos os benefícios'",
+      "default": "Ver todos os benefícios"
+    },
+    {
+      "type": "url",
+      "id": "sub_benefits_link_url",
+      "label": "URL 'Ver todos os benefícios'"
     }
   ],
   "presets": [

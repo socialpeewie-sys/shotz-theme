@@ -1,48 +1,23 @@
-/* ============================================================
-   Subscription Widget — Two-card design (multi-plan support)
-   DOM map (from live DevTools inspection):
+/* ================================================================
+   Subscription Widget — Shotz Neon UI
+   Estilos aplicados sobre o DOM do app de assinaturas da Shopify.
+   Toda a lógica de seleção/formulário permanece no app original.
+   ================================================================ */
 
-   Card 1 — One-time:
-     .subscription_group
-       label.title_and_price_wrapper[data-sub-card][data-sub-selected?]
-         div.one_time_purchase_option_app_block.custom_radio_button
-           input[type=radio]
-           span  ← "Compra única"
-         div.in_widget_price
-
-   Card 2 — Subscribe (multi-plan):
-     .subscription_group
-       div.title_and_price_wrapper
-         span.group_name  ← "Assine e ganhe X% OFF"
-       ul.group_list
-         li
-           label.group_list_item[data-sub-card][data-sub-selected?]
-             div.title_and_price_wrapper
-               span  ← frequency text
-               div.in_widget_price
-         li ...  ← second plan (if exists)
-       [select|div].group_dropdown  ← always hidden; radio buttons handle selection
-   .shopify_subscriptions_app_policy
-   ============================================================ */
-
-/* ---- CSS tokens ---- */
 [id*="subscriptions_app_block"] {
-  --sub-navy:       #0a2540;
-  --sub-blue-bg:    rgb(224, 244, 248);
-  --sub-blue-bdr:   rgb(184, 232, 245);
-  --sub-selected:   rgb(10, 132, 255);
-  --sub-label-size: 13px;
-  --sub-price-size: 15px;
+  --neon:      #CBFF00;
+  --neon-dim:  rgba(203, 255, 0, 0.10);
+  --neon-glow: 0 0 0 3px rgba(203, 255, 0, 0.28), 0 6px 24px rgba(203, 255, 0, 0.18);
+  --dark:      #0D0D0D;
+  --muted:     rgba(13, 13, 13, 0.52);
+  --border:    rgba(0, 0, 0, 0.12);
 
   width: 100%;
   font-family: inherit;
 }
 
-/* ============================================================
-   Global resets inside the widget
-   ============================================================ */
+/* ── Resets globais ─────────────────────────────────────────── */
 
-/* Hide native radio */
 [id*="subscriptions_app_block"] input[type="radio"] {
   position: absolute;
   opacity: 0;
@@ -51,13 +26,11 @@
   pointer-events: none;
 }
 
-/* Hide the visual radio-circle painted by ::before */
 [id*="subscriptions_app_block"] .custom_radio_button::before {
   display: none !important;
   content: none !important;
 }
 
-/* Renewal policy text */
 [id*="subscriptions_app_block"] .shopify_subscriptions_app_policy {
   font-size: 12px !important;
   color: #6d7175 !important;
@@ -65,69 +38,61 @@
   text-align: center;
 }
 
-/* Frequency dropdown — always hidden; radio list handles plan selection */
-[id*="subscriptions_app_block"] .group_dropdown {
-  display: none !important;
-}
+[id*="subscriptions_app_block"] .group_dropdown     { display: none !important; }
+[id*="subscriptions_app_block"] .sub-widget-checkmark { display: none !important; }
 
-/* Checkmark SVG injected by subscription-widget.js — hide */
-[id*="subscriptions_app_block"] .sub-widget-checkmark {
-  display: none !important;
-}
-
-/* ============================================================
-   .plan_card — outer wrapper: no border, flex column + gap
-   ============================================================ */
+/* ── plan_card wrapper ──────────────────────────────────────── */
 [id*="subscriptions_app_block"] .plan_card {
   border: none !important;
   background: transparent !important;
   border-radius: 0 !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 8px !important;
+  gap: 10px !important;
   padding: 0 !important;
 }
 
-/* ============================================================
-   .subscription_group — base card
-   ============================================================ */
+/* ── Base card ──────────────────────────────────────────────── */
 [id*="subscriptions_app_block"] .subscription_group {
   margin: 0 !important;
-  cursor: pointer;
-  transition: border-color 0.2s ease;
-  /* reset app defaults */
   border-bottom: none !important;
-  border-radius: 10px !important;
-  padding: 16px 20px !important;
+  border-radius: 14px !important;
+  padding: 14px 18px !important;
+  transition: box-shadow 0.2s ease;
+  overflow: hidden;
+  cursor: pointer;
 }
 
-/* ---- Card 1: one-time — neutral by default ---- */
-[id*="subscriptions_app_block"] .subscription_group:has(.one_time_purchase_option_app_block) {
-  display: flex !important;
-  align-items: center !important;
-  background: rgb(255, 255, 255) !important;
-  border: 1px solid rgba(0, 0, 0, 0.12) !important;
-}
-
-/* ---- Card 2: subscribe — neutral by default ---- */
+/* ── Card Assinatura (neon, sempre destacado) ───────────────── */
 [id*="subscriptions_app_block"] .subscription_group:has(.group_name) {
   display: flex !important;
   flex-direction: column !important;
   align-items: stretch !important;
-  background: rgb(255, 255, 255) !important;
-  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  background: var(--neon-dim) !important;
+  border: 2px solid var(--neon) !important;
   position: relative !important;
 }
-
-/* ---- Selected: blue fill + blue border ---- */
-[id*="subscriptions_app_block"] .subscription_group:has([data-sub-selected]) {
-  background: rgb(224, 244, 248) !important;
-  border: 2px solid rgb(10, 132, 255) !important;
+[id*="subscriptions_app_block"] .subscription_group:has(.group_name):has([data-sub-selected]) {
+  background: rgba(203, 255, 0, 0.14) !important;
+  box-shadow: var(--neon-glow) !important;
 }
 
-/* ============================================================
-   Card 1 inner layout
-   ============================================================ */
+/* ── Card Compra Única (branco/cinza) ───────────────────────── */
+[id*="subscriptions_app_block"] .subscription_group:has(.one_time_purchase_option_app_block) {
+  display: flex !important;
+  align-items: center !important;
+  background: #fff !important;
+  border: 1.5px solid var(--border) !important;
+}
+[id*="subscriptions_app_block"] .subscription_group:has(.one_time_purchase_option_app_block):hover {
+  border-color: rgba(0, 0, 0, 0.22) !important;
+}
+[id*="subscriptions_app_block"] .subscription_group:has(.one_time_purchase_option_app_block):has([data-sub-selected]) {
+  border-color: rgba(0, 0, 0, 0.38) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07) !important;
+}
+
+/* ── Layout interno — Compra Única ─────────────────────────── */
 [id*="subscriptions_app_block"] .subscription_group:has(.one_time_purchase_option_app_block) > .title_and_price_wrapper {
   width: 100%;
   display: flex !important;
@@ -136,67 +101,123 @@
   gap: 12px;
 }
 
-/* One-time label pill */
 [id*="subscriptions_app_block"] .one_time_purchase_option_app_block {
   display: flex !important;
   align-items: center !important;
+  gap: 8px !important;
   margin: 0 !important;
-  gap: 0 !important;
   flex-shrink: 0;
 }
 
-/* "Compra única" text */
+/* Radio indicator — Compra Única */
+[id*="subscriptions_app_block"] .one_time_purchase_option_app_block::before {
+  content: '';
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.22);
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+[id*="subscriptions_app_block"] .subscription_group:has(.one_time_purchase_option_app_block):has([data-sub-selected]) .one_time_purchase_option_app_block::before {
+  background: var(--dark);
+  border-color: var(--dark);
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
 [id*="subscriptions_app_block"] .one_time_purchase_option_app_block > span {
   font-weight: 700 !important;
-  font-size: var(--sub-label-size) !important;
-  color: var(--sub-navy) !important;
+  font-size: 13px !important;
+  color: var(--dark) !important;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
-/* ============================================================
-   Card 2 header row (group_name)
-   ============================================================ */
+/* ── Header da Assinatura (group_name row) ──────────────────── */
 [id*="subscriptions_app_block"] .subscription_group:has(.group_name) > .title_and_price_wrapper {
   position: static !important;
   z-index: auto !important;
   pointer-events: auto !important;
-  flex: none !important;
-  width: 100% !important;
   display: flex !important;
   align-items: center !important;
   justify-content: flex-start !important;
-  gap: 8px !important;
+  gap: 10px !important;
+  width: 100% !important;
+  flex: none !important;
 }
 
-/* Subscribe label */
 [id*="subscriptions_app_block"] .group_name {
   font-weight: 700 !important;
-  font-size: var(--sub-label-size) !important;
-  color: var(--sub-navy) !important;
+  font-size: 13px !important;
+  color: var(--dark) !important;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  line-height: 1.3;
+  line-height: 1.2;
   margin: 0 !important;
+  flex: 1 !important;
 }
 
-/* ============================================================
-   group_list — plan list (normal flow, replaces position:absolute)
-   Each li holds a clickable plan row with frequency + price
-   ============================================================ */
+/* Preço no header (injetado por JS) */
+[id*="subscriptions_app_block"] .sss-header-price {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--dark);
+  white-space: nowrap;
+  text-align: right;
+  flex-shrink: 0;
+  line-height: 1.1;
+}
+[id*="subscriptions_app_block"] .sss-header-price em {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--muted);
+}
+[id*="subscriptions_app_block"] .sss-header-unit {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  text-align: right;
+  margin-top: 1px;
+}
+
+/* Chevron (injetado por JS) */
+[id*="subscriptions_app_block"] .sss-chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+  opacity: 0.55;
+}
+[id*="subscriptions_app_block"] .subscription_group.sss-expanded .sss-chevron {
+  transform: rotate(180deg);
+}
+
+/* ── group_list — accordion (planos) ───────────────────────── */
 [id*="subscriptions_app_block"] .subscription_group:has(.group_name) > .group_list {
   position: static !important;
   inset: auto !important;
   list-style: none !important;
-  margin: 8px 0 0 !important;
   padding: 0 !important;
   display: flex !important;
   flex-direction: column !important;
   gap: 6px !important;
   width: 100% !important;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, margin-top 0.3s ease;
+  margin: 0 !important;
+}
+[id*="subscriptions_app_block"] .subscription_group.sss-expanded > .group_list {
+  max-height: 300px;
+  margin-top: 8px !important;
 }
 
-/* Each plan item: horizontal row */
+/* Cada plano */
 [id*="subscriptions_app_block"] .subscription_group:has(.group_name) .group_list_item {
   position: static !important;
   inset: auto !important;
@@ -205,35 +226,32 @@
   justify-content: flex-start !important;
   padding: 8px 10px !important;
   border-radius: 8px !important;
-  background: rgba(0, 0, 0, 0.03) !important;
+  background: rgba(0, 0, 0, 0.04) !important;
   gap: 8px !important;
   cursor: pointer;
   transition: background 0.15s;
 }
-
-/* Plan item: selected highlight */
 [id*="subscriptions_app_block"] .subscription_group:has(.group_name) .group_list_item[data-sub-selected] {
-  background: rgba(10, 132, 255, 0.1) !important;
+  background: rgba(0, 0, 0, 0.09) !important;
 }
 
-/* Radio dot indicator via ::before */
+/* Radio dot por plano */
 [id*="subscriptions_app_block"] .subscription_group:has(.group_name) .group_list_item::before {
   content: '';
   display: block;
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(0, 0, 0, 0.22);
   flex-shrink: 0;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
-
 [id*="subscriptions_app_block"] .subscription_group:has(.group_name) .group_list_item[data-sub-selected]::before {
-  border-color: rgb(10, 132, 255);
-  box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 7px rgb(10, 132, 255);
+  border-color: var(--dark);
+  box-shadow: inset 0 0 0 3px rgba(203, 255, 0, 0.2), inset 0 0 0 7px var(--dark);
 }
 
-/* title_and_price_wrapper inside each plan item */
+/* title_and_price_wrapper dentro do plano */
 [id*="subscriptions_app_block"] .subscription_group:has(.group_name) .group_list_item > .title_and_price_wrapper {
   display: flex !important;
   align-items: center !important;
@@ -242,7 +260,7 @@
   width: 100% !important;
 }
 
-/* Frequency text — visible, normal flow (not absolute pill) */
+/* Texto de frequência */
 [id*="subscriptions_app_block"] .subscription_group:has(.group_name) .group_list_item .title_and_price_wrapper > span {
   display: block !important;
   position: static !important;
@@ -253,21 +271,136 @@
   padding: 0 !important;
   box-shadow: none !important;
   font-size: 12px !important;
-  color: var(--sub-navy) !important;
+  color: var(--dark) !important;
   font-weight: 400 !important;
-  pointer-events: auto !important;
   white-space: normal !important;
   overflow: visible !important;
   text-overflow: clip !important;
   flex: 1 !important;
-  text-align: left !important;
+  pointer-events: auto !important;
 }
 
-/* Discount badge per plan (injected by JS) */
+/* ── Corpo injetado (savings + badge + benefícios) ──────────── */
+[id*="subscriptions_app_block"] .sss-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+[id*="subscriptions_app_block"] .subscription_group.sss-expanded .sss-body {
+  max-height: 600px;
+}
+[id*="subscriptions_app_block"] .sss-body-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 10px;
+}
+[id*="subscriptions_app_block"] .sss-divider {
+  height: 1px;
+  background: rgba(203, 255, 0, 0.45);
+}
+[id*="subscriptions_app_block"] .sss-savings {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--dark);
+}
+[id*="subscriptions_app_block"] .sss-neon-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--neon);
+  color: var(--dark);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 5px 14px;
+  border-radius: 100px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+[id*="subscriptions_app_block"] .sss-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+[id*="subscriptions_app_block"] .sss-benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--dark);
+  line-height: 1.4;
+}
+[id*="subscriptions_app_block"] .sss-check {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: var(--neon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+[id*="subscriptions_app_block"] .sss-link {
+  font-size: 12px;
+  color: var(--dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.65;
+  transition: opacity 0.15s;
+  display: inline-block;
+}
+[id*="subscriptions_app_block"] .sss-link:hover { opacity: 1; }
+
+/* ── in_widget_price ────────────────────────────────────────── */
+[id*="subscriptions_app_block"] .in_widget_price {
+  display: block !important;
+  max-height: none !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  flex-shrink: 0;
+  text-align: right;
+  white-space: nowrap;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  color: var(--dark) !important;
+  line-height: 1.3;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+[id*="subscriptions_app_block"] s,
+[id*="subscriptions_app_block"] del {
+  text-decoration: line-through;
+  font-weight: 400 !important;
+  font-size: 0.85em;
+  opacity: 0.5;
+  margin-inline-end: 4px;
+}
+
+/* Preço por unidade (injetado) */
+[id*="subscriptions_app_block"] [data-sub-unit-price] {
+  display: block !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+  opacity: 0.65 !important;
+  margin-top: 2px !important;
+  white-space: normal !important;
+  line-height: 1.3;
+  text-align: right;
+}
+
+/* Badge de desconto por plano (injetado) */
 [id*="subscriptions_app_block"] [data-sub-plan-discount] {
   display: inline-block;
-  background: #1D9E75;
-  color: #fff !important;
+  background: var(--dark);
+  color: var(--neon) !important;
   font-size: 10px !important;
   font-weight: 700 !important;
   padding: 2px 7px !important;
@@ -278,75 +411,15 @@
   letter-spacing: 0 !important;
 }
 
-/* ============================================================
-   .in_widget_price — show prices
-   ============================================================ */
-[id*="subscriptions_app_block"] .in_widget_price {
-  display: block !important;
-  max-height: none !important;
-  overflow: visible !important;
-  opacity: 1 !important;
-
-  flex-shrink: 0;
-  text-align: right;
-  white-space: nowrap;
-
-  font-weight: 700 !important;
-  font-size: var(--sub-price-size) !important;
-  color: var(--sub-navy) !important;
-  line-height: 1.3;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* ============================================================
-   Strikethrough compare-at price inside subscribe price
-   ============================================================ */
-[id*="subscriptions_app_block"] s,
-[id*="subscriptions_app_block"] del {
-  text-decoration: line-through;
-  font-weight: 400 !important;
-  font-size: 0.85em;
-  opacity: 0.5;
-  margin-inline-end: 4px;
-}
-
-/* ============================================================
-   Unit price small element (injected by JS)
-   ============================================================ */
-[id*="subscriptions_app_block"] [data-sub-unit-price] {
-  display: block !important;
-  font-size: 10px !important;
-  font-weight: 400 !important;
-  opacity: 0.7 !important;
-  margin-top: 2px !important;
-  white-space: normal !important;
-  line-height: 1.3;
-  text-align: right;
-}
-
-/* ============================================================
-   Mobile
-   ============================================================ */
-@media screen and (max-width: 749px) {
-  [id*="subscriptions_app_block"] .subscription_group {
-    padding: 14px 16px !important;
-  }
-
+/* ── Mobile ─────────────────────────────────────────────────── */
+@media (max-width: 749px) {
+  [id*="subscriptions_app_block"] .subscription_group    { padding: 12px 14px !important; }
+  [id*="subscriptions_app_block"] .sss-header-price      { font-size: 14px; }
+  [id*="subscriptions_app_block"] .in_widget_price       { font-size: 14px !important; }
+  [id*="subscriptions_app_block"] [data-sub-unit-price]  { font-size: 9px !important; }
+  [id*="subscriptions_app_block"] .sss-neon-badge        { font-size: 10px; padding: 4px 12px; }
+  [id*="subscriptions_app_block"] .sss-benefit           { font-size: 12px; }
   [id*="subscriptions_app_block"] .subscription_group:has(.group_name) .group_list_item {
     padding: 7px 8px !important;
-  }
-
-  [id*="subscriptions_app_block"] .in_widget_price {
-    font-size: 14px !important;
-  }
-
-  [id*="subscriptions_app_block"] [data-sub-unit-price] {
-    font-size: 9px !important;
-  }
-
-  [id*="subscriptions_app_block"] [data-sub-plan-discount] {
-    font-size: 9px !important;
-    padding: 1px 6px !important;
   }
 }

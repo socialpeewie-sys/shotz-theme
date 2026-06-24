@@ -86,11 +86,9 @@
     /* Discount % */
     var savePct = oneP > subP ? Math.round((oneP - subP) * 100 / oneP) : 0;
 
-    /* Read plan title from native .group_name, strip parenthetical */
+    /* Read plan title from native .group_name */
     var groupNameEl = subGroup.querySelector('.group_name');
-    var planTitle = groupNameEl
-      ? groupNameEl.textContent.trim().replace(/\s*\(.*\)\s*$/, '').trim()
-      : SUB_LABEL;
+    var planTitle = groupNameEl ? groupNameEl.textContent.trim() : SUB_LABEL;
     if (!planTitle) planTitle = SUB_LABEL;
 
     /* ── Build SUBSCRIBE header ──────────────────────────────── */
@@ -99,10 +97,9 @@
     subHd.innerHTML =
       '<span class="shotz-dot"></span>' +
       '<span class="shotz-title-col">' +
-        '<span class="shotz-label">' + planTitle +
-          (savePct > 0 ? ' <span data-shotz-pct>' + savePct + '</span>%' : '') + '</span>' +
+        '<span class="shotz-label">' + planTitle + '</span>' +
         (savePct > 0
-          ? '<span class="shotz-badge"> ECONOMIZE  <span data-shotz-pct-b>' + savePct + '</span>&nbsp;%</span>'
+          ? '<span class="shotz-badge">Economiza <span data-shotz-pct-b>' + savePct + '</span>%</span>'
           : '') +
       '</span>' +
       '<span class="shotz-price-col">' +

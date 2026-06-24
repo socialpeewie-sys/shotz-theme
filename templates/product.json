@@ -326,7 +326,7 @@
                 "mobile_quantity_price_font_size": 12,
                 "quantity_price_font_weight": 600,
                 "badge_border_radius": 12,
-                "badge_font_size": 11,
+                "badge_font_size": 14,
                 "discount_badge_background": "#0a84ff",
                 "discount_badge_text": "#ffffff",
                 "shipping_badge_font_size": 10,

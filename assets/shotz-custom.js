@@ -86,13 +86,20 @@
     /* Discount % */
     var savePct = oneP > subP ? Math.round((oneP - subP) * 100 / oneP) : 0;
 
+    /* Read plan title from native .group_name, strip parenthetical */
+    var groupNameEl = subGroup.querySelector('.group_name');
+    var planTitle = groupNameEl
+      ? groupNameEl.textContent.trim().replace(/\s*\(.*\)\s*$/, '').trim()
+      : SUB_LABEL;
+    if (!planTitle) planTitle = SUB_LABEL;
+
     /* ── Build SUBSCRIBE header ──────────────────────────────── */
     var subHd = document.createElement('div');
     subHd.className = 'shotz-hd';
     subHd.innerHTML =
       '<span class="shotz-dot"></span>' +
       '<span class="shotz-title-col">' +
-        '<span class="shotz-label">' + SUB_LABEL +
+        '<span class="shotz-label">' + planTitle +
           (savePct > 0 ? ' <span data-shotz-pct>' + savePct + '</span>%' : '') + '</span>' +
         (savePct > 0
           ? '<span class="shotz-badge"> ECONOMIZE  <span data-shotz-pct-b>' + savePct + '</span>&nbsp;%</span>'

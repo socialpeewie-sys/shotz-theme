@@ -95,7 +95,7 @@
         '<span class="shotz-label">' + SUB_LABEL +
           (savePct > 0 ? ' <span data-shotz-pct>' + savePct + '</span>%' : '') + '</span>' +
         (savePct > 0
-          ? '<span class="shotz-badge">SAVE <span data-shotz-pct-b>' + savePct + '</span>%</span>'
+          ? '<span class="shotz-badge"> ECONOMIZE <span data-shotz-pct-b>' + savePct + '</span>%</span>'
           : '') +
       '</span>' +
       '<span class="shotz-price-col">' +

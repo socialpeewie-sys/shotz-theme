@@ -287,7 +287,7 @@
                 "show_flavor_overlay": true,
                 "overlay_background": "#d7ccbc",
                 "overlay_text_color": "#000000",
-                "overlay_font_size": 11,
+                "overlay_font_size": 12,
                 "checkmark_size": 24,
                 "checkmark_position": 6,
                 "checkmark_background": "#0a84ff",

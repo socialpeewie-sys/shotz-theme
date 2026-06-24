@@ -255,7 +255,8 @@
                 "discount_badge_text": "#ffffff",
                 "shipping_badge_font_size": 10,
                 "shipping_badge_background": "#1d9e75",
-                "shipping_badge_text": "#ffffff"
+                "shipping_badge_text": "#ffffff",
+                "free_shipping_min_qty": 60
               },
               "blocks": {}
             },
@@ -291,7 +292,7 @@
                 "checkmark_size": 24,
                 "checkmark_position": 6,
                 "checkmark_background": "#0a84ff",
-                "checkmark_icon_color": "#FBF7F3",
+                "checkmark_icon_color": "#fbf7f3",
                 "show_quantity_label": true,
                 "quantity_label_text": "Escolha a quantidade:",
                 "quantity_label_color": "#666666",
@@ -329,9 +330,10 @@
                 "badge_font_size": 14,
                 "discount_badge_background": "#0a84ff",
                 "discount_badge_text": "#ffffff",
-                "shipping_badge_font_size": 10,
+                "shipping_badge_font_size": 12,
                 "shipping_badge_background": "#1d9e75",
-                "shipping_badge_text": "#ffffff"
+                "shipping_badge_text": "#ffffff",
+                "free_shipping_min_qty": 12
               },
               "blocks": {}
             },

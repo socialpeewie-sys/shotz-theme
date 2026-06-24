@@ -38,27 +38,27 @@
 
 /* ── Subscribe card ─────────────────────────────────────────── */
 .subscription_group[data-shotz="sub"] {
-  background: rgba(237, 228, 214, 0.74) !important;
-  border: 2px solid rgba(0, 0, 0, 0.10) !important;
-  color: rgb(109, 109, 109) !important;
+  background: #ffffff !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.10) !important;
+  color: #1a1a1a !important;
 }
 .subscription_group[data-shotz="sub"][data-shotz-sel="true"] {
   border-color: #0A84FF !important;
-  box-shadow: 0 0 0 2px rgba(10,132,255,0.15) !important;
+  box-shadow: 0 0 0 3px rgba(10,132,255,0.12), 0 4px 16px rgba(0,0,0,0.07) !important;
 }
 
 /* ── One-time card ──────────────────────────────────────────── */
 .subscription_group[data-shotz="onetime"] {
-  background: rgba(237, 228, 214, 0.74) !important;
-  border: 2px solid rgba(0, 0, 0, 0.10) !important;
-  color: rgb(109, 109, 109) !important;
+  background: #ffffff !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.10) !important;
+  color: #1a1a1a !important;
 }
 .subscription_group[data-shotz="onetime"]:not([data-shotz-sel="true"]):hover {
-  border-color: rgba(0, 0, 0, 0.20) !important;
+  border-color: rgba(0, 0, 0, 0.22) !important;
 }
 .subscription_group[data-shotz="onetime"][data-shotz-sel="true"] {
   border-color: #0A84FF !important;
-  box-shadow: 0 0 0 2px rgba(10,132,255,0.15) !important;
+  box-shadow: 0 0 0 3px rgba(10,132,255,0.12), 0 4px 16px rgba(0,0,0,0.07) !important;
 }
 
 /* ── Hide native content we replaced with JS ────────────────── */
@@ -229,19 +229,19 @@
   gap: 6px !important;
 }
 .subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button {
-  background: rgba(255, 255, 255, 0.55) !important;
-  border: 1.5px solid rgba(0, 0, 0, 0.10) !important;
+  background: #f5f4f2 !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.09) !important;
   border-radius: 8px !important;
   padding: 8px 12px !important;
   cursor: pointer !important;
   width: 100% !important;
   margin: 0 !important;
   align-items: center !important;
-  transition: border-color 0.15s !important;
+  transition: border-color 0.15s, background 0.15s !important;
 }
 .subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button span {
   font-family: Outfit, sans-serif !important;
-  color: rgb(109, 109, 109) !important;
+  color: #333333 !important;
   font-size: 13px !important;
   font-weight: 500 !important;
 }
@@ -261,7 +261,7 @@
 .subscription_group[data-shotz="sub"] .shopify_subscriptions_app_policy {
   font-family: Outfit, sans-serif !important;
   font-size: 10.5px !important;
-  color: rgb(109, 109, 109) !important;
+  color: #999999 !important;
   line-height: 1.5 !important;
   margin: 0 !important;
 }
@@ -282,7 +282,7 @@
   font-family: Outfit, sans-serif !important;
   font-size: 12.5px !important;
   font-weight: 400 !important;
-  color: rgb(109, 109, 109) !important;
+  color: #4a4a4a !important;
   line-height: 1.45 !important;
 }
 .shotz-check {

@@ -109,7 +109,7 @@
       '</span>' +
       '<span class="shotz-chevron">' +
         '<svg width="12" height="7" viewBox="0 0 12 7" fill="none">' +
-          '<path d="M1 1L6 6L11 1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>' +
+          '<path d="M1 1L6 6L11 1" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>' +
         '</svg>' +
       '</span>';
     subGroup.insertBefore(subHd, subGroup.firstChild);
@@ -137,7 +137,7 @@
       var freqRow = document.createElement('div');
       freqRow.style.cssText = 'display:flex;flex-direction:column;gap:6px';
       var freqLbl = document.createElement('span');
-      freqLbl.style.cssText = 'font-size:12px;font-weight:500;color:rgba(255,255,255,0.55)';
+      freqLbl.style.cssText = 'font-size:12px;font-weight:500;color:#6d6d6d';
       freqLbl.textContent = FREQ_LABEL;
       freqRow.appendChild(freqLbl);
       freqRow.appendChild(groupList);
@@ -153,7 +153,7 @@
       li.innerHTML =
         '<span class="shotz-check">' +
           '<svg width="8" height="7" viewBox="0 0 8 7" fill="none">' +
-            '<path d="M1 3.5L3 5.5L7 1.5" stroke="#0D0D0D" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>' +
+            '<path d="M1 3.5L3 5.5L7 1.5" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>' +
           '</svg>' +
         '</span>' +
         '<span>' + text + '</span>';

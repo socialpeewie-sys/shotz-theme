@@ -37,7 +37,7 @@
 
 /* ── Subscribe card — dark ──────────────────────────────────── */
 .subscription_group[data-shotz="sub"] {
-  background: #0D0D0D !important;
+  background: #fff !important;
   border: 2px solid transparent !important;
   color: #fff !important;
 }

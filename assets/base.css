@@ -21,43 +21,44 @@
 
 /* ── Card base ──────────────────────────────────────────────── */
 .subscription_group {
-  border-radius: 14px !important;
+  border-radius: 11px !important;
   overflow: hidden !important;
   cursor: pointer !important;
   padding: 0 !important;
   border: none !important;
   border-bottom: none !important;
-  transition: box-shadow 0.22s ease, border-color 0.22s ease !important;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease !important;
   position: relative !important;
+  font-family: Outfit, sans-serif !important;
 }
 
 /* Visual order: subscribe first, one-time second */
 .subscription_group[data-shotz="sub"]     { order: 1 !important; }
 .subscription_group[data-shotz="onetime"] { order: 2 !important; }
 
-/* ── Subscribe card — dark ──────────────────────────────────── */
+/* ── Subscribe card ─────────────────────────────────────────── */
 .subscription_group[data-shotz="sub"] {
-  background: #fff !important;
-  border: 2px solid transparent !important;
-  color: #fff !important;
+  background: rgba(237, 228, 214, 0.74) !important;
+  border: 2px solid rgba(0, 0, 0, 0.10) !important;
+  color: rgb(109, 109, 109) !important;
 }
 .subscription_group[data-shotz="sub"][data-shotz-sel="true"] {
-  border-color: #CBFF00 !important;
-  box-shadow: 0 0 0 3px rgba(203,255,0,0.18), 0 6px 24px rgba(203,255,0,0.10) !important;
+  border-color: #0A84FF !important;
+  box-shadow: 0 0 0 2px rgba(10,132,255,0.15) !important;
 }
 
-/* ── One-time card — light ──────────────────────────────────── */
+/* ── One-time card ──────────────────────────────────────────── */
 .subscription_group[data-shotz="onetime"] {
-  background: #fff !important;
-  border: 1.5px solid rgba(0,0,0,0.14) !important;
-  color: #0D0D0D !important;
+  background: rgba(237, 228, 214, 0.74) !important;
+  border: 2px solid rgba(0, 0, 0, 0.10) !important;
+  color: rgb(109, 109, 109) !important;
 }
 .subscription_group[data-shotz="onetime"]:not([data-shotz-sel="true"]):hover {
-  border-color: rgba(0,0,0,0.22) !important;
+  border-color: rgba(0, 0, 0, 0.20) !important;
 }
 .subscription_group[data-shotz="onetime"][data-shotz-sel="true"] {
-  border-color: rgba(0,0,0,0.32) !important;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06) !important;
+  border-color: #0A84FF !important;
+  box-shadow: 0 0 0 2px rgba(10,132,255,0.15) !important;
 }
 
 /* ── Hide native content we replaced with JS ────────────────── */
@@ -97,31 +98,17 @@
   align-items: center !important;
   justify-content: center !important;
   box-sizing: border-box !important;
+  border: 2px solid rgba(0, 0, 0, 0.22) !important;
   transition: background 0.18s, border-color 0.18s !important;
 }
-.subscription_group[data-shotz="sub"] .shotz-dot {
-  border: 2px solid rgba(255,255,255,0.30) !important;
+.subscription_group[data-shotz][data-shotz-sel="true"] .shotz-dot {
+  background: #0A84FF !important;
+  border-color: #0A84FF !important;
 }
-.subscription_group[data-shotz="sub"][data-shotz-sel="true"] .shotz-dot {
-  background: #CBFF00 !important;
-  border-color: #CBFF00 !important;
-}
-.subscription_group[data-shotz="sub"][data-shotz-sel="true"] .shotz-dot::after {
+.subscription_group[data-shotz][data-shotz-sel="true"] .shotz-dot::after {
   content: '' !important;
-  width: 6px !important; height: 6px !important;
-  border-radius: 50% !important;
-  background: #0D0D0D !important;
-}
-.subscription_group[data-shotz="onetime"] .shotz-dot {
-  border: 2px solid rgba(0,0,0,0.25) !important;
-}
-.subscription_group[data-shotz="onetime"][data-shotz-sel="true"] .shotz-dot {
-  background: #0D0D0D !important;
-  border-color: #0D0D0D !important;
-}
-.subscription_group[data-shotz="onetime"][data-shotz-sel="true"] .shotz-dot::after {
-  content: '' !important;
-  width: 6px !important; height: 6px !important;
+  width: 6px !important;
+  height: 6px !important;
   border-radius: 50% !important;
   background: #fff !important;
 }
@@ -135,29 +122,29 @@
   min-width: 0 !important;
 }
 .shotz-label {
-  font-size: 11.5px !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.07em !important;
-  text-transform: uppercase !important;
-  line-height: 1.2 !important;
+  font-family: Outfit, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  color: rgb(26, 26, 26) !important;
+  line-height: 1.3 !important;
 }
-.subscription_group[data-shotz="sub"] .shotz-label     { color: #0D0D0D !important; }
-.subscription_group[data-shotz="onetime"] .shotz-label { color: #0D0D0D !important; }
 
 .shotz-badge {
   display: inline-flex !important;
   align-items: center !important;
-  background: #0094F6 !important;
+  background: #0A84FF !important;
   color: #fff !important;
-  font-size: 9.5px !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.07em !important;
+  font-family: Outfit, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
   text-transform: uppercase !important;
-  padding: 3px 9px !important;
-  border-radius: 6px !important;
+  padding: 3px 8px !important;
+  border-radius: 100px !important;
   width: fit-content !important;
   line-height: 1.4 !important;
-  font-family: inherit !important;
 }
 
 /* ── Price column ───────────────────────────────────────────── */
@@ -169,29 +156,30 @@
   flex-shrink: 0 !important;
 }
 .shotz-price {
-  font-size: 16px !important;
-  font-weight: 800 !important;
-  line-height: 1.1 !important;
+  font-family: Outfit, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: rgb(26, 26, 26) !important;
+  line-height: 1.2 !important;
   white-space: nowrap !important;
 }
-.subscription_group[data-shotz="sub"] .shotz-price     { color: #0D0D0D !important; }
-.subscription_group[data-shotz="onetime"] .shotz-price { color: #0D0D0D !important; }
-
 .shotz-compare {
-  font-size: 11.5px !important;
+  font-family: Outfit, sans-serif !important;
+  font-size: 11px !important;
   font-weight: 400 !important;
   text-decoration: line-through !important;
-  color: rgba(255,255,255,0.55) !important;
+  color: rgb(109, 109, 109) !important;
   white-space: nowrap !important;
   line-height: 1.3 !important;
 }
 .shotz-unit {
+  font-family: Outfit, sans-serif !important;
   font-size: 10.5px !important;
+  font-weight: 400 !important;
+  color: rgb(109, 109, 109) !important;
   white-space: nowrap !important;
   line-height: 1.3 !important;
 }
-.subscription_group[data-shotz="sub"] .shotz-unit     { color: rgba(255,255,255,0.55) !important; }
-.subscription_group[data-shotz="onetime"] .shotz-unit { color: rgba(13,13,13,0.50) !important; }
 
 /* ── Chevron ────────────────────────────────────────────────── */
 .shotz-chevron {
@@ -201,12 +189,13 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  opacity: 0.45 !important;
+  opacity: 0.40 !important;
   transition: transform 0.26s ease, opacity 0.18s !important;
 }
+.shotz-chevron svg path { stroke: rgb(26, 26, 26) !important; }
 .subscription_group[data-shotz="sub"][data-shotz-open="true"] .shotz-chevron {
   transform: rotate(180deg) !important;
-  opacity: 0.75 !important;
+  opacity: 0.65 !important;
 }
 
 /* ── Collapsible body ───────────────────────────────────────── */
@@ -226,7 +215,7 @@
 }
 .shotz-divider {
   height: 1px !important;
-  background: rgba(203,255,0,0.18) !important;
+  background: rgba(0, 0, 0, 0.08) !important;
   margin-bottom: 2px !important;
 }
 
@@ -240,17 +229,19 @@
   gap: 6px !important;
 }
 .subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button {
-  background: rgba(255,255,255,0.06) !important;
-  border: 1px solid rgba(255,255,255,0.12) !important;
+  background: rgba(255, 255, 255, 0.55) !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.10) !important;
   border-radius: 8px !important;
   padding: 8px 12px !important;
   cursor: pointer !important;
   width: 100% !important;
   margin: 0 !important;
   align-items: center !important;
+  transition: border-color 0.15s !important;
 }
 .subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button span {
-  color: rgba(255,255,255,0.85) !important;
+  font-family: Outfit, sans-serif !important;
+  color: rgb(109, 109, 109) !important;
   font-size: 13px !important;
   font-weight: 500 !important;
 }
@@ -258,18 +249,19 @@
   display: none !important;
 }
 .subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button:has(input:checked) {
-  background: rgba(203,255,0,0.08) !important;
-  border-color: rgba(203,255,0,0.35) !important;
+  background: rgba(10, 132, 255, 0.07) !important;
+  border-color: #0A84FF !important;
 }
 .subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button:has(input:checked) span {
-  color: #CBFF00 !important;
-  font-weight: 700 !important;
+  color: #0A84FF !important;
+  font-weight: 600 !important;
 }
 
 /* ── Policy text ────────────────────────────────────────────── */
 .subscription_group[data-shotz="sub"] .shopify_subscriptions_app_policy {
+  font-family: Outfit, sans-serif !important;
   font-size: 10.5px !important;
-  color: rgba(255,255,255,0.35) !important;
+  color: rgb(109, 109, 109) !important;
   line-height: 1.5 !important;
   margin: 0 !important;
 }
@@ -281,14 +273,16 @@
   padding: 0 !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 9px !important;
+  gap: 8px !important;
 }
 .shotz-feature {
   display: flex !important;
   align-items: flex-start !important;
   gap: 8px !important;
+  font-family: Outfit, sans-serif !important;
   font-size: 12.5px !important;
-  color: rgba(255,255,255,0.78) !important;
+  font-weight: 400 !important;
+  color: rgb(109, 109, 109) !important;
   line-height: 1.45 !important;
 }
 .shotz-check {
@@ -296,7 +290,7 @@
   width: 16px !important;
   height: 16px !important;
   border-radius: 50% !important;
-  background: #CBFF00 !important;
+  background: #0A84FF !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -305,10 +299,10 @@
 
 /* ── Mobile ─────────────────────────────────────────────────── */
 @media (max-width: 749px) {
-  .shotz-hd          { padding: 12px 14px !important; gap: 8px !important; }
-  .shotz-body-inner  { padding: 0 14px 14px !important; }
+  .shotz-hd          { padding: 11px 12px !important; gap: 8px !important; }
+  .shotz-body-inner  { padding: 0 12px 12px !important; }
   .shotz-price       { font-size: 14px !important; }
-  .shotz-label       { font-size: 10.5px !important; }
+  .shotz-label       { font-size: 12px !important; }
   .shotz-badge       { font-size: 9px !important; padding: 2px 7px !important; }
   .shotz-feature     { font-size: 11.5px !important; }
 }

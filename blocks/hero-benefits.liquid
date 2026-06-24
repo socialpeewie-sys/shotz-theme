@@ -1,0 +1,424 @@
+{% doc %}
+  @prompt
+    Bloco Hero com Benefícios — layout 2 colunas (imagem esquerda + conteúdo direita).
+    Editável no Customizador do tema, sem JS externo.
+{% enddoc %}
+
+{% assign hb = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .hb-wrap-{{ hb }} {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    border-radius: {{ block.settings.card_radius }}px;
+    overflow: hidden;
+    background: {{ block.settings.content_bg }};
+    min-height: {{ block.settings.min_height }}px;
+  }
+
+  .hb-image-col-{{ hb }} {
+    flex: 0 0 50%;
+    background-color: {{ block.settings.image_bg }};
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ block.settings.card_radius }}px 0 0 {{ block.settings.card_radius }}px;
+  }
+
+  .hb-image-col-{{ hb }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hb-image-col-{{ hb }} .hb-placeholder-{{ hb }} {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: {{ block.settings.min_height }}px;
+  }
+
+  .hb-image-col-{{ hb }} .hb-placeholder-{{ hb }} svg {
+    width: 60%;
+    height: auto;
+    opacity: 0.3;
+  }
+
+  .hb-content-col-{{ hb }} {
+    flex: 0 0 50%;
+    padding: {{ block.settings.content_padding }}px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .hb-headline-{{ hb }} {
+    font-family: var(--font-heading--family);
+    font-size: {{ block.settings.headline_size }}px;
+    font-weight: 700;
+    color: {{ block.settings.headline_color }};
+    line-height: 1.2;
+    margin: 0 0 12px 0;
+  }
+
+  .hb-subtitle-{{ hb }} {
+    font-family: var(--font-body--family);
+    font-size: {{ block.settings.subtitle_size }}px;
+    font-weight: 400;
+    color: {{ block.settings.subtitle_color }};
+    line-height: 1.5;
+    margin: 0 0 24px 0;
+  }
+
+  .hb-benefits-{{ hb }} {
+    list-style: none;
+    margin: 0 0 28px 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hb-benefit-{{ hb }} {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-family: var(--font-body--family);
+    font-size: {{ block.settings.benefit_size }}px;
+    color: {{ block.settings.benefit_color }};
+    line-height: 1.4;
+  }
+
+  .hb-check-{{ hb }} {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    background-color: {{ block.settings.checkmark_color }};
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .hb-check-{{ hb }} svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .hb-btn-{{ hb }} {
+    align-self: flex-start;
+  }
+
+  @media screen and (max-width: 749px) {
+    .hb-wrap-{{ hb }} {
+      flex-direction: column;
+      border-radius: {{ block.settings.card_radius }}px;
+      min-height: unset;
+    }
+
+    .hb-image-col-{{ hb }} {
+      flex: none;
+      height: {{ block.settings.mobile_image_height }}px;
+      border-radius: {{ block.settings.card_radius }}px {{ block.settings.card_radius }}px 0 0;
+    }
+
+    .hb-image-col-{{ hb }} .hb-placeholder-{{ hb }} {
+      min-height: {{ block.settings.mobile_image_height }}px;
+    }
+
+    .hb-content-col-{{ hb }} {
+      flex: none;
+      padding: {{ block.settings.content_padding | times: 0.75 | round }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="hb-wrap-{{ hb }}" {{ block.shopify_attributes }}>
+
+  {%- comment -%} ── Coluna esquerda: imagem ── {%- endcomment -%}
+  <div class="hb-image-col-{{ hb }}">
+    {%- if block.settings.image != blank -%}
+      {{
+        block.settings.image
+        | image_url: width: 1200
+        | image_tag:
+          loading: 'lazy',
+          alt: block.settings.image.alt | escape,
+          widths: '400, 600, 800, 1200'
+      }}
+    {%- else -%}
+      <div class="hb-placeholder-{{ hb }}">
+        {{ 'product-1' | placeholder_svg_tag }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} ── Coluna direita: conteúdo ── {%- endcomment -%}
+  <div class="hb-content-col-{{ hb }}">
+
+    {%- if block.settings.headline != blank -%}
+      <h2 class="hb-headline-{{ hb }}">{{ block.settings.headline | escape }}</h2>
+    {%- endif -%}
+
+    {%- if block.settings.subtitle != blank -%}
+      <p class="hb-subtitle-{{ hb }}">{{ block.settings.subtitle | escape }}</p>
+    {%- endif -%}
+
+    {%- assign has_benefits = false -%}
+    {%- for i in (1..4) -%}
+      {%- assign benefit_key = 'benefit_' | append: i -%}
+      {%- if block.settings[benefit_key] != blank -%}
+        {%- assign has_benefits = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if has_benefits -%}
+      <ul class="hb-benefits-{{ hb }}">
+        {%- for i in (1..4) -%}
+          {%- assign benefit_key = 'benefit_' | append: i -%}
+          {%- if block.settings[benefit_key] != blank -%}
+            <li class="hb-benefit-{{ hb }}">
+              <span class="hb-check-{{ hb }}" aria-hidden="true">
+                <svg viewBox="0 0 11 9" fill="none">
+                  <path d="M1 4.5L4 7.5L10 1.5" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span>{{ block.settings[benefit_key] | escape }}</span>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if block.settings.btn_text != blank -%}
+      <div class="hb-btn-{{ hb }}">
+        <a
+          href="{{ block.settings.btn_link | default: '#' }}"
+          class="{{ block.settings.btn_style }}"
+        >
+          {{ block.settings.btn_text | escape }}
+        </a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero com Benefícios",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Imagem"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagem do produto"
+    },
+    {
+      "type": "color",
+      "id": "image_bg",
+      "label": "Cor de fundo da imagem",
+      "default": "#ede4d6"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Altura mínima (desktop)",
+      "min": 200,
+      "max": 700,
+      "step": 20,
+      "unit": "px",
+      "default": 420
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_height",
+      "label": "Altura da imagem (mobile)",
+      "min": 150,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 260
+    },
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Por que escolher Shotz?"
+    },
+    {
+      "type": "range",
+      "id": "headline_size",
+      "label": "Tamanho da fonte",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Cor do título",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Subtítulo"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Desenvolvido para quem leva performance a sério."
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Tamanho da fonte",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Cor do subtítulo",
+      "default": "#6d6d6d"
+    },
+    {
+      "type": "header",
+      "content": "Benefícios"
+    },
+    {
+      "type": "text",
+      "id": "benefit_1",
+      "label": "Benefício 1",
+      "default": "Fórmula desenvolvida com nutricionistas"
+    },
+    {
+      "type": "text",
+      "id": "benefit_2",
+      "label": "Benefício 2",
+      "default": "Sem açúcar, sem corantes artificiais"
+    },
+    {
+      "type": "text",
+      "id": "benefit_3",
+      "label": "Benefício 3",
+      "default": "Entrega rápida para todo o Brasil"
+    },
+    {
+      "type": "text",
+      "id": "benefit_4",
+      "label": "Benefício 4",
+      "default": ""
+    },
+    {
+      "type": "range",
+      "id": "benefit_size",
+      "label": "Tamanho do texto",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "benefit_color",
+      "label": "Cor do texto",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "checkmark_color",
+      "label": "Cor do checkmark",
+      "default": "#0a84ff"
+    },
+    {
+      "type": "header",
+      "content": "Botão CTA"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Texto do botão",
+      "default": "Comprar agora"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Link do botão"
+    },
+    {
+      "type": "select",
+      "id": "btn_style",
+      "label": "Estilo do botão",
+      "options": [
+        {
+          "value": "button",
+          "label": "Primário"
+        },
+        {
+          "value": "button-secondary",
+          "label": "Secundário"
+        }
+      ],
+      "default": "button"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "content_bg",
+      "label": "Cor de fundo do conteúdo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "label": "Padding interno (conteúdo)",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Arredondamento do card",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero com Benefícios",
+      "category": "Personalizado"
+    }
+  ]
+}
+{% endschema %}

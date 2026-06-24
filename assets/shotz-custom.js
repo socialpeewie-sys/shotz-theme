@@ -39,6 +39,26 @@
       .then(function (p) {
         variants = p.variants;
         updateAllUnits();
+
+        /* Re-calculates badge % whenever shopper switches variant */
+        function onVariantChange(variantId) {
+          if (!variantId) return;
+          var container = document.querySelector('.shopify_subscriptions_app_container');
+          if (!container) return;
+          container.querySelectorAll('.shopify_subscriptions_app_block').forEach(function (s) {
+            refreshBadge(s, variantId);
+          });
+        }
+
+        document.addEventListener('variant:changed', function (e) {
+          var v = e.detail && e.detail.variant;
+          if (v) onVariantChange(v.id);
+        });
+        document.addEventListener('change', function (e) {
+          if (e.target && e.target.name === 'id') {
+            onVariantChange(parseInt(e.target.value, 10));
+          }
+        });
       });
   }
 
@@ -105,9 +125,7 @@
       '<span class="shotz-dot"></span>' +
       '<span class="shotz-title-col">' +
         '<span class="shotz-label">' + planTitle + '</span>' +
-        (savePct > 0
-          ? '<span class="shotz-badge">Economize <span data-shotz-pct-b>' + savePct + '</span>%</span>'
-          : '') +
+        '<span class="shotz-badge" data-shotz-badge' + (savePct <= 0 ? ' style="display:none"' : '') + '>Economize ' + (savePct || 0) + '%</span>' +
       '</span>' +
       '<span class="shotz-price-col">' +
         '<span class="shotz-price" data-shotz-sub-p>' + money(subP) + '</span>' +
@@ -258,12 +276,34 @@
     }
   }
 
+  /* ── Badge % from selling_plan_allocations ─────────────────── */
+  function refreshBadge(section, variantId) {
+    if (!variants) return;
+    var v = variants.find(function (v) { return v.id == variantId; });
+    if (!v) return;
+    var alloc = (v.selling_plan_allocations || [])[0] || null;
+    var oneP  = v.price;
+    var subP  = alloc ? alloc.price : oneP;
+    var pct   = oneP > subP ? Math.round((oneP - subP) * 100 / oneP) : 0;
+    var badge = section.querySelector('[data-shotz-badge]');
+    if (!badge) return;
+    if (pct > 0) {
+      badge.textContent = 'Economize ' + pct + '%';
+      badge.style.display = '';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
   function updateAllUnits() {
     var container = document.querySelector('.shopify_subscriptions_app_container');
     if (!container) return;
     container.querySelectorAll('.shopify_subscriptions_app_block').forEach(function (s) {
       var vid = s.getAttribute('data-variant-id');
-      if (vid) refreshUnits(s, vid);
+      if (vid) {
+        refreshUnits(s, vid);
+        refreshBadge(s, vid);
+      }
     });
   }
 

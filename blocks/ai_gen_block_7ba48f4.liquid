@@ -402,7 +402,7 @@
               <div class="q-label-{{ ai_gen_id }}">
                 <div class="q-row1-{{ ai_gen_id }}">
                   <span class="ai-quantity-title-{{ ai_gen_id }}">{{ variant_quantity }}</span>
-                  {% if variant.metafields.custom.free_shipping == true %}
+                  {% if block.settings.free_shipping_min_qty > 0 and quantity_number >= block.settings.free_shipping_min_qty %}
                     <span class="ai-quantity-badge-{{ ai_gen_id }} ai-quantity-shipping-badge-{{ ai_gen_id }}">FRETE GRÁTIS</span>
                   {% endif %}
                 </div>
@@ -509,8 +509,12 @@
       html += `<div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">`;
       html += `<div class="q-radio" style="width:{{ block.settings.radio_size }}px;height:{{ block.settings.radio_size }}px;border-radius:50%;border:{{ block.settings.radio_border_width }}px solid {{ block.settings.radio_border_color }};background:#fff;flex-shrink:0;transition:all 0.2s;"></div>`;
       html += `<div style="display:flex;flex-direction:column;gap:3px;">`;
+      const freeShipMinQty = {{ block.settings.free_shipping_min_qty | default: 0 }};
       html += `<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">`;
       html += `<span style="font-size:{{ block.settings.quantity_title_font_size }}px;font-weight:{{ block.settings.quantity_title_font_weight }};color:{{ block.settings.quantity_title_color }};">${qty}</span>`;
+      if (freeShipMinQty > 0 && qtyNum >= freeShipMinQty) {
+        html += `<span style="background:{{ block.settings.shipping_badge_background }};color:{{ block.settings.shipping_badge_text }};display:inline-flex;align-items:center;padding:2px 8px;font-size:{{ block.settings.shipping_badge_font_size }}px;font-weight:700;border-radius:4px;line-height:1.3;">FRETE GRÁTIS</span>`;
+      }
       html += `</div>`;
       if (unitPrice > 0) {
         html += `<div style="font-size:{{ block.settings.quantity_price_font_size }}px;font-weight:{{ block.settings.quantity_price_font_weight }};color:{{ block.settings.quantity_price_color }};">${formatMoney(unitPrice)}/cada</div>`;
@@ -1193,6 +1197,13 @@
       "id": "shipping_badge_text",
       "label": "Texto frete grátis",
       "default": "#ffffff"
+    },
+    {
+      "type": "number",
+      "id": "free_shipping_min_qty",
+      "label": "Quantidade mínima para frete grátis",
+      "info": "Cards com quantidade ≥ a este valor mostram o badge. Use 0 para desativar.",
+      "default": 60
     }
   ],
   "presets": [

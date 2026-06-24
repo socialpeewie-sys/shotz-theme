@@ -2,6 +2,317 @@
   box-sizing: border-box;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   Shotz — Native Subscription Widget Skin
+   Targets the Shopify Subscriptions App block DOM directly.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Reset native plan_card container ──────────────────────── */
+.plan_card {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: inherit !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  padding: 0 !important;
+}
+
+/* ── Card base ──────────────────────────────────────────────── */
+.subscription_group {
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  border: none !important;
+  border-bottom: none !important;
+  transition: box-shadow 0.22s ease, border-color 0.22s ease !important;
+  position: relative !important;
+}
+
+/* Visual order: subscribe first, one-time second */
+.subscription_group[data-shotz="sub"]     { order: 1 !important; }
+.subscription_group[data-shotz="onetime"] { order: 2 !important; }
+
+/* ── Subscribe card — dark ──────────────────────────────────── */
+.subscription_group[data-shotz="sub"] {
+  background: #0D0D0D !important;
+  border: 2px solid transparent !important;
+  color: #fff !important;
+}
+.subscription_group[data-shotz="sub"][data-shotz-sel="true"] {
+  border-color: #CBFF00 !important;
+  box-shadow: 0 0 0 3px rgba(203,255,0,0.18), 0 6px 24px rgba(203,255,0,0.10) !important;
+}
+
+/* ── One-time card — light ──────────────────────────────────── */
+.subscription_group[data-shotz="onetime"] {
+  background: #fff !important;
+  border: 1.5px solid rgba(0,0,0,0.14) !important;
+  color: #0D0D0D !important;
+}
+.subscription_group[data-shotz="onetime"]:not([data-shotz-sel="true"]):hover {
+  border-color: rgba(0,0,0,0.22) !important;
+}
+.subscription_group[data-shotz="onetime"][data-shotz-sel="true"] {
+  border-color: rgba(0,0,0,0.32) !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06) !important;
+}
+
+/* ── Hide native content we replaced with JS ────────────────── */
+.subscription_group[data-shotz] > .title_and_price_wrapper,
+.subscription_group[data-shotz] > label.title_and_price_wrapper {
+  display: none !important;
+}
+/* Suppress the native ::before radio dot */
+.subscription_group[data-shotz] .custom_radio_button::before {
+  display: none !important;
+}
+/* Keep native radios invisible but in DOM (JS clicks them) */
+.subscription_group[data-shotz] input[type="radio"] {
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 1px !important;
+  height: 1px !important;
+}
+
+/* ── Shotz custom header ────────────────────────────────────── */
+.shotz-hd {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 14px 16px !important;
+  user-select: none !important;
+}
+
+/* ── Custom radio dot ───────────────────────────────────────── */
+.shotz-dot {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  flex-shrink: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  transition: background 0.18s, border-color 0.18s !important;
+}
+.subscription_group[data-shotz="sub"] .shotz-dot {
+  border: 2px solid rgba(255,255,255,0.30) !important;
+}
+.subscription_group[data-shotz="sub"][data-shotz-sel="true"] .shotz-dot {
+  background: #CBFF00 !important;
+  border-color: #CBFF00 !important;
+}
+.subscription_group[data-shotz="sub"][data-shotz-sel="true"] .shotz-dot::after {
+  content: '' !important;
+  width: 6px !important; height: 6px !important;
+  border-radius: 50% !important;
+  background: #0D0D0D !important;
+}
+.subscription_group[data-shotz="onetime"] .shotz-dot {
+  border: 2px solid rgba(0,0,0,0.25) !important;
+}
+.subscription_group[data-shotz="onetime"][data-shotz-sel="true"] .shotz-dot {
+  background: #0D0D0D !important;
+  border-color: #0D0D0D !important;
+}
+.subscription_group[data-shotz="onetime"][data-shotz-sel="true"] .shotz-dot::after {
+  content: '' !important;
+  width: 6px !important; height: 6px !important;
+  border-radius: 50% !important;
+  background: #fff !important;
+}
+
+/* ── Title + badge column ───────────────────────────────────── */
+.shotz-title-col {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 5px !important;
+  min-width: 0 !important;
+}
+.shotz-label {
+  font-size: 11.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.07em !important;
+  text-transform: uppercase !important;
+  line-height: 1.2 !important;
+}
+.subscription_group[data-shotz="sub"] .shotz-label     { color: #fff !important; }
+.subscription_group[data-shotz="onetime"] .shotz-label { color: #0D0D0D !important; }
+
+.shotz-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  background: #0094F6 !important;
+  color: #fff !important;
+  font-size: 9.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.07em !important;
+  text-transform: uppercase !important;
+  padding: 3px 9px !important;
+  border-radius: 6px !important;
+  width: fit-content !important;
+  line-height: 1.4 !important;
+  font-family: inherit !important;
+}
+
+/* ── Price column ───────────────────────────────────────────── */
+.shotz-price-col {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 1px !important;
+  flex-shrink: 0 !important;
+}
+.shotz-price {
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  white-space: nowrap !important;
+}
+.subscription_group[data-shotz="sub"] .shotz-price     { color: #fff !important; }
+.subscription_group[data-shotz="onetime"] .shotz-price { color: #0D0D0D !important; }
+
+.shotz-compare {
+  font-size: 11.5px !important;
+  font-weight: 400 !important;
+  text-decoration: line-through !important;
+  color: rgba(255,255,255,0.55) !important;
+  white-space: nowrap !important;
+  line-height: 1.3 !important;
+}
+.shotz-unit {
+  font-size: 10.5px !important;
+  white-space: nowrap !important;
+  line-height: 1.3 !important;
+}
+.subscription_group[data-shotz="sub"] .shotz-unit     { color: rgba(255,255,255,0.55) !important; }
+.subscription_group[data-shotz="onetime"] .shotz-unit { color: rgba(13,13,13,0.50) !important; }
+
+/* ── Chevron ────────────────────────────────────────────────── */
+.shotz-chevron {
+  flex-shrink: 0 !important;
+  width: 22px !important;
+  height: 22px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 0.45 !important;
+  transition: transform 0.26s ease, opacity 0.18s !important;
+}
+.subscription_group[data-shotz="sub"][data-shotz-open="true"] .shotz-chevron {
+  transform: rotate(180deg) !important;
+  opacity: 0.75 !important;
+}
+
+/* ── Collapsible body ───────────────────────────────────────── */
+.shotz-body {
+  max-height: 0 !important;
+  overflow: hidden !important;
+  transition: max-height 0.34s cubic-bezier(0.4,0,0.2,1) !important;
+}
+.subscription_group[data-shotz="sub"][data-shotz-open="true"] .shotz-body {
+  max-height: 520px !important;
+}
+.shotz-body-inner {
+  padding: 0 16px 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+.shotz-divider {
+  height: 1px !important;
+  background: rgba(203,255,0,0.18) !important;
+  margin-bottom: 2px !important;
+}
+
+/* ── Selling plan list (frequency options) ──────────────────── */
+.subscription_group[data-shotz="sub"] .group_list {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+.subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button {
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  cursor: pointer !important;
+  width: 100% !important;
+  margin: 0 !important;
+  align-items: center !important;
+}
+.subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button span {
+  color: rgba(255,255,255,0.85) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+.subscription_group[data-shotz="sub"] .group_list_item .in_widget_price {
+  display: none !important;
+}
+.subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button:has(input:checked) {
+  background: rgba(203,255,0,0.08) !important;
+  border-color: rgba(203,255,0,0.35) !important;
+}
+.subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button:has(input:checked) span {
+  color: #CBFF00 !important;
+  font-weight: 700 !important;
+}
+
+/* ── Policy text ────────────────────────────────────────────── */
+.subscription_group[data-shotz="sub"] .shopify_subscriptions_app_policy {
+  font-size: 10.5px !important;
+  color: rgba(255,255,255,0.35) !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+}
+
+/* ── Injected feature list ──────────────────────────────────── */
+.shotz-features {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 9px !important;
+}
+.shotz-feature {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  font-size: 12.5px !important;
+  color: rgba(255,255,255,0.78) !important;
+  line-height: 1.45 !important;
+}
+.shotz-check {
+  flex-shrink: 0 !important;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 50% !important;
+  background: #CBFF00 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-top: 1px !important;
+}
+
+/* ── Mobile ─────────────────────────────────────────────────── */
+@media (max-width: 749px) {
+  .shotz-hd          { padding: 12px 14px !important; gap: 8px !important; }
+  .shotz-body-inner  { padding: 0 14px 14px !important; }
+  .shotz-price       { font-size: 14px !important; }
+  .shotz-label       { font-size: 10.5px !important; }
+  .shotz-badge       { font-size: 9px !important; padding: 2px 7px !important; }
+  .shotz-feature     { font-size: 11.5px !important; }
+}
+
 body {
   color: var(--color-foreground);
   background: var(--color-background);

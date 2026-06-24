@@ -37,7 +37,7 @@
 
 /* ── Subscribe card — dark ──────────────────────────────────── */
 .subscription_group[data-shotz="sub"] {
-  background: #0D0D0D !important;
+  background: #fff !important;
   border: 2px solid transparent !important;
   color: #fff !important;
 }
@@ -141,7 +141,7 @@
   text-transform: uppercase !important;
   line-height: 1.2 !important;
 }
-.subscription_group[data-shotz="sub"] .shotz-label     { color: #fff !important; }
+.subscription_group[data-shotz="sub"] .shotz-label     { color: #0D0D0D !important; }
 .subscription_group[data-shotz="onetime"] .shotz-label { color: #0D0D0D !important; }
 
 .shotz-badge {
@@ -174,7 +174,7 @@
   line-height: 1.1 !important;
   white-space: nowrap !important;
 }
-.subscription_group[data-shotz="sub"] .shotz-price     { color: #fff !important; }
+.subscription_group[data-shotz="sub"] .shotz-price     { color: #0D0D0D !important; }
 .subscription_group[data-shotz="onetime"] .shotz-price { color: #0D0D0D !important; }
 
 .shotz-compare {

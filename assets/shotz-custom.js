@@ -7,6 +7,7 @@
    ───────────────────────────────────────────────────────────────── */
 (function () {
   /* ── Configurable ──────────────────────────────────────────── */
+  var PLAN_TITLE  = 'Escolha uma das opções:';
   var SUB_LABEL   = 'Assine & Economize';
   var ONE_LABEL   = 'COMPRA ÚNICA';
   var FREQ_LABEL  = 'Frequência de entrega:';
@@ -57,6 +58,12 @@
     var variantId = section.getAttribute('data-variant-id');
     var planCard  = section.querySelector('.plan_card');
     if (!planCard) return;
+
+    /* ── Section title above the cards ──────────────────────────── */
+    var planTitle = document.createElement('p');
+    planTitle.className = 'shotz-plan-title';
+    planTitle.textContent = PLAN_TITLE;
+    planCard.parentNode.insertBefore(planTitle, planCard);
 
     /* Find sub and onetime groups */
     var subGroup = null, oneGroup = null;

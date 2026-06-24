@@ -297,6 +297,17 @@
   margin-top: 1px !important;
 }
 
+/* ── Section title above cards ──────────────────────────────── */
+.shotz-plan-title {
+  font-family: Outfit, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #666666 !important;
+  margin: 0 0 8px 0 !important;
+  padding: 0 !important;
+  line-height: 1.4 !important;
+}
+
 /* ── Mobile ─────────────────────────────────────────────────── */
 @media (max-width: 749px) {
   .shotz-hd          { padding: 11px 12px !important; gap: 8px !important; }

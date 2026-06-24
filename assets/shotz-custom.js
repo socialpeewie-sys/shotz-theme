@@ -99,7 +99,7 @@
       '<span class="shotz-title-col">' +
         '<span class="shotz-label">' + planTitle + '</span>' +
         (savePct > 0
-          ? '<span class="shotz-badge">Economiza <span data-shotz-pct-b>' + savePct + '</span>&nbsp;%</span>'
+          ? '<span class="shotz-badge">Economize <span data-shotz-pct-b>' + savePct + '</span>%</span>'
           : '') +
       '</span>' +
       '<span class="shotz-price-col">' +

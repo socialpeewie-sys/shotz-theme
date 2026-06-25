@@ -201,12 +201,68 @@
       ],
       "name": "Hero com benefícios",
       "settings": {}
+    },
+    "17824113349f43bc3c": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_f3d7375_yhkHXd": {
+          "type": "ai_gen_block_f3d7375",
+          "settings": {
+            "title": "Shotz vs. whey tradicional vs. suco de colágeno",
+            "title_size": 36,
+            "title_color": "#000000",
+            "shotz_name": "Shotz",
+            "whey_name": "Whey tradicional",
+            "collagen_name": "Suco / refri de colágeno",
+            "attr_1_name": "18g de proteína real",
+            "attr_1_shotz": true,
+            "attr_1_whey": true,
+            "attr_1_collagen": false,
+            "attr_2_name": "Colágeno completo",
+            "attr_2_shotz": true,
+            "attr_2_whey": false,
+            "attr_2_collagen": false,
+            "attr_3_name": "Zero açúcar",
+            "attr_3_shotz": true,
+            "attr_3_whey": true,
+            "attr_3_collagen": false,
+            "attr_4_name": "Textura leve, pronta pra beber",
+            "attr_4_shotz": true,
+            "attr_4_whey": false,
+            "attr_4_collagen": true,
+            "attr_5_name": "Gosto de suco, sem sabor artificial",
+            "attr_5_shotz": true,
+            "attr_5_whey": false,
+            "attr_5_collagen": true,
+            "attr_6_name": "Sem lactose, não estufa",
+            "attr_6_shotz": true,
+            "attr_6_whey": false,
+            "attr_6_collagen": true,
+            "shotz_column_bg_color": "#007CF8",
+            "shotz_column_text_color": "#FBF7F3",
+            "check_icon_color": "#007CF8",
+            "check_icon_stroke": "#F1E9DE",
+            "cross_icon_color": "#FF6B5A",
+            "cross_icon_stroke": "#FFFFFF",
+            "background_image_opacity": 20,
+            "table_background_color": "#F1E9DE",
+            "table_text_color": "#000000",
+            "table_border_radius": 20
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_f3d7375_yhkHXd"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "hero_jVaWmY",
     "marquee_n63VUE",
     "variants_grid_dNm8hc",
-    "blocks_rCKAQq"
+    "blocks_rCKAQq",
+    "17824113349f43bc3c"
   ]
 }

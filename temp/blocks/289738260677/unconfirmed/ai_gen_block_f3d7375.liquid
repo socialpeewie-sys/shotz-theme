@@ -1,6 +1,983 @@
+{% doc %}
+  @prompt
+    Crie uma nova seção customizada para o meu tema (Horizon) chamada 
+    "Comparativo Shotz", que renderize uma tabela comparativa de produto.
+    
+    ESTRUTURA: tabela com 4 colunas
+    - Coluna 1: nome do atributo (texto)
+    - Coluna 2: "Shotz" (coluna em destaque)
+    - Coluna 3: "Whey tradicional"
+    - Coluna 4: "Suco / refri de colágeno"
+    6 linhas de atributos. Cada célula das 3 colunas de produto mostra um ícone 
+    de check (✓, positivo) ou X (✗, negativo) dentro de um círculo.
+    
+    ESTILO (identidade da marca Shotz):
+    - Fundo da tabela: preto (#0D0D0D), cantos arredondados
+    - Coluna "Shotz": faixa vertical verde-limão neon (#CBFF00) com texto preto
+    - Colunas "Whey" e "Suco de colágeno": painel escuro com texto branco
+    - Check: círculo verde neon (#CBFF00) com ícone preto
+    - X: círculo vermelho coral (#FF6B5A) com ícone branco
+    - Tipografia limpa, pesos leves, visual premium e flat (sem gradientes pesados)
+    - Totalmente responsiva (em mobile, manter as colunas legíveis)
+    
+    CONTEÚDO (linhas e marcações):
+    1. 18g de proteína real             → Shotz ✓ | Whey ✓ | Colágeno ✗
+    2. Colágeno completo                → Shotz ✓ | Whey ✗ | Colágeno ✗
+    3. Zero açúcar                      → Shotz ✓ | Whey ✓ | Colágeno ✗
+    4. Textura leve, pronta pra beber   → Shotz ✓ | Whey ✗ | Colágeno ✓
+    5. Gosto de suco, sem sabor artificial → Shotz ✓ | Whey ✗ | Colágeno ✓
+    6. Sem lactose, não estufa          → Shotz ✓ | Whey ✗ | Colágeno ✓
+    
+    REQUISITOS TÉCNICOS:
+    - Crie como uma section com {% schema %}, para eu poder editar título, 
+      atributos e marcações pelo editor de temas sem mexer no código.
+    - Cada linha deve ser um "block" no schema (com campos: nome do atributo + 
+      3 toggles de check/X), para eu adicionar ou remover linhas pelo editor.
+    - Inclua um título editável no topo: "Shotz vs. whey tradicional vs. suco de colágeno".
+    - Deixe um espaço/campo de imagem no cabeçalho de cada coluna de produto., preciso poder alterar a cor da coluna da SHOTZ e também adicionar uma imagem de fundo a tabela, preciso alterar a cor da tabela, preciso mudar a cor apenas da coluna do shotz, e também do texto da tabela
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .shotz-comparison-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 40px 20px;
+  }
+
+  .shotz-comparison__container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .shotz-comparison__title-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    font-weight: 600;
+  }
+
+  .shotz-comparison__table-wrapper-{{ ai_gen_id }} {
+    background-color: {{ block.settings.table_background_color }};
+    border-radius: {{ block.settings.table_border_radius }}px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+
+  {% if block.settings.background_image %}
+    .shotz-comparison__table-wrapper-{{ ai_gen_id }}::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('{{ block.settings.background_image | image_url: width: 2000 }}');
+      background-size: cover;
+      background-position: center;
+      opacity: {{ block.settings.background_image_opacity | divided_by: 100.0 }};
+      pointer-events: none;
+      z-index: 0;
+    }
+  {% endif %}
+
+  .shotz-comparison__table-{{ ai_gen_id }} {
+    width: 100%;
+    border-collapse: collapse;
+    position: relative;
+    z-index: 1;
+  }
+
+  .shotz-comparison__header-row-{{ ai_gen_id }} {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .shotz-comparison__header-cell-{{ ai_gen_id }} {
+    padding: 30px 20px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .shotz-comparison__header-cell-{{ ai_gen_id }}:first-child {
+    text-align: left;
+    width: 30%;
+  }
+
+  .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(2) {
+    background-color: {{ block.settings.shotz_column_bg_color }};
+  }
+
+  .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(3),
+  .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(4) {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .shotz-comparison__product-image-{{ ai_gen_id }} {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 12px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .shotz-comparison__product-image-{{ ai_gen_id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .shotz-comparison__product-name-{{ ai_gen_id }} {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(2) .shotz-comparison__product-name-{{ ai_gen_id }} {
+    color: {{ block.settings.shotz_column_text_color }};
+  }
+
+  .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(3) .shotz-comparison__product-name-{{ ai_gen_id }},
+  .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(4) .shotz-comparison__product-name-{{ ai_gen_id }} {
+    color: #FFFFFF;
+  }
+
+  .shotz-comparison__row-{{ ai_gen_id }} {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .shotz-comparison__row-{{ ai_gen_id }}:last-child {
+    border-bottom: none;
+  }
+
+  .shotz-comparison__cell-{{ ai_gen_id }} {
+    padding: 24px 20px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .shotz-comparison__cell-{{ ai_gen_id }}:first-child {
+    text-align: left;
+    color: {{ block.settings.table_text_color }};
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .shotz-comparison__cell-{{ ai_gen_id }}:nth-child(2) {
+    background-color: {{ block.settings.shotz_column_bg_color | color_modify: 'alpha', 0.08 }};
+  }
+
+  .shotz-comparison__icon-wrapper-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check {
+    background-color: {{ block.settings.check_icon_color }};
+  }
+
+  .shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross {
+    background-color: {{ block.settings.cross_icon_color }};
+  }
+
+  .shotz-comparison__icon-{{ ai_gen_id }} {
+    width: 20px;
+    height: 20px;
+  }
+
+  .shotz-comparison__icon-{{ ai_gen_id }}--check {
+    stroke: {{ block.settings.check_icon_stroke }};
+  }
+
+  .shotz-comparison__icon-{{ ai_gen_id }}--cross {
+    stroke: {{ block.settings.cross_icon_stroke }};
+  }
+
+  @media screen and (max-width: 768px) {
+    .shotz-comparison__table-{{ ai_gen_id }} {
+      display: block;
+    }
+
+    .shotz-comparison__header-row-{{ ai_gen_id }},
+    .shotz-comparison__row-{{ ai_gen_id }} {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 1px;
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .shotz-comparison__header-cell-{{ ai_gen_id }},
+    .shotz-comparison__cell-{{ ai_gen_id }} {
+      background-color: {{ block.settings.table_background_color }};
+      padding: 16px 10px;
+    }
+
+    .shotz-comparison__header-cell-{{ ai_gen_id }}:first-child,
+    .shotz-comparison__cell-{{ ai_gen_id }}:first-child {
+      grid-column: 1 / -1;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(2) {
+      background-color: {{ block.settings.shotz_column_bg_color }};
+    }
+
+    .shotz-comparison__cell-{{ ai_gen_id }}:nth-child(2) {
+      background-color: {{ block.settings.shotz_column_bg_color | color_modify: 'alpha', 0.08 }};
+    }
+
+    .shotz-comparison__product-image-{{ ai_gen_id }} {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 8px;
+    }
+
+    .shotz-comparison__product-name-{{ ai_gen_id }} {
+      font-size: 12px;
+    }
+
+    .shotz-comparison__cell-{{ ai_gen_id }}:first-child {
+      font-size: 14px;
+      padding: 20px 16px;
+    }
+
+    .shotz-comparison__icon-wrapper-{{ ai_gen_id }} {
+      width: 32px;
+      height: 32px;
+    }
+
+    .shotz-comparison__icon-{{ ai_gen_id }} {
+      width: 16px;
+      height: 16px;
+    }
+
+    .shotz-comparison__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.7 }}px;
+      margin-bottom: 30px;
+    }
+  }
+{% endstyle %}
+
+<shotz-comparison-{{ ai_gen_id }} class="shotz-comparison-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="shotz-comparison__container-{{ ai_gen_id }}">
+    {% if block.settings.title != blank %}
+      <h2 class="shotz-comparison__title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+    {% endif %}
+
+    <div class="shotz-comparison__table-wrapper-{{ ai_gen_id }}">
+      <table class="shotz-comparison__table-{{ ai_gen_id }}">
+        <thead>
+          <tr class="shotz-comparison__header-row-{{ ai_gen_id }}">
+            <th class="shotz-comparison__header-cell-{{ ai_gen_id }}"></th>
+            <th class="shotz-comparison__header-cell-{{ ai_gen_id }}">
+              {% if block.settings.shotz_image %}
+                <div class="shotz-comparison__product-image-{{ ai_gen_id }}">
+                  <img
+                    src="{{ block.settings.shotz_image | image_url: width: 160 }}"
+                    alt="{{ block.settings.shotz_name | escape }}"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                  >
+                </div>
+              {% endif %}
+              <p class="shotz-comparison__product-name-{{ ai_gen_id }}">{{ block.settings.shotz_name }}</p>
+            </th>
+            <th class="shotz-comparison__header-cell-{{ ai_gen_id }}">
+              {% if block.settings.whey_image %}
+                <div class="shotz-comparison__product-image-{{ ai_gen_id }}">
+                  <img
+                    src="{{ block.settings.whey_image | image_url: width: 160 }}"
+                    alt="{{ block.settings.whey_name | escape }}"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                  >
+                </div>
+              {% endif %}
+              <p class="shotz-comparison__product-name-{{ ai_gen_id }}">{{ block.settings.whey_name }}</p>
+            </th>
+            <th class="shotz-comparison__header-cell-{{ ai_gen_id }}">
+              {% if block.settings.collagen_image %}
+                <div class="shotz-comparison__product-image-{{ ai_gen_id }}">
+                  <img
+                    src="{{ block.settings.collagen_image | image_url: width: 160 }}"
+                    alt="{{ block.settings.collagen_name | escape }}"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                  >
+                </div>
+              {% endif %}
+              <p class="shotz-comparison__product-name-{{ ai_gen_id }}">{{ block.settings.collagen_name }}</p>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="shotz-comparison__row-{{ ai_gen_id }}">
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">{{ block.settings.attr_1_name }}</td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_1_shotz %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_1_whey %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_1_collagen %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+          </tr>
+          <tr class="shotz-comparison__row-{{ ai_gen_id }}">
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">{{ block.settings.attr_2_name }}</td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_2_shotz %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_2_whey %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_2_collagen %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+          </tr>
+          <tr class="shotz-comparison__row-{{ ai_gen_id }}">
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">{{ block.settings.attr_3_name }}</td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_3_shotz %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_3_whey %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_3_collagen %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+          </tr>
+          <tr class="shotz-comparison__row-{{ ai_gen_id }}">
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">{{ block.settings.attr_4_name }}</td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_4_shotz %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_4_whey %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_4_collagen %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+          </tr>
+          <tr class="shotz-comparison__row-{{ ai_gen_id }}">
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">{{ block.settings.attr_5_name }}</td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_5_shotz %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_5_whey %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_5_collagen %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+          </tr>
+          <tr class="shotz-comparison__row-{{ ai_gen_id }}">
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">{{ block.settings.attr_6_name }}</td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_6_shotz %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_6_whey %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+            <td class="shotz-comparison__cell-{{ ai_gen_id }}">
+              {% if block.settings.attr_6_collagen %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--check">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--check" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              {% else %}
+                <div class="shotz-comparison__icon-wrapper-{{ ai_gen_id }} shotz-comparison__icon-wrapper-{{ ai_gen_id }}--cross">
+                  <svg class="shotz-comparison__icon-{{ ai_gen_id }} shotz-comparison__icon-{{ ai_gen_id }}--cross" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </div>
+              {% endif %}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</shotz-comparison-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ShotzComparison{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+      }
+    }
+
+    customElements.define('shotz-comparison-{{ ai_gen_id }}', ShotzComparison{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Comparativo Shotz",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Título da seção",
+      "default": "Shotz vs. whey tradicional vs. suco de colágeno"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamanho do título",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Cor do título",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Produtos"
+    },
+    {
+      "type": "text",
+      "id": "shotz_name",
+      "label": "Nome Shotz",
+      "default": "Shotz"
+    },
+    {
+      "type": "image_picker",
+      "id": "shotz_image",
+      "label": "Imagem Shotz"
+    },
+    {
+      "type": "text",
+      "id": "whey_name",
+      "label": "Nome Whey",
+      "default": "Whey tradicional"
+    },
+    {
+      "type": "image_picker",
+      "id": "whey_image",
+      "label": "Imagem Whey"
+    },
+    {
+      "type": "text",
+      "id": "collagen_name",
+      "label": "Nome Colágeno",
+      "default": "Suco / refri de colágeno"
+    },
+    {
+      "type": "image_picker",
+      "id": "collagen_image",
+      "label": "Imagem Colágeno"
+    },
+    {
+      "type": "header",
+      "content": "Atributo 1"
+    },
+    {
+      "type": "text",
+      "id": "attr_1_name",
+      "label": "Nome",
+      "default": "18g de proteína real"
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_1_shotz",
+      "label": "Shotz",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_1_whey",
+      "label": "Whey",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_1_collagen",
+      "label": "Colágeno",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Atributo 2"
+    },
+    {
+      "type": "text",
+      "id": "attr_2_name",
+      "label": "Nome",
+      "default": "Colágeno completo"
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_2_shotz",
+      "label": "Shotz",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_2_whey",
+      "label": "Whey",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_2_collagen",
+      "label": "Colágeno",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Atributo 3"
+    },
+    {
+      "type": "text",
+      "id": "attr_3_name",
+      "label": "Nome",
+      "default": "Zero açúcar"
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_3_shotz",
+      "label": "Shotz",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_3_whey",
+      "label": "Whey",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_3_collagen",
+      "label": "Colágeno",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Atributo 4"
+    },
+    {
+      "type": "text",
+      "id": "attr_4_name",
+      "label": "Nome",
+      "default": "Textura leve, pronta pra beber"
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_4_shotz",
+      "label": "Shotz",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_4_whey",
+      "label": "Whey",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_4_collagen",
+      "label": "Colágeno",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Atributo 5"
+    },
+    {
+      "type": "text",
+      "id": "attr_5_name",
+      "label": "Nome",
+      "default": "Gosto de suco, sem sabor artificial"
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_5_shotz",
+      "label": "Shotz",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_5_whey",
+      "label": "Whey",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_5_collagen",
+      "label": "Colágeno",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Atributo 6"
+    },
+    {
+      "type": "text",
+      "id": "attr_6_name",
+      "label": "Nome",
+      "default": "Sem lactose, não estufa"
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_6_shotz",
+      "label": "Shotz",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_6_whey",
+      "label": "Whey",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "attr_6_collagen",
+      "label": "Colágeno",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Cores da coluna Shotz"
+    },
+    {
+      "type": "color",
+      "id": "shotz_column_bg_color",
+      "label": "Cor de fundo",
+      "default": "#CBFF00"
+    },
+    {
+      "type": "color",
+      "id": "shotz_column_text_color",
+      "label": "Cor do texto",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Cores dos ícones"
+    },
+    {
+      "type": "color",
+      "id": "check_icon_color",
+      "label": "Cor do círculo do check",
+      "default": "#CBFF00"
+    },
+    {
+      "type": "color",
+      "id": "check_icon_stroke",
+      "label": "Cor do ícone do check",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "cross_icon_color",
+      "label": "Cor do círculo do X",
+      "default": "#FF6B5A"
+    },
+    {
+      "type": "color",
+      "id": "cross_icon_stroke",
+      "label": "Cor do ícone do X",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Imagem de fundo"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Imagem de fundo da tabela"
+    },
+    {
+      "type": "range",
+      "id": "background_image_opacity",
+      "label": "Opacidade da imagem de fundo",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Estilo da tabela"
+    },
+    {
+      "type": "color",
+      "id": "table_background_color",
+      "label": "Cor de fundo",
+      "default": "#0D0D0D"
+    },
+    {
+      "type": "color",
+      "id": "table_text_color",
+      "label": "Cor do texto",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "table_border_radius",
+      "label": "Arredondamento",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparativo Shotz"
+    }
+  ]
+}
 {% endschema %}

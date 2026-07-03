@@ -1,0 +1,110 @@
+{%- doc -%}
+  Renders the free shipping progress bar for the cart drawer.
+
+  The threshold is a merchant-set theme setting (in reais). The storefront
+  cannot read the real value of a shipping rate, so this setting is the
+  source of truth for the bar; the matching shipping rate must be configured
+  separately in the Shopify admin.
+
+  @example
+  {% render 'cart-free-shipping-bar' %}
+{%- enddoc -%}
+
+{% liquid
+  assign threshold_cents = settings.cart_free_shipping_threshold | times: 100
+%}
+
+{% if settings.cart_free_shipping_bar_enabled and threshold_cents > 0 %}
+  <script
+    src="{{ 'cart-free-shipping-bar.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+
+  <cart-free-shipping-bar
+    class="cart-free-shipping-bar"
+    data-threshold-cents="{{ threshold_cents }}"
+    role="progressbar"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-label="Progresso para frete grátis"
+  >
+    <div class="cart-free-shipping-bar__row">
+      <span class="cart-free-shipping-bar__icon">
+        {{- 'icon-truck.svg' | inline_asset_content -}}
+      </span>
+      <p
+        class="cart-free-shipping-bar__message"
+        ref="message"
+      ></p>
+    </div>
+    <div class="cart-free-shipping-bar__track">
+      <div
+        class="cart-free-shipping-bar__fill"
+        ref="fill"
+      ></div>
+    </div>
+  </cart-free-shipping-bar>
+{% endif %}
+
+{% stylesheet %}
+  .cart-free-shipping-bar {
+    display: block;
+    background-color: var(--blue-tint);
+    border: var(--style-border-width) solid var(--brand-border);
+    border-radius: var(--style-border-radius-buttons-primary);
+    padding: var(--padding-sm) var(--padding-md);
+    margin-bottom: var(--margin-md);
+  }
+
+  .cart-free-shipping-bar[hidden] {
+    display: none;
+  }
+
+  .cart-free-shipping-bar__row {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-2xs);
+    margin-bottom: var(--margin-2xs);
+  }
+
+  .cart-free-shipping-bar__icon {
+    display: flex;
+    flex-shrink: 0;
+    width: var(--icon-size-sm);
+    height: var(--icon-size-sm);
+    color: var(--brand-blue);
+  }
+
+  .cart-free-shipping-bar__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .cart-free-shipping-bar__message {
+    margin: 0;
+    font-size: var(--font-size--sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-dark);
+  }
+
+  .cart-free-shipping-bar__track {
+    width: 100%;
+    height: 6px;
+    border-radius: var(--style-border-radius-pills, 999px);
+    background-color: rgb(var(--color-foreground-rgb, 13 13 13) / 0.1);
+    overflow: hidden;
+  }
+
+  .cart-free-shipping-bar__fill {
+    width: 0%;
+    height: 100%;
+    border-radius: inherit;
+    background-color: var(--brand-blue);
+    transition: width 0.4s var(--animation-easing, ease);
+  }
+
+  .cart-free-shipping-bar--complete .cart-free-shipping-bar__fill {
+    background-color: var(--brand-blue);
+  }
+{% endstylesheet %}

@@ -253,7 +253,7 @@
 
                       {%- if item.line_level_discount_allocations.size > 0 -%}
                         <ul
-                          class="cart-items__line-discounts list-unstyled"
+                          class="list-unstyled"
                           role="list"
                         >
                           {%- for discount in item.line_level_discount_allocations -%}
@@ -375,21 +375,6 @@
                   {%- endif -%}
                 </td>
               </tr>
-              {%- if item.variant.selling_plan_allocations.size > 0 or item.selling_plan_allocation -%}
-                <tr
-                  class="cart-items__subscription-row"
-                  role="row"
-                  data-key="{{ item.key }}"
-                >
-                  <td
-                    class="cart-items__subscription-cell"
-                    role="cell"
-                    colspan="4"
-                  >
-                    {% render 'cart-subscription-card', item: item, line: item.index | plus: 1 %}
-                  </td>
-                </tr>
-              {%- endif -%}
             {% endfor %}
           </tbody>
         </table>
@@ -944,43 +929,5 @@
       filter: none;
       opacity: 1;
     }
-  }
-
-  /* Subscription upsell/status row rendered below a cart line item */
-  .cart-items__subscription-row {
-    display: block;
-  }
-
-  .cart-items__subscription-cell {
-    display: block;
-    padding-block-start: var(--padding-sm);
-  }
-
-  /* Brand recolor: mini-cart (cart drawer) only */
-  .cart-drawer .cart-items__line-discounts li {
-    color: var(--brand-blue);
-    font-weight: var(--font-weight-bold);
-  }
-
-  .cart-drawer .quantity-selector {
-    background-color: var(--card-bg);
-    border-color: var(--brand-border);
-    color: var(--text-dark);
-  }
-
-  .cart-drawer .quantity-selector:hover {
-    background-color: var(--card-bg);
-  }
-
-  .cart-drawer .quantity-selector:has(:focus-visible) {
-    border-color: var(--brand-blue);
-  }
-
-  .cart-drawer .quantity-selector :is(.quantity-minus, .quantity-plus) {
-    color: var(--text-dark);
-  }
-
-  .cart-drawer .quantity-selector input[type='number'] {
-    color: var(--text-dark);
   }
 {% endstylesheet %}

@@ -225,7 +225,6 @@
                 <scroll-hint
                   class="cart-drawer__items"
                 >
-                  {% render 'cart-free-shipping-bar' %}
                   {% render 'cart-products' %}
                 </scroll-hint>
 
@@ -267,18 +266,6 @@
 ></script>
 
 {% stylesheet %}
-  /* Brand palette for the mini-cart (cart drawer). Centralized here so every
-     cart-drawer snippet (products, summary, subscription card, shipping bar)
-     can reference the same tokens. */
-  :root {
-    --brand-blue: #0a84ff;
-    --brand-cream: #fbf8f4;
-    --card-bg: #ffffff;
-    --text-dark: #0d0d0d;
-    --brand-border: #e9e4dd;
-    --blue-tint: rgba(10, 132, 255, 0.1);
-  }
-
   .header {
     --account-offset-top: calc(
       var(--header-group-height) + (var(--header-height) * var(--transparent-header-offset-boolean))
@@ -364,7 +351,7 @@
     padding: 0;
     border-left: var(--style-border-drawer);
     box-shadow: var(--shadow-drawer);
-    background-color: var(--brand-cream);
+    background-color: var(--color-background);
 
     @media screen and (min-width: 750px) {
       width: var(--sidebar-width);
@@ -388,7 +375,7 @@
     display: flex;
     flex-direction: column;
     padding: 0;
-    background-color: var(--brand-cream);
+    background-color: var(--color-background);
     flex-grow: 1;
     overflow-y: auto;
   }
@@ -398,7 +385,6 @@
     align-items: center;
     gap: var(--gap-xs);
     margin-bottom: 0;
-    color: var(--text-dark);
   }
 
   .cart-drawer__close-button {
@@ -446,7 +432,7 @@
     gap: var(--gap-xl);
     padding: var(--cart-drawer-summary-padding);
     margin-top: auto;
-    background-color: var(--brand-cream);
+    background-color: var(--color-background);
     /* stylelint-disable-next-line color-named */
     mask-image: linear-gradient(to bottom, transparent, black var(--cart-drawer-summary-padding));
 
@@ -500,7 +486,7 @@
 
   .cart-drawer__items .cart-items__table-row {
     padding-bottom: var(--gap-xl);
-    border-bottom: var(--style-border-width) solid var(--brand-border);
+    border-bottom: var(--style-border-width) solid var(--color-border);
     margin-bottom: var(--gap-xl);
   }
 
@@ -524,7 +510,7 @@
   }
 
   .cart-drawer__header {
-    background-color: var(--brand-cream);
+    background-color: var(--color-background);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -630,11 +616,11 @@
   }
 
   .cart-drawer__heading .cart-bubble .cart-bubble__background {
-    background-color: var(--brand-blue);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
   }
 
   .cart-drawer__heading .cart-bubble__text {
-    color: #ffffff;
+    color: var(--color-foreground);
     font-size: clamp(var(--font-size--3xs), 0.75em, var(--font-size--xs));
   }
 

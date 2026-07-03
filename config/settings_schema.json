@@ -1728,23 +1728,6 @@
       },
       {
         "type": "header",
-        "content": "Barra de frete grátis"
-      },
-      {
-        "type": "checkbox",
-        "id": "cart_free_shipping_bar_enabled",
-        "label": "Ativar barra de frete grátis no mini-cart",
-        "default": true
-      },
-      {
-        "type": "number",
-        "id": "cart_free_shipping_threshold",
-        "label": "Valor mínimo para frete grátis",
-        "info": "Valor total do carrinho, em reais, necessário para o cliente ganhar frete grátis. É apenas informativo: configure a regra de frete correspondente separadamente no admin da Shopify.",
-        "default": 300
-      },
-      {
-        "type": "header",
         "content": "t:content.cart_features"
       },
       {

@@ -248,7 +248,7 @@
                       {%- endif -%}
 
                       {%- if item.selling_plan_allocation -%}
-                        <p>{{ item.selling_plan_allocation.selling_plan.name }}</p>
+                        <p class="cart-items__subscription-badge">{{ item.selling_plan_allocation.selling_plan.name }}</p>
                       {%- endif -%}
 
                       {%- if item.line_level_discount_allocations.size > 0 -%}
@@ -851,6 +851,23 @@
   .cart-items__properties {
     display: block;
     margin-block-start: var(--margin-2xs);
+  }
+
+  .cart-items__subscription-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    background: #0A84FF;
+    color: #fff;
+    font-family: Outfit, sans-serif;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 100px;
+    line-height: 1.4;
+    margin-block-start: var(--margin-2xs) !important;
   }
 
   .cart-items__property {

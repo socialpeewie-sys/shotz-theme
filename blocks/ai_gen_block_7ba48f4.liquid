@@ -220,6 +220,9 @@
     position: relative;
     transition: all 0.2s ease;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .ai-quantity-card-{{ ai_gen_id }}.selected .ai-quantity-radio-{{ ai_gen_id }} {
@@ -227,16 +230,15 @@
     background-color: {{ block.settings.radio_selected_background }};
   }
 
-  .ai-quantity-card-{{ ai_gen_id }}.selected .ai-quantity-radio-{{ ai_gen_id }}::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50%;
-    height: 50%;
-    background-color: {{ block.settings.radio_selected_dot_color }};
-    border-radius: 50%;
+  .ai-quantity-radio-check-{{ ai_gen_id }} {
+    width: 60%;
+    height: 60%;
+    fill: {{ block.settings.radio_selected_dot_color }};
+    display: none;
+  }
+
+  .ai-quantity-card-{{ ai_gen_id }}.selected .ai-quantity-radio-check-{{ ai_gen_id }} {
+    display: block;
   }
 
   .ai-quantity-title-{{ ai_gen_id }} {
@@ -405,7 +407,11 @@
 
             {%- comment -%} Seção esquerda: radio + labels {%- endcomment -%}
             <div class="q-left-{{ ai_gen_id }}">
-              <div class="ai-quantity-radio-{{ ai_gen_id }}"></div>
+              <div class="ai-quantity-radio-{{ ai_gen_id }}">
+                <svg class="ai-quantity-radio-check-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                </svg>
+              </div>
               <div class="q-label-{{ ai_gen_id }}">
                 <div class="q-row1-{{ ai_gen_id }}">
                   <span class="ai-quantity-title-{{ ai_gen_id }}">{{ variant_quantity }}</span>
@@ -472,7 +478,8 @@
           ? '{{ block.settings.radio_selected_border_color }}'
           : '{{ block.settings.radio_border_color }}';
         radioEl.style.background = isSelected ? '{{ block.settings.radio_selected_background }}' : '#fff';
-        radioEl.style.boxShadow = isSelected ? 'inset 0 0 0 3px #fff' : 'none';
+        const checkEl = radioEl.querySelector('.q-radio-check');
+        if (checkEl) checkEl.style.display = isSelected ? 'block' : 'none';
       }
     });
   }
@@ -514,7 +521,7 @@
 
       // Seção esquerda: radio + labels
       html += `<div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">`;
-      html += `<div class="q-radio" style="width:{{ block.settings.radio_size }}px;height:{{ block.settings.radio_size }}px;border-radius:50%;border:{{ block.settings.radio_border_width }}px solid {{ block.settings.radio_border_color }};background:#fff;flex-shrink:0;transition:all 0.2s;"></div>`;
+      html += `<div class="q-radio" style="width:{{ block.settings.radio_size }}px;height:{{ block.settings.radio_size }}px;border-radius:50%;border:{{ block.settings.radio_border_width }}px solid {{ block.settings.radio_border_color }};background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;"><svg class="q-radio-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:60%;height:60%;fill:{{ block.settings.radio_selected_dot_color }};display:none;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>`;
       html += `<div style="display:flex;flex-direction:column;gap:3px;">`;
       const freeShipMinQty = {{ block.settings.free_shipping_min_qty | default: 0 }};
       html += `<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">`;
@@ -1070,7 +1077,7 @@
     {
       "type": "color",
       "id": "radio_selected_dot_color",
-      "label": "Ponto interno",
+      "label": "Cor do ícone de check",
       "default": "#ffffff"
     },
     {

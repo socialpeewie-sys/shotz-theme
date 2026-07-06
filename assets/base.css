@@ -105,12 +105,14 @@
   background: #0A84FF !important;
   border-color: #0A84FF !important;
 }
-.subscription_group[data-shotz][data-shotz-sel="true"] .shotz-dot::after {
-  content: '' !important;
-  width: 6px !important;
-  height: 6px !important;
-  border-radius: 50% !important;
-  background: #fff !important;
+.shotz-dot-check {
+  width: 60% !important;
+  height: 60% !important;
+  fill: #fff !important;
+  display: none !important;
+}
+.subscription_group[data-shotz][data-shotz-sel="true"] .shotz-dot-check {
+  display: block !important;
 }
 
 /* ── Title + badge column ───────────────────────────────────── */

@@ -7,6 +7,10 @@
    ───────────────────────────────────────────────────────────────── */
 (function () {
   /* ── Configurable ──────────────────────────────────────────── */
+  var DOT_CHECK_SVG =
+    '<svg class="shotz-dot-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">' +
+      '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>' +
+    '</svg>';
   var PLAN_TITLE  = 'Escolha uma das opções:';
   var SUB_LABEL   = 'Assine & Economize';
   var ONE_LABEL   = 'COMPRA ÚNICA';
@@ -122,7 +126,7 @@
     var subHd = document.createElement('div');
     subHd.className = 'shotz-hd';
     subHd.innerHTML =
-      '<span class="shotz-dot"></span>' +
+      '<span class="shotz-dot">' + DOT_CHECK_SVG + '</span>' +
       '<span class="shotz-title-col">' +
         '<span class="shotz-label">' + planTitle + '</span>' +
         '<span class="shotz-badge" data-shotz-badge' + (savePct <= 0 ? ' style="display:none"' : '') + '>Economize ' + (savePct || 0) + '%</span>' +
@@ -196,7 +200,7 @@
     var oneHd = document.createElement('div');
     oneHd.className = 'shotz-hd';
     oneHd.innerHTML =
-      '<span class="shotz-dot"></span>' +
+      '<span class="shotz-dot">' + DOT_CHECK_SVG + '</span>' +
       '<span class="shotz-title-col">' +
         '<span class="shotz-label">' + ONE_LABEL + '</span>' +
       '</span>' +

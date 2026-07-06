@@ -47,7 +47,7 @@
           "static": true,
           "settings": {
             "extend_summary": true,
-            "inherit_color_scheme": false,
+            "inherit_color_scheme": true,
             "color_scheme": "scheme-2",
             "border": "none",
             "border_width": 1,

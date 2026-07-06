@@ -72,6 +72,7 @@
     "icon_stroke": "default",
     "input_border_width": 1,
     "inputs_border_radius": 6,
+    "popover_color_scheme": "scheme-1",
     "popover_border_radius": 14,
     "popover_border": "none",
     "currency_code_enabled_product_pages": false,
@@ -773,8 +774,6 @@
     }
   },
   "platform_customizations": {
-    "custom_css": [
-      ".product-media {max-width: 550px; margin: 0 auto;}"
-    ]
+    "custom_css": []
   }
 }

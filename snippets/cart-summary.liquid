@@ -221,9 +221,6 @@
         {% endform %}
       </span>
     {% endif %}
-    <div class="cart-totals__item cart-totals__tax-note cart-primary-typography">
-      {% render 'tax-info', has_discounts_enabled: settings.show_add_discount_code %}
-    </div>
   </div>
 </div>
 
@@ -279,14 +276,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-
-  .cart-totals__tax-note {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
-  }
-
-  .cart-totals__tax-note small {
-    font-size: var(--font-size--2xs);
   }
 
   .cart-discounts {

@@ -288,7 +288,7 @@
     var badge = section.querySelector('[data-shotz-badge]');
     if (!badge) return;
     if (pct > 0) {
-      badge.textContent = 'Economize ' + pct + '%';
+      badge.textContent = 'Economize mais ' + pct + '%';
       badge.style.display = '';
     } else {
       badge.style.display = 'none';

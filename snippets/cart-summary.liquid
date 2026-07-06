@@ -490,16 +490,17 @@
     border-width: var(--style-border-width-inputs);
     border-color: var(--color-input-border);
     border-style: solid;
-    border-radius: var(--style-border-radius-inputs);
-    padding: var(--padding-sm) var(--padding-md);
+    border-radius: var(--style-border-radius-pills);
+    padding: var(--padding-sm) var(--padding-lg);
     height: 100%;
-    flex-grow: 1;
+    flex: 1;
     min-width: 0;
     font-size: var(--font-size--sm);
   }
 
   .cart-discount__input::placeholder {
     color: rgb(var(--color-input-text-rgb) / var(--opacity-subdued-text));
+    text-transform: uppercase;
   }
 
   .cart-discount__pill-code {
@@ -529,6 +530,10 @@
 
   .cart-discount__button {
     height: 100%;
+    flex: 0 0 auto;
+    padding-inline: var(--padding-xl);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
   }
 
   .cart-discount__content {
@@ -548,7 +553,7 @@
 
   .cart-discount__form {
     display: flex;
-    gap: var(--padding-md);
+    gap: var(--gap-xs);
     align-items: center;
     height: 100%;
     padding-block: var(--padding-2xs) var(--padding-sm);

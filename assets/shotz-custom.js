@@ -182,7 +182,7 @@
       li.innerHTML =
         '<span class="shotz-check">' +
           '<svg width="8" height="7" viewBox="0 0 8 7" fill="none">' +
-            '<path d="M1 3.5L3 5.5L7 1.5" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>' +
+            '<path d="M1 3.5L3 5.5L7 1.5" stroke="#0A84FF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>' +
           '</svg>' +
         '</span>' +
         '<span>' + text + '</span>';

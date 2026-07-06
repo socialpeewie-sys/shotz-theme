@@ -230,6 +230,7 @@
     "price_from": "From {{ price }}",
     "price_regular": "Regular price",
     "price_sale": "Sale price",
+    "you_save": "You save {{ amount }}",
     "price_filter_html": "The highest price is {{ price }}",
     "product_image": "Product image",
     "product_information": "Product information",

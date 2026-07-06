@@ -199,9 +199,20 @@
                   </div>
 
                   <div class="cart-items__variants-wrapper">
+                    {%- liquid
+                      assign line_savings = 0
+                      if item.variant.compare_at_price > item.original_price
+                        assign compare_at_unit_savings = item.variant.compare_at_price | minus: item.original_price
+                        assign line_savings = compare_at_unit_savings | times: item.quantity | plus: item.total_discount
+                      else
+                        assign line_savings = item.total_discount
+                      endif
+                    -%}
                     {%- if item.product.has_only_default_variant == false
                       or item.properties.size != 0
                       or item.selling_plan_allocation != null
+                      or item.line_level_discount_allocations.size > 0
+                      or line_savings > 0
                     -%}
                       {%- if item.product.has_only_default_variant == false and item.item_components.size == 0 -%}
                         <dl class="cart-items__variants">
@@ -253,13 +264,24 @@
 
                       {%- if item.line_level_discount_allocations.size > 0 -%}
                         <ul
-                          class="list-unstyled"
+                          class="cart-items__discounts list-unstyled"
                           role="list"
                         >
                           {%- for discount in item.line_level_discount_allocations -%}
-                            <li>{{ discount.discount_application.title | escape }}</li>
+                            <li class="cart-items__discount">
+                              <span class="cart-items__discount-label">
+                                {{- 'icon-discount.svg' | inline_asset_content -}}
+                                {{ discount.discount_application.title | escape }}
+                              </span>
+                              <span class="cart-items__discount-amount">-{{ discount.amount | money }}</span>
+                            </li>
                           {%- endfor -%}
                         </ul>
+                      {%- endif -%}
+
+                      {%- if line_savings > 0 -%}
+                        {%- assign line_savings_money = line_savings | money -%}
+                        <p class="cart-items__savings">{{ 'content.you_save' | t: amount: line_savings_money }}</p>
                       {%- endif -%}
                     {%- endif -%}
                   </div>
@@ -851,6 +873,48 @@
   .cart-items__properties {
     display: block;
     margin-block-start: var(--margin-2xs);
+  }
+
+  .cart-items__discounts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-3xs);
+    list-style: none;
+    padding: 0;
+    margin-block-start: var(--margin-2xs) !important;
+  }
+
+  .cart-items__discount {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--gap-2xs);
+    font-size: var(--font-size--xs);
+    color: var(--color-success);
+  }
+
+  .cart-items__discount-label {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-3xs);
+  }
+
+  .cart-items__discount-label svg {
+    width: var(--icon-size-xs);
+    height: var(--icon-size-xs);
+    flex-shrink: 0;
+  }
+
+  .cart-items__discount-amount {
+    font-weight: var(--font-weight-bold);
+    white-space: nowrap;
+  }
+
+  .cart-items__savings {
+    color: var(--color-success);
+    font-size: var(--font-size--xs);
+    font-weight: var(--font-weight-bold);
+    margin-block-start: var(--margin-3xs) !important;
   }
 
   .cart-items__subscription-badge {

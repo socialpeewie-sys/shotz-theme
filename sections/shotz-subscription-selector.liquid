@@ -317,7 +317,7 @@
         {%- comment -%} Economize R$ X,XX por ano {%- endcomment -%}
         <div class="sss-savings" data-sss-savings {% if annual_savings <= 0 %}style="display:none"{% endif %}>
           <span aria-hidden="true">💚</span>
-          <span>Economize mais <strong data-sss-savings-val>{{ annual_savings | money }}</strong> por ano</span>
+          <span>Economize <strong data-sss-savings-val>{{ annual_savings | money }}</strong> por ano</span>
         </div>
 
         {%- comment -%} Badge neon (schema: extra_discount_pct + show_free_shipping) {%- endcomment -%}

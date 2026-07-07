@@ -279,7 +279,7 @@
                         </ul>
                       {%- endif -%}
 
-                      {%- if line_savings > 0 -%}
+                      {%- if line_savings > 0 and item.line_level_discount_allocations.size == 0 -%}
                         {%- assign line_savings_money = line_savings | money -%}
                         <p class="cart-items__savings">{{ 'content.you_save' | t: amount: line_savings_money }}</p>
                       {%- endif -%}

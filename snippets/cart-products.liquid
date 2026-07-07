@@ -258,27 +258,6 @@
                         </dl>
                       {%- endif -%}
 
-                      {%- if item.selling_plan_allocation -%}
-                        <p class="cart-items__subscription-badge">Assinatura mensal</p>
-                      {%- endif -%}
-
-                      {%- if item.line_level_discount_allocations.size > 0 -%}
-                        <ul
-                          class="cart-items__discounts list-unstyled"
-                          role="list"
-                        >
-                          {%- for discount in item.line_level_discount_allocations -%}
-                            <li class="cart-items__discount">
-                              <span class="cart-items__discount-label">
-                                {{- 'icon-discount.svg' | inline_asset_content -}}
-                                {{ discount.discount_application.title | escape }}
-                              </span>
-                              <span class="cart-items__discount-amount">-{{ discount.amount | money }}</span>
-                            </li>
-                          {%- endfor -%}
-                        </ul>
-                      {%- endif -%}
-
                       {%- if line_savings > 0 and item.line_level_discount_allocations.size == 0 -%}
                         {%- assign line_savings_money = line_savings | money -%}
                         <p class="cart-items__savings">{{ 'content.you_save' | t: amount: line_savings_money }}</p>
@@ -360,6 +339,28 @@
                   headers="productTotal"
                 >
                   <text-component value="{{ price | strip_html }}">{{ price }}</text-component>
+
+                  {%- if item.selling_plan_allocation -%}
+                    <p class="cart-items__subscription-badge">Assinatura mensal</p>
+                  {%- endif -%}
+
+                  {%- if item.line_level_discount_allocations.size > 0 -%}
+                    <ul
+                      class="cart-items__discounts list-unstyled"
+                      role="list"
+                    >
+                      {%- for discount in item.line_level_discount_allocations -%}
+                        <li class="cart-items__discount">
+                          <span class="cart-items__discount-label">
+                            {{- 'icon-discount.svg' | inline_asset_content -}}
+                            {{ discount.discount_application.title | escape }}
+                          </span>
+                          <span class="cart-items__discount-amount">-{{ discount.amount | money }}</span>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+
                   {%- if item.unit_price_measurement -%}
                     <div class="cart-items__price-unit cart-secondary-typography">
                       {% render 'unit-price', price: unit_price, measurement: item.unit_price_measurement %}
@@ -852,6 +853,10 @@
     list-style: none;
     padding: 0;
     margin-block-start: var(--margin-2xs) !important;
+  }
+
+  .cart-items__price .cart-items__discounts {
+    align-items: flex-end;
   }
 
   .cart-items__discount {

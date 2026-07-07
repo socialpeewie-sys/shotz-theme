@@ -167,16 +167,23 @@
                   headers="productInformation"
                 >
                   <div class="cart-items__product-info">
-                    <p>
+                    <p class="sz-cart__name-line">
                       <a
                         href="{{ item.url }}"
-                        class="cart-items__title"
+                        class="cart-items__title sz-cart__title"
                         {% if item.parent_relationship.parent != null %}
                           aria-label="{{ 'accessibility.nested_product' | t: product_title: item.product.title, parent_title: item.parent_relationship.parent.title | escape }}"
                         {% endif %}
                       >
                         {{- item.product.title -}}
                       </a>
+                      {%- if item.product.has_only_default_variant == false and item.item_components.size == 0 -%}
+                        <span class="sz-cart__variant-inline">
+                          {%- for option in item.options_with_values -%}
+                            {{- option.value -}}{%- unless forloop.last %} · {% endunless -%}
+                          {%- endfor -%}
+                        </span>
+                      {%- endif -%}
                     </p>
                     {% if item.product.vendor and block_settings.vendor %}
                       <p>
@@ -200,44 +207,55 @@
 
                   <div class="cart-items__variants-wrapper">
                     {%- liquid
-                      assign line_savings = 0
-                      if item.variant.compare_at_price > item.original_price
-                        assign compare_at_unit_savings = item.variant.compare_at_price | minus: item.original_price
-                        assign line_savings = compare_at_unit_savings | times: item.quantity | plus: item.total_discount
-                      else
-                        assign line_savings = item.total_discount
+                      assign sz_state = 'none'
+                      if item.selling_plan_allocation
+                        assign sz_state = 'subscription'
+                      elsif item.line_level_discount_allocations.size > 0
+                        assign sz_state = 'combo'
+                      elsif item.variant.compare_at_price > item.variant.price
+                        assign sz_state = 'compare_at'
                       endif
-                    -%}
-                    {%- if item.product.has_only_default_variant == false
-                      or item.properties.size != 0
-                      or item.selling_plan_allocation != null
-                      or item.line_level_discount_allocations.size > 0
-                      or line_savings > 0
-                    -%}
-                      {%- if item.product.has_only_default_variant == false and item.item_components.size == 0 -%}
-                        <dl class="cart-items__variants">
-                          {%- for option in item.options_with_values -%}
-                            <div class="cart-items__variant">
-                              <dt class="visually-hidden">{{ option.name }}:</dt>
-                              <dd>
-                                {{- option.value -}}
-                                {%- if forloop.last != true %},&nbsp;{% endif -%}
-                              </dd>
-                            </div>
-                          {%- endfor -%}
-                        </dl>
-                      {%- endif -%}
 
-                      {%- liquid
-                        assign has_visible_properties = false
-                        for property in item.properties
-                          assign property_first_char = property.first | slice: 0
-                          if property.last != blank and property_first_char != '_'
-                            assign has_visible_properties = true
-                            break
-                          endif
-                        endfor
-                      -%}
+                      if sz_state == 'subscription'
+                        assign sz_sub_cadence = item.selling_plan_allocation.selling_plan.name
+                        assign sz_sub_one_time = item.selling_plan_allocation.compare_at_price | default: item.variant.price
+                        assign sz_sub_price = item.selling_plan_allocation.price | default: item.final_price
+                        assign sz_sub_pct = 0
+                        if sz_sub_one_time > sz_sub_price
+                          assign sz_sub_pct = sz_sub_one_time | minus: sz_sub_price | times: 100.0 | divided_by: sz_sub_one_time | round
+                        endif
+                      endif
+
+                      if sz_state == 'compare_at'
+                        assign sz_compare_riscado = item.variant.compare_at_price | times: item.quantity
+                        assign sz_compare_savings = sz_compare_riscado | minus: item.final_line_price
+                        assign sz_compare_pct = item.variant.compare_at_price | minus: item.variant.price | times: 100.0 | divided_by: item.variant.compare_at_price | round
+                      endif
+
+                      if sz_state == 'combo'
+                        assign sz_combo_riscado = item.original_line_price
+                      endif
+
+                      assign sz_dose_count = 0
+                      for option in item.options_with_values
+                        if option.name == 'Quantidade'
+                          assign sz_dose_count = option.value | split: ' ' | first | times: 1
+                        endif
+                      endfor
+                      if sz_dose_count > 0
+                        assign sz_dose_price = item.final_line_price | divided_by: sz_dose_count | divided_by: 1.0 | round
+                      endif
+
+                      assign has_visible_properties = false
+                      for property in item.properties
+                        assign property_first_char = property.first | slice: 0
+                        if property.last != blank and property_first_char != '_'
+                          assign has_visible_properties = true
+                          break
+                        endif
+                      endfor
+                    -%}
+                    {%- if has_visible_properties or sz_state != 'none' -%}
                       {%- if has_visible_properties -%}
                         <dl class="cart-items__properties">
                           {%- for property in item.properties -%}
@@ -258,62 +276,31 @@
                         </dl>
                       {%- endif -%}
 
-                      {%- if item.selling_plan_allocation -%}
-                        <p class="cart-items__subscription-badge">Assinatura mensal</p>
-                      {%- endif -%}
-
-                      {%- if item.line_level_discount_allocations.size > 0 -%}
+                      {%- if sz_state == 'subscription' -%}
+                        <p class="sz-cart__badge sz-cart__badge--subscription">
+                          {{- 'icon-reset.svg' | inline_asset_content -}}
+                          <span>Assinatura · renova {{ sz_sub_cadence | downcase }}</span>
+                        </p>
+                        <p class="sz-cart__badge-micro">Cancele quando quiser · {{ sz_sub_pct }}% off recorrente</p>
+                      {%- elsif sz_state == 'combo' -%}
                         <ul
-                          class="cart-items__discounts list-unstyled"
+                          class="sz-cart__badge-list list-unstyled"
                           role="list"
                         >
                           {%- for discount in item.line_level_discount_allocations -%}
-                            <li class="cart-items__discount">
-                              <span class="cart-items__discount-label">
-                                {{- 'icon-discount.svg' | inline_asset_content -}}
-                                {{ discount.discount_application.title | escape }}
-                              </span>
-                              <span class="cart-items__discount-amount">-{{ discount.amount | money }}</span>
+                            <li class="sz-cart__badge sz-cart__badge--combo">
+                              {{- 'icon-discount.svg' | inline_asset_content -}}
+                              <span>{{ discount.discount_application.title | escape }} · economize {{ discount.amount | money }}</span>
                             </li>
                           {%- endfor -%}
                         </ul>
-                      {%- endif -%}
-
-                      {%- if line_savings > 0 -%}
-                        {%- assign line_savings_money = line_savings | money -%}
-                        <p class="cart-items__savings">{{ 'content.you_save' | t: amount: line_savings_money }}</p>
+                      {%- elsif sz_state == 'compare_at' -%}
+                        <p class="sz-cart__badge sz-cart__badge--compare-at">
+                          {{- 'icon-discount.svg' | inline_asset_content -}}
+                          <span>{{ sz_compare_pct }}% off · economize {{ sz_compare_savings | money }}</span>
+                        </p>
                       {%- endif -%}
                     {%- endif -%}
-                  </div>
-
-                  <div class="cart-items__unit-price-wrapper">
-                    <div>
-                      {% if item.original_price != item.final_price %}
-                        <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
-                        <span>{{ item.final_price | money }}</span>
-                        <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
-                        <s class="compare-at-price">
-                          {% if item.variant.compare_at_price > item.original_price %}
-                            {{ item.variant.compare_at_price | money }}
-                          {% else %}
-                            {{ item.original_price | money }}
-                          {% endif %}
-                        </s>
-                      {% else %}
-                        {% if item.variant.compare_at_price > item.original_price %}
-                          <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
-                        {% else %}
-                          <span class="visually-hidden">{{ 'content.price' | t }}</span>
-                        {% endif %}
-
-                        <span>{{ item.original_price | money }}</span>
-
-                        {% if item.variant.compare_at_price > item.original_price %}
-                          <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
-                          <s class="compare-at-price">{{ item.variant.compare_at_price | money }}</s>
-                        {% endif %}
-                      {% endif %}
-                    </div>
                   </div>
                 </td>
                 <td
@@ -379,9 +366,18 @@
                   if settings.currency_code_enabled_cart_items
                     assign price = item.final_line_price | money_with_currency
                     assign unit_price = item.unit_price | money_with_currency
+                    assign sz_fallback_price = item.final_price | money_with_currency
                   else
                     assign price = item.final_line_price | money
                     assign unit_price = item.unit_price | money
+                    assign sz_fallback_price = item.final_price | money
+                  endif
+
+                  assign sz_riscado_amount = 0
+                  if sz_state == 'combo'
+                    assign sz_riscado_amount = sz_combo_riscado
+                  elsif sz_state == 'compare_at'
+                    assign sz_riscado_amount = sz_compare_riscado
                   endif
                 -%}
                 <td
@@ -389,11 +385,18 @@
                   role="cell"
                   headers="productTotal"
                 >
-                  <text-component value="{{ price | strip_html }}">{{ price }}</text-component>
+                  <text-component class="sz-cart__total" value="{{ price | strip_html }}">{{ price }}</text-component>
+                  {%- if sz_riscado_amount > 0 -%}
+                    <s class="compare-at-price sz-cart__riscado">{{ sz_riscado_amount | money }}</s>
+                  {%- endif -%}
                   {%- if item.unit_price_measurement -%}
                     <div class="cart-items__price-unit cart-secondary-typography">
                       {% render 'unit-price', price: unit_price, measurement: item.unit_price_measurement %}
                     </div>
+                  {%- elsif sz_dose_price -%}
+                    <div class="sz-cart__dose-price cart-secondary-typography">{{ sz_dose_price | money }} / dose</div>
+                  {%- else -%}
+                    <div class="sz-cart__dose-price cart-secondary-typography">{{ sz_fallback_price }} / un</div>
                   {%- endif -%}
                 </td>
               </tr>
@@ -409,6 +412,7 @@
   .cart-items {
     --cart-item-media-width-min: 2.5rem;
     --cart-item-media-width-max: 7.5rem;
+    --sz-subscription-accent: #0A84FF;
 
     container-name: cart-items;
     container-type: inline-size;
@@ -459,14 +463,13 @@
     margin-bottom: var(--margin-lg);
   }
 
-  /* Cart drawer: separate grid areas for variants and unit price */
+  /* Cart drawer: separate grid areas for variants */
   .cart-drawer .cart-items__table-row--full-width-variants {
     grid-template-columns: clamp(2.5rem, 15cqi, 7.5rem) minmax(0, 1fr) auto;
-    grid-template-rows: repeat(4, min-content) 1fr;
+    grid-template-rows: repeat(3, min-content) 1fr;
     grid-template-areas:
       'media details price'
       'media variants variants'
-      'media unit_price unit_price'
       'media quantity quantity'
       'media error error';
 
@@ -488,11 +491,6 @@
       p {
         margin: 0;
       }
-    }
-
-    .cart-items__unit-price-wrapper {
-      grid-area: unit_price;
-      font-size: var(--font-size--sm);
     }
 
     .cart-items__price {
@@ -736,13 +734,12 @@
       align-items: flex-end;
     }
 
-    /* Cart drawer: separate areas for variants and unit price */
+    /* Cart drawer: separate areas for variants */
     .cart-drawer .cart-items__table-row--full-width-variants {
-      grid-template-rows: min-content min-content min-content 1fr;
+      grid-template-rows: min-content min-content 1fr;
       grid-template-areas:
         'media details quantity price'
         'media variants variants variants'
-        'media unit_price unit_price unit_price'
         'media error error error';
 
       .cart-items__quantity,
@@ -875,7 +872,33 @@
     margin-block-start: var(--margin-2xs);
   }
 
-  .cart-items__discounts {
+  .sz-cart__name-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--gap-3xs);
+  }
+
+  .sz-cart__variant-inline {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-60));
+    font-size: var(--font-size--sm);
+  }
+
+  .sz-cart__total {
+    font-weight: 500;
+  }
+
+  .sz-cart__riscado {
+    display: block;
+    font-size: var(--font-size--xs);
+  }
+
+  .sz-cart__dose-price {
+    font-size: var(--font-size--xs);
+    padding-block-start: var(--padding-2xs);
+  }
+
+  .sz-cart__badge-list {
     display: flex;
     flex-direction: column;
     gap: var(--gap-3xs);
@@ -884,54 +907,41 @@
     margin-block-start: var(--margin-2xs) !important;
   }
 
-  .cart-items__discount {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: var(--gap-2xs);
-    font-size: var(--font-size--xs);
-    color: var(--color-success);
-  }
-
-  .cart-items__discount-label {
-    display: flex;
+  .sz-cart__badge {
+    display: inline-flex;
     align-items: center;
     gap: var(--gap-3xs);
+    width: fit-content;
+    font-size: var(--font-size--xs);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.4;
+    margin-block-start: var(--margin-2xs) !important;
   }
 
-  .cart-items__discount-label svg {
+  .sz-cart__badge svg {
     width: var(--icon-size-xs);
     height: var(--icon-size-xs);
     flex-shrink: 0;
   }
 
-  .cart-items__discount-amount {
-    font-weight: var(--font-weight-bold);
-    white-space: nowrap;
-  }
-
-  .cart-items__savings {
-    color: var(--color-success);
-    font-size: var(--font-size--xs);
-    font-weight: var(--font-weight-bold);
-    margin-block-start: var(--margin-3xs) !important;
-  }
-
-  .cart-items__subscription-badge {
-    display: inline-flex;
-    align-items: center;
-    width: fit-content;
-    background: #0A84FF;
-    color: #fff;
-    font-family: Outfit, sans-serif;
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
+  .sz-cart__badge--subscription {
+    background: var(--sz-subscription-accent);
+    color: var(--color-white);
     padding: 3px 8px;
     border-radius: 100px;
-    line-height: 1.4;
-    margin-block-start: var(--margin-2xs) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .sz-cart__badge--combo,
+  .sz-cart__badge--compare-at {
+    color: var(--color-success);
+  }
+
+  .sz-cart__badge-micro {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-60));
+    font-size: var(--font-size--xs);
+    margin-block-start: var(--margin-3xs) !important;
   }
 
   .cart-items__property {

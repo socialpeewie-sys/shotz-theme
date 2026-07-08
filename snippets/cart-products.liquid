@@ -332,6 +332,18 @@
                     assign price = item.final_line_price | money
                     assign unit_price = item.unit_price | money
                   endif
+
+                  assign sz_was_amount = 0
+                  if item.selling_plan_allocation
+                    assign sz_sub_one_time_unit = item.selling_plan_allocation.compare_at_price | default: item.variant.price
+                    if sz_sub_one_time_unit > item.selling_plan_allocation.price
+                      assign sz_was_amount = sz_sub_one_time_unit | times: item.quantity
+                    endif
+                  elsif item.line_level_discount_allocations.size > 0
+                    assign sz_was_amount = item.original_line_price
+                  elsif item.variant.compare_at_price > item.variant.price
+                    assign sz_was_amount = item.variant.compare_at_price | times: item.quantity
+                  endif
                 -%}
                 <td
                   class="cart-items__price cart-secondary-typography"
@@ -339,6 +351,10 @@
                   headers="productTotal"
                 >
                   <text-component value="{{ price | strip_html }}">{{ price }}</text-component>
+
+                  {%- if sz_was_amount > 0 -%}
+                    <s class="compare-at-price cart-items__was-price">{{ sz_was_amount | money }}</s>
+                  {%- endif -%}
 
                   {%- if item.selling_plan_allocation -%}
                     <p class="cart-items__subscription-badge">Assinatura mensal</p>
@@ -600,6 +616,12 @@
     padding-block-start: var(--padding-2xs);
   }
 
+  .cart-items__was-price {
+    display: inline-block;
+    margin-inline-start: var(--margin-3xs);
+    font-size: var(--font-size--xs);
+  }
+
   .cart-items__media-container {
     display: flex;
     aspect-ratio: var(--ratio);
@@ -835,7 +857,7 @@
     --sz-badge-bg: #E1EDF5;
     --sz-badge-text: #1D3686;
 
-    display: inline-flex;
+    display: flex;
     align-items: center;
     width: fit-content;
     max-width: 100%;
@@ -849,6 +871,8 @@
     padding: 3px 8px;
     border-radius: 100px;
     line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: break-word;
     margin-block-start: var(--margin-2xs) !important;
   }
 

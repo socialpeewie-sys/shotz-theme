@@ -429,16 +429,18 @@
     margin-bottom: var(--margin-lg);
   }
 
-  /* Cart drawer: separate grid areas for variants and unit price */
+  /* Cart drawer: single-column vertical stack — title, price+badge, variants
+     and quantity all share the same left edge, in a consistent rhythm. */
   .cart-drawer .cart-items__table-row--full-width-variants {
-    grid-template-columns: clamp(2.5rem, 15cqi, 7.5rem) minmax(0, 1fr) minmax(var(--cart-item-price-width), auto);
+    grid-template-columns: clamp(2.5rem, 15cqi, 7.5rem) minmax(0, 1fr);
     grid-template-rows: repeat(4, min-content) 1fr;
     grid-template-areas:
-      'media details price'
-      'media variants variants'
-      'media unit_price unit_price'
-      'media quantity quantity'
-      'media error error';
+      'media details'
+      'media price'
+      'media variants'
+      'media quantity'
+      'media error';
+    row-gap: var(--margin-xs);
 
     .cart-items__details {
       display: contents;
@@ -450,6 +452,7 @@
 
     .cart-items__variants-wrapper {
       grid-area: variants;
+      margin-block-start: 0;
 
       &:empty {
         display: none;
@@ -460,9 +463,10 @@
       }
     }
 
-    .cart-items__unit-price-wrapper {
-      grid-area: unit_price;
-      font-size: var(--font-size--sm);
+    .cart-items__price {
+      grid-area: price;
+      min-width: 0;
+      text-align: end;
     }
   }
 
@@ -707,13 +711,12 @@
       align-items: flex-end;
     }
 
-    /* Cart drawer: separate areas for variants and unit price */
+    /* Cart drawer: separate areas for variants */
     .cart-drawer .cart-items__table-row--full-width-variants {
-      grid-template-rows: min-content min-content min-content 1fr;
+      grid-template-rows: min-content min-content 1fr;
       grid-template-areas:
         'media details quantity price'
         'media variants variants variants'
-        'media unit_price unit_price unit_price'
         'media error error error';
 
       .cart-items__quantity,

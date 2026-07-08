@@ -429,20 +429,20 @@
     margin-bottom: var(--margin-lg);
   }
 
-  /* Cart drawer: single-column vertical stack — title, price+badge, variants
-     and quantity all share the same left edge, in a consistent rhythm.
-     Applies to every row (not just --full-width-variants) so unit-priced
-     items (sold by weight/measurement) get the same stacked alignment
-     instead of falling back to the 3-column cart-page grid. */
+  /* Cart drawer layout: title and price share the top row (title left,
+     price right); variants, quantity and error each span the full width
+     of the text column below. Applies to every row (not just
+     --full-width-variants) so unit-priced items (sold by weight/
+     measurement) get the same alignment instead of falling back to the
+     3-column cart-page grid. */
   .cart-drawer .cart-items__table-row {
-    grid-template-columns: clamp(2.5rem, 15cqi, 7.5rem) minmax(0, 1fr);
+    grid-template-columns: clamp(2.5rem, 15cqi, 7.5rem) minmax(0, 1fr) auto;
     grid-template-rows: repeat(4, min-content) 1fr;
     grid-template-areas:
-      'media details'
-      'media price'
-      'media variants'
-      'media quantity'
-      'media error';
+      'media details price'
+      'media variants variants'
+      'media quantity quantity'
+      'media error error';
     row-gap: var(--margin-xs);
 
     .cart-items__details {
@@ -451,6 +451,7 @@
 
     .cart-items__product-info {
       grid-area: details;
+      min-width: 0;
     }
 
     .cart-items__variants-wrapper {
@@ -469,10 +470,15 @@
     .cart-items__price {
       grid-area: price;
       min-width: 0;
-      /* start (not end) so the price/badge/unit-price cluster stays flush
-         with title and variant text — the badge is a flex block and never
-         respected text-align:end, which is what made it look disconnected. */
-      text-align: start;
+      text-align: end;
+
+      /* Badge and unit-price are block-level, so text-align:end doesn't
+         reach them — push them to the same right edge as the price. */
+      .cart-items__subscription-badge,
+      .cart-items__price-unit {
+        width: fit-content;
+        margin-inline-start: auto;
+      }
     }
   }
 

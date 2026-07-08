@@ -228,6 +228,10 @@
                         </dl>
                       {%- endif -%}
 
+                      {%- if item.selling_plan_allocation -%}
+                        <p class="cart-items__subscription-badge">Assinatura mensal</p>
+                      {%- endif -%}
+
                       {%- liquid
                         assign has_visible_properties = false
                         for property in item.properties
@@ -356,10 +360,6 @@
                     <s class="compare-at-price cart-items__was-price">{{ sz_was_amount | money }}</s>
                   {%- endif -%}
 
-                  {%- if item.selling_plan_allocation -%}
-                    <p class="cart-items__subscription-badge">Assinatura mensal</p>
-                  {%- endif -%}
-
                   {%- if item.unit_price_measurement -%}
                     <div class="cart-items__price-unit cart-secondary-typography">
                       {% render 'unit-price', price: unit_price, measurement: item.unit_price_measurement %}
@@ -472,9 +472,8 @@
       min-width: 0;
       text-align: end;
 
-      /* Badge and unit-price are block-level, so text-align:end doesn't
-         reach them — push them to the same right edge as the price. */
-      .cart-items__subscription-badge,
+      /* Unit-price is block-level, so text-align:end doesn't reach it —
+         push it to the same right edge as the price. */
       .cart-items__price-unit {
         width: fit-content;
         margin-inline-start: auto;

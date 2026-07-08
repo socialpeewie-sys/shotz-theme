@@ -217,10 +217,18 @@
 
     {%- liquid
       assign sz_cart_has_subscription = false
+      assign sz_cart_sub_pct = 0
       assign sz_cart_discount_titles = ''
       for item in cart.items
         if item.selling_plan_allocation
           assign sz_cart_has_subscription = true
+          if sz_cart_sub_pct == 0
+            assign sz_sub_compare = item.selling_plan_allocation.compare_at_price | default: item.variant.price
+            assign sz_sub_price = item.selling_plan_allocation.price | default: item.final_price
+            if sz_sub_compare > sz_sub_price
+              assign sz_cart_sub_pct = sz_sub_compare | minus: sz_sub_price | times: 100.0 | divided_by: sz_sub_compare | round
+            endif
+          endif
         endif
         for discount in item.line_level_discount_allocations
           assign sz_cart_discount_titles = sz_cart_discount_titles | append: discount.discount_application.title | append: '||'
@@ -238,7 +246,7 @@
         role="list"
       >
         {%- if sz_cart_has_subscription -%}
-          <li class="cart-totals__badge">Assinatura mensal</li>
+          <li class="cart-totals__badge">DESCONTO - {{ sz_cart_sub_pct }}% VIA ASSINATURA</li>
         {%- endif -%}
         {%- for title in sz_cart_discount_titles -%}
           {%- if title != blank -%}

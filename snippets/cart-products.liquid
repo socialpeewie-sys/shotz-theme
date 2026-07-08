@@ -430,8 +430,11 @@
   }
 
   /* Cart drawer: single-column vertical stack — title, price+badge, variants
-     and quantity all share the same left edge, in a consistent rhythm. */
-  .cart-drawer .cart-items__table-row--full-width-variants {
+     and quantity all share the same left edge, in a consistent rhythm.
+     Applies to every row (not just --full-width-variants) so unit-priced
+     items (sold by weight/measurement) get the same stacked alignment
+     instead of falling back to the 3-column cart-page grid. */
+  .cart-drawer .cart-items__table-row {
     grid-template-columns: clamp(2.5rem, 15cqi, 7.5rem) minmax(0, 1fr);
     grid-template-rows: repeat(4, min-content) 1fr;
     grid-template-areas:
@@ -466,7 +469,10 @@
     .cart-items__price {
       grid-area: price;
       min-width: 0;
-      text-align: end;
+      /* start (not end) so the price/badge/unit-price cluster stays flush
+         with title and variant text — the badge is a flex block and never
+         respected text-align:end, which is what made it look disconnected. */
+      text-align: start;
     }
   }
 
@@ -617,7 +623,7 @@
 
   .cart-items__price-unit {
     font-size: var(--font-size--xs);
-    padding-block-start: var(--padding-2xs);
+    padding-block-start: var(--margin-2xs);
   }
 
   .cart-items__was-price {
@@ -712,7 +718,7 @@
     }
 
     /* Cart drawer: separate areas for variants */
-    .cart-drawer .cart-items__table-row--full-width-variants {
+    .cart-drawer .cart-items__table-row {
       grid-template-rows: min-content min-content 1fr;
       grid-template-areas:
         'media details quantity price'

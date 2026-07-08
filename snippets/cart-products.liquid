@@ -380,6 +380,8 @@
   .cart-items {
     --cart-item-media-width-min: 2.5rem;
     --cart-item-media-width-max: 7.5rem;
+    --sz-badge-bg: #E1EDF5;
+    --sz-badge-text: #1D3686;
 
     container-name: cart-items;
     container-type: inline-size;
@@ -432,7 +434,7 @@
 
   /* Cart drawer: separate grid areas for variants and unit price */
   .cart-drawer .cart-items__table-row--full-width-variants {
-    grid-template-columns: clamp(2.5rem, 15cqi, 7.5rem) minmax(0, 1fr) auto;
+    grid-template-columns: clamp(2.5rem, 15cqi, 7.5rem) minmax(0, 1fr) minmax(var(--cart-item-price-width), auto);
     grid-template-rows: repeat(4, min-content) 1fr;
     grid-template-areas:
       'media details price'
@@ -464,11 +466,6 @@
     .cart-items__unit-price-wrapper {
       grid-area: unit_price;
       font-size: var(--font-size--sm);
-    }
-
-    .cart-items__price {
-      min-width: auto;
-      width: max-content;
     }
   }
 
@@ -860,24 +857,33 @@
   }
 
   .cart-items__discount {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: flex-start;
     gap: var(--gap-2xs);
+    width: fit-content;
+    max-width: 100%;
+    background: var(--sz-badge-bg);
+    color: var(--sz-badge-text);
     font-size: var(--font-size--xs);
-    color: var(--color-success);
+    font-weight: var(--font-weight-bold);
+    padding: 3px 8px;
+    border-radius: 100px;
+    line-height: 1.4;
   }
 
   .cart-items__discount-label {
     display: flex;
     align-items: center;
     gap: var(--gap-3xs);
+    min-width: 0;
   }
 
   .cart-items__discount-label svg {
     width: var(--icon-size-xs);
     height: var(--icon-size-xs);
     flex-shrink: 0;
+    fill: var(--sz-badge-text);
   }
 
   .cart-items__discount-amount {
@@ -896,8 +902,9 @@
     display: inline-flex;
     align-items: center;
     width: fit-content;
-    background: #0A84FF;
-    color: #fff;
+    max-width: 100%;
+    background: var(--sz-badge-bg);
+    color: var(--sz-badge-text);
     font-family: Outfit, sans-serif;
     font-size: 10.5px;
     font-weight: 700;

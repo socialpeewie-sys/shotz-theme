@@ -340,27 +340,6 @@
                 >
                   <text-component value="{{ price | strip_html }}">{{ price }}</text-component>
 
-                  {%- if item.selling_plan_allocation -%}
-                    <p class="cart-items__subscription-badge">Assinatura mensal</p>
-                  {%- endif -%}
-
-                  {%- if item.line_level_discount_allocations.size > 0 -%}
-                    <ul
-                      class="cart-items__discounts list-unstyled"
-                      role="list"
-                    >
-                      {%- for discount in item.line_level_discount_allocations -%}
-                        <li class="cart-items__discount">
-                          <span class="cart-items__discount-label">
-                            {{- 'icon-discount.svg' | inline_asset_content -}}
-                            {{ discount.discount_application.title | escape }}
-                          </span>
-                          <span class="cart-items__discount-amount">-{{ discount.amount | money }}</span>
-                        </li>
-                      {%- endfor -%}
-                    </ul>
-                  {%- endif -%}
-
                   {%- if item.unit_price_measurement -%}
                     <div class="cart-items__price-unit cart-secondary-typography">
                       {% render 'unit-price', price: unit_price, measurement: item.unit_price_measurement %}
@@ -380,8 +359,6 @@
   .cart-items {
     --cart-item-media-width-min: 2.5rem;
     --cart-item-media-width-max: 7.5rem;
-    --sz-badge-bg: #E1EDF5;
-    --sz-badge-text: #1D3686;
 
     container-name: cart-items;
     container-type: inline-size;
@@ -843,77 +820,11 @@
     margin-block-start: var(--margin-2xs);
   }
 
-  .cart-items__discounts {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-3xs);
-    list-style: none;
-    padding: 0;
-    margin-block-start: var(--margin-2xs) !important;
-  }
-
-  .cart-items__price .cart-items__discounts {
-    align-items: flex-end;
-  }
-
-  .cart-items__discount {
-    display: inline-flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: var(--gap-2xs);
-    width: fit-content;
-    max-width: 100%;
-    background: var(--sz-badge-bg);
-    color: var(--sz-badge-text);
-    font-size: var(--font-size--xs);
-    font-weight: var(--font-weight-bold);
-    padding: 3px 8px;
-    border-radius: 100px;
-    line-height: 1.4;
-  }
-
-  .cart-items__discount-label {
-    display: flex;
-    align-items: center;
-    gap: var(--gap-3xs);
-    min-width: 0;
-  }
-
-  .cart-items__discount-label svg {
-    width: var(--icon-size-xs);
-    height: var(--icon-size-xs);
-    flex-shrink: 0;
-    fill: var(--sz-badge-text);
-  }
-
-  .cart-items__discount-amount {
-    font-weight: var(--font-weight-bold);
-    white-space: nowrap;
-  }
-
   .cart-items__savings {
     color: var(--color-success);
     font-size: var(--font-size--xs);
     font-weight: var(--font-weight-bold);
     margin-block-start: var(--margin-3xs) !important;
-  }
-
-  .cart-items__subscription-badge {
-    display: inline-flex;
-    align-items: center;
-    width: fit-content;
-    max-width: 100%;
-    background: var(--sz-badge-bg);
-    color: var(--sz-badge-text);
-    font-family: Outfit, sans-serif;
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 100px;
-    line-height: 1.4;
-    margin-block-start: var(--margin-2xs) !important;
   }
 
   .cart-items__property {

@@ -214,6 +214,43 @@
         {{ total_price }}
       </text-component>
     </span>
+
+    {%- liquid
+      assign sz_cart_has_subscription = false
+      assign sz_cart_discount_titles = ''
+      for item in cart.items
+        if item.selling_plan_allocation
+          assign sz_cart_has_subscription = true
+        endif
+        for discount in item.line_level_discount_allocations
+          assign sz_cart_discount_titles = sz_cart_discount_titles | append: discount.discount_application.title | append: '||'
+        endfor
+      endfor
+      if sz_cart_discount_titles != blank
+        assign sz_cart_discount_titles = sz_cart_discount_titles | split: '||' | uniq
+      else
+        assign sz_cart_discount_titles = ''
+      endif
+    -%}
+    {%- if sz_cart_has_subscription or sz_cart_discount_titles.size > 0 -%}
+      <ul
+        class="cart-totals__badges list-unstyled"
+        role="list"
+      >
+        {%- if sz_cart_has_subscription -%}
+          <li class="cart-totals__badge">Assinatura mensal</li>
+        {%- endif -%}
+        {%- for title in sz_cart_discount_titles -%}
+          {%- if title != blank -%}
+            <li class="cart-totals__badge">
+              {{- 'icon-discount.svg' | inline_asset_content -}}
+              {{ title }}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
     {% if settings.show_installments %}
       <span class="cart-totals__item cart-totals__installments">
         {% form 'cart', cart %}
@@ -362,6 +399,41 @@
   .cart-totals__installments {
     color: var(--color-foreground);
     font-size: var(--font-size--2xs);
+  }
+
+  .cart-totals__badges {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--gap-3xs);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .cart-totals__badge {
+    --sz-badge-bg: #E1EDF5;
+    --sz-badge-text: #1D3686;
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-2xs);
+    width: fit-content;
+    max-width: 100%;
+    background: var(--sz-badge-bg);
+    color: var(--sz-badge-text);
+    font-size: var(--font-size--xs);
+    font-weight: var(--font-weight-bold);
+    padding: 3px 8px;
+    border-radius: 100px;
+    line-height: 1.4;
+  }
+
+  .cart-totals__badge svg {
+    width: var(--icon-size-xs);
+    height: var(--icon-size-xs);
+    flex-shrink: 0;
+    fill: var(--sz-badge-text);
   }
 
   .cart-note {

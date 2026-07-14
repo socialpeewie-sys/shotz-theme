@@ -1,0 +1,100 @@
+{% doc %}
+  Renders the shared lead-capture modal for the Shotz pre-launch landing page.
+  Opened by any element with a `data-spl-open-modal` attribute.
+{% enddoc %}
+
+<div
+  class="spl-modal-overlay"
+  data-spl-modal-overlay
+  aria-hidden="true"
+>
+  <div
+    class="spl-modal"
+    data-spl-modal
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="spl-modal-title"
+  >
+    <button
+      type="button"
+      class="spl-modal__close"
+      data-spl-close-modal
+      aria-label="Fechar"
+    >
+      &times;
+    </button>
+
+    <h2
+      id="spl-modal-title"
+      class="spl-modal__title"
+    >
+      Garanta 10% OFF na sua primeira compra.
+    </h2>
+    <p class="spl-modal__subtitle">Vagas limitadas. Seja o primeiro a saber.</p>
+
+    <form
+      data-spl-form
+      novalidate
+    >
+      <p
+        class="spl-modal__error"
+        data-spl-error
+      ></p>
+
+      <div class="spl-field">
+        <label for="spl-name">Seu nome</label>
+        <input
+          type="text"
+          id="spl-name"
+          name="nome"
+          data-spl-name
+          required
+        >
+      </div>
+
+      <div class="spl-field">
+        <label for="spl-email">Seu melhor e-mail</label>
+        <input
+          type="email"
+          id="spl-email"
+          name="email"
+          data-spl-email
+          required
+        >
+      </div>
+
+      <div class="spl-field">
+        <label for="spl-whatsapp">WhatsApp</label>
+        <input
+          type="tel"
+          id="spl-whatsapp"
+          name="whatsapp"
+          data-spl-whatsapp
+          placeholder="(00) 00000-0000"
+          required
+        >
+      </div>
+
+      <div class="spl-field spl-field--checkbox">
+        <input
+          type="checkbox"
+          id="spl-lgpd"
+          name="lgpd"
+          required
+        >
+        <label for="spl-lgpd">
+          Autorizo o cadastro dos meus dados na base de leads da Shotz, além do envio de email marketing e demais
+          comunicações.
+        </label>
+      </div>
+
+      <button
+        type="submit"
+        class="spl-btn spl-btn--full"
+        data-spl-submit
+      >
+        Quero me inscrever
+      </button>
+    </form>
+  </div>
+</div>

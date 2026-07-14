@@ -1,0 +1,74 @@
+{% doc %}
+  Hero section for the Shotz pre-launch landing page.
+{% enddoc %}
+
+<section class="spl-hero">
+  <div class="spl-hero__bg">
+    {% if section.settings.hero_image %}
+      {{
+        section.settings.hero_image
+        | image_url: width: 2000
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          sizes: '100vw',
+          widths: '750, 1100, 1500, 2000'
+      }}
+    {% endif %}
+    <div
+      class="spl-hero__overlay"
+      style="opacity: {{ section.settings.hero_overlay_opacity | divided_by: 100.0 }};"
+    ></div>
+  </div>
+
+  <div class="spl-hero__content">
+    {% if settings.logo %}
+      <div class="spl-hero__logo">
+        {{ settings.logo | image_url: width: 280 | image_tag: loading: 'eager' }}
+      </div>
+    {% endif %}
+
+    <h1>Sua rotina já é complexa. Consumir proteína não precisa ser.</h1>
+    <p class="spl-hero__subheadline">
+      Foi pensando nisso que criamos a Shotz, um shot proteico desenvolvido para tornar o consumo de proteína mais
+      simples.
+    </p>
+
+    <p class="spl-hero__cta-text">
+      Cadastre-se para ter acesso antecipado ao lançamento e garanta 10% OFF na sua primeira compra.
+    </p>
+
+    <button
+      type="button"
+      class="spl-btn"
+      data-spl-open-modal
+    >
+      Quero acesso antecipado
+    </button>
+
+    <p class="spl-hero__footnote">Vagas limitadas.</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Prelaunch — Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Imagem de fundo"
+    },
+    {
+      "type": "range",
+      "id": "hero_overlay_opacity",
+      "label": "Opacidade do overlay",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 60
+    }
+  ]
+}
+{% endschema %}

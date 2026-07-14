@@ -1,0 +1,33 @@
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    {%- render 'meta-tags' -%}
+
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="icon"
+        type="image/png"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+      >
+    {%- endif -%}
+
+    {%- render 'fonts' -%}
+    {%- render 'theme-styles-variables' -%}
+
+    {{ 'shotz-prelaunch.css' | asset_url | stylesheet_tag }}
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="shotz-prelaunch">
+    {% section 'shotz-prelaunch-hero' %}
+    {% section 'shotz-prelaunch-para-quem-e' %}
+    {% section 'shotz-prelaunch-o-que-e' %}
+    {% section 'shotz-prelaunch-fechamento' %}
+
+    {% render 'shotz-prelaunch-modal' %}
+
+    <script src="{{ 'shotz-prelaunch.js' | asset_url }}" defer></script>
+  </body>
+</html>

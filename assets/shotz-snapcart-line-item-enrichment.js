@@ -32,7 +32,7 @@
     style.textContent =
       '.' + BADGE_CLASS + '{display:inline-flex;align-items:center;' +
       'width:fit-content;background:#0A84FF;color:#fff;' +
-      'font-family:Outfit,sans-serif;font-size:10.5px;font-weight:700;' +
+      'font-family:"Plus Jakarta Sans",sans-serif;font-size:10.5px;font-weight:700;' +
       'letter-spacing:0.03em;text-transform:uppercase;padding:3px 8px;' +
       'border-radius:100px;line-height:1.4;margin-top:2px;}';
     document.head.appendChild(style);

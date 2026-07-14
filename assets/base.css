@@ -29,7 +29,7 @@
   border-bottom: none !important;
   transition: box-shadow 0.2s ease, border-color 0.2s ease !important;
   position: relative !important;
-  font-family: Outfit, sans-serif !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
 /* Visual order: subscribe first, one-time second */
@@ -124,7 +124,7 @@
   min-width: 0 !important;
 }
 .shotz-label {
-  font-family: Outfit, sans-serif !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-size: 13px !important;
   font-weight: 600 !important;
   letter-spacing: normal !important;
@@ -138,7 +138,7 @@
   align-items: center !important;
   background: #0A84FF !important;
   color: #fff !important;
-  font-family: Outfit, sans-serif !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-size: 12px !important;
   font-weight: 700 !important;
   letter-spacing: 0.03em !important;
@@ -158,7 +158,7 @@
   flex-shrink: 0 !important;
 }
 .shotz-price {
-  font-family: Outfit, sans-serif !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-size: 15px !important;
   font-weight: 700 !important;
   color: rgb(26, 26, 26) !important;
@@ -166,7 +166,7 @@
   white-space: nowrap !important;
 }
 .shotz-compare {
-  font-family: Outfit, sans-serif !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-size: 11px !important;
   font-weight: 400 !important;
   text-decoration: line-through !important;
@@ -175,7 +175,7 @@
   line-height: 1.3 !important;
 }
 .shotz-unit {
-  font-family: Outfit, sans-serif !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-size: 10.5px !important;
   font-weight: 400 !important;
   color: rgb(109, 109, 109) !important;
@@ -242,7 +242,7 @@
   transition: border-color 0.15s, background 0.15s !important;
 }
 .subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button span {
-  font-family: Outfit, sans-serif !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
   color: #333333 !important;
   font-size: 13px !important;
   font-weight: 500 !important;
@@ -261,7 +261,7 @@
 
 /* ── Policy text ────────────────────────────────────────────── */
 .subscription_group[data-shotz="sub"] .shopify_subscriptions_app_policy {
-  font-family: Outfit, sans-serif !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-size: 10.5px !important;
   color: #999999 !important;
   line-height: 1.5 !important;
@@ -281,7 +281,7 @@
   display: flex !important;
   align-items: flex-start !important;
   gap: 8px !important;
-  font-family: Outfit, sans-serif !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-size: 12.5px !important;
   font-weight: 400 !important;
   color: #4a4a4a !important;
@@ -301,7 +301,7 @@
 
 /* ── Section title above cards ──────────────────────────────── */
 .shotz-plan-title {
-  font-family: Outfit, sans-serif !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-size: 18px !important;
   font-weight: 600 !important;
   color: #666666 !important;

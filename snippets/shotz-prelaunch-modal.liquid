@@ -28,7 +28,7 @@
       id="spl-modal-title"
       class="spl-modal__title"
     >
-      Garanta 10% OFF na sua primeira compra.
+      Garanta 10% OFF no lançamento.
     </h2>
     <p class="spl-modal__subtitle">Vagas limitadas. Seja o primeiro a saber.</p>
 
@@ -84,7 +84,12 @@
         >
         <label for="spl-lgpd">
           Autorizo o cadastro dos meus dados na base de leads da Shotz, além do envio de email marketing e demais
-          comunicações.
+          comunicações, de acordo com a
+          <a
+            href="{{ shop.privacy_policy.url | default: '#' }}"
+            target="_blank"
+            rel="noopener"
+          >Política de Privacidade</a>.
         </label>
       </div>
 

@@ -182,8 +182,9 @@
           "type": "ai_gen_block_0453d40",
           "settings": {
             "image_position": "left",
+            "product_image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0525_4.jpg",
             "image_background_color": "#f5f5f5",
-            "image_border_radius": 20,
+            "image_border_radius": 100,
             "headline": "Potencialize seus resultados",
             "subtitle": "Descubra os benefícios que vão transformar sua rotina",
             "benefit_1": "Absorção rápida e eficiente",

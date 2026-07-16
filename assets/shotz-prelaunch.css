@@ -343,10 +343,21 @@
 }
 
 .spl-s2__content h2 {
-  font-size: 38px;
+  font-size: clamp(1.5rem, 6vw, 2.375rem);
+  line-height: 1.15;
   font-weight: 800;
   color: var(--spl-black);
   margin: 0 0 20px;
+}
+
+.spl-linebreak {
+  display: none;
+}
+
+@media screen and (min-width: 640px) {
+  .spl-linebreak {
+    display: block;
+  }
 }
 
 .spl-s2__content p {
@@ -378,10 +389,6 @@
 
   .spl-s2__content {
     padding: 28px 24px;
-  }
-
-  .spl-s2__content h2 {
-    font-size: 26px;
   }
 
   .spl-s2__content p {
@@ -496,7 +503,8 @@
 }
 
 .spl-s4__text h2 {
-  font-size: 38px;
+  font-size: clamp(1.5rem, 6vw, 2.375rem);
+  line-height: 1.15;
   font-weight: 800;
   color: var(--spl-black);
   margin: 0 0 16px;
@@ -564,10 +572,6 @@
 
   .spl-s4__text {
     padding: 28px 24px;
-  }
-
-  .spl-s4__text h2 {
-    font-size: 26px;
   }
 
   .spl-s4__benefits {

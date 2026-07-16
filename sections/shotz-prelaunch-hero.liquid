@@ -4,7 +4,18 @@
 
 <section class="spl-card-full spl-hero">
   <div class="spl-hero__bg">
-    {% if section.settings.hero_image %}
+    {% if section.settings.hero_video %}
+      {{
+        section.settings.hero_video
+        | video_tag:
+          image_size: '1500x',
+          autoplay: true,
+          loop: true,
+          muted: true,
+          controls: false,
+          class: 'spl-hero__media'
+      }}
+    {% elsif section.settings.hero_image %}
       {{
         section.settings.hero_image
         | image_url: width: 2000
@@ -17,7 +28,7 @@
       }}
     {% else %}
       <div class="spl-hero__placeholder" aria-hidden="true">
-        <span>foto: rotina / lifestyle</span>
+        <span>foto ou vídeo: rotina / lifestyle</span>
       </div>
     {% endif %}
     <div class="spl-hero__overlay"></div>
@@ -61,9 +72,16 @@
   "name": "Prelaunch — Hero",
   "settings": [
     {
+      "type": "video",
+      "id": "hero_video",
+      "label": "Vídeo de fundo",
+      "info": "Se definido, tem prioridade sobre a foto de fundo abaixo."
+    },
+    {
       "type": "image_picker",
       "id": "hero_image",
-      "label": "Foto de fundo"
+      "label": "Foto de fundo",
+      "info": "Usada quando nenhum vídeo é definido."
     }
   ]
 }

@@ -89,6 +89,26 @@
     "variant_button_border_width": 2,
     "variant_button_radius": 11,
     "variant_button_width": "default-width-buttons",
+    "sections": {
+      "shotz-prelaunch-hero": {
+        "type": "shotz-prelaunch-hero",
+        "settings": {
+          "hero_video": "shopify://files/videos/kling_20260716_VIDEO_create_a_a_5557_0.mp4"
+        }
+      },
+      "shotz-prelaunch-para-quem-e": {
+        "type": "shotz-prelaunch-para-quem-e",
+        "settings": {}
+      },
+      "shotz-prelaunch-o-que-e": {
+        "type": "shotz-prelaunch-o-que-e",
+        "settings": {}
+      },
+      "shotz-prelaunch-fechamento": {
+        "type": "shotz-prelaunch-fechamento",
+        "settings": {}
+      }
+    },
     "content_for_index": [],
     "blocks": {
       "6544682535036668446": {

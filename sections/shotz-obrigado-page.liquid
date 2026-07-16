@@ -1,0 +1,102 @@
+{% doc %}
+  Content for the Shotz post-signup "obrigado" (thank you) page.
+{% enddoc %}
+
+{% assign whatsapp_group_link = 'https://chat.whatsapp.com/IWRR7gsp0ZP1xDtzxe8DZS?s=cl&p=i&ilr=4' %}
+
+<div class="spl-ob">
+  <div class="spl-ob__bg">
+    {% if section.settings.background_image %}
+      {{
+        section.settings.background_image
+        | image_url: width: 2400
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          sizes: '100vw',
+          widths: '750, 1100, 1500, 2000, 2400',
+          class: 'spl-ob__bg-media'
+      }}
+    {% else %}
+      <div class="spl-hero__placeholder" aria-hidden="true">
+        <span>foto de fundo: página obrigado</span>
+      </div>
+    {% endif %}
+    <div class="spl-ob__overlay"></div>
+  </div>
+
+  <main class="spl-ob__content">
+    <section class="spl-ob__intro">
+      <div class="spl-ob__check-icon" aria-hidden="true">&#10003;</div>
+      <h1 class="spl-ob__intro-title">Cadastro confirmado.<br>Você está na lista.</h1>
+      <p class="spl-ob__intro-text">
+        Em breve você vai ser avisado assim que o Lote 001 abrir, com tudo que você garantiu no cadastro.
+      </p>
+    </section>
+
+    <section class="spl-ob__next">
+      <div class="spl-card spl-ob__next-card">
+        <span class="spl-ob__label">Próximo passo</span>
+        <h2 class="spl-ob__next-title">Entre na comunidade<br>do WhatsApp.</h2>
+        <p class="spl-ob__next-text">
+          Enquanto isso, entra no nosso grupo exclusivo do WhatsApp e acompanha os bastidores da Shotz antes de todo
+          mundo.
+        </p>
+
+        <a
+          href="{{ whatsapp_group_link }}"
+          target="_blank"
+          rel="noopener"
+          class="spl-btn spl-ob__next-btn"
+        >
+          Entrar no grupo exclusivo <span class="spl-btn__arrow" aria-hidden="true">→</span>
+        </a>
+
+        <p class="spl-ob__next-caption">Sem spam. Só o que importa sobre o lançamento.</p>
+      </div>
+
+      <div class="spl-ob__steps">
+        <div class="spl-card spl-ob__step-card">
+          <span class="spl-ob__step-badge">1</span>
+          <span>Você entra no grupo exclusivo</span>
+        </div>
+        <div class="spl-card spl-ob__step-card">
+          <span class="spl-ob__step-badge">2</span>
+          <span>Recebe seu cupom de 10% OFF</span>
+        </div>
+        <div class="spl-card spl-ob__step-card">
+          <span class="spl-ob__step-badge">3</span>
+          <span>Compra antes da abertura oficial</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="spl-ob__backstage">
+      <h2 class="spl-ob__backstage-title">Enquanto isso, acompanhe<br>os bastidores.</h2>
+      <p class="spl-ob__backstage-text">
+        Novidades, testes e detalhes do lançamento aparecem primeiro por lá — não fica de fora.
+      </p>
+      <a
+        href="https://www.instagram.com/meushotz"
+        target="_blank"
+        rel="noopener"
+        class="spl-btn spl-btn--dark"
+      >
+        Acompanhar nos bastidores <span class="spl-btn__arrow" aria-hidden="true">→</span>
+      </a>
+    </section>
+  </main>
+</div>
+
+{% schema %}
+{
+  "name": "Obrigado — Página",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Imagem de fundo"
+    }
+  ]
+}
+{% endschema %}

@@ -90,14 +90,6 @@
   height: 50px;
 }
 
-.spl-btn--whatsapp {
-  background: #25D366;
-}
-
-.spl-btn--whatsapp:hover {
-  background: #1EBE5A;
-}
-
 /* Cards (usado pela página /pages/obrigado — não remover) */
 
 .spl-card {
@@ -698,59 +690,196 @@
 
 /* ---------------- OBRIGADO PAGE ---------------- */
 
-.spl-thanks {
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+.spl-ob {
+  position: relative;
+  min-height: 100vh;
 }
 
-.spl-thanks__card {
-  max-width: 480px;
+.spl-ob__bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+}
+
+.spl-ob__bg-media {
   width: 100%;
-  padding: 40px 28px;
-  text-align: center;
+  height: 100%;
+  object-fit: cover;
 }
 
-@media screen and (min-width: 768px) {
-  .spl-thanks__card {
-    padding: 56px 48px;
+.spl-ob__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.spl-ob__content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 96px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+
+@media screen and (max-width: 767px) {
+  .spl-ob__content {
+    padding: 56px 20px;
+    gap: 64px;
   }
 }
 
-.spl-thanks__icon {
-  width: 72px;
-  height: 72px;
+/* Seção 1 — confirmação */
+
+.spl-ob__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.spl-ob__check-icon {
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: var(--spl-blue-bg);
-  color: var(--spl-blue);
+  background: var(--spl-blue);
+  color: var(--spl-white);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 36px;
+  font-size: 26px;
   font-weight: 700;
-  margin: 0 auto 24px;
+  flex-shrink: 0;
 }
 
-.spl-thanks h1 {
-  font-size: 24px;
+.spl-ob__intro .spl-ob__intro-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--spl-black);
+  margin: 0;
+}
+
+.spl-ob__intro .spl-ob__intro-text {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--spl-gray);
+  max-width: 480px;
+  margin: 0;
+}
+
+/* Seção 2 — próximo passo */
+
+.spl-ob__next {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media screen and (max-width: 767px) {
+  .spl-ob__next {
+    grid-template-columns: 1fr;
+  }
+}
+
+.spl-ob__next-card {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.spl-ob__label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--spl-blue);
   margin-bottom: 12px;
 }
 
-.spl-thanks__subtitle {
+.spl-ob__next-card .spl-ob__next-title {
+  font-size: clamp(1.375rem, 3vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--spl-black);
+  margin: 0 0 16px;
+}
+
+.spl-ob__next-card .spl-ob__next-text {
+  font-size: 15px;
+  line-height: 1.6;
   color: var(--spl-gray);
-  margin-bottom: 24px;
+  margin: 0 0 24px;
 }
 
-.spl-thanks__divider {
-  border: none;
-  border-top: 1px solid var(--spl-border);
-  margin: 24px 0;
+.spl-ob__next-btn {
+  align-self: flex-start;
 }
 
-.spl-thanks__footnote {
-  margin-top: 20px;
+.spl-ob__next-card .spl-ob__next-caption {
   font-size: 13px;
   color: var(--spl-gray);
+  opacity: 0.8;
+  margin: 12px 0 0;
+}
+
+.spl-ob__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.spl-ob__step-card {
+  flex: 1;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--spl-black);
+}
+
+.spl-ob__step-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--spl-blue);
+  color: var(--spl-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Seção 3 — bastidores */
+
+.spl-ob__backstage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.spl-ob__backstage .spl-ob__backstage-title {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--spl-black);
+  margin: 0;
+}
+
+.spl-ob__backstage .spl-ob__backstage-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--spl-gray);
+  max-width: 480px;
+  margin: 0;
 }

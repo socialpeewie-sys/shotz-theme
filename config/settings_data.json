@@ -98,11 +98,15 @@
       },
       "shotz-prelaunch-para-quem-e": {
         "type": "shotz-prelaunch-para-quem-e",
-        "settings": {}
+        "settings": {
+          "section2_image": "shopify://shop_images/magnific_change-the-background-to-_2974965545_fb898ebb-49ab-4868-b8ea-d8a6ebec3b4a.png"
+        }
       },
       "shotz-prelaunch-o-que-e": {
         "type": "shotz-prelaunch-o-que-e",
-        "settings": {}
+        "settings": {
+          "section3_image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0525_2.jpg"
+        }
       },
       "shotz-prelaunch-fechamento": {
         "type": "shotz-prelaunch-fechamento",

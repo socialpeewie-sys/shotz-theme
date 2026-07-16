@@ -90,6 +90,23 @@
   height: 50px;
 }
 
+.spl-btn--whatsapp {
+  background: #25D366;
+}
+
+.spl-btn--whatsapp:hover {
+  background: #1EBE5A;
+}
+
+.spl-btn--instagram {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: var(--spl-white);
+}
+
+.spl-btn--instagram:hover {
+  filter: brightness(0.92);
+}
+
 /* Cards (usado pela página /pages/obrigado — não remover) */
 
 .spl-card {
@@ -730,7 +747,13 @@
   }
 }
 
-/* Seção 1 — confirmação */
+/* Seção 1 — confirmação / Seção 3 — bastidores (cartão azul) */
+
+.spl-ob__card-section {
+  background: var(--spl-blue);
+  border-radius: 24px;
+  padding: 56px 24px;
+}
 
 .spl-ob__intro {
   display: flex;
@@ -744,8 +767,8 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: var(--spl-blue);
-  color: var(--spl-white);
+  background: var(--spl-white);
+  color: var(--spl-blue);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -758,14 +781,14 @@
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 800;
   line-height: 1.2;
-  color: var(--spl-black);
+  color: var(--spl-white);
   margin: 0;
 }
 
 .spl-ob__intro .spl-ob__intro-text {
   font-size: 17px;
   line-height: 1.6;
-  color: var(--spl-gray);
+  color: rgba(255, 255, 255, 0.85);
   max-width: 480px;
   margin: 0;
 }
@@ -872,14 +895,14 @@
   font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: 800;
   line-height: 1.25;
-  color: var(--spl-black);
+  color: var(--spl-white);
   margin: 0;
 }
 
 .spl-ob__backstage .spl-ob__backstage-text {
   font-size: 16px;
   line-height: 1.6;
-  color: var(--spl-gray);
+  color: rgba(255, 255, 255, 0.85);
   max-width: 480px;
   margin: 0;
 }

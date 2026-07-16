@@ -183,6 +183,7 @@
   .spl-hero {
     height: 100vh;
     min-height: 520px;
+    align-items: center;
   }
 }
 

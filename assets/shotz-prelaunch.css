@@ -436,10 +436,11 @@
   }
 }
 
-.spl-s3__intro {
+.spl-s3__content .spl-s3__intro {
   font-size: 18px;
+  font-weight: 600;
   max-width: 580px;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--spl-white);
   margin: 0 auto 28px;
 }
 

@@ -2,7 +2,7 @@
   Hero section for the Shotz pre-launch landing page.
 {% enddoc %}
 
-<section class="spl-hero">
+<section class="spl-card-full spl-hero">
   <div class="spl-hero__bg">
     {% if section.settings.hero_image %}
       {{
@@ -11,42 +11,48 @@
         | image_tag:
           loading: 'eager',
           fetchpriority: 'high',
-          sizes: '100vw',
-          widths: '750, 1100, 1500, 2000'
+          sizes: '(min-width: 1440px) 1440px, 100vw',
+          widths: '750, 1100, 1500, 2000',
+          class: 'spl-hero__media'
       }}
+    {% else %}
+      <div class="spl-hero__placeholder" aria-hidden="true">
+        <span>foto: rotina / lifestyle</span>
+      </div>
     {% endif %}
-    <div
-      class="spl-hero__overlay"
-      style="opacity: {{ section.settings.hero_overlay_opacity | divided_by: 100.0 }};"
-    ></div>
+    <div class="spl-hero__overlay"></div>
   </div>
 
   <div class="spl-hero__content">
-    {% if settings.logo %}
-      <div class="spl-hero__logo">
-        {{ settings.logo | image_url: width: 280 | image_tag: loading: 'eager' }}
-      </div>
-    {% endif %}
+    <div class="spl-wordmark">SHOTZ</div>
 
-    <h1>Sua rotina já é complexa. Consumir proteína não precisa ser.</h1>
+    <h1 class="spl-hero__headline">Sua rotina já é complexa.<br>Consumir proteína não precisa ser.</h1>
+
     <p class="spl-hero__subheadline">
-      Foi pensando nisso que criamos a Shotz, um shot proteico desenvolvido para tornar o consumo de proteína mais
-      simples.
+      Shotz é um shot proteico com 20g de proteína criado para tornar o consumo de proteína mais simples.
     </p>
 
-    <p class="spl-hero__cta-text">
+    <p class="spl-tagline">
+      <span class="spl-tagline__white">Pronto.</span>
+      <span class="spl-tagline__accent">Prático.</span>
+      <span class="spl-tagline__white">Proteico.</span>
+    </p>
+
+    <span class="spl-glass-pill">
       Cadastre-se para ter acesso antecipado ao lançamento e garanta 10% OFF na sua primeira compra.
-    </p>
+    </span>
 
-    <button
-      type="button"
-      class="spl-btn"
-      data-spl-open-modal
-    >
-      Quero acesso antecipado
-    </button>
+    <div>
+      <button
+        type="button"
+        class="spl-btn"
+        data-spl-open-modal
+      >
+        Quero acesso antecipado <span class="spl-btn__arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
 
-    <p class="spl-hero__footnote">Vagas limitadas.</p>
+    <p class="spl-caption">Vagas limitadas</p>
   </div>
 </section>
 
@@ -57,17 +63,7 @@
     {
       "type": "image_picker",
       "id": "hero_image",
-      "label": "Imagem de fundo"
-    },
-    {
-      "type": "range",
-      "id": "hero_overlay_opacity",
-      "label": "Opacidade do overlay",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 60
+      "label": "Foto de fundo"
     }
   ]
 }

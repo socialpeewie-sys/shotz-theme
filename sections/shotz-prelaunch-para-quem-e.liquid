@@ -2,45 +2,40 @@
   "Para quem é" section for the Shotz pre-launch landing page.
 {% enddoc %}
 
-<section class="shotz-prelaunch__section spl-s2">
-  <div class="shotz-prelaunch__inner">
-    <div class="spl-card spl-s2__card">
-      <div class="spl-s2__image">
-        {% if section.settings.section2_image %}
-          {{ section.settings.section2_image | image_url: width: 1000 | image_tag: loading: 'lazy', sizes: '(min-width: 768px) 50vw, 100vw' }}
-        {% else %}
-          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-        {% endif %}
+<section class="spl-card-split spl-s2">
+  <div class="spl-s2__image">
+    {% if section.settings.section2_image %}
+      {{
+        section.settings.section2_image
+        | image_url: width: 900
+        | image_tag: loading: 'lazy', sizes: '(min-width: 768px) 45vw, 100vw', class: 'spl-s2__media'
+      }}
+    {% else %}
+      <div class="spl-s2__placeholder" aria-hidden="true">
+        <span>foto: pessoa em movimento</span>
       </div>
+    {% endif %}
+  </div>
 
-      <div class="spl-s2__content">
-        <span class="spl-badge">Para quem é</span>
-        <h2>Para quem acredita que performance acontece todos os dias.</h2>
+  <div class="spl-s2__content">
+    <h2>Para quem acredita que performance<br>acontece todos os dias.</h2>
 
-        <p>Shotz foi criado para pessoas que vivem em movimento.</p>
-        <p>
-          Pessoas que conciliam trabalho, estudos, treinos, viagens, compromissos e uma rotina intensa, mas que ainda
-          escolhem cuidar da própria saúde.
-        </p>
-        <p>
-          Para quem entende que evoluir não depende de grandes mudanças, e sim de pequenas escolhas feitas todos os
-          dias.
-        </p>
-        <p>Porque consumir proteína deveria ser uma delas.</p>
-        <p>
-          Se você busca praticidade sem abrir mão da qualidade, bem-vindo ao começo de uma nova forma de consumir
-          proteína.
-        </p>
+    <p>
+      Shotz foi criado para pessoas que vivem em movimento — que conciliam trabalho, treinos e uma rotina intensa,
+      mas ainda escolhem cuidar da própria saúde.
+    </p>
+    <p>
+      Porque evoluir não depende de grandes mudanças, e sim de pequenas escolhas feitas todos os dias. Consumir
+      proteína deveria ser uma delas.
+    </p>
 
-        <button
-          type="button"
-          class="spl-btn"
-          data-spl-open-modal
-        >
-          Quero fazer parte desse movimento!
-        </button>
-      </div>
-    </div>
+    <button
+      type="button"
+      class="spl-btn spl-btn--sm"
+      data-spl-open-modal
+    >
+      Quero fazer parte desse movimento <span class="spl-btn__arrow" aria-hidden="true">→</span>
+    </button>
   </div>
 </section>
 

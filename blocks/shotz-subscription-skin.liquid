@@ -1,0 +1,623 @@
+{% comment %}
+  shotz-subscription-skin.liquid
+  Caminho: blocks/shotz-subscription-skin.liquid
+
+  Estiliza o app nativo de assinaturas da Shopify (Shopify Subscriptions)
+  por cima do DOM que ele já renderiza, sem substituí-lo — os radios reais
+  continuam funcionando, só a aparência é trocada (via assets/base.css +
+  assets/shotz-custom.js, que injeta a marcação .shotz-* dentro do bloco
+  do app).
+
+  Este bloco só existe para expor essa aparência como configurações
+  editáveis pelo Editor de Temas. Adicione-o UMA ÚNICA VEZ na página
+  (em qualquer lugar dentro da seção de informações do produto) — como
+  os seletores de CSS são globais (batem com as classes que o JS injeta
+  no bloco do app, não com este bloco em si), duas instâncias juntas
+  vão gerar regras conflitantes.
+{% endcomment %}
+
+{% style %}
+  .subscription_group {
+    border-radius: {{ block.settings.card_border_radius }}px !important;
+  }
+  .subscription_group[data-shotz="sub"],
+  .subscription_group[data-shotz="onetime"] {
+    border: {{ block.settings.card_border_width }}px solid {{ block.settings.card_border_color }} !important;
+  }
+  .subscription_group[data-shotz="onetime"]:not([data-shotz-sel="true"]):hover {
+    border-color: {{ block.settings.card_border_color | color_darken: 10 }} !important;
+  }
+  .subscription_group[data-shotz="sub"][data-shotz-sel="true"],
+  .subscription_group[data-shotz="onetime"][data-shotz-sel="true"] {
+    border-color: {{ block.settings.card_selected_border_color }} !important;
+    box-shadow: 0 0 0 3px {{ block.settings.card_selected_border_color | color_modify: 'alpha', 0.12 }},
+                0 4px 16px rgba(0, 0, 0, 0.07) !important;
+  }
+
+  .shotz-dot {
+    width: {{ block.settings.radio_size }}px !important;
+    height: {{ block.settings.radio_size }}px !important;
+    border: {{ block.settings.radio_border_width }}px solid {{ block.settings.radio_border_color }} !important;
+  }
+  .subscription_group[data-shotz][data-shotz-sel="true"] .shotz-dot {
+    background: {{ block.settings.radio_selected_color }} !important;
+    border-color: {{ block.settings.radio_selected_color }} !important;
+  }
+  .shotz-dot-check {
+    fill: {{ block.settings.radio_check_color }} !important;
+  }
+
+  .shotz-label {
+    font-size: {{ block.settings.label_font_size }}px !important;
+    font-weight: {{ block.settings.label_font_weight }} !important;
+    color: {{ block.settings.label_color }} !important;
+  }
+
+  .shotz-badge {
+    font-size: {{ block.settings.badge_font_size }}px !important;
+    font-weight: {{ block.settings.badge_font_weight }} !important;
+    background: {{ block.settings.badge_background }} !important;
+    color: {{ block.settings.badge_text_color }} !important;
+    border-radius: {{ block.settings.badge_border_radius }}px !important;
+  }
+
+  .shotz-price {
+    font-size: {{ block.settings.price_font_size }}px !important;
+    font-weight: {{ block.settings.price_font_weight }} !important;
+    color: {{ block.settings.price_color }} !important;
+  }
+  .shotz-compare {
+    font-size: {{ block.settings.compare_font_size }}px !important;
+    color: {{ block.settings.compare_color }} !important;
+  }
+  .shotz-unit {
+    font-size: {{ block.settings.unit_font_size }}px !important;
+    font-weight: {{ block.settings.unit_font_weight }} !important;
+    color: {{ block.settings.unit_color }} !important;
+  }
+
+  .shotz-chevron svg path {
+    stroke: {{ block.settings.chevron_color }} !important;
+  }
+
+  .shotz-divider {
+    background: {{ block.settings.divider_color }} !important;
+  }
+  .subscription_group[data-shotz="sub"] .shopify_subscriptions_app_policy {
+    font-size: {{ block.settings.policy_font_size }}px !important;
+    color: {{ block.settings.policy_color }} !important;
+  }
+
+  .subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button {
+    background: {{ block.settings.freq_pill_background }} !important;
+    border: {{ block.settings.freq_pill_border_width }}px solid {{ block.settings.freq_pill_border_color }} !important;
+    border-radius: {{ block.settings.freq_pill_border_radius }}px !important;
+  }
+  .subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button span {
+    font-size: {{ block.settings.freq_pill_font_size }}px !important;
+    color: {{ block.settings.freq_pill_text_color }} !important;
+  }
+  .subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button:has(input:checked) {
+    background: {{ block.settings.freq_pill_selected_background }} !important;
+    border-color: {{ block.settings.freq_pill_selected_border_color }} !important;
+  }
+  .subscription_group[data-shotz="sub"] .group_list_item.custom_radio_button:has(input:checked) span {
+    color: {{ block.settings.freq_pill_selected_text_color }} !important;
+  }
+
+  .shotz-feature {
+    font-size: {{ block.settings.feature_font_size }}px !important;
+    color: {{ block.settings.feature_color }} !important;
+  }
+  .shotz-check svg path {
+    stroke: {{ block.settings.feature_check_icon_color }} !important;
+  }
+
+  .shotz-plan-title {
+    font-size: {{ block.settings.plan_title_font_size }}px !important;
+    font-weight: {{ block.settings.plan_title_font_weight }} !important;
+    color: {{ block.settings.plan_title_color }} !important;
+  }
+
+  @media screen and (max-width: 749px) {
+    .shotz-label  { font-size: {{ block.settings.label_font_size_mobile }}px !important; }
+    .shotz-price  { font-size: {{ block.settings.price_font_size_mobile }}px !important; }
+    .shotz-unit   { font-size: {{ block.settings.unit_font_size_mobile }}px !important; }
+    .shotz-badge  { font-size: {{ block.settings.badge_font_size_mobile }}px !important; }
+  }
+{% endstyle %}
+
+<script>
+  window.ShotzSubSkinConfig = {
+    planTitle: {{ block.settings.plan_title_text | json }},
+    subLabel: {{ block.settings.sub_label_text | json }},
+    oneLabel: {{ block.settings.one_label_text | json }},
+    freqLabel: {{ block.settings.freq_label_text | json }},
+    features: [
+      {% for feature_block in block.blocks %}
+        {% if feature_block.type == '_shotz-subscription-feature' and feature_block.settings.text != blank %}
+          {{ feature_block.settings.text | json }}{% unless forloop.last %},{% endunless %}
+        {% endif %}
+      {% endfor %}
+    ]
+  };
+</script>
+<div style="display:none" {{ block.shopify_attributes }}></div>
+
+{% schema %}
+{
+  "name": "Skin — Assinatura nativa",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Estiliza o widget nativo de assinaturas da Shopify. Adicione este bloco apenas uma vez na página."
+    },
+    {
+      "type": "header",
+      "content": "Textos"
+    },
+    {
+      "type": "text",
+      "id": "plan_title_text",
+      "label": "Título acima dos cards",
+      "default": "Escolha uma das opções:"
+    },
+    {
+      "type": "text",
+      "id": "sub_label_text",
+      "label": "Nome do plano de assinatura",
+      "default": "Assine & Economize"
+    },
+    {
+      "type": "text",
+      "id": "one_label_text",
+      "label": "Nome da compra única",
+      "default": "COMPRA ÚNICA"
+    },
+    {
+      "type": "text",
+      "id": "freq_label_text",
+      "label": "Label de frequência de entrega",
+      "default": "Frequência de entrega:"
+    },
+    {
+      "type": "header",
+      "content": "Título da seção"
+    },
+    {
+      "type": "range",
+      "id": "plan_title_font_size",
+      "label": "Tamanho da fonte",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "plan_title_font_weight",
+      "label": "Peso da fonte",
+      "min": 400,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "color",
+      "id": "plan_title_color",
+      "label": "Cor",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Espessura da borda",
+      "min": 0,
+      "max": 4,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1.5
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Cor da borda",
+      "default": "#0000001A"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Arredondamento",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "color",
+      "id": "card_selected_border_color",
+      "label": "Cor da borda selecionado",
+      "default": "#0A84FF"
+    },
+    {
+      "type": "header",
+      "content": "Radio"
+    },
+    {
+      "type": "range",
+      "id": "radio_size",
+      "label": "Tamanho",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "radio_border_width",
+      "label": "Espessura da borda",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "radio_border_color",
+      "label": "Cor da borda",
+      "default": "#d7ccbc"
+    },
+    {
+      "type": "color",
+      "id": "radio_selected_color",
+      "label": "Cor selecionado",
+      "default": "#0A84FF"
+    },
+    {
+      "type": "color",
+      "id": "radio_check_color",
+      "label": "Cor do ícone de check",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Label do plano"
+    },
+    {
+      "type": "range",
+      "id": "label_font_size",
+      "label": "Tamanho da fonte",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "label_font_size_mobile",
+      "label": "Tamanho (mobile)",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "label_font_weight",
+      "label": "Peso da fonte",
+      "min": 400,
+      "max": 900,
+      "step": 100,
+      "default": 800
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Cor",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "header",
+      "content": "Badge de desconto"
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "label": "Tamanho da fonte",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size_mobile",
+      "label": "Tamanho (mobile)",
+      "min": 7,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "badge_font_weight",
+      "label": "Peso da fonte",
+      "min": 400,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "color",
+      "id": "badge_background",
+      "label": "Fundo",
+      "default": "#0A84FF"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Texto",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "badge_border_radius",
+      "label": "Arredondamento",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Preço"
+    },
+    {
+      "type": "range",
+      "id": "price_font_size",
+      "label": "Tamanho do preço",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "price_font_size_mobile",
+      "label": "Tamanho (mobile)",
+      "min": 8,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "price_font_weight",
+      "label": "Peso do preço",
+      "min": 400,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Cor do preço",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "compare_font_size",
+      "label": "Tamanho do preço riscado",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "color",
+      "id": "compare_color",
+      "label": "Cor do preço riscado",
+      "default": "#6d6d6d"
+    },
+    {
+      "type": "range",
+      "id": "unit_font_size",
+      "label": "Tamanho do preço unitário",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "unit_font_size_mobile",
+      "label": "Tamanho (mobile)",
+      "min": 8,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "unit_font_weight",
+      "label": "Peso do preço unitário",
+      "min": 400,
+      "max": 900,
+      "step": 100,
+      "default": 600
+    },
+    {
+      "type": "color",
+      "id": "unit_color",
+      "label": "Cor do preço unitário",
+      "default": "#6d6d6d"
+    },
+    {
+      "type": "header",
+      "content": "Chevron"
+    },
+    {
+      "type": "color",
+      "id": "chevron_color",
+      "label": "Cor",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "header",
+      "content": "Corpo expandido"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Cor do divisor",
+      "default": "#00000014"
+    },
+    {
+      "type": "range",
+      "id": "policy_font_size",
+      "label": "Tamanho do texto de política",
+      "min": 8,
+      "max": 14,
+      "step": 0.5,
+      "unit": "px",
+      "default": 10.5
+    },
+    {
+      "type": "color",
+      "id": "policy_color",
+      "label": "Cor do texto de política",
+      "default": "#999999"
+    },
+    {
+      "type": "header",
+      "content": "Opções de frequência"
+    },
+    {
+      "type": "color",
+      "id": "freq_pill_background",
+      "label": "Fundo",
+      "default": "#f5f4f2"
+    },
+    {
+      "type": "range",
+      "id": "freq_pill_border_width",
+      "label": "Espessura da borda",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "freq_pill_border_color",
+      "label": "Cor da borda",
+      "default": "#D0CFCF"
+    },
+    {
+      "type": "range",
+      "id": "freq_pill_border_radius",
+      "label": "Arredondamento",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "freq_pill_selected_background",
+      "label": "Fundo selecionado",
+      "default": "#0A84FF12"
+    },
+    {
+      "type": "color",
+      "id": "freq_pill_selected_border_color",
+      "label": "Borda selecionado",
+      "default": "#0A84FF"
+    },
+    {
+      "type": "color",
+      "id": "freq_pill_text_color",
+      "label": "Cor do texto",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "freq_pill_selected_text_color",
+      "label": "Cor do texto selecionado",
+      "default": "#0A84FF"
+    },
+    {
+      "type": "range",
+      "id": "freq_pill_font_size",
+      "label": "Tamanho da fonte",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "header",
+      "content": "Lista de benefícios"
+    },
+    {
+      "type": "range",
+      "id": "feature_font_size",
+      "label": "Tamanho da fonte",
+      "min": 10,
+      "max": 16,
+      "step": 0.5,
+      "unit": "px",
+      "default": 12.5
+    },
+    {
+      "type": "color",
+      "id": "feature_color",
+      "label": "Cor do texto",
+      "default": "#4a4a4a"
+    },
+    {
+      "type": "color",
+      "id": "feature_check_icon_color",
+      "label": "Cor do ícone de check",
+      "default": "#0A84FF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_shotz-subscription-feature"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Skin — Assinatura nativa",
+      "blocks": [
+        { "type": "_shotz-subscription-feature", "settings": { "text": "Desconto em todas as entregas da assinatura" } },
+        { "type": "_shotz-subscription-feature", "settings": { "text": "Pause ou cancele quando quiser, sem taxas" } },
+        { "type": "_shotz-subscription-feature", "settings": { "text": "Entrega automática todo mês" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

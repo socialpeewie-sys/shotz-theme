@@ -369,6 +369,25 @@
                 "product": "{{closest.product}}"
               }
             },
+            "shotz_subscription_skin_main": {
+              "type": "shotz-subscription-skin",
+              "settings": {},
+              "blocks": {
+                "feature_1": {
+                  "type": "_shotz-subscription-feature",
+                  "settings": { "text": "Desconto em todas as entregas da assinatura" }
+                },
+                "feature_2": {
+                  "type": "_shotz-subscription-feature",
+                  "settings": { "text": "Pause ou cancele quando quiser, sem taxas" }
+                },
+                "feature_3": {
+                  "type": "_shotz-subscription-feature",
+                  "settings": { "text": "Entrega automática todo mês" }
+                }
+              },
+              "block_order": ["feature_1", "feature_2", "feature_3"]
+            },
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
               "settings": {
@@ -494,6 +513,7 @@
             "ai_gen_block_7ba48f4_fzPx9B",
             "variant_picker_R3rGDr",
             "subscriptions_app_block_gb6Mkz",
+            "shotz_subscription_skin_main",
             "buy_buttons_eYQEYi",
             "text_tVyr8B",
             "text_VeNPpP",

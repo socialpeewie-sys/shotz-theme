@@ -111,6 +111,12 @@
       "shotz-prelaunch-fechamento": {
         "type": "shotz-prelaunch-fechamento",
         "settings": {}
+      },
+      "shotz-obrigado-page": {
+        "type": "shotz-obrigado-page",
+        "settings": {
+          "background_image": "shopify://shop_images/Design_sem_nome.svg"
+        }
       }
     },
     "content_for_index": [],

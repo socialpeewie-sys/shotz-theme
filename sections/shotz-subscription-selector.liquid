@@ -134,7 +134,7 @@
 /* Título */
 #sss-{{ section.id }} .sss-title {
   flex: 1;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--dark);
   text-transform: uppercase;
@@ -151,7 +151,7 @@
   flex-shrink: 0;
 }
 #sss-{{ section.id }} .sss-price {
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--dark);
   white-space: nowrap;
@@ -164,7 +164,8 @@
   color: var(--muted);
 }
 #sss-{{ section.id }} .sss-unit {
-  font-size: 11px;
+  font-size: 12px;
+  font-weight: 600;
   color: var(--muted);
   white-space: nowrap;
 }
@@ -225,7 +226,7 @@
   background: var(--neon);
   color: var(--dark);
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 700;
   padding: 5px 14px;
   border-radius: 100px;
   letter-spacing: 0.02em;
@@ -279,8 +280,10 @@
 @media (max-width: 749px) {
   #sss-{{ section.id }} .sss-header     { padding: 12px 14px; }
   #sss-{{ section.id }} .sss-body-inner { padding: 4px 14px 14px; }
-  #sss-{{ section.id }} .sss-price      { font-size: 14px; }
-  #sss-{{ section.id }} .sss-badge      { font-size: 10px; padding: 4px 12px; }
+  #sss-{{ section.id }} .sss-title      { font-size: 13px; }
+  #sss-{{ section.id }} .sss-price      { font-size: 11px; }
+  #sss-{{ section.id }} .sss-unit       { font-size: 11px; }
+  #sss-{{ section.id }} .sss-badge      { padding: 4px 12px; }
   #sss-{{ section.id }} .sss-benefit    { font-size: 12px; }
 }
 {% endstyle %}

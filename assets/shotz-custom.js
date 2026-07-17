@@ -7,19 +7,15 @@
    ───────────────────────────────────────────────────────────────── */
 (function () {
   /* ── Configurable ──────────────────────────────────────────── */
-  /* Text content comes from window.ShotzSubSkinConfig, set by
-     blocks/shotz-subscription-skin.liquid (editable via Customizer).
-     Falls back to these defaults if that block isn't on the page. */
-  var CFG = window.ShotzSubSkinConfig || {};
   var DOT_CHECK_SVG =
     '<svg class="shotz-dot-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">' +
       '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>' +
     '</svg>';
-  var PLAN_TITLE  = CFG.planTitle || 'Escolha uma das opções:';
-  var SUB_LABEL   = CFG.subLabel  || 'Assine & Economize';
-  var ONE_LABEL   = CFG.oneLabel  || 'COMPRA ÚNICA';
-  var FREQ_LABEL  = CFG.freqLabel || 'Frequência de entrega:';
-  var FEATURES    = (CFG.features && CFG.features.length) ? CFG.features : [
+  var PLAN_TITLE  = 'Escolha uma das opções:';
+  var SUB_LABEL   = 'Assine & Economize';
+  var ONE_LABEL   = 'COMPRA ÚNICA';
+  var FREQ_LABEL  = 'Frequência de entrega:';
+  var FEATURES    = [
     'Desconto em todas as entregas da assinatura',
     'Pause ou cancele quando quiser, sem taxas',
     'Entrega automática todo mês',

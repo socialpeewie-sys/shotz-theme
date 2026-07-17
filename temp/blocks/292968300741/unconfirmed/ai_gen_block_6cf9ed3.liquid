@@ -1,6 +1,375 @@
+{% doc %}
+  @prompt
+    Crie uma section de tema Shopify (Online Store 2.0) chamada shotz-flavor-cards.liquid que exibe cards de sabores de produto, totalmente dinâmicos.
+    
+    Layout e estrutura:
+    
+    Uma seção centralizada, largura máxima ~1100px, com fundo configurável.
+    No topo: um "eyebrow" (texto pequeno em maiúsculas, ex.: "DOIS SABORES") e um título grande (ex.: "Escolha o seu").
+    Abaixo, um grid flexível de cards lado a lado (2 por linha no desktop, empilhados no mobile).
+    Cada card = 1 produto (via block do tipo "flavor"), com dados 100% dinâmicos vindos do produto selecionado:
+    
+    Nome: product.title
+    Imagem: imagem principal do produto (product.featured_image), com opção de override por image_picker.
+    Preço: product.price_min formatado com o filtro money.
+    Desconto: se product.compare_at_price_min > product.price_min, mostrar o preço antigo riscado (<s>) e um selo no canto superior da imagem com a porcentagem calculada automaticamente (ex.: -25%).
+    Prefixo "A partir de": mostrar apenas quando product.price_varies for verdadeiro.
+    Esgotado: se product.available == false, trocar o botão de preço por um texto "Esgotado" em cinza.
+    O card inteiro deve ser um link para product.url.
+    Um subtítulo configurável por block (ex.: "18g de proteína · 100ml").
+    NÃO incluir seletor de variante — cada card representa apenas o produto (sabor).
+    
+    Configurações da seção (schema): eyebrow (text), heading (text), cor do eyebrow, cor de fundo, checkbox para ativar/desativar o selo de desconto, e padding superior/inferior (range em px).
+    
+    Configurações do block "flavor": product (product picker), image (opcional), subtitle (text), prefixo do preço (text), texto de esgotado (text), cor do botão/selo (color), cor do texto do botão/selo (color).
+    
+    Incluir um preset chamado "Shotz – Sabores" com 2 blocks de exemplo (um amarelo #f2b705, um rosa #e0257f).
+    
+    O CSS deve ficar inline dentro de uma tag <style> no próprio arquivo. Use var(--font-heading--family) e var(--font-body--family) para as fontes. Cards com cantos arredondados, borda sutil e efeito de leve elevação no hover.
+{% enddoc %}
+{% liquid
+  assign block_id = block.id | replace: '_', '' | downcase
+  assign product = block.settings.product
+  assign custom_image = block.settings.image
+  assign subtitle = block.settings.subtitle
+  assign price_prefix = block.settings.price_prefix
+  assign sold_out_text = block.settings.sold_out_text
+  assign button_color = block.settings.button_color
+  assign button_text_color = block.settings.button_text_color
+
+  if product == blank
+    assign show_placeholder = true
+  else
+    assign show_placeholder = false
+  endif
+
+  assign product_image = product.featured_image
+  if custom_image != blank
+    assign product_image = custom_image
+  endif
+
+  assign has_discount = false
+  assign discount_percentage = 0
+  if product.compare_at_price_min > product.price_min
+    assign has_discount = true
+    assign price_diff = product.compare_at_price_min | minus: product.price_min
+    assign discount_percentage = price_diff | times: 100.0 | divided_by: product.compare_at_price_min | round
+  endif
+%}
+
+{% style %}
+  .shotz-flavor-card-{{ block_id }} {
+    position: relative;
+    display: block;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .shotz-flavor-card-{{ block_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .shotz-flavor-card__image-wrapper-{{ block_id }} {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background-color: #f5f5f5;
+  }
+
+  .shotz-flavor-card__image-{{ block_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .shotz-flavor-card__image-placeholder-{{ block_id }} {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+  }
+
+  .shotz-flavor-card__image-placeholder-{{ block_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .shotz-flavor-card__badge-{{ block_id }} {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-family: var(--font-body-family);
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 2;
+  }
+
+  .shotz-flavor-card__content-{{ block_id }} {
+    padding: 20px;
+  }
+
+  .shotz-flavor-card__title-{{ block_id }} {
+    font-family: var(--font-heading-family);
+    font-size: 20px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0 0 8px 0;
+  }
+
+  .shotz-flavor-card__subtitle-{{ block_id }} {
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    color: #6d6d6d;
+    margin: 0 0 16px 0;
+  }
+
+  .shotz-flavor-card__price-wrapper-{{ block_id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .shotz-flavor-card__price-button-{{ block_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-family: var(--font-body-family);
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .shotz-flavor-card__price-button-{{ block_id }}:hover {
+    transform: scale(1.02);
+  }
+
+  .shotz-flavor-card__compare-price-{{ block_id }} {
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    color: #999999;
+    text-decoration: line-through;
+  }
+
+  .shotz-flavor-card__sold-out-{{ block_id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-family: var(--font-body-family);
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #e6e6e6;
+    color: #999999;
+    border: none;
+  }
+
+  .shotz-flavor-card__empty-state-{{ block_id }} {
+    padding: 20px;
+    text-align: center;
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    color: #999999;
+    font-style: italic;
+  }
+
+  @media screen and (max-width: 749px) {
+    .shotz-flavor-card__content-{{ block_id }} {
+      padding: 16px;
+    }
+
+    .shotz-flavor-card__title-{{ block_id }} {
+      font-size: 18px;
+    }
+
+    .shotz-flavor-card__price-button-{{ block_id }} {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  }
+{% endstyle %}
+
+{% if show_placeholder %}
+  <div class="shotz-flavor-card-{{ block_id }}" {{ block.shopify_attributes }}>
+    <div class="shotz-flavor-card__image-wrapper-{{ block_id }}">
+      <div class="shotz-flavor-card__image-placeholder-{{ block_id }}">
+        {{ 'product-1' | placeholder_svg_tag }}
+      </div>
+    </div>
+    <div class="shotz-flavor-card__empty-state-{{ block_id }}">
+      Selecione um produto para exibir
+    </div>
+  </div>
+{% else %}
+  <a
+    href="{{ product.url }}"
+    class="shotz-flavor-card-{{ block_id }}"
+    {{ block.shopify_attributes }}
+  >
+    <div class="shotz-flavor-card__image-wrapper-{{ block_id }}">
+      {% if product_image %}
+        <img
+          src="{{ product_image | image_url: width: 800 }}"
+          alt="{{ product_image.alt | escape }}"
+          class="shotz-flavor-card__image-{{ block_id }}"
+          loading="lazy"
+          width="800"
+          height="800"
+        >
+      {% else %}
+        <div class="shotz-flavor-card__image-placeholder-{{ block_id }}">
+          {{ 'product-1' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+
+      {% if has_discount and block.settings.show_discount_badge %}
+        <div
+          class="shotz-flavor-card__badge-{{ block_id }}"
+          style="background-color: {{ button_color }}; color: {{ button_text_color }};"
+        >
+          -{{ discount_percentage }}%
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="shotz-flavor-card__content-{{ block_id }}">
+      <h3 class="shotz-flavor-card__title-{{ block_id }}">
+        {{ product.title }}
+      </h3>
+
+      {% if subtitle != blank %}
+        <p class="shotz-flavor-card__subtitle-{{ block_id }}">
+          {{ subtitle }}
+        </p>
+      {% endif %}
+
+      <div class="shotz-flavor-card__price-wrapper-{{ block_id }}">
+        {% if product.available %}
+          {% if has_discount %}
+            <s class="shotz-flavor-card__compare-price-{{ block_id }}">
+              {{ product.compare_at_price_min | money }}
+            </s>
+          {% endif %}
+          <div
+            class="shotz-flavor-card__price-button-{{ block_id }}"
+            style="background-color: {{ button_color }}; color: {{ button_text_color }};"
+          >
+            {% if product.price_varies and price_prefix != blank %}
+              {{ price_prefix }}
+            {% endif %}
+            {{ product.price_min | money }}
+          </div>
+        {% else %}
+          <div class="shotz-flavor-card__sold-out-{{ block_id }}">
+            {{ sold_out_text }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </a>
+{% endif %}
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Shotz flavor card",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Produto"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Produto"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagem personalizada",
+      "info": "Opcional. Substitui a imagem principal do produto."
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "18g de proteína · 100ml"
+    },
+    {
+      "type": "header",
+      "content": "Preço"
+    },
+    {
+      "type": "text",
+      "id": "price_prefix",
+      "label": "Prefixo do preço",
+      "default": "A partir de",
+      "info": "Mostrado apenas quando o produto tem variantes com preços diferentes."
+    },
+    {
+      "type": "text",
+      "id": "sold_out_text",
+      "label": "Texto de esgotado",
+      "default": "Esgotado"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_discount_badge",
+      "label": "Mostrar selo de desconto",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Cores"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Cor do botão/selo",
+      "default": "#0a84ff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Cor do texto do botão/selo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Largura no desktop",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shotz flavor card"
+    }
+  ]
+}
 {% endschema %}

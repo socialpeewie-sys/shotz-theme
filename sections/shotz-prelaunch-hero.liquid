@@ -35,7 +35,13 @@
   </div>
 
   <div class="spl-hero__content">
-    <div class="spl-wordmark">SHOTZ</div>
+    {% if section.settings.logo_image %}
+      <div class="spl-hero__logo">
+        {{ section.settings.logo_image | image_url: width: 400 | image_tag: loading: 'eager' }}
+      </div>
+    {% else %}
+      <div class="spl-wordmark">SHOTZ</div>
+    {% endif %}
 
     <h1 class="spl-hero__headline">Sua rotina já é complexa.<br>Consumir proteína não precisa ser.</h1>
 
@@ -71,6 +77,12 @@
 {
   "name": "Prelaunch — Hero",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo (PNG)",
+      "info": "Se definido, substitui o texto \"SHOTZ\"."
+    },
     {
       "type": "video",
       "id": "hero_video",

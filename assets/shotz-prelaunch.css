@@ -242,6 +242,14 @@
   letter-spacing: 0.35em;
 }
 
+.spl-hero__logo {
+  max-width: clamp(90px, 20vw, 140px);
+}
+
+.spl-hero__logo img {
+  width: 100%;
+}
+
 .spl-hero__content .spl-hero__headline {
   font-size: clamp(1.6rem, 7vw, 3.3rem);
   font-weight: 900;

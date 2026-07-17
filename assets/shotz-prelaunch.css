@@ -59,6 +59,7 @@
   height: 52px;
   background: var(--spl-blue);
   color: var(--spl-white);
+  font-family: inherit;
   font-weight: 700;
   font-size: 16px;
   border: none;

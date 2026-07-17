@@ -62,7 +62,7 @@
   --neon-glow: 0 0 0 3px rgba(203, 255, 0, 0.30), 0 6px 24px rgba(203, 255, 0, 0.18);
   --dark:      #0D0D0D;
   --muted:     rgba(13, 13, 13, 0.52);
-  --border:    rgba(0, 0, 0, 0.12);
+  --border:    #d7ccbc;
 
   display: flex;
   flex-direction: column;
@@ -90,7 +90,7 @@
 
 /* Card Compra Única */
 #sss-{{ section.id }} .sss-card.onetime {
-  border: 1.5px solid var(--border);
+  border: 2px solid var(--border);
   background: #fff;
 }
 #sss-{{ section.id }} .sss-card.onetime:hover {
@@ -115,7 +115,7 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, 0.22);
+  border: 2px solid var(--border);
   flex-shrink: 0;
   transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
 }
@@ -134,8 +134,8 @@
 /* Título */
 #sss-{{ section.id }} .sss-title {
   flex: 1;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 500;
   color: var(--dark);
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -151,7 +151,7 @@
   flex-shrink: 0;
 }
 #sss-{{ section.id }} .sss-price {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--dark);
   white-space: nowrap;
@@ -164,7 +164,7 @@
   color: var(--muted);
 }
 #sss-{{ section.id }} .sss-unit {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--muted);
   white-space: nowrap;
@@ -280,9 +280,9 @@
 @media (max-width: 749px) {
   #sss-{{ section.id }} .sss-header     { padding: 12px 14px; }
   #sss-{{ section.id }} .sss-body-inner { padding: 4px 14px 14px; }
-  #sss-{{ section.id }} .sss-title      { font-size: 13px; }
-  #sss-{{ section.id }} .sss-price      { font-size: 11px; }
-  #sss-{{ section.id }} .sss-unit       { font-size: 11px; }
+  #sss-{{ section.id }} .sss-title      { font-size: 14px; }
+  #sss-{{ section.id }} .sss-price      { font-size: 12px; }
+  #sss-{{ section.id }} .sss-unit       { font-size: 12px; }
   #sss-{{ section.id }} .sss-badge      { padding: 4px 12px; }
   #sss-{{ section.id }} .sss-benefit    { font-size: 12px; }
 }

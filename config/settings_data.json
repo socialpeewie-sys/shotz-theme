@@ -93,6 +93,7 @@
       "shotz-prelaunch-hero": {
         "type": "shotz-prelaunch-hero",
         "settings": {
+          "logo_image": "shopify://shop_images/Sem_nome_1200_x_300_px_1.png",
           "hero_video": "shopify://files/videos/kling_20260716_VIDEO_create_a_a_5557_0.mp4"
         }
       },

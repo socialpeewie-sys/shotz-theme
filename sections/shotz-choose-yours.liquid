@@ -1,0 +1,319 @@
+{% style %}
+  .shotz-choose-{{ section.id }} {
+    --cy-bg: {{ section.settings.background_color }};
+    --cy-text: {{ section.settings.text_color }};
+    --cy-text-secondary: {{ section.settings.secondary_text_color }};
+    --cy-padding-block: {{ section.settings.padding_block }}px;
+    --cy-padding-inline: {{ section.settings.padding_inline }}px;
+    background-color: var(--cy-bg);
+    padding: var(--cy-padding-block) var(--cy-padding-inline);
+  }
+{% endstyle %}
+
+<div class="shotz-choose shotz-choose-{{ section.id }}" {{ section.shopify_attributes }}>
+
+  {%- if section.settings.eyebrow_text != blank or section.settings.heading != blank -%}
+    <div class="shotz-choose__header">
+      {%- if section.settings.eyebrow_text != blank -%}
+        <p class="shotz-choose__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="shotz-choose__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="shotz-choose__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'card' -%}
+          {%- assign card_product = block.settings.product -%}
+          <a
+            href="{{ card_product.url | default: '#' }}"
+            class="shotz-choose__card"
+            style="--cy-accent: {{ block.settings.accent_color }}; --cy-pill-text: {{ block.settings.button_text_color }};"
+            {{ block.shopify_attributes }}
+          >
+            <div class="shotz-choose__img-wrap">
+              {%- if card_product.featured_image != blank -%}
+                <img
+                  src="{{ card_product.featured_image | image_url: width: 800 }}"
+                  alt="{{ card_product.featured_image.alt | escape | default: card_product.title }}"
+                  class="shotz-choose__img"
+                  width="{{ card_product.featured_image.width }}"
+                  height="{{ card_product.featured_image.height }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="shotz-choose__img shotz-choose__img--placeholder">
+                  {{- 'product-1' | placeholder_svg_tag: 'placeholder-svg' -}}
+                </div>
+              {%- endif -%}
+            </div>
+
+            <div class="shotz-choose__footer">
+              <div class="shotz-choose__info">
+                <span class="shotz-choose__title">{{ card_product.title | default: 'Selecione um produto' }}</span>
+                {%- if block.settings.subtitle != blank -%}
+                  <span class="shotz-choose__subtitle">{{ block.settings.subtitle | escape }}</span>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.button_label != blank -%}
+                <span class="shotz-choose__pill">{{ block.settings.button_label | escape }}</span>
+              {%- endif -%}
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% stylesheet %}
+  .shotz-choose__header {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .shotz-choose__eyebrow {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #D9186B;
+    margin: 0 0 10px;
+  }
+
+  .shotz-choose__heading {
+    font-size: 38px;
+    margin: 0;
+    color: var(--cy-text);
+  }
+
+  .shotz-choose__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .shotz-choose__card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 2px solid var(--cy-text);
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .shotz-choose__card:hover {
+    border-color: var(--cy-accent);
+  }
+
+  .shotz-choose__img-wrap {
+    width: 100%;
+  }
+
+  .shotz-choose__img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+  }
+
+  .shotz-choose__img--placeholder {
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .shotz-choose__img--placeholder .placeholder-svg {
+    width: 50%;
+    height: 50%;
+    opacity: 0.3;
+  }
+
+  .shotz-choose__footer {
+    border-top: 2px solid var(--cy-text);
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .shotz-choose__info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .shotz-choose__title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--cy-text);
+  }
+
+  .shotz-choose__subtitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cy-text-secondary);
+  }
+
+  .shotz-choose__pill {
+    flex: 0 0 auto;
+    background: var(--cy-accent);
+    color: var(--cy-pill-text);
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-weight: 900;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 749px) {
+    .shotz-choose__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .shotz-choose__heading {
+      font-size: 28px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Escolha o seu",
+  "tag": "section",
+  "class": "shotz-choose-yours-section",
+  "max_blocks": 2,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Cabeçalho"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow",
+      "default": "DOIS SABORES"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Escolha o seu"
+    },
+    {
+      "type": "header",
+      "content": "Cores"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Fundo da seção",
+      "default": "#FAF7EF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Texto principal / bordas",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "secondary_text_color",
+      "label": "Texto secundário",
+      "default": "#777777"
+    },
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "label": "Espaço acima/abaixo",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_inline",
+      "label": "Espaço lateral",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card de produto",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Produto"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Linha secundária",
+          "default": "21g de proteína · 100ml"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Texto do botão",
+          "default": "EXPERIMENTE AGORA"
+        },
+        {
+          "type": "color",
+          "id": "accent_color",
+          "label": "Cor de destaque (borda no hover / fundo do botão)",
+          "default": "#F5B301"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Cor do texto do botão",
+          "default": "#111111"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Escolha o seu",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "accent_color": "#F5B301",
+            "button_text_color": "#111111"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "accent_color": "#D9186B",
+            "button_text_color": "#ffffff"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

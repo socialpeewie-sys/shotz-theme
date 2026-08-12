@@ -137,19 +137,6 @@
         "disabled": true,
         "settings": {}
       },
-      "1768834845299682660": {
-        "type": "shopify://apps/subscriptions/blocks/app-embed-block/a3bfe9ec-96f8-4508-a003-df608a36d2ad",
-        "disabled": false,
-        "settings": {
-          "color_text_title": "#6d7175",
-          "color_text_body": "#6d7175",
-          "dividers_color": "#8f8d8d",
-          "bacgkround_color": "#ffffff",
-          "border_thickness": 1,
-          "border_radius": 0,
-          "subscription_policy_url": ""
-        }
-      },
       "5091004626459974968": {
         "type": "shopify://apps/moose-whatsapp/blocks/whatsapp/b77db749-c44a-4265-8135-8b842af1b111",
         "disabled": false,
@@ -165,15 +152,28 @@
         "disabled": false,
         "settings": {}
       },
-      "9388344762370057067": {
-        "type": "shopify://apps/essential-cart-drawer/blocks/app-embed/824bb1f9-5f36-4608-a60c-1f2b6a6f8834",
-        "disabled": false,
-        "settings": {}
-      },
       "18155451270687726080": {
         "type": "shopify://apps/snap-cart-drawer/blocks/sticky_button/749c3d78-31de-41bb-a321-492d569e1a37",
         "disabled": true,
         "settings": {}
+      },
+      "9388344762370057067": {
+        "type": "shopify://apps/essential-cart-drawer/blocks/app-embed/824bb1f9-5f36-4608-a60c-1f2b6a6f8834",
+        "disabled": true,
+        "settings": {}
+      },
+      "1768834845299682660": {
+        "type": "shopify://apps/subscriptions/blocks/app-embed-block/a3bfe9ec-96f8-4508-a003-df608a36d2ad",
+        "disabled": true,
+        "settings": {
+          "color_text_title": "#6d7175",
+          "color_text_body": "#6d7175",
+          "dividers_color": "#8f8d8d",
+          "bacgkround_color": "#ffffff",
+          "border_thickness": 1,
+          "border_radius": 0,
+          "subscription_policy_url": ""
+        }
       }
     },
     "color_schemes": {

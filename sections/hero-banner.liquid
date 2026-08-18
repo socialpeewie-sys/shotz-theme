@@ -132,16 +132,11 @@
     align-items: center;
     gap: 22px;
     margin: 0;
-    padding: 0;
+    padding: 0 0 4px;
     list-style: none;
     max-width: 100%;
     overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .hero-banner-{{ sid }} .hb-badges::-webkit-scrollbar {
-    display: none;
+    -webkit-overflow-scrolling: touch;
   }
 
   .hero-banner-{{ sid }} .hb-badge {
@@ -151,16 +146,13 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: {{ section.settings.badge_color }};
-    display: flex;
-    align-items: center;
-    gap: 22px;
     white-space: nowrap;
     flex: 0 0 auto;
   }
 
   .hero-banner-{{ sid }} .hb-badge::after {
     content: '\00b7';
-    margin-left: 22px;
+    margin-left: 10px;
     color: {{ section.settings.badge_color }};
   }
 
@@ -212,16 +204,14 @@
 
     .hero-banner-{{ sid }} .hb-badges {
       gap: 16px;
-      padding-bottom: 4px;
     }
 
     .hero-banner-{{ sid }} .hb-badge {
       font-size: 11px;
-      gap: 16px;
     }
 
     .hero-banner-{{ sid }} .hb-badge::after {
-      margin-left: 16px;
+      margin-left: 8px;
     }
   }
 

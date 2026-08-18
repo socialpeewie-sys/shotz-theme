@@ -173,39 +173,55 @@
 
   @media screen and (max-width: 749px) {
     .hero-banner-{{ sid }} {
-      min-height: 520px;
+      min-height: 460px;
     }
 
     .hero-banner-{{ sid }} .hb-content {
-      padding: 32px 20px;
+      padding: 28px 20px;
       max-width: 100%;
-      gap: 18px;
+      gap: 14px;
+    }
+
+    .hero-banner-{{ sid }} .hb-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.1em;
     }
 
     .hero-banner-{{ sid }} .hb-title {
-      font-size: clamp(34px, 9vw, 56px);
+      font-size: clamp(28px, 8vw, 40px);
+      line-height: 1.05;
     }
 
     .hero-banner-{{ sid }} .hb-paragraph {
-      font-size: 16px;
+      font-size: 14px;
+      line-height: 1.45;
       max-width: 100%;
     }
 
     .hero-banner-{{ sid }} .hb-buttons {
       flex-direction: column;
       align-items: stretch;
-      gap: 12px;
+      gap: 10px;
     }
 
     .hero-banner-{{ sid }} .hb-btn {
       width: 100%;
-      padding: 14px 28px;
+      padding: 12px 22px;
+      font-size: 13px;
+    }
+
+    .hero-banner-{{ sid }} .hb-badges {
+      gap: 10px;
+    }
+
+    .hero-banner-{{ sid }} .hb-badge {
+      font-size: 10px;
     }
   }
 
   @media screen and (max-width: 400px) {
     .hero-banner-{{ sid }} .hb-title {
-      font-size: clamp(28px, 10vw, 48px);
+      font-size: clamp(24px, 9vw, 34px);
     }
   }
 {% endstyle %}

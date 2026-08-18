@@ -9,41 +9,6 @@
  */
 {
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
-      "name": "t:names.hero",
-      "settings": {
-        "media_type_1": "image",
-        "image_1": "shopify://shop_images/ChatGPT_Image_19_de_mai._de_2026_15_01_31.png",
-        "media_type_2": "image",
-        "stack_media_on_mobile": true,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "row",
-        "vertical_on_mobile": false,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "center",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 13,
-        "section_width": "page-width",
-        "section_height": "small",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-1",
-        "toggle_overlay": false,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 60,
-        "padding-block-end": 60
-      }
-    },
     "marquee_n63VUE": {
       "type": "marquee",
       "blocks": {
@@ -261,13 +226,80 @@
         "ai_gen_block_f3d7375_yhkHXd"
       ],
       "settings": {}
+    },
+    "hero_banner_xf8AGM": {
+      "type": "hero-banner",
+      "blocks": {
+        "button_yxkihb": {
+          "type": "button",
+          "settings": {
+            "text": "Comprar agora",
+            "url": "",
+            "style": "solid"
+          }
+        },
+        "button_NVYmwe": {
+          "type": "button",
+          "settings": {
+            "text": "Saiba mais",
+            "url": "",
+            "style": "outline"
+          }
+        },
+        "tag_xGCU97": {
+          "type": "tag",
+          "settings": {
+            "text": "Zero açúcar"
+          }
+        },
+        "tag_hdLViy": {
+          "type": "tag",
+          "settings": {
+            "text": "Zero lactose"
+          }
+        },
+        "tag_7CAk9T": {
+          "type": "tag",
+          "settings": {
+            "text": "Zero carbo"
+          }
+        },
+        "tag_G8ck6y": {
+          "type": "tag",
+          "settings": {
+            "text": "Zero gordura"
+          }
+        }
+      },
+      "block_order": [
+        "button_yxkihb",
+        "button_NVYmwe",
+        "tag_xGCU97",
+        "tag_hdLViy",
+        "tag_7CAk9T",
+        "tag_G8ck6y"
+      ],
+      "name": "Hero Banner",
+      "settings": {
+        "image": "shopify://shop_images/ChatGPT_Image_19_de_mai._de_2026_15_01_31.png",
+        "eyebrow": "O primeiro shot de proteína do Brasil",
+        "eyebrow_color": "#0094F6",
+        "title_line_1": "Proteína de",
+        "title_line_2": "verdade, em",
+        "title_line_3": "30 segundos",
+        "title_color": "#FAF7EF",
+        "title_accent_color": "#0094F6",
+        "paragraph": "Um shot de 60ml com 20g de proteína, zero açúcar e zero lactose. Pronto pra tomar, sem misturar nada.",
+        "paragraph_color": "#EFEAE0",
+        "badge_color": "#EFEAE0"
+      }
     }
   },
   "order": [
-    "hero_jVaWmY",
     "marquee_n63VUE",
     "variants_grid_dNm8hc",
     "blocks_rCKAQq",
-    "17824113349f43bc3c"
+    "17824113349f43bc3c",
+    "hero_banner_xf8AGM"
   ]
 }

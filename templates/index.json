@@ -76,6 +76,45 @@
         "badge_color": "#efeae0"
       }
     },
+    "stats_bar_np8Egw": {
+      "type": "stats-bar",
+      "blocks": {
+        "stat_CHgrMH": {
+          "type": "stat",
+          "settings": {
+            "text": "21g de proteína"
+          }
+        },
+        "stat_WiW4gk": {
+          "type": "stat",
+          "settings": {
+            "text": "aminoácidos essenciais"
+          }
+        },
+        "stat_Dan4gw": {
+          "type": "stat",
+          "settings": {
+            "text": "Apenas 100ml"
+          }
+        },
+        "stat_QcrYrA": {
+          "type": "stat",
+          "settings": {
+            "text": "SABORES FRUTADOS"
+          }
+        }
+      },
+      "block_order": [
+        "stat_CHgrMH",
+        "stat_WiW4gk",
+        "stat_Dan4gw",
+        "stat_QcrYrA"
+      ],
+      "name": "Barra de estatísticas",
+      "settings": {
+        "background_color": "#FAF7EF"
+      }
+    },
     "blocks_rCKAQq": {
       "type": "_blocks",
       "blocks": {
@@ -286,7 +325,7 @@
       "settings": {
         "eyebrow_text": "",
         "heading": "Escolha o seu",
-        "background_color": "#FAF7EF",
+        "background_color": "#faf7ef",
         "text_color": "#111111",
         "secondary_text_color": "#777777",
         "padding_block": 80,
@@ -296,6 +335,7 @@
   },
   "order": [
     "hero_banner_xf8AGM",
+    "stats_bar_np8Egw",
     "blocks_rCKAQq",
     "variants_grid_dNm8hc",
     "17824113349f43bc3c",

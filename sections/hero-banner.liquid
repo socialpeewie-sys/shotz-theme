@@ -44,10 +44,12 @@
     position: relative;
     z-index: 1;
     padding: 64px;
-    max-width: 640px;
+    max-width: 780px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 24px;
+    box-sizing: border-box;
   }
 
   .hero-banner-{{ sid }} .hb-eyebrow {
@@ -130,21 +132,19 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    gap: 22px;
+    gap: clamp(8px, 2.2vw, 22px);
     margin: 0;
-    padding: 0 0 4px;
+    padding: 0;
     list-style: none;
-    max-width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    width: 100%;
   }
 
   .hero-banner-{{ sid }} .hb-badge {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13px;
+    font-size: clamp(9px, 1.6vw, 13px);
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: clamp(0.02em, 0.4vw, 0.08em);
     color: {{ section.settings.badge_color }};
     white-space: nowrap;
     flex: 0 0 auto;
@@ -152,7 +152,7 @@
 
   .hero-banner-{{ sid }} .hb-badge::after {
     content: '\00b7';
-    margin-left: 10px;
+    margin-left: clamp(4px, 1vw, 10px);
     color: {{ section.settings.badge_color }};
   }
 
@@ -200,18 +200,6 @@
     .hero-banner-{{ sid }} .hb-btn {
       width: 100%;
       padding: 14px 28px;
-    }
-
-    .hero-banner-{{ sid }} .hb-badges {
-      gap: 16px;
-    }
-
-    .hero-banner-{{ sid }} .hb-badge {
-      font-size: 11px;
-    }
-
-    .hero-banner-{{ sid }} .hb-badge::after {
-      margin-left: 8px;
     }
   }
 

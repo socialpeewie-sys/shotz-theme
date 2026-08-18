@@ -56,7 +56,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    color: #0094f6;
+    color: {{ section.settings.eyebrow_color }};
     margin: 0;
   }
 
@@ -65,7 +65,7 @@
     font-weight: 800;
     font-size: clamp(48px, 5.5vw, 76px);
     line-height: 0.98;
-    color: #faf7ef;
+    color: {{ section.settings.title_color }};
     margin: 0;
   }
 
@@ -77,7 +77,7 @@
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 18px;
     line-height: 1.55;
-    color: #efeae0;
+    color: {{ section.settings.paragraph_color }};
     max-width: 440px;
     margin: 0;
   }
@@ -128,12 +128,20 @@
 
   .hero-banner-{{ sid }} .hb-badges {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     gap: 22px;
     margin: 0;
     padding: 0;
     list-style: none;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .hero-banner-{{ sid }} .hb-badges::-webkit-scrollbar {
+    display: none;
   }
 
   .hero-banner-{{ sid }} .hb-badge {
@@ -142,16 +150,18 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #efeae0;
+    color: {{ section.settings.badge_color }};
     display: flex;
     align-items: center;
     gap: 22px;
+    white-space: nowrap;
+    flex: 0 0 auto;
   }
 
   .hero-banner-{{ sid }} .hb-badge::after {
     content: '\00b7';
     margin-left: 22px;
-    color: #efeae0;
+    color: {{ section.settings.badge_color }};
   }
 
   .hero-banner-{{ sid }} .hb-badge:last-child::after {
@@ -159,18 +169,65 @@
     margin-left: 0;
   }
 
-  @media screen and (max-width: 749px) {
+  @media screen and (max-width: 989px) {
     .hero-banner-{{ sid }} {
-      min-height: 560px;
+      min-height: 580px;
     }
 
     .hero-banner-{{ sid }} .hb-content {
-      padding: 32px 24px;
+      padding: 48px 32px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .hero-banner-{{ sid }} {
+      min-height: 520px;
+    }
+
+    .hero-banner-{{ sid }} .hb-content {
+      padding: 32px 20px;
       max-width: 100%;
+      gap: 18px;
+    }
+
+    .hero-banner-{{ sid }} .hb-title {
+      font-size: clamp(34px, 9vw, 56px);
     }
 
     .hero-banner-{{ sid }} .hb-paragraph {
+      font-size: 16px;
       max-width: 100%;
+    }
+
+    .hero-banner-{{ sid }} .hb-buttons {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    .hero-banner-{{ sid }} .hb-btn {
+      width: 100%;
+      padding: 14px 28px;
+    }
+
+    .hero-banner-{{ sid }} .hb-badges {
+      gap: 16px;
+      padding-bottom: 4px;
+    }
+
+    .hero-banner-{{ sid }} .hb-badge {
+      font-size: 11px;
+      gap: 16px;
+    }
+
+    .hero-banner-{{ sid }} .hb-badge::after {
+      margin-left: 16px;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    .hero-banner-{{ sid }} .hb-title {
+      font-size: clamp(28px, 10vw, 48px);
     }
   }
 {% endstyle %}
@@ -263,6 +320,12 @@
       "default": "O primeiro shot de proteína do Brasil"
     },
     {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Cor do eyebrow",
+      "default": "#0094F6"
+    },
+    {
       "type": "text",
       "id": "title_line_1",
       "label": "Título — linha 1",
@@ -282,6 +345,12 @@
     },
     {
       "type": "color",
+      "id": "title_color",
+      "label": "Cor do título (linhas 1 e 2)",
+      "default": "#FAF7EF"
+    },
+    {
+      "type": "color",
       "id": "title_accent_color",
       "label": "Cor da linha 3",
       "default": "#0094F6"
@@ -293,12 +362,24 @@
       "default": "Um shot de 60ml com 20g de proteína, zero açúcar e zero lactose. Pronto pra tomar, sem misturar nada."
     },
     {
+      "type": "color",
+      "id": "paragraph_color",
+      "label": "Cor do parágrafo",
+      "default": "#EFEAE0"
+    },
+    {
       "type": "header",
       "content": "Badges"
     },
     {
       "type": "paragraph",
       "content": "Adicione até 4 blocks do tipo \"Badge\" abaixo (ex: Zero açúcar, Zero lactose, Zero carbo, Zero gordura)."
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Cor dos badges",
+      "default": "#EFEAE0"
     }
   ],
   "blocks": [

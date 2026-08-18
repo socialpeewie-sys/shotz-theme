@@ -1,0 +1,361 @@
+{% assign sid = section.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .hero-banner-{{ sid }} {
+    position: relative;
+    width: 100%;
+    min-height: 640px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-banner-{{ sid }} .hb-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-banner-{{ sid }} .hb-bg img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-banner-{{ sid }} .hb-bg-placeholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #111;
+  }
+
+  .hero-banner-{{ sid }} .hb-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.32) 48%, rgba(0, 0, 0, 0.05) 100%);
+  }
+
+  .hero-banner-{{ sid }} .hb-content {
+    position: relative;
+    z-index: 1;
+    padding: 64px;
+    max-width: 640px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .hero-banner-{{ sid }} .hb-eyebrow {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #0094f6;
+    margin: 0;
+  }
+
+  .hero-banner-{{ sid }} .hb-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: clamp(48px, 5.5vw, 76px);
+    line-height: 0.98;
+    color: #faf7ef;
+    margin: 0;
+  }
+
+  .hero-banner-{{ sid }} .hb-title .hb-title-accent {
+    color: {{ section.settings.title_accent_color }};
+  }
+
+  .hero-banner-{{ sid }} .hb-paragraph {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    line-height: 1.55;
+    color: #efeae0;
+    max-width: 440px;
+    margin: 0;
+  }
+
+  .hero-banner-{{ sid }} .hb-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .hero-banner-{{ sid }} .hb-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 16px 34px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .hero-banner-{{ sid }} .hb-btn--solid {
+    background-color: #faf7ef;
+    color: #111;
+    border: 2px solid #faf7ef;
+  }
+
+  .hero-banner-{{ sid }} .hb-btn--solid:hover {
+    background-color: #0094f6;
+    color: #fff;
+    border-color: #0094f6;
+  }
+
+  .hero-banner-{{ sid }} .hb-btn--outline {
+    background-color: transparent;
+    color: #faf7ef;
+    border: 2px solid #faf7ef;
+  }
+
+  .hero-banner-{{ sid }} .hb-btn--outline:hover {
+    color: #0094f6;
+    border-color: #0094f6;
+  }
+
+  .hero-banner-{{ sid }} .hb-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 22px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hero-banner-{{ sid }} .hb-badge {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #efeae0;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+
+  .hero-banner-{{ sid }} .hb-badge::after {
+    content: '\00b7';
+    margin-left: 22px;
+    color: #efeae0;
+  }
+
+  .hero-banner-{{ sid }} .hb-badge:last-child::after {
+    content: '';
+    margin-left: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .hero-banner-{{ sid }} {
+      min-height: 560px;
+    }
+
+    .hero-banner-{{ sid }} .hb-content {
+      padding: 32px 24px;
+      max-width: 100%;
+    }
+
+    .hero-banner-{{ sid }} .hb-paragraph {
+      max-width: 100%;
+    }
+  }
+{% endstyle %}
+
+<section class="hero-banner-{{ sid }}">
+  <div class="hb-bg">
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 2000
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          sizes: '100vw',
+          widths: '750, 1100, 1500, 2000',
+          alt: section.settings.image.alt | escape
+      }}
+    {%- else -%}
+      <div class="hb-bg-placeholder"></div>
+    {%- endif -%}
+    <div class="hb-overlay"></div>
+  </div>
+
+  <div class="hb-content">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="hb-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.title_line_1 != blank or section.settings.title_line_2 != blank or section.settings.title_line_3 != blank -%}
+      <h1 class="hb-title">
+        {%- if section.settings.title_line_1 != blank -%}{{ section.settings.title_line_1 | escape }}<br>{%- endif -%}
+        {%- if section.settings.title_line_2 != blank -%}{{ section.settings.title_line_2 | escape }}<br>{%- endif -%}
+        {%- if section.settings.title_line_3 != blank -%}
+          <span class="hb-title-accent">{{ section.settings.title_line_3 | escape }}</span>
+        {%- endif -%}
+      </h1>
+    {%- endif -%}
+
+    {%- if section.settings.paragraph != blank -%}
+      <p class="hb-paragraph">{{ section.settings.paragraph | escape }}</p>
+    {%- endif -%}
+
+    {%- assign button_blocks = section.blocks | where: 'type', 'button' -%}
+    {%- if button_blocks.size > 0 -%}
+      <div class="hb-buttons">
+        {%- for block in button_blocks -%}
+          <a
+            href="{{ block.settings.url | default: '#' }}"
+            class="hb-btn hb-btn--{{ block.settings.style }}"
+            {{ block.shopify_attributes }}
+          >
+            {{ block.settings.text | escape }}
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- assign tag_blocks = section.blocks | where: 'type', 'tag' -%}
+    {%- if tag_blocks.size > 0 -%}
+      <ul class="hb-badges">
+        {%- for block in tag_blocks -%}
+          <li class="hb-badge" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Imagem de fundo"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagem de fundo (full-bleed)"
+    },
+    {
+      "type": "header",
+      "content": "Texto"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "O primeiro shot de proteína do Brasil"
+    },
+    {
+      "type": "text",
+      "id": "title_line_1",
+      "label": "Título — linha 1",
+      "default": "Proteína de"
+    },
+    {
+      "type": "text",
+      "id": "title_line_2",
+      "label": "Título — linha 2",
+      "default": "verdade, em"
+    },
+    {
+      "type": "text",
+      "id": "title_line_3",
+      "label": "Título — linha 3 (cor customizada)",
+      "default": "30 segundos"
+    },
+    {
+      "type": "color",
+      "id": "title_accent_color",
+      "label": "Cor da linha 3",
+      "default": "#0094F6"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph",
+      "label": "Parágrafo de apoio",
+      "default": "Um shot de 60ml com 20g de proteína, zero açúcar e zero lactose. Pronto pra tomar, sem misturar nada."
+    },
+    {
+      "type": "header",
+      "content": "Badges"
+    },
+    {
+      "type": "paragraph",
+      "content": "Adicione até 4 blocks do tipo \"Badge\" abaixo (ex: Zero açúcar, Zero lactose, Zero carbo, Zero gordura)."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "button",
+      "name": "Botão",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto do botão",
+          "default": "Comprar agora"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Estilo",
+          "options": [
+            { "value": "solid", "label": "Sólido" },
+            { "value": "outline", "label": "Outline" }
+          ],
+          "default": "solid"
+        }
+      ]
+    },
+    {
+      "type": "tag",
+      "name": "Badge",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto do badge",
+          "default": "Zero açúcar"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner",
+      "blocks": [
+        { "type": "button", "settings": { "text": "Comprar agora", "style": "solid" } },
+        { "type": "button", "settings": { "text": "Saiba mais", "style": "outline" } },
+        { "type": "tag", "settings": { "text": "Zero açúcar" } },
+        { "type": "tag", "settings": { "text": "Zero lactose" } },
+        { "type": "tag", "settings": { "text": "Zero carbo" } },
+        { "type": "tag", "settings": { "text": "Zero gordura" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

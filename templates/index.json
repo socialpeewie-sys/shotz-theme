@@ -9,47 +9,6 @@
  */
 {
   "sections": {
-    "marquee_n63VUE": {
-      "type": "marquee",
-      "blocks": {
-        "text_TqQHNT": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Fazemos coisas que funcionam melhor e duram mais.</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "tight",
-            "letter_spacing": "tight",
-            "case": "none",
-            "wrap": "nowrap",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_TqQHNT"
-      ],
-      "name": "t:names.marquee_section",
-      "settings": {
-        "movement_direction": "reverse",
-        "color_scheme": "",
-        "padding-block-start": 24,
-        "padding-block-end": 24,
-        "gap_between_elements": 24
-      }
-    },
     "variants_grid_dNm8hc": {
       "type": "variants-grid",
       "blocks": {
@@ -283,23 +242,62 @@
       "settings": {
         "image": "shopify://shop_images/ChatGPT_Image_19_de_mai._de_2026_15_01_31.png",
         "eyebrow": "O primeiro shot de proteína do Brasil",
-        "eyebrow_color": "#0094F6",
+        "eyebrow_color": "#0094f6",
         "title_line_1": "Proteína de",
         "title_line_2": "verdade, em",
         "title_line_3": "30 segundos",
-        "title_color": "#FAF7EF",
-        "title_accent_color": "#0094F6",
+        "title_color": "#faf7ef",
+        "title_accent_color": "#0094f6",
         "paragraph": "Um shot de 60ml com 20g de proteína, zero açúcar e zero lactose. Pronto pra tomar, sem misturar nada.",
-        "paragraph_color": "#EFEAE0",
-        "badge_color": "#EFEAE0"
+        "paragraph_color": "#efeae0",
+        "badge_color": "#efeae0"
+      }
+    },
+    "shotz_choose_yours_Gp37ig": {
+      "type": "shotz-choose-yours",
+      "blocks": {
+        "card_DYaLX3": {
+          "type": "card",
+          "settings": {
+            "product": "shot-frutas-amarelas",
+            "subtitle": "21g de proteína · 100ml",
+            "button_label": "EXPERIMENTE AGORA",
+            "accent_color": "#f5b301",
+            "button_text_color": "#111111"
+          }
+        },
+        "card_PnWyPy": {
+          "type": "card",
+          "settings": {
+            "product": "shot-frutas-amarelas",
+            "subtitle": "21g de proteína · 100ml",
+            "button_label": "EXPERIMENTE AGORA",
+            "accent_color": "#d9186b",
+            "button_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "card_DYaLX3",
+        "card_PnWyPy"
+      ],
+      "name": "Escolha o seu",
+      "settings": {
+        "eyebrow_text": "",
+        "heading": "Escolha o seu",
+        "background_color": "#FAF7EF",
+        "text_color": "#111111",
+        "secondary_text_color": "#777777",
+        "padding_block": 80,
+        "padding_inline": 48
       }
     }
   },
   "order": [
-    "marquee_n63VUE",
     "variants_grid_dNm8hc",
     "blocks_rCKAQq",
     "17824113349f43bc3c",
-    "hero_banner_xf8AGM"
+    "hero_banner_xf8AGM",
+    "shotz_choose_yours_Gp37ig"
   ]
 }

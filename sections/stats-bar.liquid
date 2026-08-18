@@ -1,0 +1,128 @@
+{% assign sid = section.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .stats-bar-{{ sid }} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 64px;
+    padding: 26px 48px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #e8e2d4;
+    background-color: {{ section.settings.background_color }};
+  }
+
+  .stats-bar-{{ sid }} .sb-stat {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .stats-bar-{{ sid }} .sb-icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stats-bar-{{ sid }} .sb-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .stats-bar-{{ sid }} .sb-icon-star {
+    color: #0094f6;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .stats-bar-{{ sid }} {
+      gap: 28px;
+      padding: 20px 24px;
+    }
+
+    .stats-bar-{{ sid }} .sb-stat {
+      font-size: 12px;
+    }
+
+    .stats-bar-{{ sid }} .sb-icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    .stats-bar-{{ sid }} .sb-icon-star {
+      font-size: 14px;
+    }
+  }
+{% endstyle %}
+
+<div class="stats-bar-{{ sid }}">
+  {%- for block in section.blocks -%}
+    {%- if block.settings.text != blank -%}
+      <span class="sb-stat" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
+    {%- endif -%}
+
+    {%- unless forloop.last -%}
+      <span class="sb-icon" aria-hidden="true">
+        {%- if block.settings.icon != blank -%}
+          {{ block.settings.icon | image_url: width: 40 | image_tag: loading: 'lazy', alt: '' }}
+        {%- else -%}
+          <span class="sb-icon-star">★</span>
+        {%- endif -%}
+      </span>
+    {%- endunless -%}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Barra de estatísticas",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Cor de fundo",
+      "default": "#FAF7EF"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Estatística",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "18g proteína"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Ícone customizado (opcional)",
+          "info": "Se não for definido, exibe uma estrela ★ na cor #0094F6."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Barra de estatísticas",
+      "blocks": [
+        { "type": "stat", "settings": { "text": "18g proteína" } },
+        { "type": "stat", "settings": { "text": "Zero açúcar" } },
+        { "type": "stat", "settings": { "text": "60ml" } },
+        { "type": "stat", "settings": { "text": "Zero lactose" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

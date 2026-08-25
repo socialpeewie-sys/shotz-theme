@@ -299,7 +299,7 @@
                 "checkmark_background": "#000000",
                 "checkmark_icon_color": "#fbf7f3",
                 "show_quantity_label": true,
-                "quantity_label_text": "ESCOLHA A QUANTIDADE",
+                "quantity_label_text": "Escolha a quantidade:",
                 "quantity_label_color": "#000000",
                 "quantity_label_font_size": 15,
                 "quantity_label_font_weight": 700,

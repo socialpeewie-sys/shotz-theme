@@ -93,7 +93,6 @@
   }
 
   .shotz-benefits-card-description-{{ ai_gen_id }} {
-    font-size: 0.7em;
     color: #ffffff;
     opacity: 0.8;
     line-height: 1.6;
@@ -173,7 +172,12 @@
           {% endif %}
 
           {% if block.settings.card_1_description != blank %}
-            <p class="shotz-benefits-card-description-{{ ai_gen_id }}">{{ block.settings.card_1_description }}</p>
+            <p
+              class="shotz-benefits-card-description-{{ ai_gen_id }}"
+              style="font-size: {{ block.settings.card_1_description_size }}px;"
+            >
+              {{ block.settings.card_1_description }}
+            </p>
           {% endif %}
         </div>
       {% endif %}
@@ -209,7 +213,12 @@
           {% endif %}
 
           {% if block.settings.card_2_description != blank %}
-            <p class="shotz-benefits-card-description-{{ ai_gen_id }}">{{ block.settings.card_2_description }}</p>
+            <p
+              class="shotz-benefits-card-description-{{ ai_gen_id }}"
+              style="font-size: {{ block.settings.card_2_description_size }}px;"
+            >
+              {{ block.settings.card_2_description }}
+            </p>
           {% endif %}
         </div>
       {% endif %}
@@ -245,7 +254,12 @@
           {% endif %}
 
           {% if block.settings.card_3_description != blank %}
-            <p class="shotz-benefits-card-description-{{ ai_gen_id }}">{{ block.settings.card_3_description }}</p>
+            <p
+              class="shotz-benefits-card-description-{{ ai_gen_id }}"
+              style="font-size: {{ block.settings.card_3_description_size }}px;"
+            >
+              {{ block.settings.card_3_description }}
+            </p>
           {% endif %}
         </div>
       {% endif %}
@@ -342,6 +356,16 @@
       "default": "25g de proteína por shot para máxima recuperação muscular"
     },
     {
+      "type": "range",
+      "id": "card_1_description_size",
+      "label": "Subtitle font size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
       "type": "header",
       "content": "Card 2"
     },
@@ -390,6 +414,16 @@
       "default": "Absorção imediata para resultados quando você mais precisa"
     },
     {
+      "type": "range",
+      "id": "card_2_description_size",
+      "label": "Subtitle font size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
       "type": "header",
       "content": "Card 3"
     },
@@ -436,6 +470,16 @@
       "id": "card_3_description",
       "label": "Subtitle",
       "default": "Leve para qualquer lugar e consuma em segundos"
+    },
+    {
+      "type": "range",
+      "id": "card_3_description_size",
+      "label": "Subtitle font size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
     }
   ],
   "presets": [

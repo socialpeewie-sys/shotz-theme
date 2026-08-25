@@ -535,7 +535,7 @@
           "settings": {
             "image_position": "left",
             "product_image": "shopify://shop_images/teste_pure_genius.webp",
-            "image_background_color": "#FBF8F4",
+            "image_background_color": "#ffffff",
             "image_border_radius": 20,
             "headline": "Por que SHOTZ é diferente?",
             "subtitle": "Desenvolvemos uma fórmula especial e única. Partimos do colágeno hidrolisado e adicionamos exatamente os aminoácidos que faltavam para se tornar uma proteína completa.",
@@ -562,11 +562,11 @@
         "ai_gen_block_eb3f4b4_afejKe": {
           "type": "ai_gen_block_eb3f4b4",
           "settings": {
-            "background_color": "#0d0d0d",
+            "background_color": "#fbf8f4",
             "eyebrow": "",
             "heading": "21g de proteína. 100ml. Dois goles",
             "subheading": "Proteína de alta qualidade em formato prático para o seu dia a dia",
-            "text_color": "#ffffff",
+            "text_color": "#000000",
             "card_1_bg_color": "#1a1a1a",
             "card_1_text_align": "left",
             "card_1_title_size": 20,

@@ -112,7 +112,7 @@
       ],
       "name": "Barra de estatísticas",
       "settings": {
-        "background_color": "#FAF7EF"
+        "background_color": "#faf7ef"
       }
     },
     "blocks_rCKAQq": {
@@ -244,7 +244,6 @@
             "title_size": 36,
             "title_color": "#000000",
             "shotz_name": "",
-            "shotz_image": "shopify://shop_images/1_f3e1ace0-630a-4bee-a65d-98004fe8bfc9.png",
             "whey_name": "Whey tradicional",
             "whey_image": "shopify://shop_images/2_b4b70441-633a-4cfa-93fd-3d043b5dc415.png",
             "collagen_name": "Bebidas de colágeno",

@@ -12,7 +12,7 @@
   .shotz-benefits-{{ ai_gen_id }} {
     position: relative;
     width: 100%;
-    background-color: #0d0d0d;
+    background-color: {{ block.settings.background_color }};
     padding: 80px 20px;
     overflow: hidden;
   }
@@ -259,6 +259,12 @@
   "tag": null,
   "class": "shotz-benefits-section",
   "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Block background color",
+      "default": "#0d0d0d"
+    },
     {
       "type": "header",
       "content": "Header"

@@ -1,0 +1,435 @@
+{% doc %}
+  @prompt
+    crie um secção onde eu possa colocar blocos de texto de um lado e uma imagem do outro, dividido entre esquerda e direita
+    
+    o texto precisa ter titulo e o texto abaixo, em blocos
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-text-image-split-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+  }
+
+  .ai-text-image-split__container-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: {{ block.settings.gap }}px;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: {{ block.settings.padding_vertical }}px {{ block.settings.padding_horizontal }}px;
+  }
+
+  {% if block.settings.layout == 'image_left' %}
+    .ai-text-image-split__container-{{ ai_gen_id }} {
+      flex-direction: row;
+    }
+  {% else %}
+    .ai-text-image-split__container-{{ ai_gen_id }} {
+      flex-direction: row-reverse;
+    }
+  {% endif %}
+
+  .ai-text-image-split__image-wrapper-{{ ai_gen_id }} {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ai-text-image-split__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: {{ block.settings.image_border_radius }}px;
+  }
+
+  .ai-text-image-split__image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    position: relative;
+  }
+
+  .ai-text-image-split__image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-text-image-split__empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .ai-text-image-split__content-wrapper-{{ ai_gen_id }} {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ai-text-image-split__text-blocks-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.text_block_gap }}px;
+  }
+
+  .ai-text-image-split__text-block-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ai-text-image-split__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.title_color }};
+    margin: 0;
+  }
+
+  .ai-text-image-split__text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    color: {{ block.settings.text_color }};
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-text-image-split__container-{{ ai_gen_id }} {
+      flex-direction: column;
+      gap: {{ block.settings.gap | times: 0.7 }}px;
+    }
+
+    .ai-text-image-split__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.8 }}px;
+    }
+
+    .ai-text-image-split__text-{{ ai_gen_id }} {
+      font-size: {{ block.settings.text_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<text-image-split-{{ ai_gen_id }}
+  class="ai-text-image-split-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-text-image-split__container-{{ ai_gen_id }}">
+    <div class="ai-text-image-split__image-wrapper-{{ ai_gen_id }}">
+      {% if block.settings.image %}
+        <img
+          src="{{ block.settings.image | image_url: width: 1200 }}"
+          alt="{{ block.settings.image.alt | escape }}"
+          loading="lazy"
+          width="{{ block.settings.image.width }}"
+          height="{{ block.settings.image.height }}"
+          class="ai-text-image-split__image-{{ ai_gen_id }}"
+        >
+      {% else %}
+        <div class="ai-text-image-split__image-placeholder-{{ ai_gen_id }}">
+          {{ 'image' | placeholder_svg_tag }}
+          <div class="ai-text-image-split__empty-state-{{ ai_gen_id }}">
+            Adicione uma imagem
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="ai-text-image-split__content-wrapper-{{ ai_gen_id }}">
+      <div class="ai-text-image-split__text-blocks-{{ ai_gen_id }}">
+        {% for i in (1..5) %}
+          {% liquid
+            assign title_key = 'text_block_' | append: i | append: '_title'
+            assign text_key = 'text_block_' | append: i | append: '_text'
+            assign enabled_key = 'text_block_' | append: i | append: '_enabled'
+
+            assign title = block.settings[title_key]
+            assign text = block.settings[text_key]
+            assign enabled = block.settings[enabled_key]
+          %}
+
+          {% if enabled %}
+            <div class="ai-text-image-split__text-block-{{ ai_gen_id }}">
+              {% if title != blank %}
+                <h3 class="ai-text-image-split__title-{{ ai_gen_id }}">{{ title }}</h3>
+              {% endif %}
+              {% if text != blank %}
+                <div class="ai-text-image-split__text-{{ ai_gen_id }}">{{ text }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</text-image-split-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class TextImageSplit{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+      }
+    }
+
+    customElements.define('text-image-split-{{ ai_gen_id }}', TextImageSplit{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Texto e imagem divididos",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Posição da imagem",
+      "options": [
+        {
+          "value": "image_left",
+          "label": "Esquerda"
+        },
+        {
+          "value": "image_right",
+          "label": "Direita"
+        }
+      ],
+      "default": "image_left"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Largura no desktop",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Espaço entre imagem e texto",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "label": "Espaçamento vertical",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "label": "Espaçamento horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Imagem"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagem"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Raio da borda",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Blocos de texto"
+    },
+    {
+      "type": "range",
+      "id": "text_block_gap",
+      "label": "Espaço entre blocos",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamanho do título",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamanho do texto",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Cor do título",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Cor do texto",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Bloco de texto 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_block_1_enabled",
+      "label": "Ativar bloco 1",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text_block_1_title",
+      "label": "Título",
+      "default": "Título do bloco 1"
+    },
+    {
+      "type": "richtext",
+      "id": "text_block_1_text",
+      "label": "Texto",
+      "default": "<p>Adicione o texto do primeiro bloco aqui. Você pode usar este espaço para descrever características, benefícios ou qualquer informação relevante.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Bloco de texto 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_block_2_enabled",
+      "label": "Ativar bloco 2",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text_block_2_title",
+      "label": "Título",
+      "default": "Título do bloco 2"
+    },
+    {
+      "type": "richtext",
+      "id": "text_block_2_text",
+      "label": "Texto",
+      "default": "<p>Adicione o texto do segundo bloco aqui. Continue descrevendo mais detalhes ou informações importantes.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Bloco de texto 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_block_3_enabled",
+      "label": "Ativar bloco 3",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text_block_3_title",
+      "label": "Título",
+      "default": "Título do bloco 3"
+    },
+    {
+      "type": "richtext",
+      "id": "text_block_3_text",
+      "label": "Texto",
+      "default": "<p>Adicione o texto do terceiro bloco aqui.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Bloco de texto 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_block_4_enabled",
+      "label": "Ativar bloco 4",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "text_block_4_title",
+      "label": "Título"
+    },
+    {
+      "type": "richtext",
+      "id": "text_block_4_text",
+      "label": "Texto"
+    },
+    {
+      "type": "header",
+      "content": "Bloco de texto 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_block_5_enabled",
+      "label": "Ativar bloco 5",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "text_block_5_title",
+      "label": "Título"
+    },
+    {
+      "type": "richtext",
+      "id": "text_block_5_text",
+      "label": "Texto"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Texto e imagem divididos"
+    }
+  ]
+}
+{% endschema %}

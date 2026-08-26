@@ -520,7 +520,7 @@
           "type": "ai_gen_block_0453d40",
           "settings": {
             "image_position": "left",
-            "product_image": "shopify://shop_images/teste1231_1.png",
+            "product_image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0518.jpg",
             "image_background_color": "#ffffff",
             "image_border_radius": 20,
             "headline": "Por que SHOTZ é diferente?",
@@ -544,47 +544,45 @@
       "name": "Hero com benefícios",
       "settings": {}
     },
-    "1781793164760508d2": {
+    "1787751400146840dd": {
       "type": "_blocks",
       "blocks": {
-        "ai_gen_block_eb3f4b4_afejKe": {
-          "type": "ai_gen_block_eb3f4b4",
+        "ai_gen_block_4ab66b1_ETtnhm": {
+          "type": "ai_gen_block_4ab66b1",
           "settings": {
-            "background_color": "#fbf8f4",
-            "eyebrow": "",
-            "heading": "21g de proteína. 100ml. Dois goles",
-            "subheading": "Proteína de alta qualidade em formato prático para o seu dia a dia",
+            "layout": "image_right",
+            "desktop_width_percent": 100,
+            "gap": 30,
+            "padding_vertical": 40,
+            "padding_horizontal": 20,
+            "image": "shopify://shop_images/tabela_comparativa_1.png",
+            "image_border_radius": 24,
+            "text_block_gap": 30,
+            "title_size": 24,
+            "text_size": 16,
+            "title_color": "#119BE5",
             "text_color": "#000000",
-            "card_1_bg_color": "#ffffff",
-            "card_1_text_align": "center",
-            "card_1_title_size": 20,
-            "card_1_title_color": "#ffffff",
-            "card_1_title": "Proteína que funciona",
-            "card_1_description": "Colágeno enriquecido com todos os aminoácidos necessários. Proteína de verdade!",
-            "card_1_description_size": 14,
-            "card_1_description_color": "#000000",
-            "card_2_bg_color": "#FFFFFF",
-            "card_2_text_align": "center",
-            "card_2_title_size": 20,
-            "card_2_title_color": "#ffffff",
-            "card_2_title": "4 Z'S",
-            "card_2_description": "tes teste teste teste",
-            "card_2_description_size": 14,
-            "card_2_description_color": "#000000",
-            "card_3_bg_color": "#ffffff",
-            "card_3_text_align": "center",
-            "card_3_title_size": 20,
-            "card_3_title_color": "#ffffff",
-            "card_3_title": "Praticidade total",
-            "card_3_description": "Leve para qualquer lugar e consuma em segundos",
-            "card_3_description_size": 14,
-            "card_3_description_color": "#000000"
+            "text_block_1_enabled": true,
+            "text_block_1_title": "Mais proteína. Menos calorias.",
+            "text_block_1_text": "<p>A maioria das barras de proteína líderes de mercado oferece 210 calorias para fornecer 20g de proteína. A Pure Genius oferece 23g de proteína completa em apenas 100 calorias. Isso significa mais proteína com menos da metade das calorias — sem a quantidade de açúcar, gordura e carboidratos presentes na maioria das barras.</p>",
+            "text_block_2_enabled": true,
+            "text_block_2_title": "Desenvolvido para músculos, articulações e pele.",
+            "text_block_2_text": "<p>A leucina sinaliza para seus músculos que é hora de se reconstruírem — e Pure Genius é rico nela. Os peptídeos de colágeno hidrolisado cuidam do resto: elasticidade da pele, resistência das articulações, tecido conjuntivo. 23 g de proteína. 100 ml. Pronto.</p>",
+            "text_block_3_enabled": true,
+            "text_block_3_title": "Feito para vidas agitadas.",
+            "text_block_3_text": "<p>Proteína em pó significa uma coqueteleira, água, dois minutos de mistura e algo para limpar depois. Uma barra significa 210 calorias e 7g de gordura que você não pediu. Pure Genius vem em 100ml, pronto para beber, e pronto antes mesmo de você calçar os sapatos. Sem preparo. Sem limpeza. Sem abrir mão de nada.</p>",
+            "text_block_4_enabled": false,
+            "text_block_4_title": "",
+            "text_block_4_text": "",
+            "text_block_5_enabled": false,
+            "text_block_5_title": "",
+            "text_block_5_text": ""
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "ai_gen_block_eb3f4b4_afejKe"
+        "ai_gen_block_4ab66b1_ETtnhm"
       ],
       "settings": {}
     },
@@ -1271,7 +1269,7 @@
         "eyebrow_text": "MOMENTO SHOTZ",
         "heading": "O encaixe perfeito para sua rotina",
         "background_color": "#fbf7f3",
-        "accent_color": "#0a84ff",
+        "accent_color": "#000000",
         "label_text_color": "#ffffff",
         "card_width": 220,
         "card_height": 290,
@@ -1634,58 +1632,16 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
-    },
-    "marquee_nqYXTq": {
-      "type": "marquee",
-      "blocks": {
-        "text_c9PLF3": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Fazemos coisas que funcionam melhor e duram mais.</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "custom",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "tight",
-            "letter_spacing": "tight",
-            "case": "none",
-            "wrap": "nowrap",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_c9PLF3"
-      ],
-      "name": "t:names.marquee_section",
-      "settings": {
-        "movement_direction": "normal",
-        "color_scheme": "",
-        "padding-block-start": 24,
-        "padding-block-end": 24,
-        "gap_between_elements": 24
-      }
     }
   },
   "order": [
     "main",
     "blocks_kwinyp",
-    "1781793164760508d2",
+    "1787751400146840dd",
     "section_ppLNkk",
     "media_with_content_HpEXVz",
     "shotz_marquee_4GaJbj",
     "media_with_content_Fq9fwm",
-    "section_tdzjcT",
-    "marquee_nqYXTq"
+    "section_tdzjcT"
   ]
 }

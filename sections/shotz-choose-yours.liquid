@@ -28,20 +28,39 @@
       {%- for block in section.blocks -%}
         {%- if block.type == 'card' -%}
           {%- assign card_product = block.settings.product -%}
+          {%- assign card_variant = nil -%}
+          {%- assign wanted_sku = block.settings.variant_sku | strip -%}
+          {%- if wanted_sku != blank -%}
+            {%- for variant in card_product.variants -%}
+              {%- if variant.sku == wanted_sku -%}
+                {%- assign card_variant = variant -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+          {%- assign card_image = card_variant.featured_image | default: card_product.featured_image -%}
+          {%- assign card_title = card_product.title -%}
+          {%- if card_variant != nil and card_variant.title != 'Default Title' -%}
+            {%- assign card_title = card_variant.title -%}
+          {%- endif -%}
+          {%- assign card_url = card_product.url -%}
+          {%- if card_variant != nil -%}
+            {%- assign card_url = card_url | append: '?variant=' | append: card_variant.id -%}
+          {%- endif -%}
           <a
-            href="{{ card_product.url | default: '#' }}"
+            href="{{ card_url | default: '#' }}"
             class="shotz-choose__card"
             style="--cy-accent: {{ block.settings.accent_color }}; --cy-pill-text: {{ block.settings.button_text_color }};"
             {{ block.shopify_attributes }}
           >
             <div class="shotz-choose__img-wrap">
-              {%- if card_product.featured_image != blank -%}
+              {%- if card_image != blank -%}
                 <img
-                  src="{{ card_product.featured_image | image_url: width: 800 }}"
-                  alt="{{ card_product.featured_image.alt | escape | default: card_product.title }}"
+                  src="{{ card_image | image_url: width: 800 }}"
+                  alt="{{ card_image.alt | escape | default: card_title }}"
                   class="shotz-choose__img"
-                  width="{{ card_product.featured_image.width }}"
-                  height="{{ card_product.featured_image.height }}"
+                  width="{{ card_image.width }}"
+                  height="{{ card_image.height }}"
                   loading="lazy"
                 >
               {%- else -%}
@@ -53,7 +72,7 @@
 
             <div class="shotz-choose__footer">
               <div class="shotz-choose__info">
-                <span class="shotz-choose__title">{{ card_product.title | default: 'Selecione um produto' }}</span>
+                <span class="shotz-choose__title">{{ card_title | default: 'Selecione um produto' }}</span>
                 {%- if block.settings.subtitle != blank -%}
                   <span class="shotz-choose__subtitle">{{ block.settings.subtitle | escape }}</span>
                 {%- endif -%}
@@ -266,6 +285,12 @@
           "type": "product",
           "id": "product",
           "label": "Produto"
+        },
+        {
+          "type": "text",
+          "id": "variant_sku",
+          "label": "SKU da variante (opcional)",
+          "info": "Se preenchido, usa a imagem e o link dessa variante específica em vez da imagem padrão do produto."
         },
         {
           "type": "text",

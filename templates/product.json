@@ -1673,6 +1673,47 @@
         "padding-block-end": 24,
         "gap_between_elements": 24
       }
+    },
+    "1787751400146840dd": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_4ab66b1_ETtnhm": {
+          "type": "ai_gen_block_4ab66b1",
+          "settings": {
+            "layout": "image_left",
+            "desktop_width_percent": 100,
+            "gap": 40,
+            "padding_vertical": 40,
+            "padding_horizontal": 20,
+            "image_border_radius": 8,
+            "text_block_gap": 30,
+            "title_size": 24,
+            "text_size": 16,
+            "title_color": "#119BE5",
+            "text_color": "#000000",
+            "text_block_1_enabled": true,
+            "text_block_1_title": "Mais proteína. Menos calorias.",
+            "text_block_1_text": "<p>A maioria das barras de proteína líderes de mercado oferece 210 calorias para fornecer 20g de proteína. A Pure Genius oferece 23g de proteína completa em apenas 100 calorias. Isso significa mais proteína com menos da metade das calorias — sem a quantidade de açúcar, gordura e carboidratos presentes na maioria das barras.</p>",
+            "text_block_2_enabled": true,
+            "text_block_2_title": "Desenvolvido para músculos, articulações e pele.",
+            "text_block_2_text": "<p>A leucina sinaliza para seus músculos que é hora de se reconstruírem — e Pure Genius é rico nela. Os peptídeos de colágeno hidrolisado cuidam do resto: elasticidade da pele, resistência das articulações, tecido conjuntivo. 23 g de proteína. 100 ml. Pronto.</p>",
+            "text_block_3_enabled": true,
+            "text_block_3_title": "Feito para vidas agitadas.",
+            "text_block_3_text": "<p>Proteína em pó significa uma coqueteleira, água, dois minutos de mistura e algo para limpar depois. Uma barra significa 210 calorias e 7g de gordura que você não pediu. Pure Genius vem em 100ml, pronto para beber, e pronto antes mesmo de você calçar os sapatos. Sem preparo. Sem limpeza. Sem abrir mão de nada.</p>",
+            "text_block_4_enabled": false,
+            "text_block_4_title": "",
+            "text_block_4_text": "",
+            "text_block_5_enabled": false,
+            "text_block_5_title": "",
+            "text_block_5_text": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_4ab66b1_ETtnhm"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -1684,6 +1725,7 @@
     "shotz_marquee_4GaJbj",
     "media_with_content_Fq9fwm",
     "section_tdzjcT",
-    "marquee_nqYXTq"
+    "marquee_nqYXTq",
+    "1787751400146840dd"
   ]
 }

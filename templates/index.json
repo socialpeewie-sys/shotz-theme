@@ -240,7 +240,7 @@
         "ai_gen_block_f3d7375_yhkHXd": {
           "type": "ai_gen_block_f3d7375",
           "settings": {
-            "title": "Shotz vs. whey tradicional vs. suco de colágeno",
+            "title": "Nós contra eles",
             "title_size": 36,
             "title_color": "#000000",
             "shotz_name": "",
@@ -271,7 +271,7 @@
             "attr_6_whey": false,
             "attr_6_collagen": true,
             "shotz_column_bg_color": "#007cf8",
-            "shotz_column_text_color": "#fbf7f3",
+            "shotz_column_text_color": "#000000",
             "check_icon_color": "#007cf8",
             "check_icon_stroke": "#f1e9de",
             "cross_icon_color": "#ff6b5a",

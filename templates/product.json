@@ -581,15 +581,15 @@
             "attr_6_shotz": true,
             "attr_6_whey": false,
             "attr_6_collagen": true,
-            "shotz_column_bg_color": "#FBF8F4",
+            "shotz_column_bg_color": "#CBFF00",
             "shotz_column_text_color": "#000000",
-            "check_icon_color": "#000000",
-            "check_icon_stroke": "#FBF8F4",
+            "check_icon_color": "#CBFF00",
+            "check_icon_stroke": "#000000",
             "cross_icon_color": "#FF6B5A",
             "cross_icon_stroke": "#FFFFFF",
             "background_image_opacity": 20,
-            "table_background_color": "#FBF8F4",
-            "table_text_color": "#000000",
+            "table_background_color": "#0D0D0D",
+            "table_text_color": "#FFFFFF",
             "table_border_radius": 20
           },
           "blocks": {}
@@ -1238,7 +1238,7 @@
         "ai_gen_block_eb3f4b4_E3XxNA": {
           "type": "ai_gen_block_eb3f4b4",
           "settings": {
-            "background_color": "#FBF8F4",
+            "background_color": "#0d0d0d",
             "eyebrow": "Por que escolher",
             "heading": "Benefícios do SHOTZ",
             "subheading": "Proteína de alta qualidade em formato prático para o seu dia a dia",
@@ -1259,7 +1259,7 @@
             "card_2_description": "A leucina sinaliza para seus músculos que é hora de se reconstruírem — e Pure Genius é rico nela. Os peptídeos de colágeno hidrolisado cuidam do resto: elasticidade da pele, resistência das articulações, tecido conjuntivo. 23 g de proteína. 100 ml. Pronto.",
             "card_2_description_size": 14,
             "card_2_description_color": "#cccccc",
-            "card_3_bg_color": "#FBF8F4",
+            "card_3_bg_color": "#1a1a1a",
             "card_3_text_align": "left",
             "card_3_title_size": 20,
             "card_3_title_color": "#ffffff",

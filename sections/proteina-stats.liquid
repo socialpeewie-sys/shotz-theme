@@ -47,7 +47,7 @@
 
   .proteina-stats-headline-{{ section.id }} {
     margin: 0;
-    color: #ffffff;
+    color: {{ section.settings.heading_color }};
     font-size: 48px;
     font-weight: 800;
     font-stretch: condensed;
@@ -59,7 +59,7 @@
   .proteina-stats-paragraph-{{ section.id }} {
     margin-top: 20px;
     max-width: 46ch;
-    color: #a3a3a3;
+    color: {{ section.settings.paragraph_color }};
     font-size: 16px;
     line-height: 1.6;
   }
@@ -95,14 +95,14 @@
 
   .proteina-stats-stat-title-{{ section.id }} {
     margin: 8px 0 0;
-    color: #ffffff;
+    color: {{ section.settings.stat_title_color }};
     font-size: 14px;
     font-weight: 700;
   }
 
   .proteina-stats-stat-description-{{ section.id }} {
     margin: 4px 0 0;
-    color: #8a8a8a;
+    color: {{ section.settings.stat_description_color }};
     font-size: 14px;
     line-height: 1.5;
   }
@@ -237,9 +237,33 @@
     },
     {
       "type": "color",
+      "id": "heading_color",
+      "label": "Cor da headline",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "paragraph_color",
+      "label": "Cor do parágrafo",
+      "default": "#A3A3A3"
+    },
+    {
+      "type": "color",
       "id": "accent_color",
       "label": "Cor de destaque (números)",
       "default": "#EC0F6E"
+    },
+    {
+      "type": "color",
+      "id": "stat_title_color",
+      "label": "Cor do título do stat",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "stat_description_color",
+      "label": "Cor da descrição do stat",
+      "default": "#8A8A8A"
     },
     {
       "type": "header",

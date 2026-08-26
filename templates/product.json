@@ -531,7 +531,9 @@
             "benefit_4": "",
             "checkmark_color": "#f1e9de",
             "button_text": "A ciência por trás",
-            "button_link": "https://meushotz.com.br/pages/a-ciencia-por-tras-da-shotz"
+            "button_link": "https://meushotz.com.br/pages/a-ciencia-por-tras-da-shotz",
+            "button_bg_color": "#000000",
+            "button_text_color": "#ffffff"
           },
           "blocks": {}
         }

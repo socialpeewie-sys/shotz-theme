@@ -520,7 +520,7 @@
           "type": "ai_gen_block_0453d40",
           "settings": {
             "image_position": "left",
-            "product_image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0518.jpg",
+            "product_image": "shopify://shop_images/teste_pure_genius.webp",
             "image_background_color": "#ffffff",
             "image_border_radius": 85,
             "headline": "Por que SHOTZ é diferente?",
@@ -543,6 +543,60 @@
       ],
       "name": "Hero com benefícios",
       "settings": {}
+    },
+    "proteina_stats_KecjAk": {
+      "type": "proteina-stats",
+      "blocks": {
+        "stat_CAVTHV": {
+          "type": "stat",
+          "settings": {
+            "number": "18g",
+            "title": "Whey isolado",
+            "description": "Perfil completo de aminoácidos essenciais, incluindo 2,7g de leucina."
+          }
+        },
+        "stat_WEaiLW": {
+          "type": "stat",
+          "settings": {
+            "number": "100ml",
+            "title": "Um gole, não uma refeição",
+            "description": "Cabe no bolso da calça, na bolsa de treino e na mala de mão."
+          }
+        },
+        "stat_BTiEFK": {
+          "type": "stat",
+          "settings": {
+            "number": "0x4",
+            "title": "Os 4 Z's",
+            "description": "Zero açúcar, zero carboidrato, zero gordura, zero lactose."
+          }
+        },
+        "stat_WjFnx3": {
+          "type": "stat",
+          "settings": {
+            "number": "5s",
+            "title": "Do bolso ao gole",
+            "description": "Sem shaker, sem pó, sem louça. Sabor de suco gelado."
+          }
+        }
+      },
+      "block_order": [
+        "stat_CAVTHV",
+        "stat_WEaiLW",
+        "stat_BTiEFK",
+        "stat_WjFnx3"
+      ],
+      "name": "Proteína Stats",
+      "settings": {
+        "image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0525_1.jpg",
+        "image_position": "right",
+        "heading": "PROTEÍNA SEM A PARTE CHATA",
+        "paragraph": "<p><strong>Um shake em pó exige medidor, shaker, água e 3 minutos. A Shotz exige um gesto: abrir. Mesma proteína completa, um décimo do esforço.</strong></p>",
+        "background_color": "#000000",
+        "accent_color": "#119BE5",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     },
     "1787751400146840dd": {
       "type": "_blocks",
@@ -581,15 +635,15 @@
             "attr_6_shotz": true,
             "attr_6_whey": false,
             "attr_6_collagen": true,
-            "shotz_column_bg_color": "#CBFF00",
+            "shotz_column_bg_color": "#cbff00",
             "shotz_column_text_color": "#000000",
-            "check_icon_color": "#CBFF00",
+            "check_icon_color": "#cbff00",
             "check_icon_stroke": "#000000",
-            "cross_icon_color": "#FF6B5A",
-            "cross_icon_stroke": "#FFFFFF",
+            "cross_icon_color": "#ff6b5a",
+            "cross_icon_stroke": "#ffffff",
             "background_image_opacity": 20,
-            "table_background_color": "#0D0D0D",
-            "table_text_color": "#FFFFFF",
+            "table_background_color": "#0d0d0d",
+            "table_text_color": "#ffffff",
             "table_border_radius": 20
           },
           "blocks": {}
@@ -1234,46 +1288,6 @@
     },
     "blocks_4Eg7mB": {
       "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_eb3f4b4_E3XxNA": {
-          "type": "ai_gen_block_eb3f4b4",
-          "settings": {
-            "background_color": "#0d0d0d",
-            "eyebrow": "Por que escolher",
-            "heading": "Benefícios do SHOTZ",
-            "subheading": "Proteína de alta qualidade em formato prático para o seu dia a dia",
-            "text_color": "#ffffff",
-            "card_1_bg_color": "#1a1a1a",
-            "card_1_text_align": "center",
-            "card_1_title_size": 20,
-            "card_1_title_color": "#ffffff",
-            "card_1_title": "Desenvolvido para músculos, articulações e pele.",
-            "card_1_description": "A maioria das barras de proteína líderes de mercado oferece 210 calorias para fornecer 20g de proteína. A Pure Genius oferece 23g de proteína completa em apenas 100 calorias. Isso significa mais proteína com menos da metade das calorias — sem a quantidade de açúcar, gordura e carboidratos presentes na maioria das barras.",
-            "card_1_description_size": 14,
-            "card_1_description_color": "#cccccc",
-            "card_2_bg_color": "#1a1a1a",
-            "card_2_text_align": "left",
-            "card_2_title_size": 20,
-            "card_2_title_color": "#ffffff",
-            "card_2_title": "Energia rápida",
-            "card_2_description": "A leucina sinaliza para seus músculos que é hora de se reconstruírem — e Pure Genius é rico nela. Os peptídeos de colágeno hidrolisado cuidam do resto: elasticidade da pele, resistência das articulações, tecido conjuntivo. 23 g de proteína. 100 ml. Pronto.",
-            "card_2_description_size": 14,
-            "card_2_description_color": "#cccccc",
-            "card_3_bg_color": "#1a1a1a",
-            "card_3_text_align": "left",
-            "card_3_title_size": 20,
-            "card_3_title_color": "#ffffff",
-            "card_3_title": "Feito para vidas agitadas.",
-            "card_3_description": "Proteína em pó significa uma coqueteleira, água, dois minutos de mistura e algo para limpar depois. Uma barra significa 210 calorias e 7g de gordura que você não pediu. Pure Genius vem em 100ml, pronto para beber, e pronto antes mesmo de você calçar os sapatos. Sem preparo. Sem limpeza. Sem abrir mão de nada.",
-            "card_3_description_size": 14,
-            "card_3_description_color": "#cccccc"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_eb3f4b4_E3XxNA"
-      ],
       "name": "Shotz benefits",
       "settings": {}
     },
@@ -1696,6 +1710,7 @@
   "order": [
     "main",
     "blocks_kwinyp",
+    "proteina_stats_KecjAk",
     "1787751400146840dd",
     "section_ppLNkk",
     "media_with_content_HpEXVz",

@@ -522,7 +522,7 @@
             "image_position": "left",
             "product_image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0518.jpg",
             "image_background_color": "#ffffff",
-            "image_border_radius": 20,
+            "image_border_radius": 85,
             "headline": "Por que SHOTZ é diferente?",
             "subtitle": "Desenvolvemos uma fórmula especial e única. Partimos do colágeno hidrolisado e adicionamos exatamente os aminoácidos que faltavam para se tornar uma proteína completa.",
             "benefit_1": "",
@@ -547,42 +547,56 @@
     "1787751400146840dd": {
       "type": "_blocks",
       "blocks": {
-        "ai_gen_block_4ab66b1_ETtnhm": {
-          "type": "ai_gen_block_4ab66b1",
+        "ai_gen_block_f3d7375_W4qJB8": {
+          "type": "ai_gen_block_f3d7375",
+          "name": "Comparativo Shotz",
           "settings": {
-            "layout": "image_right",
-            "desktop_width_percent": 100,
-            "gap": 30,
-            "padding_vertical": 40,
-            "padding_horizontal": 20,
-            "image": "shopify://shop_images/tabela_comparativa_1.png",
-            "image_border_radius": 24,
-            "text_block_gap": 30,
-            "title_size": 24,
-            "text_size": 16,
-            "title_color": "#119be5",
-            "text_color": "#000000",
-            "text_block_1_enabled": true,
-            "text_block_1_title": "Mais proteína. Menos calorias.",
-            "text_block_1_text": "<p>A maioria das barras de proteína líderes de mercado oferece 210 calorias para fornecer 20g de proteína. A Pure Genius oferece 23g de proteína completa em apenas 100 calorias. Isso significa mais proteína com menos da metade das calorias — sem a quantidade de açúcar, gordura e carboidratos presentes na maioria das barras.</p>",
-            "text_block_2_enabled": true,
-            "text_block_2_title": "Desenvolvido para músculos, articulações e pele.",
-            "text_block_2_text": "<p>A leucina sinaliza para seus músculos que é hora de se reconstruírem — e Pure Genius é rico nela. Os peptídeos de colágeno hidrolisado cuidam do resto: elasticidade da pele, resistência das articulações, tecido conjuntivo. 23 g de proteína. 100 ml. Pronto.</p>",
-            "text_block_3_enabled": true,
-            "text_block_3_title": "Feito para vidas agitadas.",
-            "text_block_3_text": "<p>Proteína em pó significa uma coqueteleira, água, dois minutos de mistura e algo para limpar depois. Uma barra significa 210 calorias e 7g de gordura que você não pediu. Pure Genius vem em 100ml, pronto para beber, e pronto antes mesmo de você calçar os sapatos. Sem preparo. Sem limpeza. Sem abrir mão de nada.</p>",
-            "text_block_4_enabled": false,
-            "text_block_4_title": "",
-            "text_block_4_text": "",
-            "text_block_5_enabled": false,
-            "text_block_5_title": "",
-            "text_block_5_text": ""
+            "title": "Shotz vs. whey tradicional vs. suco de colágeno",
+            "title_size": 36,
+            "title_color": "#000000",
+            "shotz_name": "Shotz",
+            "whey_name": "Whey tradicional",
+            "collagen_name": "Suco / refri de colágeno",
+            "attr_1_name": "18g de proteína real",
+            "attr_1_shotz": true,
+            "attr_1_whey": true,
+            "attr_1_collagen": false,
+            "attr_2_name": "Colágeno completo",
+            "attr_2_shotz": true,
+            "attr_2_whey": false,
+            "attr_2_collagen": false,
+            "attr_3_name": "Zero açúcar",
+            "attr_3_shotz": true,
+            "attr_3_whey": true,
+            "attr_3_collagen": false,
+            "attr_4_name": "Textura leve, pronta pra beber",
+            "attr_4_shotz": true,
+            "attr_4_whey": false,
+            "attr_4_collagen": true,
+            "attr_5_name": "Gosto de suco, sem sabor artificial",
+            "attr_5_shotz": true,
+            "attr_5_whey": false,
+            "attr_5_collagen": true,
+            "attr_6_name": "Sem lactose, não estufa",
+            "attr_6_shotz": true,
+            "attr_6_whey": false,
+            "attr_6_collagen": true,
+            "shotz_column_bg_color": "#CBFF00",
+            "shotz_column_text_color": "#000000",
+            "check_icon_color": "#CBFF00",
+            "check_icon_stroke": "#000000",
+            "cross_icon_color": "#FF6B5A",
+            "cross_icon_stroke": "#FFFFFF",
+            "background_image_opacity": 20,
+            "table_background_color": "#0D0D0D",
+            "table_text_color": "#FFFFFF",
+            "table_border_radius": 20
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "ai_gen_block_4ab66b1_ETtnhm"
+        "ai_gen_block_f3d7375_W4qJB8"
       ],
       "settings": {}
     },
@@ -1218,6 +1232,51 @@
         "padding-block-end": 0
       }
     },
+    "blocks_4Eg7mB": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_eb3f4b4_E3XxNA": {
+          "type": "ai_gen_block_eb3f4b4",
+          "settings": {
+            "background_color": "#0d0d0d",
+            "eyebrow": "Por que escolher",
+            "heading": "Benefícios do SHOTZ",
+            "subheading": "Proteína de alta qualidade em formato prático para o seu dia a dia",
+            "text_color": "#ffffff",
+            "card_1_bg_color": "#1a1a1a",
+            "card_1_text_align": "center",
+            "card_1_title_size": 20,
+            "card_1_title_color": "#ffffff",
+            "card_1_title": "Desenvolvido para músculos, articulações e pele.",
+            "card_1_description": "A maioria das barras de proteína líderes de mercado oferece 210 calorias para fornecer 20g de proteína. A Pure Genius oferece 23g de proteína completa em apenas 100 calorias. Isso significa mais proteína com menos da metade das calorias — sem a quantidade de açúcar, gordura e carboidratos presentes na maioria das barras.",
+            "card_1_description_size": 14,
+            "card_1_description_color": "#cccccc",
+            "card_2_bg_color": "#1a1a1a",
+            "card_2_text_align": "left",
+            "card_2_title_size": 20,
+            "card_2_title_color": "#ffffff",
+            "card_2_title": "Energia rápida",
+            "card_2_description": "A leucina sinaliza para seus músculos que é hora de se reconstruírem — e Pure Genius é rico nela. Os peptídeos de colágeno hidrolisado cuidam do resto: elasticidade da pele, resistência das articulações, tecido conjuntivo. 23 g de proteína. 100 ml. Pronto.",
+            "card_2_description_size": 14,
+            "card_2_description_color": "#cccccc",
+            "card_3_bg_color": "#1a1a1a",
+            "card_3_text_align": "left",
+            "card_3_title_size": 20,
+            "card_3_title_color": "#ffffff",
+            "card_3_title": "Feito para vidas agitadas.",
+            "card_3_description": "Proteína em pó significa uma coqueteleira, água, dois minutos de mistura e algo para limpar depois. Uma barra significa 210 calorias e 7g de gordura que você não pediu. Pure Genius vem em 100ml, pronto para beber, e pronto antes mesmo de você calçar os sapatos. Sem preparo. Sem limpeza. Sem abrir mão de nada.",
+            "card_3_description_size": 14,
+            "card_3_description_color": "#cccccc"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_eb3f4b4_E3XxNA"
+      ],
+      "name": "Shotz benefits",
+      "settings": {}
+    },
     "shotz_marquee_4GaJbj": {
       "type": "shotz-marquee",
       "blocks": {
@@ -1268,7 +1327,7 @@
       "settings": {
         "eyebrow_text": "MOMENTO SHOTZ",
         "heading": "O encaixe perfeito para sua rotina",
-        "background_color": "#FFFFFF",
+        "background_color": "#ffffff",
         "accent_color": "#000000",
         "label_text_color": "#ffffff",
         "card_width": 220,
@@ -1640,6 +1699,7 @@
     "1787751400146840dd",
     "section_ppLNkk",
     "media_with_content_HpEXVz",
+    "blocks_4Eg7mB",
     "shotz_marquee_4GaJbj",
     "media_with_content_Fq9fwm",
     "section_tdzjcT"

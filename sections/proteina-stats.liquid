@@ -1,0 +1,335 @@
+{% style %}
+  .proteina-stats-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    width: 100%;
+  }
+
+  .proteina-stats-container-{{ section.id }} {
+    display: flex;
+    flex-direction: {% if section.settings.image_position == 'right' %}row-reverse{% else %}row{% endif %};
+    align-items: stretch;
+    gap: 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .proteina-stats-image-col-{{ section.id }} {
+    flex: 0 0 42%;
+    max-width: 42%;
+  }
+
+  .proteina-stats-image-{{ section.id }} {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .proteina-stats-image-placeholder-{{ section.id }} {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .proteina-stats-content-col-{{ section.id }} {
+    flex: 0 0 58%;
+    max-width: 58%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .proteina-stats-headline-{{ section.id }} {
+    margin: 0;
+    color: #ffffff;
+    font-size: 48px;
+    font-weight: 800;
+    font-stretch: condensed;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    text-transform: uppercase;
+  }
+
+  .proteina-stats-paragraph-{{ section.id }} {
+    margin-top: 20px;
+    max-width: 46ch;
+    color: #a3a3a3;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .proteina-stats-paragraph-{{ section.id }} p {
+    margin: 0;
+  }
+
+  .proteina-stats-list-{{ section.id }} {
+    margin: 48px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .proteina-stats-item-{{ section.id }} {
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .proteina-stats-item-{{ section.id }}:last-child {
+    border-bottom: none;
+  }
+
+  .proteina-stats-number-{{ section.id }} {
+    display: block;
+    color: {{ section.settings.accent_color }};
+    font-size: 40px;
+    font-weight: 800;
+    font-stretch: condensed;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .proteina-stats-stat-title-{{ section.id }} {
+    margin: 8px 0 0;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .proteina-stats-stat-description-{{ section.id }} {
+    margin: 4px 0 0;
+    color: #8a8a8a;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  @media screen and (max-width: 749px) {
+    .proteina-stats-{{ section.id }} {
+      padding-top: 48px;
+      padding-bottom: 48px;
+    }
+
+    .proteina-stats-container-{{ section.id }} {
+      flex-direction: column;
+    }
+
+    .proteina-stats-image-col-{{ section.id }},
+    .proteina-stats-content-col-{{ section.id }} {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+
+    .proteina-stats-headline-{{ section.id }} {
+      font-size: 32px;
+    }
+
+    .proteina-stats-number-{{ section.id }} {
+      font-size: 32px;
+    }
+  }
+{% endstyle %}
+
+<div class="proteina-stats proteina-stats-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="proteina-stats-container-{{ section.id }}">
+    <div class="proteina-stats-image-col-{{ section.id }}">
+      {% if section.settings.image %}
+        <img
+          src="{{ section.settings.image | image_url: width: 900 }}"
+          srcset="
+            {{ section.settings.image | image_url: width: 450 }} 450w,
+            {{ section.settings.image | image_url: width: 900 }} 900w,
+            {{ section.settings.image | image_url: width: 1400 }} 1400w
+          "
+          sizes="(min-width: 750px) 42vw, 100vw"
+          alt="{{ section.settings.image.alt | escape }}"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          loading="lazy"
+          class="proteina-stats-image-{{ section.id }}"
+        >
+      {% else %}
+        <div class="proteina-stats-image-placeholder-{{ section.id }}">
+          {{ 'product-1' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="proteina-stats-content-col-{{ section.id }}">
+      {% if section.settings.heading != blank %}
+        <h2 class="proteina-stats-headline-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.paragraph != blank %}
+        <div class="proteina-stats-paragraph-{{ section.id }}">{{ section.settings.paragraph }}</div>
+      {% endif %}
+
+      {% if section.blocks.size > 0 %}
+        <ul class="proteina-stats-list-{{ section.id }}">
+          {% for block in section.blocks %}
+            {% if block.type == 'stat' %}
+              <li class="proteina-stats-item-{{ section.id }}" {{ block.shopify_attributes }}>
+                {% if block.settings.number != blank %}
+                  <span class="proteina-stats-number-{{ section.id }}">{{ block.settings.number }}</span>
+                {% endif %}
+
+                {% if block.settings.title != blank %}
+                  <p class="proteina-stats-stat-title-{{ section.id }}">{{ block.settings.title }}</p>
+                {% endif %}
+
+                {% if block.settings.description != blank %}
+                  <p class="proteina-stats-stat-description-{{ section.id }}">{{ block.settings.description }}</p>
+                {% endif %}
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Proteína Stats",
+  "tag": "section",
+  "class": "section-proteina-stats",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagem"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Posição da imagem",
+      "options": [
+        { "value": "left", "label": "Esquerda" },
+        { "value": "right", "label": "Direita" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Headline",
+      "default": "PROTEÍNA SEM A PARTE CHATA"
+    },
+    {
+      "type": "richtext",
+      "id": "paragraph",
+      "label": "Parágrafo",
+      "default": "<p>Um shake em pó exige medidor, shaker, água e 3 minutos. A Shotz exige um gesto: abrir. Mesma proteína completa, um décimo do esforço.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Cores"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Cor de fundo",
+      "default": "#0D0D0D"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Cor de destaque (números)",
+      "default": "#EC0F6E"
+    },
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior (desktop)",
+      "min": 0,
+      "max": 150,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior (desktop)",
+      "min": 0,
+      "max": 150,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Número / destaque",
+          "default": "18g"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Título do stat"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Descrição"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Proteína Stats",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "number": "18g",
+            "title": "Whey isolado",
+            "description": "Perfil completo de aminoácidos essenciais, incluindo 2,7g de leucina."
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "100ml",
+            "title": "Um gole, não uma refeição",
+            "description": "Cabe no bolso da calça, na bolsa de treino e na mala de mão."
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "0x4",
+            "title": "Os 4 Z's",
+            "description": "Zero açúcar, zero carboidrato, zero gordura, zero lactose."
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "5s",
+            "title": "Do bolso ao gole",
+            "description": "Sem shaker, sem pó, sem louça. Sabor de suco gelado."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

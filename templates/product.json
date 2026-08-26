@@ -592,7 +592,7 @@
         "image_position": "right",
         "heading": "PROTEÍNA SEM A PARTE CHATA",
         "paragraph": "<p><strong>Um shake em pó exige medidor, shaker, água e 3 minutos. A Shotz exige um gesto: abrir. Mesma proteína completa, um décimo do esforço.</strong></p>",
-        "background_color": "#FBF8F4",
+        "background_color": "#fbf8f4",
         "heading_color": "#000000",
         "paragraph_color": "#696565",
         "accent_color": "#119be5",
@@ -1709,6 +1709,65 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "momento_shotz_PcRfra": {
+      "type": "momento-shotz",
+      "blocks": {
+        "card_LdiR9T": {
+          "type": "card",
+          "settings": {
+            "kicker": "PÓS-TREINO",
+            "title": "Saiu da academia",
+            "description": "Proteína antes de chegar ao vestiário.",
+            "link": ""
+          }
+        },
+        "card_6TwATL": {
+          "type": "card",
+          "settings": {
+            "kicker": "VIAGEM",
+            "title": "Bagagem",
+            "description": "Te ajuda a bater a meta de proteína na viagem",
+            "link": ""
+          }
+        },
+        "card_mUXgTi": {
+          "type": "card",
+          "settings": {
+            "kicker": "TRABALHO",
+            "title": "Almoço",
+            "description": "Quando o almoço não tem proteína suficiente.",
+            "link": ""
+          }
+        },
+        "card_eWFfKk": {
+          "type": "card",
+          "settings": {
+            "kicker": "ROTINA",
+            "title": "Manhã sem apetite",
+            "description": "18g quando comida não desce.",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_LdiR9T",
+        "card_6TwATL",
+        "card_mUXgTi",
+        "card_eWFfKk"
+      ],
+      "name": "Shotz Rotina",
+      "settings": {
+        "eyebrow": "MOMENTO SHOTZ",
+        "heading": "ONDE ELE ENTRA NA SUA ROTINA",
+        "cta_label": "QUERO EXPERIMENTAR",
+        "cta_url": "",
+        "background_color": "#FFFFFF",
+        "heading_color": "#0D0D0D",
+        "accent_color": "#119BE5",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     }
   },
   "order": [
@@ -1721,6 +1780,7 @@
     "blocks_4Eg7mB",
     "shotz_marquee_4GaJbj",
     "media_with_content_Fq9fwm",
-    "section_tdzjcT"
+    "section_tdzjcT",
+    "momento_shotz_PcRfra"
   ]
 }

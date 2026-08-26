@@ -508,7 +508,7 @@
         "limit_details_width": false,
         "gap": 8,
         "enable_sticky_add_to_cart": true,
-        "color_scheme": "scheme-2",
+        "color_scheme": "scheme-1",
         "padding-block-start": 0,
         "padding-block-end": 0
       }

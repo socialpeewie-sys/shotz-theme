@@ -1,0 +1,426 @@
+{% style %}
+  .momento-shotz-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    width: 100%;
+  }
+
+  .momento-shotz-inner-{{ section.id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .momento-shotz-header-{{ section.id }} {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .momento-shotz-eyebrow-{{ section.id }} {
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #8a8a8a;
+  }
+
+  .momento-shotz-heading-{{ section.id }} {
+    margin: 12px 0 0;
+    text-transform: uppercase;
+    font-size: 44px;
+    font-weight: 800;
+    font-stretch: condensed;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: {{ section.settings.heading_color }};
+  }
+
+  .momento-shotz-cta-{{ section.id }} {
+    flex-shrink: 0;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: {{ section.settings.accent_color }};
+    text-decoration: none;
+    border-bottom: 2px solid {{ section.settings.accent_color }};
+    padding-bottom: 2px;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .momento-shotz-cta-{{ section.id }}:hover {
+    opacity: 0.7;
+  }
+
+  .momento-shotz-cta-{{ section.id }}:focus-visible {
+    outline: 2px solid {{ section.settings.accent_color }};
+    outline-offset: 4px;
+  }
+
+  .momento-shotz-grid-{{ section.id }} {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 20px;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .momento-shotz-grid-{{ section.id }}::-webkit-scrollbar {
+    display: none;
+  }
+
+  .momento-shotz-card-{{ section.id }} {
+    position: relative;
+    display: block;
+    flex: 0 0 78vw;
+    aspect-ratio: 3 / 4;
+    border-radius: 16px;
+    overflow: hidden;
+    scroll-snap-align: start;
+  }
+
+  .momento-shotz-card-{{ section.id }}:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+  }
+
+  .momento-shotz-card-img-{{ section.id }} {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 400ms ease;
+  }
+
+  .momento-shotz-card-{{ section.id }}:hover .momento-shotz-card-img-{{ section.id }} {
+    transform: scale(1.03);
+  }
+
+  .momento-shotz-card-placeholder-{{ section.id }} {
+    position: absolute;
+    inset: 0;
+    background-color: #e5e5e5;
+  }
+
+  .momento-shotz-card-overlay-{{ section.id }} {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 35%, transparent 60%);
+  }
+
+  .momento-shotz-card-content-{{ section.id }} {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    color: #ffffff;
+  }
+
+  .momento-shotz-card-kicker-{{ section.id }} {
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .momento-shotz-card-title-{{ section.id }} {
+    margin: 6px 0 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .momento-shotz-card-description-{{ section.id }} {
+    margin: 4px 0 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  @media screen and (min-width: 750px) {
+    .momento-shotz-grid-{{ section.id }} {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      overflow: visible;
+    }
+
+    .momento-shotz-card-{{ section.id }} {
+      flex: initial;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .momento-shotz-grid-{{ section.id }} {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .momento-shotz-{{ section.id }} {
+      padding-top: 48px;
+      padding-bottom: 48px;
+    }
+
+    .momento-shotz-header-{{ section.id }} {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .momento-shotz-cta-{{ section.id }} {
+      margin-top: 20px;
+    }
+
+    .momento-shotz-heading-{{ section.id }} {
+      font-size: 30px;
+    }
+  }
+{% endstyle %}
+
+<div class="momento-shotz momento-shotz-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="momento-shotz-inner-{{ section.id }}">
+    <div class="momento-shotz-header-{{ section.id }}">
+      <div class="momento-shotz-header-left-{{ section.id }}">
+        {% if section.settings.eyebrow != blank %}
+          <p class="momento-shotz-eyebrow-{{ section.id }}">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+
+        {% if section.settings.heading != blank %}
+          <h2 class="momento-shotz-heading-{{ section.id }}">{{ section.settings.heading }}</h2>
+        {% endif %}
+      </div>
+
+      {% if section.settings.cta_label != blank %}
+        <a
+          href="{{ section.settings.cta_url | default: '#' }}"
+          class="momento-shotz-cta-{{ section.id }}"
+        >
+          {{ section.settings.cta_label }}
+        </a>
+      {% endif %}
+    </div>
+
+    {% if section.blocks.size > 0 %}
+      <div class="momento-shotz-grid-{{ section.id }}">
+        {% for block in section.blocks %}
+          {% if block.type == 'card' %}
+            {% assign card_tag = 'div' %}
+            {% if block.settings.link != blank %}
+              {% assign card_tag = 'a' %}
+            {% endif %}
+            <{{ card_tag }}
+              class="momento-shotz-card-{{ section.id }}"
+              {% if card_tag == 'a' %}
+                href="{{ block.settings.link }}"
+              {% endif %}
+              {{ block.shopify_attributes }}
+            >
+              {% if block.settings.image %}
+                <img
+                  src="{{ block.settings.image | image_url: width: 800 }}"
+                  srcset="
+                    {{ block.settings.image | image_url: width: 400 }} 400w,
+                    {{ block.settings.image | image_url: width: 800 }} 800w,
+                    {{ block.settings.image | image_url: width: 1200 }} 1200w
+                  "
+                  sizes="(min-width: 990px) 25vw, (min-width: 750px) 50vw, 78vw"
+                  alt="{{ block.settings.image.alt | escape }}"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  loading="lazy"
+                  class="momento-shotz-card-img-{{ section.id }}"
+                >
+              {% else %}
+                <div class="momento-shotz-card-placeholder-{{ section.id }}">
+                  {{ 'lifestyle-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+
+              <div class="momento-shotz-card-overlay-{{ section.id }}"></div>
+
+              <div class="momento-shotz-card-content-{{ section.id }}">
+                {% if block.settings.kicker != blank %}
+                  <p class="momento-shotz-card-kicker-{{ section.id }}">{{ block.settings.kicker }}</p>
+                {% endif %}
+
+                {% if block.settings.title != blank %}
+                  <p class="momento-shotz-card-title-{{ section.id }}">{{ block.settings.title }}</p>
+                {% endif %}
+
+                {% if block.settings.description != blank %}
+                  <p class="momento-shotz-card-description-{{ section.id }}">{{ block.settings.description }}</p>
+                {% endif %}
+              </div>
+            </{{ card_tag }}>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Shotz Rotina",
+  "tag": "section",
+  "class": "section-momento-shotz",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "MOMENTO SHOTZ"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Headline",
+      "default": "ONDE ELE ENTRA NA SUA ROTINA"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto do CTA",
+      "default": "QUERO EXPERIMENTAR"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Link do CTA"
+    },
+    {
+      "type": "header",
+      "content": "Cores"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Cor de fundo",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Cor da headline",
+      "default": "#0D0D0D"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Cor de destaque (CTA)",
+      "default": "#EC0F6E"
+    },
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior (desktop)",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior (desktop)",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagem"
+        },
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "Kicker",
+          "default": "MOMENTO"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Título do card"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Descrição"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (opcional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Shotz Rotina",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "kicker": "PÓS-TREINO",
+            "title": "Saiu da academia",
+            "description": "Proteína antes de chegar ao vestiário."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "kicker": "VIAGEM",
+            "title": "Mala de mão",
+            "description": "100ml passa no raio-x e no dia longo."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "kicker": "TRABALHO",
+            "title": "Turno de 12h",
+            "description": "Quando o almoço virou café."
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "kicker": "ROTINA",
+            "title": "Manhã sem apetite",
+            "description": "18g quando comida não desce."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

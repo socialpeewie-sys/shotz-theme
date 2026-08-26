@@ -513,20 +513,6 @@
         "padding-block-end": 0
       }
     },
-    "divider_gG48eM": {
-      "type": "divider",
-      "name": "t:names.divider_section",
-      "settings": {
-        "color_scheme": "",
-        "section_width": "full-width",
-        "thickness": 1,
-        "corner_radius": "square",
-        "width_percent": 100,
-        "alignment_horizontal": "center",
-        "padding-block-start": 16,
-        "padding-block-end": 16
-      }
-    },
     "blocks_kwinyp": {
       "type": "_blocks",
       "blocks": {
@@ -599,20 +585,6 @@
         "ai_gen_block_eb3f4b4_afejKe"
       ],
       "settings": {}
-    },
-    "divider_iQQL3Y": {
-      "type": "divider",
-      "name": "t:names.divider_section",
-      "settings": {
-        "color_scheme": "",
-        "section_width": "full-width",
-        "thickness": 0.5,
-        "corner_radius": "square",
-        "width_percent": 100,
-        "alignment_horizontal": "center",
-        "padding-block-start": 16,
-        "padding-block-end": 16
-      }
     },
     "section_ppLNkk": {
       "type": "section",
@@ -1705,10 +1677,8 @@
   },
   "order": [
     "main",
-    "divider_gG48eM",
     "blocks_kwinyp",
     "1781793164760508d2",
-    "divider_iQQL3Y",
     "section_ppLNkk",
     "media_with_content_HpEXVz",
     "shotz_marquee_4GaJbj",

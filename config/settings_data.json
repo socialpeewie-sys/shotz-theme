@@ -12,7 +12,7 @@
     "logo": "shopify://shop_images/Design_sem_nome_1.png",
     "logo_height": 32,
     "logo_height_mobile": 28,
-    "favicon": "shopify://shop_images/logo_500_1.png",
+    "favicon": "shopify://shop_images/Design_sem_nome_6.png",
     "type_body_font": "plus_jakarta_sans_n5",
     "type_subheading_font": "plus_jakarta_sans_n6",
     "type_heading_font": "plus_jakarta_sans_n6",
@@ -179,7 +179,7 @@
     "color_schemes": {
       "scheme-1": {
         "settings": {
-          "background": "#FFFFFF",
+          "background": "#ffffff",
           "foreground_heading": "#000000",
           "foreground": "#000000",
           "primary": "#000000",

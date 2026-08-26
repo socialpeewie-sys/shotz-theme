@@ -550,15 +550,15 @@
         "stat_CAVTHV": {
           "type": "stat",
           "settings": {
-            "number": "18g",
-            "title": "Whey isolado",
+            "number": "21g de proteína",
+            "title": "Colágeno enriquecido",
             "description": "Perfil completo de aminoácidos essenciais, incluindo 2,7g de leucina."
           }
         },
         "stat_WEaiLW": {
           "type": "stat",
           "settings": {
-            "number": "100ml",
+            "number": "100ml. Dois goles. 5 segundos",
             "title": "Um gole, não uma refeição",
             "description": "Cabe no bolso da calça, na bolsa de treino e na mala de mão."
           }
@@ -566,7 +566,7 @@
         "stat_BTiEFK": {
           "type": "stat",
           "settings": {
-            "number": "0x4",
+            "number": "Tecnologia 4 Zs",
             "title": "Os 4 Z's",
             "description": "Zero açúcar, zero carboidrato, zero gordura, zero lactose."
           }
@@ -592,8 +592,12 @@
         "image_position": "right",
         "heading": "PROTEÍNA SEM A PARTE CHATA",
         "paragraph": "<p><strong>Um shake em pó exige medidor, shaker, água e 3 minutos. A Shotz exige um gesto: abrir. Mesma proteína completa, um décimo do esforço.</strong></p>",
-        "background_color": "#000000",
-        "accent_color": "#119BE5",
+        "background_color": "#FBF8F4",
+        "heading_color": "#000000",
+        "paragraph_color": "#696565",
+        "accent_color": "#119be5",
+        "stat_title_color": "#000000",
+        "stat_description_color": "#8a8a8a",
         "padding_top": 80,
         "padding_bottom": 80
       }
@@ -1340,7 +1344,7 @@
       "name": "Shotz Marquee",
       "settings": {
         "eyebrow_text": "MOMENTO SHOTZ",
-        "heading": "O encaixe perfeito para sua rotina",
+        "heading": "O ENCAIXE PERFEITO NA SUA ROTINA",
         "background_color": "#ffffff",
         "accent_color": "#000000",
         "label_text_color": "#ffffff",

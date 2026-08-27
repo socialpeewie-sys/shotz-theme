@@ -522,7 +522,7 @@
             "image_position": "left",
             "background_color": "#ffffff",
             "product_image": "shopify://shop_images/teste_pure_genius.webp",
-            "image_background_color": "#ffffff",
+            "image_background_color": "#FBF8F4",
             "image_border_radius": 85,
             "headline": "Por que SHOTZ é diferente?",
             "subtitle": "Desenvolvemos uma fórmula especial e única. Partimos do colágeno hidrolisado e adicionamos exatamente os aminoácidos que faltavam para se tornar uma proteína completa.",
@@ -593,7 +593,7 @@
         "image_position": "right",
         "heading": "PROTEÍNA SEM A PARTE CHATA",
         "paragraph": "<p><strong>Um shake em pó exige medidor, shaker, água e 3 minutos. A Shotz exige um gesto: abrir. Mesma proteína completa, um décimo do esforço.</strong></p>",
-        "background_color": "#FBF8F4",
+        "background_color": "#fbf8f4",
         "heading_color": "#000000",
         "paragraph_color": "#696565",
         "accent_color": "#119be5",
@@ -1296,6 +1296,65 @@
       "name": "Shotz benefits",
       "settings": {}
     },
+    "momento_shotz_PcRfra": {
+      "type": "momento-shotz",
+      "blocks": {
+        "card_LdiR9T": {
+          "type": "card",
+          "settings": {
+            "kicker": "PÓS-TREINO",
+            "title": "Saiu da academia",
+            "description": "Proteína antes de chegar ao vestiário.",
+            "link": ""
+          }
+        },
+        "card_6TwATL": {
+          "type": "card",
+          "settings": {
+            "kicker": "VIAGEM",
+            "title": "Bagagem",
+            "description": "Te ajuda a bater a meta de proteína na viagem",
+            "link": ""
+          }
+        },
+        "card_mUXgTi": {
+          "type": "card",
+          "settings": {
+            "kicker": "TRABALHO",
+            "title": "Almoço",
+            "description": "Quando o almoço não tem proteína suficiente.",
+            "link": ""
+          }
+        },
+        "card_eWFfKk": {
+          "type": "card",
+          "settings": {
+            "kicker": "ROTINA",
+            "title": "Manhã sem apetite",
+            "description": "18g quando comida não desce.",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_LdiR9T",
+        "card_6TwATL",
+        "card_mUXgTi",
+        "card_eWFfKk"
+      ],
+      "name": "Shotz Rotina",
+      "settings": {
+        "eyebrow": "MOMENTO SHOTZ",
+        "heading": "ONDE ELE ENTRA NA SUA ROTINA",
+        "cta_label": "QUERO EXPERIMENTAR",
+        "cta_url": "",
+        "background_color": "#FFFFFF",
+        "heading_color": "#0D0D0D",
+        "accent_color": "#119BE5",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
     "shotz_marquee_4GaJbj": {
       "type": "shotz-marquee",
       "blocks": {
@@ -1720,6 +1779,7 @@
     "section_ppLNkk",
     "media_with_content_HpEXVz",
     "blocks_4Eg7mB",
+    "momento_shotz_PcRfra",
     "shotz_marquee_4GaJbj",
     "media_with_content_Fq9fwm",
     "section_tdzjcT"

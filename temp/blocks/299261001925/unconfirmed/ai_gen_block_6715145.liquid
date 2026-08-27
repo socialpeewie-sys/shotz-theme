@@ -1,6 +1,450 @@
+{% doc %}
+  @prompt
+    preciso gerar uma seccao para explicar a ciencia do shtoz
+    
+    a ideia ~e ter um conteúdo em texto central com titulo e subtitulo
+    
+    e ao lado ou ao fundo (dar a op~cao de editar) uma imagem do produto
+    
+    logo abaixo um botão de CTA
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-science-section-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 60px 20px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-science-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    {% if block.settings.layout == 'image-left' %}
+      flex-direction: row;
+    {% elsif block.settings.layout == 'image-right' %}
+      flex-direction: row-reverse;
+    {% elsif block.settings.layout == 'image-background' %}
+      flex-direction: column;
+      position: relative;
+    {% endif %}
+  }
+
+  .ai-science-content-{{ ai_gen_id }} {
+    flex: 1;
+    {% if block.settings.layout == 'image-background' %}
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+    {% else %}
+      max-width: 600px;
+    {% endif %}
+  }
+
+  .ai-science-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 16px;
+    line-height: 1.2;
+  }
+
+  .ai-science-subtitle-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subtitle_size }}px;
+    color: {{ block.settings.subtitle_color }};
+    margin: 0 0 24px;
+    line-height: 1.5;
+  }
+
+  .ai-science-text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    color: {{ block.settings.text_color }};
+    line-height: 1.6;
+    margin: 0 0 32px;
+  }
+
+  .ai-science-image-wrapper-{{ ai_gen_id }} {
+    {% if block.settings.layout == 'image-background' %}
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    {% else %}
+      flex: 1;
+      max-width: 500px;
+    {% endif %}
+  }
+
+  .ai-science-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    {% if block.settings.layout == 'image-background' %}
+      object-fit: cover;
+      height: 100%;
+      opacity: {{ block.settings.background_image_opacity }};
+    {% endif %}
+  }
+
+  .ai-science-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 400px;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    {% if block.settings.layout == 'image-background' %}
+      height: 100%;
+      opacity: {{ block.settings.background_image_opacity }};
+    {% endif %}
+  }
+
+  .ai-science-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+  }
+
+  .ai-science-cta-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 16px 32px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_text_size }}px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: {{ block.settings.button_border_width }}px solid {{ block.settings.button_border_color }};
+  }
+
+  .ai-science-cta-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+    color: {{ block.settings.button_hover_text_color }};
+    border-color: {{ block.settings.button_hover_border_color }};
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-science-container-{{ ai_gen_id }} {
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .ai-science-content-{{ ai_gen_id }} {
+      max-width: 100%;
+      text-align: center;
+    }
+
+    .ai-science-image-wrapper-{{ ai_gen_id }} {
+      max-width: 100%;
+      {% if block.settings.layout == 'image-background' %}
+        position: relative;
+        height: 300px;
+      {% endif %}
+    }
+
+    .ai-science-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.7 }}px;
+    }
+
+    .ai-science-subtitle-{{ ai_gen_id }} {
+      font-size: {{ block.settings.subtitle_size | times: 0.8 }}px;
+    }
+
+    .ai-science-text-{{ ai_gen_id }} {
+      font-size: {{ block.settings.text_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-science-section-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-science-container-{{ ai_gen_id }}">
+    {% if block.settings.layout == 'image-background' %}
+      <div class="ai-science-image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.image %}
+          <img
+            src="{{ block.settings.image | image_url: width: 1600 }}"
+            alt="{{ block.settings.image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.image.width }}"
+            height="{{ block.settings.image.height }}"
+            class="ai-science-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-science-image-placeholder-{{ ai_gen_id }}">
+            {{ 'product-1' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="ai-science-content-{{ ai_gen_id }}">
+      {% if block.settings.title != blank %}
+        <h2 class="ai-science-title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+      {% endif %}
+
+      {% if block.settings.subtitle != blank %}
+        <h3 class="ai-science-subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle }}</h3>
+      {% endif %}
+
+      {% if block.settings.text != blank %}
+        <div class="ai-science-text-{{ ai_gen_id }}">{{ block.settings.text }}</div>
+      {% endif %}
+
+      {% if block.settings.button_text != blank %}
+        <a href="{{ block.settings.button_link }}" class="ai-science-cta-{{ ai_gen_id }}">
+          {{ block.settings.button_text }}
+        </a>
+      {% endif %}
+    </div>
+
+    {% if block.settings.layout != 'image-background' %}
+      <div class="ai-science-image-wrapper-{{ ai_gen_id }}">
+        {% if block.settings.image %}
+          <img
+            src="{{ block.settings.image | image_url: width: 800 }}"
+            alt="{{ block.settings.image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.image.width }}"
+            height="{{ block.settings.image.height }}"
+            class="ai-science-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-science-image-placeholder-{{ ai_gen_id }}">
+            {{ 'product-1' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Ciência do produto",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Posição da imagem",
+      "options": [
+        {
+          "value": "image-left",
+          "label": "Esquerda"
+        },
+        {
+          "value": "image-right",
+          "label": "Direita"
+        },
+        {
+          "value": "image-background",
+          "label": "Fundo"
+        }
+      ],
+      "default": "image-right"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Cor de fundo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Conteúdo"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Título",
+      "default": "A Ciência do SHOTZ"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamanho do título",
+      "min": 20,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Cor do título",
+      "default": "#000000"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Proteína de alta qualidade em formato prático"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Tamanho do subtítulo",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Cor do subtítulo",
+      "default": "#666666"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "<p>Nossos shots de proteína são formulados com ingredientes de alta qualidade para fornecer nutrição rápida e eficaz. Cada shot contém proteína de absorção rápida, ideal para recuperação muscular e energia sustentada.</p>"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamanho do texto",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Cor do texto",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Imagem"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagem do produto"
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Raio da borda",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "background_image_opacity",
+      "label": "Opacidade da imagem de fundo",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.3,
+      "info": "Aplicado apenas quando a imagem está no fundo"
+    },
+    {
+      "type": "header",
+      "content": "Botão CTA"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto do botão",
+      "default": "Saiba mais"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link do botão"
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "label": "Tamanho do texto",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Cor de fundo",
+      "default": "#0a84ff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Cor do texto",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Cor da borda",
+      "default": "#0a84ff"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "label": "Largura da borda",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Raio da borda",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Cor de fundo ao passar o mouse",
+      "default": "#0070d2"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Cor do texto ao passar o mouse",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border_color",
+      "label": "Cor da borda ao passar o mouse",
+      "default": "#0070d2"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ciência do produto"
+    }
+  ]
+}
 {% endschema %}

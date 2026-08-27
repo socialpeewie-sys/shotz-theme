@@ -57,6 +57,7 @@
     display: block;
     width: 100%;
     padding: 64px 0;
+    background-color: {{ block.settings.background_color }};
   }
 
   .ai-hero-benefits-container-{{ ai_gen_id }} {
@@ -299,6 +300,12 @@
         }
       ],
       "default": "left"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Cor de fundo da seção",
+      "default": "#ffffff"
     },
     {
       "type": "header",

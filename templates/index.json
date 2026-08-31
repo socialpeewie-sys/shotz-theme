@@ -76,6 +76,14 @@
         "badge_color": "#efeae0"
       }
     },
+    "teste_claude_html": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div style=\"text-align:center; padding:24px 0; font-size:32px; font-weight:800; letter-spacing:1px;\">TESTE CLAUDE</div>",
+        "color_scheme": "scheme-1",
+        "section_width": "page-width"
+      }
+    },
     "stats_bar_np8Egw": {
       "type": "stats-bar",
       "blocks": {
@@ -377,6 +385,7 @@
   },
   "order": [
     "hero_banner_xf8AGM",
+    "teste_claude_html",
     "stats_bar_np8Egw",
     "blocks_rCKAQq",
     "variants_grid_dNm8hc",

@@ -1,7 +1,8 @@
 /* Shotz — Landing "A ciência"
- * Coluna única centralizada (620px), fundos creme/branco alternados e
- * imagens de produto transbordando (overflow) sobre os blocos.
- * Alto-fidelidade a partir de landing-shotz.html. */
+ * Landing de produto responsiva (mobile → desktop): seções full-bleed com
+ * fundos creme/branco alternados, conteúdo centralizado em largura de leitura
+ * e imagens de produto transbordando (overflow) sobre o card.
+ * Base visual: landing-shotz.html (tokens de cor/tipografia preservados). */
 
 .shotz-ciencia {
   --sci-page-bg: #e2d8c8;
@@ -14,6 +15,11 @@
   --sci-ink-label: #6b6357;
   --sci-ink-faint: #8a8279;
   --sci-radius: 16px;
+
+  /* Largura máxima do conteúdo textual (centralizado dentro do full-bleed) */
+  --sci-content: 640px;
+  /* Gutter lateral fluido das seções */
+  --sci-gutter: clamp(20px, 5vw, 48px);
 
   margin: 0;
   background: var(--sci-page-bg);
@@ -41,19 +47,15 @@
   max-width: 100%;
 }
 
-/* Layout / coluna */
+/* Container — full-bleed (as seções ocupam a largura toda) */
 
 .sci-page {
-  display: flex;
-  justify-content: center;
-  padding: 40px 16px;
+  width: 100%;
 }
 
 .sci-column {
   width: 100%;
-  max-width: 620px;
   background: var(--sci-white);
-  box-shadow: 0 24px 80px rgba(20, 30, 25, 0.18);
   overflow: hidden;
 }
 
@@ -62,7 +64,7 @@
 .sci-column p {
   margin: 16px auto 0;
   max-width: 400px;
-  font-size: 15px;
+  font-size: clamp(15px, 1.6vw, 16px);
   line-height: 1.6;
   color: var(--sci-ink-soft);
   text-wrap: pretty;
@@ -78,20 +80,20 @@
 }
 
 .sci-logo {
-  font-size: 30px;
+  font-size: clamp(26px, 3.4vw, 32px);
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--sci-ink);
 }
 
 .sci-logo sup {
-  font-size: 13px;
+  font-size: 0.42em;
   font-weight: 400;
 }
 
 .sci-logo img {
   display: inline-block;
-  height: 30px;
+  height: 1em;
   width: auto;
 }
 
@@ -124,7 +126,7 @@
 
 .sci-hero {
   background: var(--sci-cream);
-  padding: 44px 40px 0;
+  padding: clamp(40px, 6vw, 72px) var(--sci-gutter) 0;
   text-align: center;
 }
 
@@ -137,8 +139,9 @@
 }
 
 .sci-hero h1 {
-  margin: 16px 0 0;
-  font-size: 40px;
+  margin: 16px auto 0;
+  max-width: var(--sci-content);
+  font-size: clamp(30px, 5.4vw, 44px);
   line-height: 1.14;
   font-weight: 300;
   color: var(--sci-ink);
@@ -152,16 +155,23 @@
 /* 2. Bloco "O que nos diferencia" com imagem transbordando (full-bleed) */
 
 .sci-overflow-section {
+  /* --bleed reserva o espaço acima do card e é reaproveitado no top/height
+     da imagem, mantendo o overflow proporcional em qualquer largura. */
+  --bleed: clamp(190px, 40vw, 340px);
+  --bleed-over: clamp(120px, 16vw, 170px);
+  --bleed-side: clamp(16px, 4vw, 32px);
   background: var(--sci-white);
-  padding: 330px 32px 0;
+  padding: var(--bleed) var(--sci-gutter) 0;
   position: relative;
   z-index: 1;
 }
 
 .sci-overflow-card {
+  max-width: var(--sci-content);
+  margin: 0 auto;
   background: var(--sci-cream-card);
   border-radius: var(--sci-radius);
-  padding: 120px 36px 46px;
+  padding: clamp(84px, 14vw, 120px) clamp(24px, 5vw, 36px) 46px;
   text-align: center;
   position: relative;
   overflow: visible;
@@ -169,10 +179,10 @@
 
 .sci-bleed-img {
   position: absolute;
-  top: -330px;
-  left: -32px;
-  right: -32px;
-  height: 500px;
+  top: calc(-1 * var(--bleed));
+  left: calc(-1 * var(--bleed-side));
+  right: calc(-1 * var(--bleed-side));
+  height: calc(var(--bleed) + var(--bleed-over));
   z-index: 2;
   filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
 }
@@ -205,8 +215,9 @@
 }
 
 .sci-overflow-card h2 {
-  margin: 0;
-  font-size: 30px;
+  margin: 0 auto;
+  max-width: 460px;
+  font-size: clamp(26px, 4vw, 32px);
   line-height: 1.2;
   font-weight: 300;
   color: var(--sci-ink);
@@ -254,7 +265,7 @@
 .sci-full-image {
   position: relative;
   width: 100%;
-  height: 620px;
+  height: clamp(360px, 58vw, 640px);
   background: var(--sci-cream);
   filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
 }
@@ -289,13 +300,14 @@
 
 .sci-proof {
   background: var(--sci-white);
-  padding: 52px 40px 44px;
+  padding: clamp(44px, 6vw, 72px) var(--sci-gutter) 44px;
   text-align: center;
 }
 
 .sci-proof h2 {
-  margin: 0;
-  font-size: 32px;
+  margin: 0 auto;
+  max-width: var(--sci-content);
+  font-size: clamp(26px, 4.4vw, 34px);
   line-height: 1.18;
   font-weight: 300;
   color: var(--sci-ink);
@@ -315,7 +327,7 @@
 .sci-closing-image {
   position: relative;
   width: 100%;
-  height: 300px;
+  height: clamp(220px, 30vw, 340px);
   background: var(--sci-cream);
 }
 
@@ -330,7 +342,7 @@
 
 .sci-footer {
   background: var(--sci-cream);
-  padding: 40px;
+  padding: clamp(32px, 5vw, 48px) var(--sci-gutter);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -359,42 +371,4 @@
   font-size: 11px;
   color: var(--sci-ink-faint);
   letter-spacing: 0.04em;
-}
-
-/* Responsivo — o ponto de quebra mais sensível é o overflow da imagem */
-
-@media (max-width: 560px) {
-  .sci-hero h1 {
-    font-size: 32px;
-  }
-
-  .sci-proof h2,
-  .sci-overflow-card h2 {
-    font-size: 26px;
-  }
-
-  .sci-overflow-section {
-    padding: 230px 20px 0;
-  }
-
-  .sci-bleed-img {
-    top: -230px;
-    left: -20px;
-    right: -20px;
-    height: 360px;
-  }
-
-  .sci-overflow-card {
-    padding: 90px 24px 36px;
-  }
-
-  .sci-hero,
-  .sci-proof {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
-  .sci-full-image {
-    height: 420px;
-  }
 }

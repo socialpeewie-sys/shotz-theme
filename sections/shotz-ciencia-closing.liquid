@@ -1,0 +1,47 @@
+{% doc %}
+  Imagem de fechamento (foto lifestyle, corte cover). Pode ser ocultada pelo editor.
+{% enddoc %}
+
+{% if section.settings.enabled %}
+  <div class="sci-closing-image">
+    {% if section.settings.closing_image %}
+      {{
+        section.settings.closing_image
+        | image_url: width: 1400
+        | image_tag:
+          loading: 'lazy',
+          widths: '620, 900, 1240, 1400',
+          sizes: '(min-width: 620px) 620px, 100vw',
+          alt: 'Shotz — lifestyle'
+      }}
+    {% else %}
+      <div class="sci-full-placeholder" aria-hidden="true">
+        <span>Foto lifestyle (corte cover)</span>
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "A ciência — Fechamento",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Exibir imagem de fechamento",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "closing_image",
+      "label": "Foto lifestyle"
+    }
+  ],
+  "presets": [
+    {
+      "name": "A ciência — Fechamento"
+    }
+  ]
+}
+{% endschema %}

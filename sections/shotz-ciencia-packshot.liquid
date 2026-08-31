@@ -1,0 +1,59 @@
+{% doc %}
+  Pack shot full-bleed (sem texto). Pode ser ocultado pelo editor.
+{% enddoc %}
+
+{% if section.settings.enabled %}
+  <div class="sci-full-image">
+    {% if section.settings.pack_image %}
+      {%- assign fit_class = 'sci-fit-' | append: section.settings.image_fit -%}
+      {{
+        section.settings.pack_image
+        | image_url: width: 1400
+        | image_tag:
+          loading: 'lazy',
+          widths: '620, 900, 1240, 1400',
+          sizes: '(min-width: 620px) 620px, 100vw',
+          alt: 'Shotz — pack shot',
+          class: fit_class
+      }}
+    {% else %}
+      <div class="sci-full-placeholder" aria-hidden="true">
+        <span>Pack shot (foto do produto)</span>
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "A ciência — Pack shot",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Exibir pack shot",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "pack_image",
+      "label": "Imagem do pack shot"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Enquadramento",
+      "options": [
+        { "value": "cover", "label": "Preencher (cover)" },
+        { "value": "contain", "label": "Inteira (contain — para PNG transparente)" }
+      ],
+      "default": "cover"
+    }
+  ],
+  "presets": [
+    {
+      "name": "A ciência — Pack shot"
+    }
+  ]
+}
+{% endschema %}

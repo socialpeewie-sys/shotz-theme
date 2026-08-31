@@ -1,0 +1,400 @@
+/* Shotz — Landing "A ciência"
+ * Coluna única centralizada (620px), fundos creme/branco alternados e
+ * imagens de produto transbordando (overflow) sobre os blocos.
+ * Alto-fidelidade a partir de landing-shotz.html. */
+
+.shotz-ciencia {
+  --sci-page-bg: #e2d8c8;
+  --sci-cream: #ede4d6;
+  --sci-cream-card: #f5f0e8;
+  --sci-white: #ffffff;
+  --sci-ink: #0d0d0d;
+  --sci-ink-soft: #4c4a45;
+  --sci-ink-muted: #7a756c;
+  --sci-ink-label: #6b6357;
+  --sci-ink-faint: #8a8279;
+  --sci-radius: 16px;
+
+  margin: 0;
+  background: var(--sci-page-bg);
+  font-family: 'Outfit', Helvetica, sans-serif;
+  color: var(--sci-ink);
+  overflow-x: hidden;
+}
+
+.shotz-ciencia *,
+.shotz-ciencia *::before,
+.shotz-ciencia *::after {
+  box-sizing: border-box;
+}
+
+.shotz-ciencia a {
+  color: var(--sci-ink);
+  text-decoration: none;
+}
+
+.shotz-ciencia a:hover {
+  color: #4c554e;
+}
+
+.shotz-ciencia img {
+  max-width: 100%;
+}
+
+/* Layout / coluna */
+
+.sci-page {
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.sci-column {
+  width: 100%;
+  max-width: 620px;
+  background: var(--sci-white);
+  box-shadow: 0 24px 80px rgba(20, 30, 25, 0.18);
+  overflow: hidden;
+}
+
+/* Tipografia base */
+
+.sci-column p {
+  margin: 16px auto 0;
+  max-width: 400px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--sci-ink-soft);
+  text-wrap: pretty;
+}
+
+.sci-column p.sci-lead {
+  margin-top: 22px;
+}
+
+.sci-column p.sci-emphasis {
+  font-weight: 500;
+  color: var(--sci-ink);
+}
+
+.sci-logo {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--sci-ink);
+}
+
+.sci-logo sup {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.sci-logo img {
+  display: inline-block;
+  height: 30px;
+  width: auto;
+}
+
+/* Botão pill */
+
+.sci-btn-row {
+  display: flex;
+  justify-content: center;
+  padding: 30px 0 34px;
+}
+
+.shotz-ciencia .sci-btn {
+  display: inline-block;
+  background: var(--sci-ink);
+  color: var(--sci-white);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  padding: 15px 40px;
+  border-radius: 999px;
+  transition: background-color 0.2s ease;
+}
+
+.shotz-ciencia .sci-btn:hover {
+  background: #333;
+  color: var(--sci-white);
+}
+
+/* 1. Hero */
+
+.sci-hero {
+  background: var(--sci-cream);
+  padding: 44px 40px 0;
+  text-align: center;
+}
+
+.sci-eyebrow {
+  margin-top: 30px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--sci-ink-label);
+}
+
+.sci-hero h1 {
+  margin: 16px 0 0;
+  font-size: 40px;
+  line-height: 1.14;
+  font-weight: 300;
+  color: var(--sci-ink);
+  text-wrap: pretty;
+}
+
+.sci-hero h1 strong {
+  font-weight: 700;
+}
+
+/* 2. Bloco "O que nos diferencia" com imagem transbordando (full-bleed) */
+
+.sci-overflow-section {
+  background: var(--sci-white);
+  padding: 330px 32px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.sci-overflow-card {
+  background: var(--sci-cream-card);
+  border-radius: var(--sci-radius);
+  padding: 120px 36px 46px;
+  text-align: center;
+  position: relative;
+  overflow: visible;
+}
+
+.sci-bleed-img {
+  position: absolute;
+  top: -330px;
+  left: -32px;
+  right: -32px;
+  height: 500px;
+  z-index: 2;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
+}
+
+.sci-bleed-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.sci-bleed-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  font-size: 13px;
+  color: var(--sci-ink-muted);
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(13, 13, 13, 0.05),
+    rgba(13, 13, 13, 0.05) 10px,
+    rgba(13, 13, 13, 0.09) 10px,
+    rgba(13, 13, 13, 0.09) 20px
+  );
+  border-radius: var(--sci-radius);
+}
+
+.sci-overflow-card h2 {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 300;
+  color: var(--sci-ink);
+  text-wrap: pretty;
+}
+
+.sci-overflow-card h2 strong {
+  font-weight: 700;
+}
+
+.sci-kicker {
+  margin: 20px auto 0;
+  max-width: 400px;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--sci-ink);
+}
+
+.sci-bullets {
+  display: grid;
+  gap: 10px;
+  margin: 24px auto 0;
+  max-width: 340px;
+  padding: 0;
+  text-align: left;
+}
+
+.sci-bullets li {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--sci-ink);
+  list-style: none;
+}
+
+.sci-bullets li .sci-bolt {
+  flex: 0 0 auto;
+}
+
+/* 3. Pack shot full-bleed */
+
+.sci-full-image {
+  position: relative;
+  width: 100%;
+  height: 620px;
+  background: var(--sci-cream);
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
+}
+
+.sci-full-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.sci-full-image img.sci-fit-cover {
+  object-fit: cover;
+}
+
+.sci-full-image img.sci-fit-contain {
+  object-fit: contain;
+}
+
+.sci-full-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  font-size: 13px;
+  color: var(--sci-ink-muted);
+}
+
+/* 4. Prova / laudo */
+
+.sci-proof {
+  background: var(--sci-white);
+  padding: 52px 40px 44px;
+  text-align: center;
+}
+
+.sci-proof h2 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.18;
+  font-weight: 300;
+  color: var(--sci-ink);
+  text-wrap: pretty;
+}
+
+.sci-proof h2 strong {
+  font-weight: 700;
+}
+
+.sci-proof p.sci-fine {
+  color: var(--sci-ink-muted);
+}
+
+/* 5. Imagem de fechamento */
+
+.sci-closing-image {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: var(--sci-cream);
+}
+
+.sci-closing-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 6. Footer */
+
+.sci-footer {
+  background: var(--sci-cream);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+}
+
+.sci-footer .sci-logo {
+  font-size: 20px;
+}
+
+.sci-footer-nav {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.sci-footer-nav a:hover {
+  color: var(--sci-ink-label);
+}
+
+.sci-copyright {
+  font-size: 11px;
+  color: var(--sci-ink-faint);
+  letter-spacing: 0.04em;
+}
+
+/* Responsivo — o ponto de quebra mais sensível é o overflow da imagem */
+
+@media (max-width: 560px) {
+  .sci-hero h1 {
+    font-size: 32px;
+  }
+
+  .sci-proof h2,
+  .sci-overflow-card h2 {
+    font-size: 26px;
+  }
+
+  .sci-overflow-section {
+    padding: 230px 20px 0;
+  }
+
+  .sci-bleed-img {
+    top: -230px;
+    left: -20px;
+    right: -20px;
+    height: 360px;
+  }
+
+  .sci-overflow-card {
+    padding: 90px 24px 36px;
+  }
+
+  .sci-hero,
+  .sci-proof {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .sci-full-image {
+    height: 420px;
+  }
+}

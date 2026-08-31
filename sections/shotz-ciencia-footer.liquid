@@ -1,0 +1,67 @@
+{% doc %}
+  Footer da landing "A ciência": wordmark, navegação e copyright.
+{% enddoc %}
+
+<footer class="sci-footer">
+  <div class="sci-logo">SHOTZ</div>
+
+  <nav class="sci-footer-nav">
+    <a href="{{ section.settings.shop_link | default: '#laudo' }}">{{ section.settings.shop_label }}</a>
+    <a href="{{ section.settings.laudo_link | default: '#laudo' }}">{{ section.settings.laudo_label }}</a>
+    <a href="{{ section.settings.contact_link | default: '#laudo' }}">{{ section.settings.contact_label }}</a>
+  </nav>
+
+  <div class="sci-copyright">{{ section.settings.copyright }}</div>
+</footer>
+
+{% schema %}
+{
+  "name": "A ciência — Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "shop_label",
+      "label": "Link 1 — texto",
+      "default": "COMPRAR"
+    },
+    {
+      "type": "url",
+      "id": "shop_link",
+      "label": "Link 1 — destino"
+    },
+    {
+      "type": "text",
+      "id": "laudo_label",
+      "label": "Link 2 — texto",
+      "default": "O LAUDO"
+    },
+    {
+      "type": "url",
+      "id": "laudo_link",
+      "label": "Link 2 — destino"
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Link 3 — texto",
+      "default": "CONTATO"
+    },
+    {
+      "type": "url",
+      "id": "contact_link",
+      "label": "Link 3 — destino"
+    },
+    {
+      "type": "text",
+      "id": "copyright",
+      "label": "Copyright",
+      "default": "© 2026 Shotz. Todos os direitos reservados."
+    }
+  ],
+  "presets": [
+    {
+      "name": "A ciência — Footer"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,87 @@
+{% doc %}
+  Bloco "O que nos diferencia": card creme com a imagem do produto transbordando
+  (full-bleed) por cima, contraste colágeno puro vs. blend completo e lista de
+  benefícios. O padding-top da section reserva o espaço da imagem.
+{% enddoc %}
+
+<section class="sci-overflow-section">
+  <div class="sci-overflow-card">
+    <div class="sci-bleed-img">
+      {% if section.settings.product_image %}
+        {{
+          section.settings.product_image
+          | image_url: width: 1200
+          | image_tag:
+            loading: 'lazy',
+            widths: '620, 900, 1200',
+            sizes: '(min-width: 620px) 620px, 100vw',
+            alt: 'Shotz — produto'
+        }}
+      {% else %}
+        <div class="sci-bleed-placeholder" aria-hidden="true">
+          <span>PNG do produto (fundo transparente)</span>
+        </div>
+      {% endif %}
+    </div>
+
+    <h2>O que nos <strong>diferencia</strong><br>dos demais?</h2>
+
+    <p class="sci-lead">
+      Você já tomou colágeno achando que estava tomando proteína. O colágeno sozinho não tem todas as 9 peças essenciais.
+    </p>
+    <p>É como uma receita de bolo faltando o fermento. Todos os outros ingredientes estão lá. O bolo só não cresce.</p>
+    <p>
+      Foi aí que fizemos diferente. Pegamos o colágeno, com todos os benefícios que ele já tem, e completamos o que faltava: um blend com os 9 aminoácidos essenciais.
+    </p>
+
+    <p class="sci-kicker">O resultado: uma categoria nova.</p>
+
+    <ul class="sci-bullets">
+      <li><span class="sci-bolt" aria-hidden="true">⚡</span><span>Proteína completa</span></li>
+      <li><span class="sci-bolt" aria-hidden="true">⚡</span><span>Benefícios do colágeno</span></li>
+      <li>
+        <span class="sci-bolt" aria-hidden="true">⚡</span>
+        <span>{{ section.settings.protein_grams }}g de proteína em {{ section.settings.protein_volume }}</span>
+      </li>
+      <li><span class="sci-bolt" aria-hidden="true">⚡</span><span>Só {{ section.settings.kcal }}kcal</span></li>
+      <li><span class="sci-bolt" aria-hidden="true">⚡</span><span>Pronto pra tomar em 3 segundos</span></li>
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "A ciência — Diferencial",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Imagem do produto (PNG transparente)",
+      "info": "Transborda por cima do card. A sombra é gerada por CSS."
+    },
+    {
+      "type": "text",
+      "id": "protein_grams",
+      "label": "Gramas de proteína",
+      "default": "12"
+    },
+    {
+      "type": "text",
+      "id": "protein_volume",
+      "label": "Volume",
+      "default": "100ml"
+    },
+    {
+      "type": "text",
+      "id": "kcal",
+      "label": "Calorias (kcal)",
+      "default": "60"
+    }
+  ],
+  "presets": [
+    {
+      "name": "A ciência — Diferencial"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,73 @@
+{% doc %}
+  Hero da landing "A ciência": tese "seu corpo usa aminoácidos, não proteína".
+{% enddoc %}
+
+<section class="sci-hero">
+  {% if section.settings.logo_image %}
+    <div class="sci-logo">
+      {{ section.settings.logo_image | image_url: width: 400 | image_tag: loading: 'eager', alt: 'SHOTZ' }}
+    </div>
+  {% else %}
+    <div class="sci-logo">SHOTZ<sup>®</sup></div>
+  {% endif %}
+
+  <div class="sci-eyebrow">{{ section.settings.eyebrow }}</div>
+
+  <h1>{{ section.settings.headline }}</h1>
+
+  <p class="sci-lead">
+    Toda proteína que você toma é desmontada em peças. São essas peças que viram músculo, pele, cabelo e unha.
+  </p>
+  <p class="sci-emphasis">São 9 peças essenciais. Seu corpo não fabrica nenhuma delas.</p>
+  <p>Então a pergunta não é quantos gramas tem. É quais peças vêm dentro.</p>
+
+  <div class="sci-btn-row">
+    <a class="sci-btn" href="{{ section.settings.cta_link | default: '#laudo' }}">
+      {{ section.settings.cta_label }}
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "A ciência — Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo (PNG)",
+      "info": "Se definido, substitui o texto \"SHOTZ®\"."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "NÃO É MILAGRE. É CIÊNCIA."
+    },
+    {
+      "type": "html",
+      "id": "headline",
+      "label": "Título (H1)",
+      "info": "Use <strong> para destaque e <br> para quebra de linha.",
+      "default": "Seu corpo não usa proteína.<br>Ele usa <strong>aminoácidos</strong>."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto do botão",
+      "default": "QUERO SHOTZ"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Link do botão",
+      "info": "Checkout ou página do produto."
+    }
+  ],
+  "presets": [
+    {
+      "name": "A ciência — Hero"
+    }
+  ]
+}
+{% endschema %}

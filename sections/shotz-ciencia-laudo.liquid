@@ -1,0 +1,51 @@
+{% doc %}
+  Prova / laudo: "A gente não pede confiança. A gente mostra o laudo."
+{% enddoc %}
+
+<section class="sci-proof" id="laudo">
+  <h2>{{ section.settings.headline }}</h2>
+
+  <p class="sci-lead">Escrever "proteína completa" no rótulo é fácil. Provar é que é difícil.</p>
+  <p>Nosso perfil de aminoácidos foi medido em laboratório, não estimado na planilha.</p>
+  <p class="sci-fine">
+    E o que a ciência não promete, a gente também não promete: proteína não substitui treino nem sono. Ela só fecha a conta quando o resto já está de pé.
+  </p>
+
+  <div class="sci-btn-row">
+    <a class="sci-btn" href="{{ section.settings.laudo_link | default: '#laudo' }}">
+      {{ section.settings.cta_label }}
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "A ciência — Laudo",
+  "settings": [
+    {
+      "type": "html",
+      "id": "headline",
+      "label": "Título (H2)",
+      "info": "Use <strong> para destaque e <br> para quebra de linha.",
+      "default": "A gente não pede confiança.<br>A gente mostra o <strong>laudo</strong>."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Texto do botão",
+      "default": "VER O LAUDO →"
+    },
+    {
+      "type": "url",
+      "id": "laudo_link",
+      "label": "Link do laudo",
+      "info": "PDF ou página do laudo laboratorial."
+    }
+  ],
+  "presets": [
+    {
+      "name": "A ciência — Laudo"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,44 @@
+{% comment %}
+  Template "A ciência" — landing de produto Shotz (coluna única, overflow de imagem).
+  Standalone (layout none), no mesmo padrão da landing de pré-lançamento.
+  Atribua este template a uma página no admin: Páginas > (sua página) > Template = "a-ciencia".
+{% endcomment %}
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    {%- render 'meta-tags' -%}
+
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="icon"
+        type="image/png"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+      >
+    {%- endif -%}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    >
+
+    {{ 'shotz-ciencia.css' | asset_url | stylesheet_tag }}
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="shotz-ciencia">
+    <div class="sci-page">
+      <div class="sci-column">
+        {% section 'shotz-ciencia-hero' %}
+        {% section 'shotz-ciencia-diferencial' %}
+        {% section 'shotz-ciencia-packshot' %}
+        {% section 'shotz-ciencia-laudo' %}
+        {% section 'shotz-ciencia-closing' %}
+        {% section 'shotz-ciencia-footer' %}
+      </div>
+    </div>
+  </body>
+</html>

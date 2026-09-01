@@ -167,8 +167,15 @@
       display: none;
     }
 
+    /* Força o conteúdo aberto no desktop, vencendo o esconde-esconde nativo
+       do <details> fechado (display:none legado + content-visibility moderno). */
     #shopify-section-{{ section.id }} .shotz-problem-grid__card-body {
       display: block !important;
+    }
+
+    #shopify-section-{{ section.id }} .shotz-problem-grid__card::details-content {
+      content-visibility: visible !important;
+      block-size: auto !important;
     }
   }
 

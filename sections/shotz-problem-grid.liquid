@@ -52,9 +52,7 @@
   }
 
   #shopify-section-{{ section.id }} .shotz-problem-grid__card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    display: block;
     box-sizing: border-box;
     background-color: {{ section.settings.card_background }};
     border-radius: 20px;
@@ -65,7 +63,35 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    margin-bottom: 14px;
+    cursor: pointer;
+    list-style: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__card-head::-webkit-details-marker {
+    display: none;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__card-chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    margin-left: auto;
+    width: 20px;
+    height: 20px;
+    color: #ffffff;
+    transition: transform 0.25s ease;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__card-chevron svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__card[open] .shotz-problem-grid__card-chevron {
+    transform: rotate(180deg);
   }
 
   #shopify-section-{{ section.id }} .shotz-problem-grid__icon {
@@ -100,7 +126,7 @@
   }
 
   #shopify-section-{{ section.id }} .shotz-problem-grid__card-body {
-    margin: 0;
+    margin: 14px 0 0;
     color: {{ section.settings.card_text_color }};
     font-size: 15px;
     line-height: 1.6;
@@ -114,9 +140,35 @@
     margin-bottom: 0;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    #shopify-section-{{ section.id }} .shotz-problem-grid__card-chevron {
+      transition: none;
+    }
+  }
+
   @media screen and (min-width: 750px) {
     #shopify-section-{{ section.id }} .shotz-problem-grid__grid {
       grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Desktop: cards ficam sempre abertos, sem comportamento de dropdown */
+    #shopify-section-{{ section.id }} .shotz-problem-grid__card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    #shopify-section-{{ section.id }} .shotz-problem-grid__card-head {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    #shopify-section-{{ section.id }} .shotz-problem-grid__card-chevron {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .shotz-problem-grid__card-body {
+      display: block !important;
     }
   }
 
@@ -144,8 +196,8 @@
       <div class="shotz-problem-grid__grid">
         {%- for block in section.blocks -%}
           {%- if block.type == 'card' -%}
-            <div class="shotz-problem-grid__card" {{ block.shopify_attributes }}>
-              <div class="shotz-problem-grid__card-head">
+            <details class="shotz-problem-grid__card" {{ block.shopify_attributes }}>
+              <summary class="shotz-problem-grid__card-head">
                 {%- if block.settings.custom_icon != blank -%}
                   <span class="shotz-problem-grid__icon">
                     <img
@@ -207,12 +259,27 @@
                 {%- if block.settings.title != blank -%}
                   <p class="shotz-problem-grid__card-title">{{ block.settings.title }}</p>
                 {%- endif -%}
-              </div>
+
+                <span class="shotz-problem-grid__card-chevron" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    role="presentation"
+                    focusable="false"
+                  >
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </summary>
 
               {%- if block.settings.body != blank -%}
                 <div class="shotz-problem-grid__card-body">{{ block.settings.body }}</div>
               {%- endif -%}
-            </div>
+            </details>
           {%- endif -%}
         {%- endfor -%}
       </div>

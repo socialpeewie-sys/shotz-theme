@@ -1,0 +1,425 @@
+{% comment %}
+  Shotz — Grade de Problemas
+  Grade de "problemas" que apresenta os perfis de cliente que têm
+  dificuldade de encaixar proteína no dia.
+  Todo o CSS está escopado sob #shopify-section-{{ section.id }} — nada vaza.
+{% endcomment %}
+
+{%- liquid
+  assign heading_tag = section.settings.heading_tag | default: 'h2'
+  assign columns_desktop = section.settings.columns_desktop | default: 3
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} .shotz-problem-grid {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__heading {
+    margin: 0 0 40px;
+    text-align: center;
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__heading-1 {
+    color: {{ section.settings.heading_color }};
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__heading-2 {
+    color: {{ section.settings.accent_color }};
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: {{ section.settings.card_background }};
+    border-radius: 20px;
+    padding: 32px;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__card-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    color: {{ section.settings.accent_color }};
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__icon svg {
+    display: block;
+    width: 28px;
+    height: 28px;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__icon-img {
+    display: block;
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__card-title {
+    margin: 0;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__card-body {
+    margin: 0;
+    color: {{ section.settings.card_text_color }};
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__card-body p {
+    margin: 0 0 0.75em;
+  }
+
+  #shopify-section-{{ section.id }} .shotz-problem-grid__card-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .shotz-problem-grid__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .shotz-problem-grid__grid {
+      grid-template-columns: repeat({{ columns_desktop }}, 1fr);
+    }
+  }
+{% endstyle %}
+
+<div class="shotz-problem-grid" {{ section.shopify_attributes }}>
+  <div class="shotz-problem-grid__inner">
+    {%- if section.settings.heading_part_1 != blank or section.settings.heading_part_2 != blank -%}
+      <{{ heading_tag }} class="shotz-problem-grid__heading">
+        {%- if section.settings.heading_part_1 != blank -%}
+          <span class="shotz-problem-grid__heading-1">{{ section.settings.heading_part_1 }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading_part_2 != blank -%}
+          <span class="shotz-problem-grid__heading-2">{{ section.settings.heading_part_2 }}</span>
+        {%- endif -%}
+      </{{ heading_tag }}>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="shotz-problem-grid__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'card' -%}
+            <div class="shotz-problem-grid__card" {{ block.shopify_attributes }}>
+              <div class="shotz-problem-grid__card-head">
+                {%- if block.settings.custom_icon != blank -%}
+                  <span class="shotz-problem-grid__icon">
+                    <img
+                      class="shotz-problem-grid__icon-img"
+                      src="{{ block.settings.custom_icon | image_url: width: 56 }}"
+                      alt=""
+                      width="28"
+                      height="28"
+                      loading="lazy"
+                    >
+                  </span>
+                {%- else -%}
+                  <span class="shotz-problem-grid__icon" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      role="presentation"
+                      focusable="false"
+                    >
+                      {%- case block.settings.icon -%}
+                        {%- when 'relogio' -%}
+                          <circle cx="12" cy="12" r="9"></circle>
+                          <path d="M12 7v5l3.5 2"></path>
+                        {%- when 'corredor' -%}
+                          <circle cx="14" cy="5" r="2"></circle>
+                          <path d="M14 8c-1.2 1-3.3 1.8-4.3 3.1-.9 1.2.2 2.9 1.3 3.9L9 20"></path>
+                          <path d="M11 11.1l3.8 1 1.1 3.1 3.1 1.6"></path>
+                          <path d="M5.5 11.5l4-1"></path>
+                        {%- when 'cruz-medica' -%}
+                          <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+                          <path d="M12 8.5v7M8.5 12h7"></path>
+                        {%- when 'intestino' -%}
+                          <path d="M8 4v3.2A2.6 2.6 0 0 0 10.6 9.8h2.8A2.6 2.6 0 0 1 16 12.4a2.6 2.6 0 0 1-2.6 2.6h-2.8A2.6 2.6 0 0 0 8 17.6V20"></path>
+                          <path d="M8 4h-1.5M16 12.4h1.5"></path>
+                        {%- when 'prato' -%}
+                          <path d="M4 17.5h16"></path>
+                          <path d="M5.5 17.5a6.5 6.5 0 0 1 13 0"></path>
+                          <path d="M12 7.8v3.2"></path>
+                          <circle cx="12" cy="6.6" r="0.6"></circle>
+                        {%- when 'estomago' -%}
+                          <path d="M8.5 4v3.3c0 1.9 1.3 3 3.2 3.4 2.4.5 4.3 2.3 4.3 4.8a4.2 4.2 0 0 1-8-1.4"></path>
+                          <path d="M8.5 5.2H6.7"></path>
+                        {%- when 'raio' -%}
+                          <path d="M13 3 5 13h5.5L9.5 21 19 10h-5.5z"></path>
+                        {%- when 'folha' -%}
+                          <path d="M5 19c0-7 5-13.5 14-14 1 9.5-5 15.5-14 14z"></path>
+                          <path d="M5 19c4-4.5 7.5-6.5 11.5-7.5"></path>
+                        {%- else -%}
+                          <circle cx="12" cy="12" r="9"></circle>
+                      {%- endcase -%}
+                    </svg>
+                  </span>
+                {%- endif -%}
+
+                {%- if block.settings.title != blank -%}
+                  <p class="shotz-problem-grid__card-title">{{ block.settings.title }}</p>
+                {%- endif -%}
+              </div>
+
+              {%- if block.settings.body != blank -%}
+                <div class="shotz-problem-grid__card-body">{{ block.settings.body }}</div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Grade de Problemas",
+  "tag": "section",
+  "class": "section-shotz-problem-grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Título"
+    },
+    {
+      "type": "text",
+      "id": "heading_part_1",
+      "label": "Título — parte 1",
+      "default": "Proteína no dia a dia"
+    },
+    {
+      "type": "text",
+      "id": "heading_part_2",
+      "label": "Título — parte 2 (destaque)",
+      "default": "nem sempre é simples."
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Tag do título (SEO)",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "header",
+      "content": "Cores"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Cor de destaque",
+      "default": "#4A90B8"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Cor do título (parte 1)",
+      "default": "#0D0D0D"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Cor de fundo da seção",
+      "default": "#F5F1E8"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Cor de fundo do card",
+      "default": "#16202E"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Cor do texto do card",
+      "default": "#D8DDE4"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Colunas (desktop)",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícone",
+          "options": [
+            { "value": "relogio", "label": "Relógio" },
+            { "value": "corredor", "label": "Corredor" },
+            { "value": "cruz-medica", "label": "Cruz médica" },
+            { "value": "intestino", "label": "Intestino" },
+            { "value": "prato", "label": "Prato" },
+            { "value": "estomago", "label": "Estômago" },
+            { "value": "raio", "label": "Raio" },
+            { "value": "folha", "label": "Folha" }
+          ],
+          "default": "relogio"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Ícone personalizado",
+          "info": "Sobrescreve o ícone selecionado acima quando preenchido."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Texto"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Grade de Problemas",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "icon": "relogio",
+            "title": "Vidas agitadas",
+            "body": "<p>Reuniões consecutivas não deixam tempo para preparar refeição. O Shotz leva três segundos na sua mesa, entre uma chamada e outra.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "corredor",
+            "title": "Treino",
+            "body": "<p>Para otimizar o treino, proteína é essencial. Mas uma refeição pesada é a última coisa que você quer antes ou depois da sessão.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "cruz-medica",
+            "title": "Recuperação",
+            "body": "<p>Doenças, cirurgias e lesões aumentam sua necessidade de proteína exatamente quando comer fica mais difícil — o apetite cai justo quando o corpo precisa de mais.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "prato",
+            "title": "Dieta",
+            "body": "<p>A maioria das fontes de proteína vem acompanhada das calorias que você está tentando cortar. Com 73 calorias, o Shotz cabe em praticamente qualquer restrição calórica.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "estomago",
+            "title": "Estômagos sensíveis",
+            "body": "<p>Shakes, barras e laticínios deixam muita gente com sensação de inchaço. O Shotz é leve, líquido e não tem textura farinhenta.</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "icon": "raio",
+            "title": "Fora de casa",
+            "body": "<p>Viagem, aeroporto, carro. Não precisa de geladeira, coqueteleira nem água — cabe no bolso e resolve.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

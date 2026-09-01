@@ -556,6 +556,81 @@
       "name": "Texto e imagem divididos",
       "settings": {}
     },
+    "shotz_problem_grid_mFgaUC": {
+      "type": "shotz-problem-grid",
+      "blocks": {
+        "card_AmhCaF": {
+          "type": "card",
+          "settings": {
+            "icon": "relogio",
+            "title": "Vidas agitadas",
+            "body": "<p>Reuniões consecutivas não deixam tempo para preparar refeição. O Shotz leva três segundos na sua mesa, entre uma chamada e outra.</p>"
+          }
+        },
+        "card_YLgrbX": {
+          "type": "card",
+          "settings": {
+            "icon": "corredor",
+            "title": "Treino",
+            "body": "<p>Para otimizar o treino, proteína é essencial. Mas uma refeição pesada é a última coisa que você quer antes ou depois da sessão.</p>"
+          }
+        },
+        "card_aiq9jd": {
+          "type": "card",
+          "settings": {
+            "icon": "cruz-medica",
+            "title": "GLP-1",
+            "body": "<p>Doenças, cirurgias e lesões aumentam sua necessidade de proteína exatamente quando comer fica mais difícil — o apetite cai justo quando o corpo precisa de mais.</p>"
+          }
+        },
+        "card_fpKLf3": {
+          "type": "card",
+          "settings": {
+            "icon": "prato",
+            "title": "Dieta",
+            "body": "<p>A maioria das fontes de proteína vem acompanhada das calorias que você está tentando cortar. Com 73 calorias, o Shotz cabe em praticamente qualquer restrição calórica.</p>"
+          }
+        },
+        "card_bg3E8y": {
+          "type": "card",
+          "settings": {
+            "icon": "estomago",
+            "title": "Estômagos sensíveis",
+            "body": "<p>Shakes, barras e laticínios deixam muita gente com sensação de inchaço. O Shotz é leve, líquido e não tem textura farinhenta.</p>"
+          }
+        },
+        "card_6xLbxD": {
+          "type": "card",
+          "settings": {
+            "icon": "raio",
+            "title": "Fora de casa",
+            "body": "<p>Viagem, aeroporto, carro. Não precisa de geladeira, coqueteleira nem água — cabe no bolso e resolve.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_AmhCaF",
+        "card_YLgrbX",
+        "card_aiq9jd",
+        "card_fpKLf3",
+        "card_bg3E8y",
+        "card_6xLbxD"
+      ],
+      "name": "Grade de Problemas",
+      "settings": {
+        "heading_part_1": "Proteína no dia a dia",
+        "heading_part_2": "nem sempre é simples.",
+        "heading_tag": "h2",
+        "accent_color": "#4A90B8",
+        "heading_color": "#0D0D0D",
+        "background_color": "#F5F1E8",
+        "card_background": "#16202E",
+        "card_text_color": "#D8DDE4",
+        "columns_desktop": 3,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
     "proteina_stats_KecjAk": {
       "type": "proteina-stats",
       "blocks": {
@@ -595,7 +670,7 @@
         "image_position": "right",
         "heading": "PROTEÍNA SEM A PARTE CHATA",
         "paragraph": "<p><strong>Um shake em pó exige medidor, shaker, água e 3 minutos. A Shotz exige um gesto: abrir. Mesma proteína completa, um décimo do esforço.</strong></p>",
-        "background_color": "#FFFFFF",
+        "background_color": "#ffffff",
         "heading_color": "#000000",
         "paragraph_color": "#696565",
         "accent_color": "#119be5",
@@ -1238,6 +1313,7 @@
   "order": [
     "main",
     "blocks_tBwT3X",
+    "shotz_problem_grid_mFgaUC",
     "proteina_stats_KecjAk",
     "1787751400146840dd",
     "media_with_content_HpEXVz",

@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "main": {
       "type": "main-page",
@@ -47,6 +48,7 @@
         "heading",
         "page-content"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -54,9 +56,128 @@
         "padding-block-start": 40,
         "padding-block-end": 80
       }
+    },
+    "hero_banner_cdxzHA": {
+      "type": "hero-banner",
+      "name": "Hero Banner",
+      "settings": {
+        "image": "shopify://shop_images/teste_pure_genius.webp",
+        "eyebrow": "",
+        "eyebrow_color": "#0094F6",
+        "title_line_1": "Não é milagre",
+        "title_line_2": "É ciência",
+        "title_line_3": "",
+        "title_color": "#FAF7EF",
+        "title_accent_color": "#0094F6",
+        "paragraph": "Toda proteína que você toma é desmontada em peças. São essas peças que viram músculo, pele, cabelo e unha.",
+        "paragraph_color": "#EFEAE0",
+        "badge_color": "#EFEAE0"
+      }
+    },
+    "proteina_stats_qCdtJk": {
+      "type": "proteina-stats",
+      "blocks": {
+        "stat_Kdm7Pt": {
+          "type": "stat",
+          "settings": {
+            "number": "18g",
+            "title": "Whey isolado",
+            "description": "Perfil completo de aminoácidos essenciais, incluindo 2,7g de leucina."
+          }
+        },
+        "stat_gBmMde": {
+          "type": "stat",
+          "settings": {
+            "number": "100ml",
+            "title": "Um gole, não uma refeição",
+            "description": "Cabe no bolso da calça, na bolsa de treino e na mala de mão."
+          }
+        },
+        "stat_jkUjhr": {
+          "type": "stat",
+          "settings": {
+            "number": "0x4",
+            "title": "Os 4 Z's",
+            "description": "Zero açúcar, zero carboidrato, zero gordura, zero lactose."
+          }
+        },
+        "stat_Lbe8dh": {
+          "type": "stat",
+          "settings": {
+            "number": "5s",
+            "title": "Do bolso ao gole",
+            "description": "Sem shaker, sem pó, sem louça. Sabor de suco gelado."
+          }
+        }
+      },
+      "block_order": [
+        "stat_Kdm7Pt",
+        "stat_gBmMde",
+        "stat_jkUjhr",
+        "stat_Lbe8dh"
+      ],
+      "name": "Proteína Stats",
+      "settings": {
+        "image": "shopify://shop_images/af22152a7bfeedd9ce4d0cdab856ad3d.jpg",
+        "image_position": "right",
+        "heading": "PROTEÍNA SEM A PARTE CHATA",
+        "paragraph": "<p>Um shake em pó exige medidor, shaker, água e 3 minutos. A Shotz exige um gesto: abrir. Mesma proteína completa, um décimo do esforço.</p>",
+        "background_color": "#F8F3EC",
+        "heading_color": "#000000",
+        "paragraph_color": "#A3A3A3",
+        "accent_color": "#EC0F6E",
+        "stat_title_color": "#FFFFFF",
+        "stat_description_color": "#8A8A8A",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "blocks_hcegWK": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_6715145_Kfeb7E": {
+          "type": "ai_gen_block_6715145",
+          "settings": {
+            "layout": "image-right",
+            "background_color": "#ffffff",
+            "title": "A Ciência do SHOTZ",
+            "title_size": 48,
+            "title_color": "#000000",
+            "subtitle": "Proteína de alta qualidade em formato prático",
+            "subtitle_size": 24,
+            "subtitle_color": "#666666",
+            "text": "<p>Nossos shots de proteína são formulados com ingredientes de alta qualidade para fornecer nutrição rápida e eficaz. Cada shot contém proteína de absorção rápida, ideal para recuperação muscular e energia sustentada.</p>",
+            "text_size": 16,
+            "text_color": "#333333",
+            "image": "shopify://shop_images/teste1231_1.png",
+            "image_border_radius": 12,
+            "background_image_opacity": 0.3,
+            "button_text": "Saiba mais",
+            "button_link": "",
+            "button_text_size": 16,
+            "button_background": "#0a84ff",
+            "button_text_color": "#ffffff",
+            "button_border_color": "#0a84ff",
+            "button_border_width": 0,
+            "button_border_radius": 14,
+            "button_hover_background": "#0070d2",
+            "button_hover_text_color": "#ffffff",
+            "button_hover_border_color": "#0070d2"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_6715145_Kfeb7E"
+      ],
+      "name": "Ciência do produto",
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "hero_banner_cdxzHA",
+    "blocks_hcegWK",
+    "proteina_stats_qCdtJk"
   ]
 }

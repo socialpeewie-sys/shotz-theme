@@ -513,36 +513,47 @@
         "padding-block-end": 0
       }
     },
-    "blocks_kwinyp": {
+    "blocks_tBwT3X": {
       "type": "_blocks",
       "blocks": {
-        "ai_gen_block_0453d40_EbeFyE": {
-          "type": "ai_gen_block_0453d40",
+        "ai_gen_block_4ab66b1_BwTbRC": {
+          "type": "ai_gen_block_4ab66b1",
           "settings": {
-            "image_position": "left",
-            "background_color": "#ffffff",
-            "product_image": "shopify://shop_images/teste_pure_genius.webp",
-            "image_background_color": "#fbf8f4",
-            "image_border_radius": 85,
-            "headline": "O jeito mais simples e fácil de tomar sua proteína",
-            "subtitle": "SHOTZ foi criado para tornar a proteína acessível à todos.\n\nAtingir a meta de proteína não deve ser difícil, porém, muita das vezes, as opções de proteína não se encaixam na sua rotina.",
-            "benefit_1": "",
-            "benefit_2": "",
-            "benefit_3": "",
-            "benefit_4": "",
-            "checkmark_color": "#f1e9de",
-            "button_text": "A ciência por trás",
-            "button_link": "https://meushotz.com.br/pages/a-ciencia-por-tras-da-shotz",
-            "button_bg_color": "#000000",
-            "button_text_color": "#ffffff"
+            "layout": "image_left",
+            "desktop_width_percent": 100,
+            "gap": 15,
+            "padding_vertical": 60,
+            "padding_horizontal": 0,
+            "image": "shopify://shop_images/teste_pure_genius.webp",
+            "image_border_radius": 8,
+            "text_block_gap": 30,
+            "title_size": 38,
+            "text_size": 18,
+            "title_color": "#000000",
+            "text_color": "#666666",
+            "text_block_1_enabled": true,
+            "text_block_1_title": "UM JEITO MAIS SIMPLES E FÁCIL DE TOMAR SUA PROTEÍNA",
+            "text_block_1_text": "<p>SHOTZ foi criado para tornar a proteína acessível à todos.<br/>Atingir a meta de proteína não deve ser difícil, porém, muita das vezes, o formato da proteína não se encaixa muito bem na sua rotina.<br/><br/>SHOTZ foi criado para vidas agitadas, at</p>",
+            "text_block_2_enabled": false,
+            "text_block_2_title": "Título do bloco 2",
+            "text_block_2_text": "<p>Adicione o texto do segundo bloco aqui. Continue descrevendo mais detalhes ou informações importantes.</p>",
+            "text_block_3_enabled": false,
+            "text_block_3_title": "Título do bloco 3",
+            "text_block_3_text": "<p>Adicione o texto do terceiro bloco aqui.</p>",
+            "text_block_4_enabled": false,
+            "text_block_4_title": "",
+            "text_block_4_text": "",
+            "text_block_5_enabled": false,
+            "text_block_5_title": "",
+            "text_block_5_text": ""
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "ai_gen_block_0453d40_EbeFyE"
+        "ai_gen_block_4ab66b1_BwTbRC"
       ],
-      "name": "Hero com benefícios",
+      "name": "Texto e imagem divididos",
       "settings": {}
     },
     "proteina_stats_KecjAk": {
@@ -561,31 +572,22 @@
           "settings": {
             "number": "100ml. Dois goles. 5 segundos",
             "title": "Um gole, não uma refeição",
-            "description": "Cabe no bolso da calça, na bolsa de treino e na mala de mão."
+            "description": "Proteína que te deixa pesado, lento ou inchado é proteína que você vai pular na segunda semana. A nossa precisava ser leve o suficiente para ser consumida entre reuniões, antes do treino ou em jejum."
           }
         },
         "stat_BTiEFK": {
           "type": "stat",
           "settings": {
-            "number": "Tecnologia 4 Zs",
-            "title": "Os 4 Z's",
-            "description": "Zero açúcar, zero carboidrato, zero gordura, zero lactose."
-          }
-        },
-        "stat_WjFnx3": {
-          "type": "stat",
-          "settings": {
-            "number": "5s",
-            "title": "Do bolso ao gole",
-            "description": "Sem shaker, sem pó, sem louça. Sabor de suco gelado."
+            "number": "Fácil e saboroso",
+            "title": "",
+            "description": "Sem coqueteleira, sem liquidificador, sem preparo, sem limpeza e sem giz. Tinha que ser gostoso o suficiente para você querer tomar nos dias em que não estiver com vontade."
           }
         }
       },
       "block_order": [
         "stat_CAVTHV",
         "stat_WEaiLW",
-        "stat_BTiEFK",
-        "stat_WjFnx3"
+        "stat_BTiEFK"
       ],
       "name": "Proteína Stats",
       "settings": {
@@ -593,7 +595,7 @@
         "image_position": "right",
         "heading": "PROTEÍNA SEM A PARTE CHATA",
         "paragraph": "<p><strong>Um shake em pó exige medidor, shaker, água e 3 minutos. A Shotz exige um gesto: abrir. Mesma proteína completa, um décimo do esforço.</strong></p>",
-        "background_color": "#fbf8f4",
+        "background_color": "#FFFFFF",
         "heading_color": "#000000",
         "paragraph_color": "#696565",
         "accent_color": "#119be5",
@@ -605,550 +607,7 @@
     },
     "1787751400146840dd": {
       "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_f3d7375_W4qJB8": {
-          "type": "ai_gen_block_f3d7375",
-          "name": "Comparativo Shotz",
-          "settings": {
-            "title": "Shotz vs. whey tradicional vs. suco de colágeno",
-            "title_size": 36,
-            "title_color": "#000000",
-            "shotz_name": "Shotz",
-            "whey_name": "Whey tradicional",
-            "collagen_name": "Suco / refri de colágeno",
-            "attr_1_name": "18g de proteína real",
-            "attr_1_shotz": true,
-            "attr_1_whey": true,
-            "attr_1_collagen": false,
-            "attr_2_name": "Colágeno completo",
-            "attr_2_shotz": true,
-            "attr_2_whey": false,
-            "attr_2_collagen": false,
-            "attr_3_name": "Zero açúcar",
-            "attr_3_shotz": true,
-            "attr_3_whey": true,
-            "attr_3_collagen": false,
-            "attr_4_name": "Textura leve, pronta pra beber",
-            "attr_4_shotz": true,
-            "attr_4_whey": false,
-            "attr_4_collagen": true,
-            "attr_5_name": "Gosto de suco, sem sabor artificial",
-            "attr_5_shotz": true,
-            "attr_5_whey": false,
-            "attr_5_collagen": true,
-            "attr_6_name": "Sem lactose, não estufa",
-            "attr_6_shotz": true,
-            "attr_6_whey": false,
-            "attr_6_collagen": true,
-            "shotz_column_bg_color": "#cbff00",
-            "shotz_column_text_color": "#000000",
-            "check_icon_color": "#cbff00",
-            "check_icon_stroke": "#000000",
-            "cross_icon_color": "#ff6b5a",
-            "cross_icon_stroke": "#ffffff",
-            "background_image_opacity": 20,
-            "table_background_color": "#0d0d0d",
-            "table_text_color": "#ffffff",
-            "table_border_radius": 20
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_f3d7375_W4qJB8"
-      ],
       "settings": {}
-    },
-    "section_ppLNkk": {
-      "type": "section",
-      "blocks": {
-        "group_kkYNVF": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 16,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "icon_itrJGB": {
-              "type": "icon",
-              "settings": {
-                "icon": "lightning_bolt",
-                "width": 40,
-                "link": "",
-                "open_in_new_tab": false
-              },
-              "blocks": {}
-            },
-            "group_DUTGmJ": {
-              "type": "group",
-              "settings": {
-                "content_direction": "column",
-                "vertical_on_mobile": true,
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "flex-start",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 4,
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "custom_height": 100,
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "background_media": "none",
-                "video_position": "cover",
-                "background_image_position": "cover",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "link": "",
-                "open_in_new_tab": false,
-                "placeholder": "",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "text_He4KLG": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<h2>4 Z's</h2>",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "center",
-                    "type_preset": "h3",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "text_baf7wk": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Zero Lactose | Zero Açúcar | Zero Carboidratos | Zero Gorduras</p>",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "center",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 6,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_He4KLG",
-                "text_baf7wk"
-              ]
-            }
-          },
-          "block_order": [
-            "icon_itrJGB",
-            "group_DUTGmJ"
-          ]
-        },
-        "group_fQ3w74": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 16,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "icon_964yg7": {
-              "type": "icon",
-              "settings": {
-                "icon": "heart",
-                "image_upload": "shopify://shop_images/Design_sem_nome_4.png",
-                "width": 40,
-                "link": "",
-                "open_in_new_tab": false
-              },
-              "blocks": {}
-            },
-            "group_Nggpt4": {
-              "type": "group",
-              "settings": {
-                "content_direction": "column",
-                "vertical_on_mobile": true,
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "flex-start",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 4,
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "custom_height": 100,
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "background_media": "none",
-                "video_position": "cover",
-                "background_image_position": "cover",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "link": "",
-                "open_in_new_tab": false,
-                "placeholder": "",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "text_Nf3x6c": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<h2>Alto teor de protéina </h2>",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "center",
-                    "type_preset": "h3",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "text_dYxhxJ": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>18g de proteína em apenas 100ml</p>",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "center",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_Nf3x6c",
-                "text_dYxhxJ"
-              ]
-            }
-          },
-          "block_order": [
-            "icon_964yg7",
-            "group_Nggpt4"
-          ]
-        },
-        "group_TXDiwK": {
-          "type": "group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 16,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "icon_DDc69w": {
-              "type": "icon",
-              "settings": {
-                "icon": "bottle",
-                "image_upload": "shopify://shop_images/272107.png",
-                "width": 40,
-                "link": "",
-                "open_in_new_tab": false
-              },
-              "blocks": {}
-            },
-            "group_TBR6F4": {
-              "type": "group",
-              "settings": {
-                "content_direction": "column",
-                "vertical_on_mobile": true,
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "flex-start",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 4,
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "custom_height": 100,
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "background_media": "none",
-                "video_position": "cover",
-                "background_image_position": "cover",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "link": "",
-                "open_in_new_tab": false,
-                "placeholder": "",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "text_HpkwWp": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<h2>Sabores frutados</h2>",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "center",
-                    "type_preset": "h3",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "text_9HUURk": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Proteína com sabor de fruta. Leve, refrescante e fácil de tomar</p>",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "center",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "var(--color-foreground)",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_HpkwWp",
-                "text_9HUURk"
-              ]
-            }
-          },
-          "block_order": [
-            "icon_DDc69w",
-            "group_TBR6F4"
-          ]
-        }
-      },
-      "block_order": [
-        "group_kkYNVF",
-        "group_fQ3w74",
-        "group_TXDiwK"
-      ],
-      "disabled": true,
-      "name": "t:names.icons_with_text",
-      "settings": {
-        "content_direction": "row",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 16,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-1",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
     },
     "media_with_content_HpEXVz": {
       "type": "media-with-content",
@@ -1291,11 +750,6 @@
         "padding-block-end": 0
       }
     },
-    "blocks_4Eg7mB": {
-      "type": "_blocks",
-      "name": "Shotz benefits",
-      "settings": {}
-    },
     "momento_shotz_PcRfra": {
       "type": "momento-shotz",
       "blocks": {
@@ -1342,6 +796,7 @@
         "card_mUXgTi",
         "card_eWFfKk"
       ],
+      "disabled": true,
       "name": "Shotz Rotina",
       "settings": {
         "eyebrow": "MOMENTO SHOTZ",
@@ -1401,6 +856,7 @@
         "card_tHBbjG",
         "card_HfnAUP"
       ],
+      "disabled": true,
       "name": "Shotz Marquee",
       "settings": {
         "eyebrow_text": "MOMENTO SHOTZ",
@@ -1769,19 +1225,27 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "17882712150416c950": {
+      "type": "_blocks",
+      "settings": {}
+    },
+    "1788303568867f6062": {
+      "type": "_blocks",
+      "settings": {}
     }
   },
   "order": [
     "main",
-    "blocks_kwinyp",
+    "blocks_tBwT3X",
     "proteina_stats_KecjAk",
     "1787751400146840dd",
-    "section_ppLNkk",
     "media_with_content_HpEXVz",
-    "blocks_4Eg7mB",
     "momento_shotz_PcRfra",
     "shotz_marquee_4GaJbj",
     "media_with_content_Fq9fwm",
-    "section_tdzjcT"
+    "section_tdzjcT",
+    "17882712150416c950",
+    "1788303568867f6062"
   ]
 }

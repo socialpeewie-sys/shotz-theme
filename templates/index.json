@@ -208,77 +208,6 @@
       "name": "Hero com benefícios",
       "settings": {}
     },
-    "shotz_numeros_kR9xTq": {
-      "type": "shotz-numeros",
-      "blocks": {
-        "numero_a1": {
-          "type": "numero",
-          "settings": {
-            "number": "21",
-            "unit": "g",
-            "label": "Proteína de qualidade"
-          }
-        },
-        "numero_a2": {
-          "type": "numero",
-          "settings": {
-            "number": "100",
-            "unit": "ml",
-            "label": "Pronto pra tomar"
-          }
-        },
-        "numero_a3": {
-          "type": "numero",
-          "settings": {
-            "number": "0",
-            "unit": "g",
-            "label": "Açúcar"
-          }
-        },
-        "numero_a4": {
-          "type": "numero",
-          "settings": {
-            "number": "0",
-            "unit": "g",
-            "label": "Lactose"
-          }
-        },
-        "numero_a5": {
-          "type": "numero",
-          "settings": {
-            "number": "5",
-            "unit": "s",
-            "label": "Do bolso ao gole"
-          }
-        }
-      },
-      "block_order": [
-        "numero_a1",
-        "numero_a2",
-        "numero_a3",
-        "numero_a4",
-        "numero_a5"
-      ],
-      "name": "Números em destaque",
-      "settings": {
-        "heading": "Pequenas escolhas, grandes resultados",
-        "subtitle": "Uma rotina que você mantém vale mais que a perfeita que você abandona. Consistência é a chave.",
-        "background_color": "#faf7ef",
-        "heading_color": "#1a2740",
-        "subtitle_color": "#5a6273",
-        "number_color": "#1a2740",
-        "accent_color": "#0094f6",
-        "label_color": "#1a2740",
-        "heading_size": 44,
-        "subtitle_size": 16,
-        "number_size": 64,
-        "label_size": 15,
-        "grid_gap_top": 56,
-        "max_width": 1200,
-        "padding_top": 70,
-        "padding_bottom": 70
-      }
-    },
     "variants_grid_dNm8hc": {
       "type": "variants-grid",
       "blocks": {
@@ -515,7 +444,6 @@
     "shotz_numeros_LEgDf3",
     "stats_bar_np8Egw",
     "blocks_rCKAQq",
-    "shotz_numeros_kR9xTq",
     "variants_grid_dNm8hc",
     "17824113349f43bc3c",
     "shotz_choose_yours_Gp37ig",

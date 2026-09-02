@@ -61,7 +61,7 @@
       "type": "hero-banner",
       "name": "Hero Banner",
       "settings": {
-        "image": "shopify://shop_images/teste_pure_genius.webp",
+        "image": "shopify://shop_images/hf_20260902_004946_26ca5fdf-ff07-4b5e-bed0-156d9d457bad.png",
         "eyebrow": "",
         "eyebrow_color": "#0094f6",
         "title_line_1": "Não é milagre",
@@ -74,6 +74,48 @@
         "badge_color": "#efeae0"
       }
     },
+    "blocks_fLJ4mP": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_4ab66b1_UP3whj": {
+          "type": "ai_gen_block_4ab66b1",
+          "settings": {
+            "layout": "image_left",
+            "desktop_width_percent": 100,
+            "gap": 40,
+            "padding_vertical": 40,
+            "padding_horizontal": 20,
+            "image_border_radius": 8,
+            "text_block_gap": 30,
+            "title_size": 24,
+            "text_size": 16,
+            "title_color": "#000000",
+            "text_color": "#666666",
+            "text_block_1_enabled": true,
+            "text_block_1_title": "Não é milagre É ciência",
+            "text_block_1_text": "<p>Adicione o texto do primeiro bloco aqui. Você pode usar este espaço para descrever características, benefícios ou qualquer informação relevante.</p>",
+            "text_block_2_enabled": true,
+            "text_block_2_title": "Título do bloco 2",
+            "text_block_2_text": "<p>Adicione o texto do segundo bloco aqui. Continue descrevendo mais detalhes ou informações importantes.</p>",
+            "text_block_3_enabled": true,
+            "text_block_3_title": "Título do bloco 3",
+            "text_block_3_text": "<p>Adicione o texto do terceiro bloco aqui.</p>",
+            "text_block_4_enabled": false,
+            "text_block_4_title": "",
+            "text_block_4_text": "",
+            "text_block_5_enabled": false,
+            "text_block_5_title": "",
+            "text_block_5_text": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_4ab66b1_UP3whj"
+      ],
+      "name": "Texto e imagem divididos",
+      "settings": {}
+    },
     "blocks_hcegWK": {
       "type": "_blocks",
       "name": "Ciência do produto",
@@ -82,57 +124,34 @@
     "proteina_stats_qCdtJk": {
       "type": "proteina-stats",
       "blocks": {
-        "stat_Kdm7Pt": {
-          "type": "stat",
-          "settings": {
-            "number": "18g",
-            "title": "Whey isolado",
-            "description": "Perfil completo de aminoácidos essenciais, incluindo 2,7g de leucina."
-          }
-        },
-        "stat_gBmMde": {
-          "type": "stat",
-          "settings": {
-            "number": "100ml",
-            "title": "Um gole, não uma refeição",
-            "description": "Cabe no bolso da calça, na bolsa de treino e na mala de mão."
-          }
-        },
-        "stat_jkUjhr": {
-          "type": "stat",
-          "settings": {
-            "number": "0x4",
-            "title": "Os 4 Z's",
-            "description": "Zero açúcar, zero carboidrato, zero gordura, zero lactose."
-          }
-        },
         "stat_Lbe8dh": {
           "type": "stat",
           "settings": {
-            "number": "5s",
-            "title": "Do bolso ao gole",
-            "description": "Sem shaker, sem pó, sem louça. Sabor de suco gelado."
+            "number": "FOI AÍ QUE FIZEMOS DIFERENTE",
+            "title": "",
+            "description": "Pegamos o melhor do colágeno e completamos exatamente o que faltava. O resultado não é colágeno com proteína — é colágeno transformado em proteína completa, com 21g em 100ml e apenas 73kcal. E o perfil de aminoácidos foi medido e comprovado em laboratório."
           }
         }
       },
       "block_order": [
-        "stat_Kdm7Pt",
-        "stat_gBmMde",
-        "stat_jkUjhr",
         "stat_Lbe8dh"
       ],
       "name": "Proteína Stats",
       "settings": {
         "image": "shopify://shop_images/af22152a7bfeedd9ce4d0cdab856ad3d.jpg",
         "image_position": "right",
-        "heading": "PROTEÍNA SEM A PARTE CHATA",
-        "paragraph": "<p>Um shake em pó exige medidor, shaker, água e 3 minutos. A Shotz exige um gesto: abrir. Mesma proteína completa, um décimo do esforço.</p>",
+        "heading": "O que nos diferencia dos demais?",
+        "paragraph": "<p>Você já tomou colágeno achando que estava tomando proteína. Ele tem benefícios reais, mas sozinho não entrega as nove peças essenciais: é como uma receita de bolo sem fermento. Todos os outros ingredientes estão lá, o bolo só não cresce.</p>",
         "background_color": "#f8f3ec",
         "heading_color": "#000000",
         "paragraph_color": "#a3a3a3",
-        "accent_color": "#ec0f6e",
+        "accent_color": "#0094F6",
         "stat_title_color": "#ffffff",
         "stat_description_color": "#8a8a8a",
+        "button_text": "Quero experimentar",
+        "button_link": "",
+        "button_bg_color": "#000000",
+        "button_text_color": "#ffffff",
         "padding_top": 80,
         "padding_bottom": 80
       }
@@ -141,6 +160,7 @@
   "order": [
     "main",
     "hero_banner_cdxzHA",
+    "blocks_fLJ4mP",
     "blocks_hcegWK",
     "proteina_stats_qCdtJk"
   ]

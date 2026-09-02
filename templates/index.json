@@ -385,7 +385,7 @@
         "background_color": "#F8F3EC",
         "text_color": "#111111",
         "secondary_text_color": "#777777",
-        "padding_block": 80,
+        "padding_block": 16,
         "padding_inline": 48
       }
     },
@@ -428,6 +428,20 @@
       ],
       "name": "Hero com benefícios",
       "settings": {}
+    },
+    "divider_DryE3e": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      }
     }
   },
   "order": [
@@ -437,6 +451,7 @@
     "blocks_rCKAQq",
     "variants_grid_dNm8hc",
     "17824113349f43bc3c",
+    "divider_DryE3e",
     "shotz_choose_yours_Gp37ig",
     "1787857495d8ac9ebf",
     "blocks_9FNXWB"

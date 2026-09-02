@@ -150,22 +150,10 @@
     "stats_bar_np8Egw": {
       "type": "stats-bar",
       "blocks": {
-        "stat_CHgrMH": {
-          "type": "stat",
-          "settings": {
-            "text": "21g de proteína"
-          }
-        },
         "stat_WiW4gk": {
           "type": "stat",
           "settings": {
             "text": "aminoácidos essenciais"
-          }
-        },
-        "stat_Dan4gw": {
-          "type": "stat",
-          "settings": {
-            "text": "Apenas 100ml"
           }
         },
         "stat_QcrYrA": {
@@ -176,9 +164,7 @@
         }
       },
       "block_order": [
-        "stat_CHgrMH",
         "stat_WiW4gk",
-        "stat_Dan4gw",
         "stat_QcrYrA"
       ],
       "name": "Barra de estatísticas",

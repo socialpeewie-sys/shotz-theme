@@ -142,6 +142,25 @@
     object-fit: cover;
   }
 
+  /* Coluna destaque: aceita logotipo (quadrado ou horizontal) sem cortar */
+  .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(2) .shotz-comparison__product-image-{{ ai_gen_id }} {
+    width: auto;
+    max-width: 170px;
+    height: auto;
+    max-height: 96px;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(2) .shotz-comparison__product-image-{{ ai_gen_id }} img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 96px;
+    object-fit: contain;
+  }
+
   .shotz-comparison__product-name-{{ ai_gen_id }} {
     font-size: 18px;
     font-weight: 700;
@@ -259,6 +278,12 @@
       margin-bottom: 8px;
     }
 
+    .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(2) .shotz-comparison__product-image-{{ ai_gen_id }},
+    .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(2) .shotz-comparison__product-image-{{ ai_gen_id }} img {
+      max-width: 92px;
+      max-height: 52px;
+    }
+
     .shotz-comparison__product-name-{{ ai_gen_id }} {
       font-size: 11px;
       line-height: 1.25;
@@ -358,11 +383,11 @@
               {% if block.settings.shotz_image %}
                 <div class="shotz-comparison__product-image-{{ ai_gen_id }}">
                   <img
-                    src="{{ block.settings.shotz_image | image_url: width: 160 }}"
+                    src="{{ block.settings.shotz_image | image_url: width: 480 }}"
                     alt="{{ block.settings.shotz_name | escape }}"
                     loading="lazy"
-                    width="80"
-                    height="80"
+                    width="{{ block.settings.shotz_image.width }}"
+                    height="{{ block.settings.shotz_image.height }}"
                   >
                 </div>
               {% endif %}

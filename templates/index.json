@@ -65,15 +65,15 @@
       "settings": {
         "image": "shopify://shop_images/WhatsApp_Image_2026-05-18_at_22.51.51.jpg",
         "eyebrow": "O primeiro shot de proteína do Brasil",
-        "eyebrow_color": "#0094f6",
-        "title_line_1": "Proteína de",
-        "title_line_2": "verdade, em",
-        "title_line_3": "30 segundos",
+        "eyebrow_color": "#FFFFFF",
+        "title_line_1": "Pequeno no tamanho",
+        "title_line_2": "Grande nos resultados",
+        "title_line_3": "",
         "title_color": "#faf7ef",
         "title_accent_color": "#0094f6",
-        "paragraph": "Um shot de 60ml com 20g de proteína, zero açúcar e zero lactose. Pronto pra tomar, sem misturar nada.",
-        "paragraph_color": "#efeae0",
-        "badge_color": "#efeae0"
+        "paragraph": "100ml. 21 gramas de proteína. \nA proteína que realmente facilita sua rotina",
+        "paragraph_color": "#FFFFFF",
+        "badge_color": "#FFFFFF"
       }
     },
     "shotz_numeros_LEgDf3": {
@@ -170,7 +170,7 @@
           "type": "ai_gen_block_0453d40",
           "settings": {
             "image_position": "left",
-            "background_color": "#ffffff",
+            "background_color": "#F8F3EC",
             "product_image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0525_4.jpg",
             "image_background_color": "#f5f5f5",
             "image_border_radius": 20,
@@ -187,7 +187,7 @@
             "box_4_text": "21g de proteína de alta qualidade, enriquecida com todos os aminoácidos essenciais para recuperar e construir músculo.",
             "button_text": "EXPERIMENTE AGORA",
             "button_link": "",
-            "button_bg_color": "#000000",
+            "button_bg_color": "#1B2030",
             "button_text_color": "#ffffff"
           },
           "blocks": {}
@@ -382,7 +382,7 @@
       "settings": {
         "eyebrow_text": "",
         "heading": "Escolha o seu",
-        "background_color": "#ffffff",
+        "background_color": "#F8F3EC",
         "text_color": "#111111",
         "secondary_text_color": "#777777",
         "padding_block": 80,
@@ -400,24 +400,24 @@
           "type": "ai_gen_block_0453d40",
           "settings": {
             "image_position": "left",
-            "background_color": "#ffffff",
+            "background_color": "#F8F3EC",
             "product_image": "shopify://shop_images/5539c8cf-856d-4601-b6d1-1cdbc0e09587.jpg",
             "image_background_color": "#f5f5f5",
             "image_border_radius": 20,
             "headline": "A CIÊNCIA POR TRÁS",
             "subtitle": "A proteína que dá match com a sua rotina",
             "box_subtitle_color": "#0a84ff",
-            "box_1_subtitle": "Sabores frutados",
-            "box_1_text": "Nada de gosto artificial nem retrogosto de proteína. É leve, refrescante e gostoso de tomar todo dia.",
-            "box_2_subtitle": "Zero do que você não quer",
-            "box_2_text": "Sem açúcar, sem lactose, sem excessos. Só o que importa para o seu corpo, sem nada que atrapalhe.",
+            "box_1_subtitle": "",
+            "box_1_text": "",
+            "box_2_subtitle": "",
+            "box_2_text": "",
             "box_3_subtitle": "Sem shake, sem sujeira e sem trabalho",
-            "box_3_text": "100ml prontos para tomar. Abre, bebe e segue o dia — sem coqueteleira, sem bagunça, sem preparo.",
-            "box_4_subtitle": "Proteína completa de verdade",
-            "box_4_text": "21g de proteína de alta qualidade, enriquecida com todos os aminoácidos essenciais para recuperar e construir músculo.",
+            "box_3_text": "",
+            "box_4_subtitle": "",
+            "box_4_text": "",
             "button_text": "EXPERIMENTE AGORA",
             "button_link": "",
-            "button_bg_color": "#000000",
+            "button_bg_color": "#1B2030",
             "button_text_color": "#ffffff"
           },
           "blocks": {}

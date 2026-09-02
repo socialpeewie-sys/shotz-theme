@@ -211,46 +211,95 @@
       line-height: 1.3;
     }
 
-    /* Tabela mantém estrutura original — wrapper com scroll horizontal */
+    /* A tabela cabe inteira na tela — nada de scroll lateral */
+    .shotz-comparison__table-wrapper-{{ ai_gen_id }} {
+      overflow-x: hidden;
+    }
+
     .shotz-comparison__table-{{ ai_gen_id }} {
-      min-width: 480px;
+      table-layout: fixed;
+      width: 100%;
+      min-width: 0;
     }
 
     .shotz-comparison__header-cell-{{ ai_gen_id }} {
-      padding: 18px 10px;
+      padding: 16px 6px;
     }
 
     .shotz-comparison__header-cell-{{ ai_gen_id }}:first-child {
-      width: 28%;
+      width: 31%;
     }
 
     .shotz-comparison__product-image-{{ ai_gen_id }} {
-      width: 50px;
-      height: 50px;
+      width: 44px;
+      height: 44px;
       margin-bottom: 8px;
     }
 
     .shotz-comparison__product-name-{{ ai_gen_id }} {
       font-size: 11px;
-      line-height: 1.3;
+      line-height: 1.25;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
     }
 
     .shotz-comparison__cell-{{ ai_gen_id }} {
-      padding: 16px 10px;
+      padding: 14px 6px;
     }
 
     .shotz-comparison__cell-{{ ai_gen_id }}:first-child {
       font-size: 12px;
+      line-height: 1.35;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      hyphens: auto;
     }
 
     .shotz-comparison__icon-wrapper-{{ ai_gen_id }} {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
     }
 
     .shotz-comparison__icon-{{ ai_gen_id }} {
-      width: 15px;
-      height: 15px;
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    .shotz-comparison__header-cell-{{ ai_gen_id }},
+    .shotz-comparison__cell-{{ ai_gen_id }} {
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+
+    .shotz-comparison__header-cell-{{ ai_gen_id }}:first-child {
+      width: 34%;
+    }
+
+    .shotz-comparison__product-image-{{ ai_gen_id }} {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+    }
+
+    .shotz-comparison__product-name-{{ ai_gen_id }} {
+      font-size: 10px;
+    }
+
+    .shotz-comparison__cell-{{ ai_gen_id }}:first-child {
+      font-size: 11px;
+    }
+
+    .shotz-comparison__icon-wrapper-{{ ai_gen_id }} {
+      width: 26px;
+      height: 26px;
+    }
+
+    .shotz-comparison__icon-{{ ai_gen_id }} {
+      width: 12px;
+      height: 12px;
     }
   }
 {% endstyle %}

@@ -133,28 +133,31 @@
     margin: 0;
   }
 
-  .ai-hero-benefits-list-{{ ai_gen_id }} {
+  .ai-hero-benefits-boxes-{{ ai_gen_id }} {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    gap: 24px;
   }
 
-  .ai-hero-benefits-item-{{ ai_gen_id }} {
+  .ai-hero-benefits-box-{{ ai_gen_id }} {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 16px;
-    line-height: 1.5;
+    flex-direction: column;
+    gap: 6px;
   }
 
-  .ai-hero-benefits-checkmark-{{ ai_gen_id }} {
-    flex-shrink: 0;
-    width: 20px;
-    height: 20px;
-    color: {{ block.settings.checkmark_color }};
+  .ai-hero-benefits-box-subtitle-{{ ai_gen_id }} {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0;
+    color: {{ block.settings.box_subtitle_color }};
+  }
+
+  .ai-hero-benefits-box-text-{{ ai_gen_id }} {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #6d6d6d;
+    margin: 0;
   }
 
   .ai-hero-benefits-cta-{{ ai_gen_id }} {
@@ -188,7 +191,11 @@
       font-size: 16px;
     }
 
-    .ai-hero-benefits-item-{{ ai_gen_id }} {
+    .ai-hero-benefits-box-subtitle-{{ ai_gen_id }} {
+      font-size: 18px;
+    }
+
+    .ai-hero-benefits-box-text-{{ ai_gen_id }} {
       font-size: 14px;
     }
   }
@@ -224,43 +231,22 @@
         <p class="ai-hero-benefits-subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle }}</p>
       {% endif %}
 
-      <ul class="ai-hero-benefits-list-{{ ai_gen_id }}">
-        {% if block.settings.benefit_1 != blank %}
-          <li class="ai-hero-benefits-item-{{ ai_gen_id }}">
-            <svg class="ai-hero-benefits-checkmark-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <span>{{ block.settings.benefit_1 }}</span>
-          </li>
-        {% endif %}
-
-        {% if block.settings.benefit_2 != blank %}
-          <li class="ai-hero-benefits-item-{{ ai_gen_id }}">
-            <svg class="ai-hero-benefits-checkmark-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <span>{{ block.settings.benefit_2 }}</span>
-          </li>
-        {% endif %}
-
-        {% if block.settings.benefit_3 != blank %}
-          <li class="ai-hero-benefits-item-{{ ai_gen_id }}">
-            <svg class="ai-hero-benefits-checkmark-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <span>{{ block.settings.benefit_3 }}</span>
-          </li>
-        {% endif %}
-
-        {% if block.settings.benefit_4 != blank %}
-          <li class="ai-hero-benefits-item-{{ ai_gen_id }}">
-            <svg class="ai-hero-benefits-checkmark-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <span>{{ block.settings.benefit_4 }}</span>
-          </li>
-        {% endif %}
-      </ul>
+      <div class="ai-hero-benefits-boxes-{{ ai_gen_id }}">
+        {% for i in (1..4) %}
+          {% assign box_subtitle_key = 'box_' | append: i | append: '_subtitle' %}
+          {% assign box_text_key = 'box_' | append: i | append: '_text' %}
+          {% if block.settings[box_subtitle_key] != blank or block.settings[box_text_key] != blank %}
+            <div class="ai-hero-benefits-box-{{ ai_gen_id }}">
+              {% if block.settings[box_subtitle_key] != blank %}
+                <h3 class="ai-hero-benefits-box-subtitle-{{ ai_gen_id }}">{{ block.settings[box_subtitle_key] }}</h3>
+              {% endif %}
+              {% if block.settings[box_text_key] != blank %}
+                <p class="ai-hero-benefits-box-text-{{ ai_gen_id }}">{{ block.settings[box_text_key] }}</p>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
 
       {% if block.settings.button_text != blank %}
         <div class="ai-hero-benefits-cta-{{ ai_gen_id }}">
@@ -351,37 +337,61 @@
     },
     {
       "type": "header",
-      "content": "Benefícios"
-    },
-    {
-      "type": "text",
-      "id": "benefit_1",
-      "label": "Benefício 1",
-      "default": "Absorção rápida e eficiente"
-    },
-    {
-      "type": "text",
-      "id": "benefit_2",
-      "label": "Benefício 2",
-      "default": "Fórmula premium com ingredientes selecionados"
-    },
-    {
-      "type": "text",
-      "id": "benefit_3",
-      "label": "Benefício 3",
-      "default": "Resultados visíveis em poucas semanas"
-    },
-    {
-      "type": "text",
-      "id": "benefit_4",
-      "label": "Benefício 4",
-      "default": "Sabor incrível e refrescante"
+      "content": "Caixas de conteúdo"
     },
     {
       "type": "color",
-      "id": "checkmark_color",
-      "label": "Cor do checkmark",
+      "id": "box_subtitle_color",
+      "label": "Cor do subtítulo das caixas",
       "default": "#0a84ff"
+    },
+    {
+      "type": "text",
+      "id": "box_1_subtitle",
+      "label": "Caixa 1 · Subtítulo",
+      "default": "Sabores frutados"
+    },
+    {
+      "type": "textarea",
+      "id": "box_1_text",
+      "label": "Caixa 1 · Texto",
+      "default": "Nada de gosto artificial nem retrogosto de proteína. É leve, refrescante e gostoso de tomar todo dia."
+    },
+    {
+      "type": "text",
+      "id": "box_2_subtitle",
+      "label": "Caixa 2 · Subtítulo",
+      "default": "Zero do que você não quer"
+    },
+    {
+      "type": "textarea",
+      "id": "box_2_text",
+      "label": "Caixa 2 · Texto",
+      "default": "Sem açúcar, sem lactose, sem excessos. Só o que importa para o seu corpo, sem nada que atrapalhe."
+    },
+    {
+      "type": "text",
+      "id": "box_3_subtitle",
+      "label": "Caixa 3 · Subtítulo",
+      "default": "Sem shake, sem sujeira e sem trabalho"
+    },
+    {
+      "type": "textarea",
+      "id": "box_3_text",
+      "label": "Caixa 3 · Texto",
+      "default": "100ml prontos para tomar. Abre, bebe e segue o dia — sem coqueteleira, sem bagunça, sem preparo."
+    },
+    {
+      "type": "text",
+      "id": "box_4_subtitle",
+      "label": "Caixa 4 · Subtítulo",
+      "default": "Proteína completa de verdade"
+    },
+    {
+      "type": "textarea",
+      "id": "box_4_text",
+      "label": "Caixa 4 · Texto",
+      "default": "21g de proteína de alta qualidade, enriquecida com todos os aminoácidos essenciais para recuperar e construir músculo."
     },
     {
       "type": "header",

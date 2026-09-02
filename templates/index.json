@@ -126,13 +126,13 @@
             "product_image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0525_4.jpg",
             "image_background_color": "#f5f5f5",
             "image_border_radius": 20,
-            "headline": "21g de proteína. 100ml. Pronto",
+            "headline": "CRIADO PARA VIDAS AGITADAS",
             "subtitle": "A proteína que dá match com a sua rotina",
             "box_subtitle_color": "#0a84ff",
-            "box_1_subtitle": "Sabores frutados",
-            "box_1_text": "Nada de gosto artificial nem retrogosto de proteína. É leve, refrescante e gostoso de tomar todo dia.",
+            "box_1_subtitle": "100ML. Dois goles. 5 segundos",
+            "box_1_text": "Proteína pronta para beber. Abre, bebe e segue o dia — sem coqueteleira, sem bagunça, sem preparo.",
             "box_2_subtitle": "Zero tudo. SHOTZ tem apenas o que você busca",
-            "box_2_text": "Sem açúcar, sem lactose, sem excessos. Só o que importa para o seu corpo, sem nada que atrapalhe.",
+            "box_2_text": "Fórmula exclusiva trazendo proteína enriquecida do colágeno com todos aminoácidos.\nZero lactose, gorduras, carboidratos e açúcares",
             "box_3_subtitle": "Sem shake, sem sujeira e sem trabalho",
             "box_3_text": "100ml prontos para tomar. Abre, bebe e segue o dia — sem coqueteleira, sem bagunça, sem preparo.",
             "box_4_subtitle": "Proteína completa de verdade",
@@ -278,7 +278,7 @@
             "attr_6_shotz": true,
             "attr_6_whey": false,
             "attr_6_collagen": true,
-            "shotz_column_bg_color": "#F1E9DE",
+            "shotz_column_bg_color": "#f1e9de",
             "shotz_column_text_color": "#000000",
             "accent_color": "#2f5d8a",
             "divider_color": "#c9d6e3",
@@ -334,7 +334,7 @@
       "settings": {
         "eyebrow_text": "",
         "heading": "Escolha o seu",
-        "background_color": "#FFFFFF",
+        "background_color": "#ffffff",
         "text_color": "#111111",
         "secondary_text_color": "#777777",
         "padding_block": 80,
@@ -358,6 +358,15 @@
             "image_border_radius": 20,
             "headline": "A CIÊNCIA POR TRÁS",
             "subtitle": "A proteína que dá match com a sua rotina",
+            "box_subtitle_color": "#0a84ff",
+            "box_1_subtitle": "Sabores frutados",
+            "box_1_text": "Nada de gosto artificial nem retrogosto de proteína. É leve, refrescante e gostoso de tomar todo dia.",
+            "box_2_subtitle": "Zero do que você não quer",
+            "box_2_text": "Sem açúcar, sem lactose, sem excessos. Só o que importa para o seu corpo, sem nada que atrapalhe.",
+            "box_3_subtitle": "Sem shake, sem sujeira e sem trabalho",
+            "box_3_text": "100ml prontos para tomar. Abre, bebe e segue o dia — sem coqueteleira, sem bagunça, sem preparo.",
+            "box_4_subtitle": "Proteína completa de verdade",
+            "box_4_text": "21g de proteína de alta qualidade, enriquecida com todos os aminoácidos essenciais para recuperar e construir músculo.",
             "button_text": "EXPERIMENTE AGORA",
             "button_link": "",
             "button_bg_color": "#000000",
@@ -371,47 +380,12 @@
       ],
       "name": "Hero com benefícios",
       "settings": {}
-    },
-    "shotz_numeros_kR9xTq": {
-      "type": "shotz-numeros",
-      "blocks": {
-        "numero_a1": {
-          "type": "numero",
-          "settings": { "number": "21", "unit": "g", "label": "Proteína de qualidade" }
-        },
-        "numero_a2": {
-          "type": "numero",
-          "settings": { "number": "100", "unit": "ml", "label": "Pronto pra tomar" }
-        },
-        "numero_a3": {
-          "type": "numero",
-          "settings": { "number": "0", "unit": "g", "label": "Açúcar" }
-        },
-        "numero_a4": {
-          "type": "numero",
-          "settings": { "number": "0", "unit": "g", "label": "Lactose" }
-        },
-        "numero_a5": {
-          "type": "numero",
-          "settings": { "number": "5", "unit": "s", "label": "Do bolso ao gole" }
-        }
-      },
-      "block_order": [
-        "numero_a1",
-        "numero_a2",
-        "numero_a3",
-        "numero_a4",
-        "numero_a5"
-      ],
-      "name": "Números em destaque",
-      "settings": {}
     }
   },
   "order": [
     "hero_banner_xf8AGM",
     "stats_bar_np8Egw",
     "blocks_rCKAQq",
-    "shotz_numeros_kR9xTq",
     "variants_grid_dNm8hc",
     "17824113349f43bc3c",
     "shotz_choose_yours_Gp37ig",

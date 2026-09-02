@@ -193,6 +193,9 @@
         {%- if section.settings.heading_part_1 != blank -%}
           <span class="shotz-problem-grid__heading-1">{{ section.settings.heading_part_1 }}</span>
         {%- endif -%}
+        {%- if section.settings.heading_part_1 != blank and section.settings.heading_part_2 != blank -%}
+          {{ ' ' }}
+        {%- endif -%}
         {%- if section.settings.heading_part_2 != blank -%}
           <span class="shotz-problem-grid__heading-2">{{ section.settings.heading_part_2 }}</span>
         {%- endif -%}

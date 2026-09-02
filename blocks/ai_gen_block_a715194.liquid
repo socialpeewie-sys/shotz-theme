@@ -93,15 +93,18 @@
       width: 100%;
     }
 
-    /* Scroll horizontal suave — abas nunca quebram linha */
+    /* Scroll horizontal suave — abas nunca quebram linha.
+       O mask cria um fade na borda direita, sinalizando que há mais abas. */
     .ai-tabs__nav-{{ ai_gen_id }} {
       flex-wrap: nowrap;
       border-radius: 12px;
+      -webkit-mask-image: linear-gradient(to right, #000 88%, transparent 100%);
+      mask-image: linear-gradient(to right, #000 88%, transparent 100%);
     }
 
     .ai-tabs__tab-{{ ai_gen_id }} {
-      font-size: {{ block.settings.title_size | minus: 1 }}px;
-      padding: 8px 14px;
+      font-size: {{ block.settings.title_size | minus: 2 }}px;
+      padding: 8px 11px;
     }
   }
 {% endstyle %}

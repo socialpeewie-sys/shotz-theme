@@ -207,6 +207,12 @@
     border-bottom: 1px solid {{ block.settings.divider_color }};
   }
 
+  /* Oculta linhas cujo rótulo (1ª coluna) esteja vazio — evita linha "fantasma"
+     só com ícones quando um atributo não tem nome preenchido. */
+  .shotz-comparison__row-{{ ai_gen_id }}:has(.shotz-comparison__cell-{{ ai_gen_id }}:first-child:empty) {
+    display: none;
+  }
+
   .shotz-comparison__icon-wrapper-{{ ai_gen_id }} {
     display: inline-flex;
     align-items: center;
@@ -282,8 +288,14 @@
 
     .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(2) .shotz-comparison__product-image-{{ ai_gen_id }},
     .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(2) .shotz-comparison__product-image-{{ ai_gen_id }} img {
-      max-width: 92px;
-      max-height: 52px;
+      max-width: 78px;
+      max-height: 48px;
+    }
+
+    /* Um respiro entre a pílula do destaque e o texto das colunas vizinhas */
+    .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(3),
+    .shotz-comparison__cell-{{ ai_gen_id }}:nth-child(3) {
+      padding-left: 10px;
     }
 
     .shotz-comparison__product-name-{{ ai_gen_id }} {

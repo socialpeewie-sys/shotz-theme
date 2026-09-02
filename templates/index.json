@@ -373,35 +373,34 @@
       "settings": {}
     },
     "shotz_numeros_kR9xTq": {
-      "type": "shotz-numeros",
+      "type": "_blocks",
       "blocks": {
-        "numero_a1": {
-          "type": "numero",
-          "settings": { "number": "21", "unit": "g", "label": "Proteína de qualidade" }
-        },
-        "numero_a2": {
-          "type": "numero",
-          "settings": { "number": "100", "unit": "ml", "label": "Pronto pra tomar" }
-        },
-        "numero_a3": {
-          "type": "numero",
-          "settings": { "number": "0", "unit": "g", "label": "Açúcar" }
-        },
-        "numero_a4": {
-          "type": "numero",
-          "settings": { "number": "0", "unit": "g", "label": "Lactose" }
-        },
-        "numero_a5": {
-          "type": "numero",
-          "settings": { "number": "5", "unit": "s", "label": "Do bolso ao gole" }
+        "shotz_numeros_block_1": {
+          "type": "shotz-numeros",
+          "settings": {
+            "heading": "Pequenas escolhas, grandes resultados",
+            "subtitle": "Uma rotina que você mantém vale mais que a perfeita que você abandona. Consistência é a chave.",
+            "number_1": "21",
+            "unit_1": "g",
+            "label_1": "Proteína de qualidade",
+            "number_2": "100",
+            "unit_2": "ml",
+            "label_2": "Pronto pra tomar",
+            "number_3": "0",
+            "unit_3": "g",
+            "label_3": "Açúcar",
+            "number_4": "0",
+            "unit_4": "g",
+            "label_4": "Lactose",
+            "number_5": "5",
+            "unit_5": "s",
+            "label_5": "Do bolso ao gole"
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "numero_a1",
-        "numero_a2",
-        "numero_a3",
-        "numero_a4",
-        "numero_a5"
+        "shotz_numeros_block_1"
       ],
       "name": "Números em destaque",
       "settings": {}

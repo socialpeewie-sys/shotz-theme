@@ -42,29 +42,28 @@
   .shotz-comparison-{{ ai_gen_id }} {
     display: block;
     width: 100%;
-    padding: 40px 20px;
+    padding: 56px 20px;
+    background-color: {{ block.settings.table_background_color }};
   }
 
   .shotz-comparison__container-{{ ai_gen_id }} {
-    max-width: 1200px;
+    max-width: 1080px;
     margin: 0 auto;
   }
 
   .shotz-comparison__title-{{ ai_gen_id }} {
     text-align: center;
-    margin-bottom: 40px;
+    margin: 0 0 44px;
     font-size: {{ block.settings.title_size }}px;
     color: {{ block.settings.title_color }};
-    font-weight: 600;
+    font-weight: 700;
   }
 
+  /* Faixa off-white atrás da tabela; a coluna destaque flutua sobre ela */
   .shotz-comparison__table-wrapper-{{ ai_gen_id }} {
-    background-color: {{ block.settings.table_background_color }};
-    border-radius: {{ block.settings.table_border_radius }}px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     position: relative;
+    background: transparent;
+    overflow: visible;
   }
 
   {% if block.settings.background_image %}
@@ -84,21 +83,34 @@
     }
   {% endif %}
 
+  /* Coluna destaque: pílula escura arredondada, alinhada à 2ª coluna,
+     estendendo-se acima e abaixo da tabela (efeito flutuante) */
+  .shotz-comparison__highlight-{{ ai_gen_id }} {
+    position: absolute;
+    top: -16px;
+    bottom: -16px;
+    left: 30%;
+    width: 23.3333%;
+    background-color: {{ block.settings.shotz_column_bg_color }};
+    border-radius: {{ block.settings.table_border_radius }}px;
+    box-shadow: 0 24px 48px rgba(13, 13, 13, 0.16);
+    z-index: 0;
+    pointer-events: none;
+  }
+
   .shotz-comparison__table-{{ ai_gen_id }} {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
     position: relative;
     z-index: 1;
   }
 
-  .shotz-comparison__header-row-{{ ai_gen_id }} {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
   .shotz-comparison__header-cell-{{ ai_gen_id }} {
-    padding: 30px 20px;
+    padding: 26px 16px;
     text-align: center;
     vertical-align: middle;
+    background: transparent;
   }
 
   .shotz-comparison__header-cell-{{ ai_gen_id }}:first-child {
@@ -106,18 +118,19 @@
     width: 30%;
   }
 
-  .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(2) {
-    background-color: {{ block.settings.shotz_column_bg_color }};
+  /* Linha divisória sob os cabeçalhos, exceto sob a coluna destaque */
+  .shotz-comparison__header-cell-{{ ai_gen_id }}:not(:nth-child(2)) {
+    border-bottom: 1px solid {{ block.settings.divider_color }};
   }
 
-  .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(3),
-  .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(4) {
-    background-color: rgba(255, 255, 255, 0.05);
+  /* Cabeçalho da coluna destaque um pouco mais alto (topo da pílula) */
+  .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(2) {
+    padding-top: 40px;
   }
 
   .shotz-comparison__product-image-{{ ai_gen_id }} {
-    width: 80px;
-    height: 80px;
+    width: 72px;
+    height: 72px;
     margin: 0 auto 12px;
     border-radius: 12px;
     overflow: hidden;
@@ -131,8 +144,9 @@
 
   .shotz-comparison__product-name-{{ ai_gen_id }} {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 700;
     margin: 0;
+    line-height: 1.2;
   }
 
   .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(2) .shotz-comparison__product-name-{{ ai_gen_id }} {
@@ -141,33 +155,35 @@
 
   .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(3) .shotz-comparison__product-name-{{ ai_gen_id }},
   .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(4) .shotz-comparison__product-name-{{ ai_gen_id }} {
-    color: #FFFFFF;
-  }
-
-  .shotz-comparison__row-{{ ai_gen_id }} {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .shotz-comparison__row-{{ ai_gen_id }}:last-child {
-    border-bottom: none;
+    color: {{ block.settings.accent_color }};
   }
 
   .shotz-comparison__cell-{{ ai_gen_id }} {
-    padding: 24px 20px;
+    padding: 22px 16px;
     text-align: center;
     vertical-align: middle;
+    background: transparent;
   }
 
+  /* Rótulos das linhas (1ª coluna) em cor de destaque, alinhados à esquerda */
   .shotz-comparison__cell-{{ ai_gen_id }}:first-child {
     text-align: left;
-    color: {{ block.settings.table_text_color }};
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.5;
+    color: {{ block.settings.accent_color }};
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.4;
   }
 
-  .shotz-comparison__cell-{{ ai_gen_id }}:nth-child(2) {
-    background-color: {{ block.settings.shotz_column_bg_color | color_modify: 'alpha', 0.08 }};
+  /* Texto das colunas comparadas (não destaque) */
+  .shotz-comparison__cell-{{ ai_gen_id }}:nth-child(3),
+  .shotz-comparison__cell-{{ ai_gen_id }}:nth-child(4) {
+    color: {{ block.settings.table_text_color }};
+    font-size: 16px;
+  }
+
+  /* Divisórias entre linhas, exceto sob a coluna destaque */
+  .shotz-comparison__cell-{{ ai_gen_id }}:not(:nth-child(2)) {
+    border-bottom: 1px solid {{ block.settings.divider_color }};
   }
 
   .shotz-comparison__icon-wrapper-{{ ai_gen_id }} {
@@ -202,24 +218,27 @@
 
   @media screen and (max-width: 768px) {
     .shotz-comparison-{{ ai_gen_id }} {
-      padding: 24px 8px;
+      padding: 32px 12px;
     }
 
     .shotz-comparison__title-{{ ai_gen_id }} {
       font-size: {{ block.settings.title_size | times: 0.6 | round }}px;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       line-height: 1.3;
     }
 
     /* A tabela cabe inteira na tela — nada de scroll lateral */
-    .shotz-comparison__table-wrapper-{{ ai_gen_id }} {
-      overflow-x: hidden;
-    }
-
     .shotz-comparison__table-{{ ai_gen_id }} {
-      table-layout: fixed;
       width: 100%;
       min-width: 0;
+    }
+
+    .shotz-comparison__highlight-{{ ai_gen_id }} {
+      top: -10px;
+      bottom: -10px;
+      left: 31%;
+      width: 23%;
+      border-radius: {{ block.settings.table_border_radius | times: 0.7 | round }}px;
     }
 
     .shotz-comparison__header-cell-{{ ai_gen_id }} {
@@ -228,6 +247,10 @@
 
     .shotz-comparison__header-cell-{{ ai_gen_id }}:first-child {
       width: 31%;
+    }
+
+    .shotz-comparison__header-cell-{{ ai_gen_id }}:nth-child(2) {
+      padding-top: 24px;
     }
 
     .shotz-comparison__product-image-{{ ai_gen_id }} {
@@ -256,6 +279,11 @@
       hyphens: auto;
     }
 
+    .shotz-comparison__cell-{{ ai_gen_id }}:nth-child(3),
+    .shotz-comparison__cell-{{ ai_gen_id }}:nth-child(4) {
+      font-size: 13px;
+    }
+
     .shotz-comparison__icon-wrapper-{{ ai_gen_id }} {
       width: 30px;
       height: 30px;
@@ -278,6 +306,11 @@
       width: 34%;
     }
 
+    .shotz-comparison__highlight-{{ ai_gen_id }} {
+      left: 34%;
+      width: 22%;
+    }
+
     .shotz-comparison__product-image-{{ ai_gen_id }} {
       width: 38px;
       height: 38px;
@@ -290,6 +323,11 @@
 
     .shotz-comparison__cell-{{ ai_gen_id }}:first-child {
       font-size: 11px;
+    }
+
+    .shotz-comparison__cell-{{ ai_gen_id }}:nth-child(3),
+    .shotz-comparison__cell-{{ ai_gen_id }}:nth-child(4) {
+      font-size: 12px;
     }
 
     .shotz-comparison__icon-wrapper-{{ ai_gen_id }} {
@@ -311,6 +349,7 @@
     {% endif %}
 
     <div class="shotz-comparison__table-wrapper-{{ ai_gen_id }}">
+      <div class="shotz-comparison__highlight-{{ ai_gen_id }}" aria-hidden="true"></div>
       <table class="shotz-comparison__table-{{ ai_gen_id }}">
         <thead>
           <tr class="shotz-comparison__header-row-{{ ai_gen_id }}">
@@ -716,7 +755,7 @@
       "type": "color",
       "id": "title_color",
       "label": "Cor do título",
-      "default": "#000000"
+      "default": "#16202E"
     },
     {
       "type": "header",
@@ -925,19 +964,35 @@
     },
     {
       "type": "header",
-      "content": "Cores da coluna Shotz"
+      "content": "Coluna destaque (Shotz)"
     },
     {
       "type": "color",
       "id": "shotz_column_bg_color",
-      "label": "Cor de fundo",
-      "default": "#CBFF00"
+      "label": "Cor de fundo da coluna",
+      "default": "#16202E"
     },
     {
       "type": "color",
       "id": "shotz_column_text_color",
-      "label": "Cor do texto",
-      "default": "#000000"
+      "label": "Cor do texto da coluna",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Rótulos e divisórias"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Cor dos rótulos (linhas e colunas)",
+      "default": "#2F5D8A"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Cor das linhas divisórias",
+      "default": "#C9D6E3"
     },
     {
       "type": "header",
@@ -993,24 +1048,24 @@
     {
       "type": "color",
       "id": "table_background_color",
-      "label": "Cor de fundo",
-      "default": "#0D0D0D"
+      "label": "Cor de fundo da seção",
+      "default": "#F5F1E8"
     },
     {
       "type": "color",
       "id": "table_text_color",
-      "label": "Cor do texto",
-      "default": "#FFFFFF"
+      "label": "Cor do texto das colunas comparadas",
+      "default": "#16202E"
     },
     {
       "type": "range",
       "id": "table_border_radius",
-      "label": "Arredondamento",
+      "label": "Arredondamento da coluna destaque",
       "min": 0,
       "max": 40,
       "step": 2,
       "unit": "px",
-      "default": 20
+      "default": 24
     }
   ],
   "presets": [

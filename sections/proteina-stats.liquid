@@ -107,6 +107,35 @@
     line-height: 1.5;
   }
 
+  .proteina-stats-cta-{{ section.id }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    padding: 16px 34px;
+    background-color: {{ section.settings.button_bg_color }};
+    color: {{ section.settings.button_text_color }};
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .proteina-stats-cta-{{ section.id }}:hover {
+    opacity: 0.88;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .proteina-stats-cta-{{ section.id }} {
+      transition: none;
+    }
+  }
+
   @media screen and (max-width: 749px) {
     .proteina-stats-{{ section.id }} {
       padding-top: 48px;
@@ -188,6 +217,15 @@
           {% endfor %}
         </ul>
       {% endif %}
+
+      {% if section.settings.button_text != blank %}
+        <a
+          class="proteina-stats-cta-{{ section.id }}"
+          href="{{ section.settings.button_link | default: '#' }}"
+        >
+          {{ section.settings.button_text }}
+        </a>
+      {% endif %}
     </div>
   </div>
 </div>
@@ -264,6 +302,33 @@
       "id": "stat_description_color",
       "label": "Cor da descrição do stat",
       "default": "#8A8A8A"
+    },
+    {
+      "type": "header",
+      "content": "Botão (CTA)"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto do botão",
+      "default": "Quero experimentar"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link do botão"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Cor do botão",
+      "default": "#EC0F6E"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Cor do texto do botão",
+      "default": "#FFFFFF"
     },
     {
       "type": "header",

@@ -63,16 +63,21 @@
       "settings": {
         "image": "shopify://shop_images/teste_pure_genius.webp",
         "eyebrow": "",
-        "eyebrow_color": "#0094F6",
+        "eyebrow_color": "#0094f6",
         "title_line_1": "Não é milagre",
         "title_line_2": "É ciência",
         "title_line_3": "",
-        "title_color": "#FAF7EF",
-        "title_accent_color": "#0094F6",
+        "title_color": "#faf7ef",
+        "title_accent_color": "#0094f6",
         "paragraph": "Toda proteína que você toma é desmontada em peças. São essas peças que viram músculo, pele, cabelo e unha.",
-        "paragraph_color": "#EFEAE0",
-        "badge_color": "#EFEAE0"
+        "paragraph_color": "#efeae0",
+        "badge_color": "#efeae0"
       }
+    },
+    "blocks_hcegWK": {
+      "type": "_blocks",
+      "name": "Ciência do produto",
+      "settings": {}
     },
     "proteina_stats_qCdtJk": {
       "type": "proteina-stats",
@@ -122,56 +127,15 @@
         "image_position": "right",
         "heading": "PROTEÍNA SEM A PARTE CHATA",
         "paragraph": "<p>Um shake em pó exige medidor, shaker, água e 3 minutos. A Shotz exige um gesto: abrir. Mesma proteína completa, um décimo do esforço.</p>",
-        "background_color": "#F8F3EC",
+        "background_color": "#f8f3ec",
         "heading_color": "#000000",
-        "paragraph_color": "#A3A3A3",
-        "accent_color": "#EC0F6E",
-        "stat_title_color": "#FFFFFF",
-        "stat_description_color": "#8A8A8A",
+        "paragraph_color": "#a3a3a3",
+        "accent_color": "#ec0f6e",
+        "stat_title_color": "#ffffff",
+        "stat_description_color": "#8a8a8a",
         "padding_top": 80,
         "padding_bottom": 80
       }
-    },
-    "blocks_hcegWK": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_6715145_Kfeb7E": {
-          "type": "ai_gen_block_6715145",
-          "settings": {
-            "layout": "image-right",
-            "background_color": "#ffffff",
-            "title": "A Ciência do SHOTZ",
-            "title_size": 48,
-            "title_color": "#000000",
-            "subtitle": "Proteína de alta qualidade em formato prático",
-            "subtitle_size": 24,
-            "subtitle_color": "#666666",
-            "text": "<p>Nossos shots de proteína são formulados com ingredientes de alta qualidade para fornecer nutrição rápida e eficaz. Cada shot contém proteína de absorção rápida, ideal para recuperação muscular e energia sustentada.</p>",
-            "text_size": 16,
-            "text_color": "#333333",
-            "image": "shopify://shop_images/teste1231_1.png",
-            "image_border_radius": 12,
-            "background_image_opacity": 0.3,
-            "button_text": "Saiba mais",
-            "button_link": "",
-            "button_text_size": 16,
-            "button_background": "#0a84ff",
-            "button_text_color": "#ffffff",
-            "button_border_color": "#0a84ff",
-            "button_border_width": 0,
-            "button_border_radius": 14,
-            "button_hover_background": "#0070d2",
-            "button_hover_text_color": "#ffffff",
-            "button_hover_border_color": "#0070d2"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_6715145_Kfeb7E"
-      ],
-      "name": "Ciência do produto",
-      "settings": {}
     }
   },
   "order": [

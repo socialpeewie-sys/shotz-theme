@@ -371,12 +371,47 @@
       ],
       "name": "Hero com benefícios",
       "settings": {}
+    },
+    "shotz_numeros_kR9xTq": {
+      "type": "shotz-numeros",
+      "blocks": {
+        "numero_a1": {
+          "type": "numero",
+          "settings": { "number": "21", "unit": "g", "label": "Proteína de qualidade" }
+        },
+        "numero_a2": {
+          "type": "numero",
+          "settings": { "number": "100", "unit": "ml", "label": "Pronto pra tomar" }
+        },
+        "numero_a3": {
+          "type": "numero",
+          "settings": { "number": "0", "unit": "g", "label": "Açúcar" }
+        },
+        "numero_a4": {
+          "type": "numero",
+          "settings": { "number": "0", "unit": "g", "label": "Lactose" }
+        },
+        "numero_a5": {
+          "type": "numero",
+          "settings": { "number": "5", "unit": "s", "label": "Do bolso ao gole" }
+        }
+      },
+      "block_order": [
+        "numero_a1",
+        "numero_a2",
+        "numero_a3",
+        "numero_a4",
+        "numero_a5"
+      ],
+      "name": "Números em destaque",
+      "settings": {}
     }
   },
   "order": [
     "hero_banner_xf8AGM",
     "stats_bar_np8Egw",
     "blocks_rCKAQq",
+    "shotz_numeros_kR9xTq",
     "variants_grid_dNm8hc",
     "17824113349f43bc3c",
     "shotz_choose_yours_Gp37ig",

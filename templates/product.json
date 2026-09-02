@@ -1346,16 +1346,16 @@
             "attr_6_shotz": true,
             "attr_6_whey": false,
             "attr_6_collagen": true,
-            "shotz_column_bg_color": "#CBFF00",
+            "shotz_column_bg_color": "#F8F3EC",
             "shotz_column_text_color": "#000000",
-            "check_icon_color": "#CBFF00",
-            "check_icon_stroke": "#000000",
+            "check_icon_color": "#0094F6",
+            "check_icon_stroke": "#FFFFFF",
             "cross_icon_color": "#FF6B5A",
             "cross_icon_stroke": "#FFFFFF",
             "background_image_opacity": 20,
-            "table_background_color": "#0D0D0D",
-            "table_text_color": "#FFFFFF",
-            "table_border_radius": 20
+            "table_background_color": "#F8F3EC",
+            "table_text_color": "#000000",
+            "table_border_radius": 16
           },
           "blocks": {}
         }

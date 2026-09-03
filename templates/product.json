@@ -565,7 +565,7 @@
           "settings": {
             "number": "21g de proteína",
             "title": "",
-            "description": "Perfil completo de aminoácidos essenciais, incluindo 2,7g de leucina."
+            "description": "Proteína enriquecida com aminoácidos essenciais"
           }
         },
         "stat_WEaiLW": {
@@ -573,7 +573,7 @@
           "settings": {
             "number": "100ml. Dois goles. 5 segundos",
             "title": "",
-            "description": "Proteína que te deixa pesado, lento ou inchado é proteína que você vai pular na segunda semana. A nossa precisava ser leve o suficiente para ser consumida entre reuniões, antes do treino ou em jejum."
+            "description": "Proteína que deixa pesado é proteína que você abandona na segunda semana. Essa cabe entre reuniões, antes do treino ou em jejum."
           }
         },
         "stat_BTiEFK": {
@@ -581,7 +581,7 @@
           "settings": {
             "number": "Fácil e saboroso",
             "title": "",
-            "description": "Sem coqueteleira, sem liquidificador, sem preparo, sem limpeza e sem giz. Tinha que ser gostoso o suficiente para você querer tomar nos dias em que não estiver com vontade."
+            "description": "Sem coqueteleira, sem preparo, sem limpeza, sem gosto de giz. Gostoso o suficiente pros dias em que você não está com vontade."
           }
         }
       },
@@ -592,16 +592,20 @@
       ],
       "name": "Proteína Stats",
       "settings": {
-        "image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0525_1.jpg",
+        "image": "shopify://shop_images/teste_pure_genius.webp",
         "image_position": "right",
         "heading": "UM JEITO MAIS SIMPLES E FÁCIL DE TOMAR SUA PROTEÍNA",
-        "paragraph": "<h5>A maioria das pessoas não bate a meta de proteína por falta de disciplina, mas porque os produtos dão trabalho demais: preparar, lavar coqueteleira, encarar textura farinhenta, barrinha derretida na mochila. É isso que faz você desistir no meio do caminho.</h5><h5>Então a gente foi por outro caminho: 18g de proteína em 100ml, textura de bebida leve, pra qualquer hora do dia. Abre, bebe, segue. Porque a melhor proteína é a que você realmente toma — e o Shotz existe pra tornar isso fácil.</h5>",
+        "paragraph": "<h5>Ninguém deixa de bater a meta de proteína por falta de disciplina. Deixa porque o produto dá trabalho: preparar, lavar coqueteleira, encarar textura farinhenta, barrinha derretida na mochila.</h5><h5>Então fomos por outro caminho: 21g de proteína em 100ml, textura de bebida leve, pra qualquer hora. Abre, bebe, segue. A melhor proteína é a que você realmente toma.</h5>",
         "background_color": "#ffffff",
         "heading_color": "#000000",
         "paragraph_color": "#696565",
         "accent_color": "#119be5",
         "stat_title_color": "#000000",
         "stat_description_color": "#8a8a8a",
+        "button_text": "Quero experimentar",
+        "button_link": "",
+        "button_bg_color": "#ec0f6e",
+        "button_text_color": "#ffffff",
         "padding_top": 80,
         "padding_bottom": 80
       }

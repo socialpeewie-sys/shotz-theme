@@ -135,12 +135,13 @@
 
   @media screen and (max-width: 749px) {
     .proteina-stats-{{ section.id }} {
-      padding-top: 48px;
-      padding-bottom: 48px;
+      padding-top: 32px;
+      padding-bottom: 32px;
     }
 
     .proteina-stats-container-{{ section.id }} {
       flex-direction: column;
+      gap: 24px;
     }
 
     .proteina-stats-image-col-{{ section.id }},
@@ -150,11 +151,39 @@
     }
 
     .proteina-stats-headline-{{ section.id }} {
-      font-size: 32px;
+      font-size: 28px;
+      line-height: 1.1;
+    }
+
+    .proteina-stats-paragraph-{{ section.id }} {
+      margin-top: 12px;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .proteina-stats-list-{{ section.id }} {
+      margin-top: 24px;
+    }
+
+    .proteina-stats-item-{{ section.id }} {
+      padding: 16px 0;
     }
 
     .proteina-stats-number-{{ section.id }} {
-      font-size: 32px;
+      font-size: 28px;
+    }
+
+    .proteina-stats-stat-title-{{ section.id }} {
+      margin-top: 6px;
+    }
+
+    .proteina-stats-stat-description-{{ section.id }} {
+      font-size: 13px;
+    }
+
+    .proteina-stats-cta-{{ section.id }} {
+      margin-top: 28px;
+      width: 100%;
     }
   }
 {% endstyle %}

@@ -11,14 +11,12 @@
     flex-direction: {% if section.settings.image_position == 'right' %}row-reverse{% else %}row{% endif %};
     align-items: stretch;
     gap: 48px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    width: 100%;
   }
 
   .proteina-stats-image-col-{{ section.id }} {
-    flex: 0 0 42%;
-    max-width: 42%;
+    flex: 0 0 46%;
+    max-width: 46%;
   }
 
   .proteina-stats-image-{{ section.id }} {
@@ -26,23 +24,37 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 12px;
+    {% if section.settings.image_position == 'right' %}
+      border-radius: 12px 0 0 12px;
+    {% else %}
+      border-radius: 0 12px 12px 0;
+    {% endif %}
   }
 
   .proteina-stats-image-placeholder-{{ section.id }} {
     width: 100%;
     height: 100%;
     min-height: 320px;
-    border-radius: 12px;
+    {% if section.settings.image_position == 'right' %}
+      border-radius: 12px 0 0 12px;
+    {% else %}
+      border-radius: 0 12px 12px 0;
+    {% endif %}
     background-color: rgba(255, 255, 255, 0.05);
   }
 
   .proteina-stats-content-col-{{ section.id }} {
-    flex: 0 0 58%;
-    max-width: 58%;
+    flex: 1 1 auto;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    box-sizing: border-box;
+    {% if section.settings.image_position == 'right' %}
+      padding-left: max(20px, calc((100vw - 1200px) / 2 + 20px));
+    {% else %}
+      padding-right: max(20px, calc((100vw - 1200px) / 2 + 20px));
+    {% endif %}
   }
 
   .proteina-stats-headline-{{ section.id }} {
@@ -142,12 +154,23 @@
     .proteina-stats-container-{{ section.id }} {
       flex-direction: column;
       gap: 24px;
+      padding: 0 20px;
     }
 
     .proteina-stats-image-col-{{ section.id }},
     .proteina-stats-content-col-{{ section.id }} {
       flex: 1 1 100%;
       max-width: 100%;
+    }
+
+    .proteina-stats-content-col-{{ section.id }} {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .proteina-stats-image-{{ section.id }},
+    .proteina-stats-image-placeholder-{{ section.id }} {
+      border-radius: 12px;
     }
 
     .proteina-stats-headline-{{ section.id }} {

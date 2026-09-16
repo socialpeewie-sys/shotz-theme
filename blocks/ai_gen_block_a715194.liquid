@@ -13,71 +13,73 @@
     width: {{ block.settings.desktop_width_percent }}%;
     max-width: 100%;
     font-family: var(--font-paragraph--family, 'Plus Jakarta Sans', sans-serif);
-  }
-
-  /* ---- Segmented control container ---- */
-  .ai-tabs__nav-{{ ai_gen_id }} {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* ---- Cada item do acordeão ---- */
+  .ai-tabs__item-{{ ai_gen_id }} {
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    border-radius: var(--style-border-radius-buttons-primary, {{ block.settings.border_radius }}px);
+    background-color: {{ block.settings.background_color }};
+    overflow: hidden;
+  }
+
+  /* ---- Cabeçalho clicável (título + setinha) ---- */
+  .ai-tabs__header-{{ ai_gen_id }} {
+    width: 100%;
+    display: flex;
     align-items: center;
-    background: rgba(0, 0, 0, 0.06);
-    border-radius: var(--style-border-radius-buttons-primary, 14px);
-    padding: 4px;
-    gap: 2px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    margin-bottom: 16px;
-  }
-
-  .ai-tabs__nav-{{ ai_gen_id }}::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* ---- Each tab = pill button ---- */
-  .ai-tabs__tab-{{ ai_gen_id }} {
-    flex: none;
-    padding: 9px 16px;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
     background: transparent;
     border: none;
-    border-radius: calc(var(--style-border-radius-buttons-primary, 14px) - 2px);
     cursor: pointer;
-    text-align: center;
-    white-space: nowrap;
+    text-align: left;
     font-family: var(--font-paragraph--family, 'Plus Jakarta Sans', sans-serif);
     font-size: {{ block.settings.title_size }}px;
     font-weight: {{ block.settings.title_weight }};
-    color: var(--color-foreground, {{ block.settings.title_color }});
-    letter-spacing: 0.01em;
-    transition: background 0.18s ease, box-shadow 0.18s ease, color 0.18s ease;
-  }
-
-  .ai-tabs__tab-{{ ai_gen_id }}:hover:not(.active) {
-    background: rgba(255, 255, 255, 0.45);
-  }
-
-  .ai-tabs__tab-{{ ai_gen_id }}.active {
-    background: #ffffff;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.14), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
     color: {{ block.settings.title_color }};
+    letter-spacing: 0.01em;
+    transition: background 0.18s ease;
+  }
+
+  .ai-tabs__header-{{ ai_gen_id }}:hover {
+    background: {{ block.settings.header_hover_background }};
+  }
+
+  .ai-tabs__header-{{ ai_gen_id }}[aria-expanded="true"] {
     font-weight: {{ block.settings.title_weight | plus: 100 }};
   }
 
-  /* ---- Content panels ---- */
+  /* ---- Setinha ---- */
+  .ai-tabs__arrow-{{ ai_gen_id }} {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    color: {{ block.settings.title_color }};
+    transition: transform 0.25s ease;
+  }
+
+  .ai-tabs__header-{{ ai_gen_id }}[aria-expanded="true"] .ai-tabs__arrow-{{ ai_gen_id }} {
+    transform: rotate(180deg);
+  }
+
+  /* ---- Conteúdo colapsável ---- */
   .ai-tabs__panel-{{ ai_gen_id }} {
-    display: none;
-    padding: {{ block.settings.padding }}px;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+  }
+
+  .ai-tabs__panel-inner-{{ ai_gen_id }} {
+    padding: 0 {{ block.settings.padding }}px {{ block.settings.padding }}px;
     font-family: var(--font-paragraph--family, 'Plus Jakarta Sans', sans-serif);
     font-size: {{ block.settings.content_size }}px;
     line-height: 1.6;
     color: {{ block.settings.content_color }};
-    background-color: {{ block.settings.background_color }};
-    border: {{ block.settings.border_width }}px solid rgba(0, 0, 0, 0.07);
-    border-radius: var(--style-border-radius-buttons-primary, 14px);
-  }
-
-  .ai-tabs__panel-{{ ai_gen_id }}.active {
-    display: block;
   }
 
   .ai-tabs__image-{{ ai_gen_id }} {
@@ -93,18 +95,9 @@
       width: 100%;
     }
 
-    /* Scroll horizontal suave — abas nunca quebram linha.
-       O mask cria um fade na borda direita, sinalizando que há mais abas. */
-    .ai-tabs__nav-{{ ai_gen_id }} {
-      flex-wrap: nowrap;
-      border-radius: 12px;
-      -webkit-mask-image: linear-gradient(to right, #000 88%, transparent 100%);
-      mask-image: linear-gradient(to right, #000 88%, transparent 100%);
-    }
-
-    .ai-tabs__tab-{{ ai_gen_id }} {
-      font-size: {{ block.settings.title_size | minus: 2 }}px;
-      padding: 8px 11px;
+    .ai-tabs__header-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | minus: 1 }}px;
+      padding: 13px 14px;
     }
   }
 {% endstyle %}
@@ -113,74 +106,97 @@
   class="ai-tabs-{{ ai_gen_id }}"
   {{ block.shopify_attributes }}
 >
-  <!-- Tab navigation -->
-  <div class="ai-tabs__nav-{{ ai_gen_id }}" role="tablist">
+  <!-- Item 1 -->
+  <div class="ai-tabs__item-{{ ai_gen_id }}">
     <button
-      class="ai-tabs__tab-{{ ai_gen_id }} active"
-      role="tab"
-      aria-selected="true"
+      class="ai-tabs__header-{{ ai_gen_id }}"
+      type="button"
+      aria-expanded="false"
+      aria-controls="ai-panel-{{ ai_gen_id }}-0"
       data-tab="0"
-      type="button"
-    >{{ block.settings.title_1 }}</button>
+    >
+      <span>{{ block.settings.title_1 }}</span>
+      <svg class="ai-tabs__arrow-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="ai-tabs__panel-{{ ai_gen_id }}" id="ai-panel-{{ ai_gen_id }}-0" role="region" data-panel="0">
+      <div class="ai-tabs__panel-inner-{{ ai_gen_id }}">
+        {% if block.settings.image_1 %}
+          <img
+            src="{{ block.settings.image_1 | image_url: width: 800 }}"
+            alt="{{ block.settings.image_1.alt | escape }}"
+            class="ai-tabs__image-{{ ai_gen_id }}"
+            loading="lazy"
+            width="{{ block.settings.image_1.width }}"
+            height="{{ block.settings.image_1.height }}"
+          >
+        {% endif %}
+        {{ block.settings.content_1 }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Item 2 -->
+  <div class="ai-tabs__item-{{ ai_gen_id }}">
     <button
-      class="ai-tabs__tab-{{ ai_gen_id }}"
-      role="tab"
-      aria-selected="false"
+      class="ai-tabs__header-{{ ai_gen_id }}"
+      type="button"
+      aria-expanded="false"
+      aria-controls="ai-panel-{{ ai_gen_id }}-1"
       data-tab="1"
-      type="button"
-    >{{ block.settings.title_2 }}</button>
+    >
+      <span>{{ block.settings.title_2 }}</span>
+      <svg class="ai-tabs__arrow-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="ai-tabs__panel-{{ ai_gen_id }}" id="ai-panel-{{ ai_gen_id }}-1" role="region" data-panel="1">
+      <div class="ai-tabs__panel-inner-{{ ai_gen_id }}">
+        {% if block.settings.image_2 %}
+          <img
+            src="{{ block.settings.image_2 | image_url: width: 800 }}"
+            alt="{{ block.settings.image_2.alt | escape }}"
+            class="ai-tabs__image-{{ ai_gen_id }}"
+            loading="lazy"
+            width="{{ block.settings.image_2.width }}"
+            height="{{ block.settings.image_2.height }}"
+          >
+        {% endif %}
+        {{ block.settings.content_2 }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Item 3 -->
+  <div class="ai-tabs__item-{{ ai_gen_id }}">
     <button
-      class="ai-tabs__tab-{{ ai_gen_id }}"
-      role="tab"
-      aria-selected="false"
-      data-tab="2"
+      class="ai-tabs__header-{{ ai_gen_id }}"
       type="button"
-    >{{ block.settings.title_3 }}</button>
-  </div>
-
-  <!-- Panel 1 -->
-  <div class="ai-tabs__panel-{{ ai_gen_id }} active" role="tabpanel" data-panel="0">
-    {% if block.settings.image_1 %}
-      <img
-        src="{{ block.settings.image_1 | image_url: width: 800 }}"
-        alt="{{ block.settings.image_1.alt | escape }}"
-        class="ai-tabs__image-{{ ai_gen_id }}"
-        loading="lazy"
-        width="{{ block.settings.image_1.width }}"
-        height="{{ block.settings.image_1.height }}"
-      >
-    {% endif %}
-    {{ block.settings.content_1 }}
-  </div>
-
-  <!-- Panel 2 -->
-  <div class="ai-tabs__panel-{{ ai_gen_id }}" role="tabpanel" data-panel="1">
-    {% if block.settings.image_2 %}
-      <img
-        src="{{ block.settings.image_2 | image_url: width: 800 }}"
-        alt="{{ block.settings.image_2.alt | escape }}"
-        class="ai-tabs__image-{{ ai_gen_id }}"
-        loading="lazy"
-        width="{{ block.settings.image_2.width }}"
-        height="{{ block.settings.image_2.height }}"
-      >
-    {% endif %}
-    {{ block.settings.content_2 }}
-  </div>
-
-  <!-- Panel 3 -->
-  <div class="ai-tabs__panel-{{ ai_gen_id }}" role="tabpanel" data-panel="2">
-    {% if block.settings.image_3 %}
-      <img
-        src="{{ block.settings.image_3 | image_url: width: 800 }}"
-        alt="{{ block.settings.image_3.alt | escape }}"
-        class="ai-tabs__image-{{ ai_gen_id }}"
-        loading="lazy"
-        width="{{ block.settings.image_3.width }}"
-        height="{{ block.settings.image_3.height }}"
-      >
-    {% endif %}
-    {{ block.settings.content_3 }}
+      aria-expanded="false"
+      aria-controls="ai-panel-{{ ai_gen_id }}-2"
+      data-tab="2"
+    >
+      <span>{{ block.settings.title_3 }}</span>
+      <svg class="ai-tabs__arrow-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="ai-tabs__panel-{{ ai_gen_id }}" id="ai-panel-{{ ai_gen_id }}-2" role="region" data-panel="2">
+      <div class="ai-tabs__panel-inner-{{ ai_gen_id }}">
+        {% if block.settings.image_3 %}
+          <img
+            src="{{ block.settings.image_3 | image_url: width: 800 }}"
+            alt="{{ block.settings.image_3.alt | escape }}"
+            class="ai-tabs__image-{{ ai_gen_id }}"
+            loading="lazy"
+            width="{{ block.settings.image_3.width }}"
+            height="{{ block.settings.image_3.height }}"
+          >
+        {% endif %}
+        {{ block.settings.content_3 }}
+      </div>
+    </div>
   </div>
 </accordion-menu-{{ ai_gen_id }}>
 
@@ -188,20 +204,52 @@
   (function() {
     class AccordionMenu{{ ai_gen_id }} extends HTMLElement {
       connectedCallback() {
-        this.tabs   = Array.from(this.querySelectorAll('.ai-tabs__tab-{{ ai_gen_id }}'));
-        this.panels = Array.from(this.querySelectorAll('.ai-tabs__panel-{{ ai_gen_id }}'));
-        this.tabs.forEach((tab, i) => {
-          tab.addEventListener('click', () => this.#activate(i));
+        this.headers = Array.from(this.querySelectorAll('.ai-tabs__header-{{ ai_gen_id }}'));
+        this.allowMultiple = {% if block.settings.allow_multiple %}true{% else %}false{% endif %};
+
+        this.headers.forEach((header) => {
+          const panel = header.nextElementSibling;
+          header.addEventListener('click', () => this.#toggle(header, panel));
         });
+
+        // Reajusta a altura ao redimensionar a janela (conteúdo aberto)
+        window.addEventListener('resize', () => this.#refresh());
       }
 
-      #activate(index) {
-        this.tabs.forEach((t, i) => {
-          const active = i === index;
-          t.classList.toggle('active', active);
-          t.setAttribute('aria-selected', active ? 'true' : 'false');
+      #toggle(header, panel) {
+        const isOpen = header.getAttribute('aria-expanded') === 'true';
+
+        if (!this.allowMultiple && !isOpen) {
+          // Fecha os demais antes de abrir este
+          this.headers.forEach((h) => {
+            if (h !== header) this.#close(h, h.nextElementSibling);
+          });
+        }
+
+        if (isOpen) {
+          this.#close(header, panel);
+        } else {
+          this.#open(header, panel);
+        }
+      }
+
+      #open(header, panel) {
+        header.setAttribute('aria-expanded', 'true');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+
+      #close(header, panel) {
+        header.setAttribute('aria-expanded', 'false');
+        panel.style.maxHeight = null;
+      }
+
+      #refresh() {
+        this.headers.forEach((header) => {
+          if (header.getAttribute('aria-expanded') === 'true') {
+            const panel = header.nextElementSibling;
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+          }
         });
-        this.panels.forEach((p, i) => p.classList.toggle('active', i === index));
       }
     }
 
@@ -278,6 +326,16 @@
       "id": "content_3",
       "label": "Conteúdo",
       "default": "<p>Insira aqui a descrição do produto.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Comportamento"
+    },
+    {
+      "type": "checkbox",
+      "id": "allow_multiple",
+      "label": "Permitir vários itens abertos ao mesmo tempo",
+      "default": false
     },
     {
       "type": "header",

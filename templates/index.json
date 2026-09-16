@@ -65,15 +65,15 @@
       "settings": {
         "image": "shopify://shop_images/WhatsApp_Image_2026-05-18_at_22.51.51.jpg",
         "eyebrow": "O primeiro shot de proteína do Brasil",
-        "eyebrow_color": "#FFFFFF",
+        "eyebrow_color": "#ffffff",
         "title_line_1": "Pequeno no tamanho",
         "title_line_2": "Grande nos resultados",
         "title_line_3": "",
         "title_color": "#faf7ef",
         "title_accent_color": "#0094f6",
         "paragraph": "100ml. 21 gramas de proteína. \nA proteína que realmente facilita sua rotina",
-        "paragraph_color": "#FFFFFF",
-        "badge_color": "#FFFFFF"
+        "paragraph_color": "#ffffff",
+        "badge_color": "#ffffff"
       }
     },
     "shotz_numeros_LEgDf3": {
@@ -122,12 +122,12 @@
       "settings": {
         "heading": "Pequenas escolhas, grandes resultados",
         "subtitle": "Uma rotina que você mantém vale mais que a perfeita que você abandona. Consistência é a chave.",
-        "background_color": "#FAF7EF",
-        "heading_color": "#1A2740",
-        "subtitle_color": "#5A6273",
-        "number_color": "#1A2740",
-        "accent_color": "#0094F6",
-        "label_color": "#1A2740",
+        "background_color": "#faf7ef",
+        "heading_color": "#1a2740",
+        "subtitle_color": "#5a6273",
+        "number_color": "#1a2740",
+        "accent_color": "#0094f6",
+        "label_color": "#1a2740",
         "heading_size": 44,
         "subtitle_size": 16,
         "number_size": 64,
@@ -170,7 +170,7 @@
           "type": "ai_gen_block_0453d40",
           "settings": {
             "image_position": "left",
-            "background_color": "#F8F3EC",
+            "background_color": "#f8f3ec",
             "product_image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0525_4.jpg",
             "image_background_color": "#f5f5f5",
             "image_border_radius": 20,
@@ -178,16 +178,16 @@
             "subtitle": "A proteína que dá match com a sua rotina",
             "box_subtitle_color": "#0a84ff",
             "box_1_subtitle": "100ML. Dois goles. 5 segundos",
-            "box_1_text": "Proteína pronta para beber. Abre, bebe e segue o dia — sem coqueteleira, sem bagunça, sem preparo.",
-            "box_2_subtitle": "Zero tudo. SHOTZ tem apenas o que você busca",
-            "box_2_text": "Fórmula exclusiva trazendo proteína enriquecida do colágeno com todos aminoácidos.\nZero lactose, gorduras, carboidratos e açúcares",
-            "box_3_subtitle": "Sem shake, sem sujeira e sem trabalho",
-            "box_3_text": "100ml prontos para tomar. Abre, bebe e segue o dia — sem coqueteleira, sem bagunça, sem preparo.",
-            "box_4_subtitle": "Proteína completa de verdade",
-            "box_4_text": "21g de proteína de alta qualidade, enriquecida com todos os aminoácidos essenciais para recuperar e construir músculo.",
+            "box_1_text": "Proteína pronta para beber. Abre, bebe e segue o dia.\nSem coqueteleira, sem bagunça, sem preparo.",
+            "box_2_subtitle": "SHOTZ tem apenas o que você busca. PROTEÍNA",
+            "box_2_text": "Fórmula exclusiva trazendo proteína enriquecida do colágeno com todos aminoácidos essenciais.",
+            "box_3_subtitle": "A proteína feita para sua rotina",
+            "box_3_text": "100ml prontos para tomar. Com gelo ou sem gelo. Na corrida, no treino, no trabalho, no café ou até mesmo antes do jantar.",
+            "box_4_subtitle": "",
+            "box_4_text": "",
             "button_text": "EXPERIMENTE AGORA",
             "button_link": "",
-            "button_bg_color": "#1B2030",
+            "button_bg_color": "#1b2030",
             "button_text_color": "#ffffff"
           },
           "blocks": {}
@@ -348,6 +348,20 @@
       "name": "Comparativo",
       "settings": {}
     },
+    "divider_DryE3e": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      }
+    },
     "shotz_choose_yours_Gp37ig": {
       "type": "shotz-choose-yours",
       "blocks": {
@@ -356,7 +370,7 @@
           "settings": {
             "product": "shot-frutas-amarelas",
             "variant_sku": "",
-            "subtitle": "21g de proteína · 100ml",
+            "subtitle": "23g de proteína · 100ml",
             "button_label": "EXPERIMENTE AGORA",
             "accent_color": "#f5b301",
             "button_text_color": "#111111"
@@ -382,7 +396,7 @@
       "settings": {
         "eyebrow_text": "",
         "heading": "Escolha o seu",
-        "background_color": "#F8F3EC",
+        "background_color": "#f8f3ec",
         "text_color": "#111111",
         "secondary_text_color": "#777777",
         "padding_block": 16,
@@ -400,24 +414,24 @@
           "type": "ai_gen_block_0453d40",
           "settings": {
             "image_position": "left",
-            "background_color": "#F8F3EC",
+            "background_color": "#f8f3ec",
             "product_image": "shopify://shop_images/5539c8cf-856d-4601-b6d1-1cdbc0e09587.jpg",
             "image_background_color": "#f5f5f5",
             "image_border_radius": 20,
             "headline": "A CIÊNCIA POR TRÁS",
-            "subtitle": "A proteína que dá match com a sua rotina",
+            "subtitle": "Trabalhamos com engenheiros e cientistas para buscar a melhor fórmula do mercado quando se trata de bebidas proteicas.",
             "box_subtitle_color": "#0a84ff",
-            "box_1_subtitle": "",
+            "box_1_subtitle": "A opção mais saudável também pode ser a mais fácil.",
             "box_1_text": "",
             "box_2_subtitle": "",
             "box_2_text": "",
-            "box_3_subtitle": "Sem shake, sem sujeira e sem trabalho",
+            "box_3_subtitle": "",
             "box_3_text": "",
             "box_4_subtitle": "",
             "box_4_text": "",
-            "button_text": "EXPERIMENTE AGORA",
-            "button_link": "",
-            "button_bg_color": "#1B2030",
+            "button_text": "A CIÊNCIA",
+            "button_link": "shopify://pages/a-ciencia-por-tras-da-shotz",
+            "button_bg_color": "#000000",
             "button_text_color": "#ffffff"
           },
           "blocks": {}
@@ -428,20 +442,6 @@
       ],
       "name": "Hero com benefícios",
       "settings": {}
-    },
-    "divider_DryE3e": {
-      "type": "divider",
-      "name": "t:names.divider_section",
-      "settings": {
-        "color_scheme": "",
-        "section_width": "full-width",
-        "thickness": 1,
-        "corner_radius": "square",
-        "width_percent": 100,
-        "alignment_horizontal": "center",
-        "padding-block-start": 16,
-        "padding-block-end": 16
-      }
     }
   },
   "order": [

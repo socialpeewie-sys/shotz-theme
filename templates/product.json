@@ -463,10 +463,10 @@
               "type": "ai_gen_block_a715194",
               "settings": {
                 "title_1": "Ingredientes",
-                "content_1": "<p>Ingredientes: água, colágeno hidrolisado, mix exclusivo de aminoácidos (L-leucina, L-valina, L-isoleucina, L-lisina, L-fenilalanina, L-metionina, L-histidina, L-treonina, L-triptofano e L-cistina), acidulantes ácido cítrico e ácido málico, aromatizantes, edulcorante sucralose, conservantes: benzoato de sódio e sorbato de potássio, corante artificial betacaroteno. <strong>NÃO CONTÉM GLÚTEN</strong>. </p>",
+                "content_1": "<p>Ingredientes: água, colágeno hidrolisado, mix exclusivo de aminoácidos (L-leucina, L-valina, L-isoleucina, L-lisina, L-fenilalanina, L-metionina, L-histidina, L-treonina, L-triptofano e L-cistina), acidulantes ácido cítrico e ácido málico, aromatizantes, edulcorante sucralose, conservantes: benzoato de sódio e sorbato de potássio, corante artificial betacaroteno. <br/><strong>NÃO CONTÉM GLÚTEN</strong>. <br/><strong>ALÉRGICOS: PODE CONTER SOJA. </strong></p>",
                 "title_2": "Informações nutricionais",
                 "image_2": "shopify://shop_images/3c7a48d3d9cb2e057511154795803bf16d736441ac351e149fa02131d83958f8.png",
-                "content_2": "",
+                "content_2": "<p>Validade: 12 meses<br/><br/>Manter em local seco, fresco e ao abrigo da luz. Após aberto, consumir imediatamente<br/><br/></p>",
                 "title_3": "Descrição do produto",
                 "content_3": "<p>A Shotz é diferente de qualquer proteína que você já experimentou. É um shot proteico com<strong> 23g de proteína de alta qualidade</strong> e todos os aminoácidos essenciais em uma <strong>garrafa de 100ml</strong>, criado para rotinas corridas, viagens, longos turnos de trabalho, dias de pouco apetite e tudo mais. Tem sabor de suco, sem textura arenosa e sem causar sensação de estufamento. As pessoas costumam se surpreender com o quão fácil, prática e conveniente é consumir 23g de proteína.<br/><br/></p>",
                 "allow_multiple": false,
@@ -797,7 +797,7 @@
             "accordion_row_8cfHPH": {
               "type": "_accordion-row",
               "settings": {
-                "heading": "Qual é a política de devolução?",
+                "heading": "O que é uma proteína completa?",
                 "open_by_default": false,
                 "icon": "none",
                 "width": 20

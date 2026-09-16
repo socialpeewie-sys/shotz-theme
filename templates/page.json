@@ -69,7 +69,7 @@
         "title_line_3": "",
         "title_color": "#faf7ef",
         "title_accent_color": "#0094f6",
-        "paragraph": "Toda proteína que você toma é desmontada em peças. São essas peças que viram músculo, pele, cabelo e unha.",
+        "paragraph": "23g de proteína, 100 calorias. O hábito diário de consumir proteína que realmente funciona.",
         "paragraph_color": "#efeae0",
         "badge_color": "#efeae0"
       }
@@ -82,16 +82,25 @@
     "proteina_stats_qCdtJk": {
       "type": "proteina-stats",
       "blocks": {
+        "stat_PA8gD4": {
+          "type": "stat",
+          "settings": {
+            "number": "18g",
+            "title": "Título do stat",
+            "description": ""
+          }
+        },
         "stat_Lbe8dh": {
           "type": "stat",
           "settings": {
             "number": "FOI AÍ QUE FIZEMOS DIFERENTE",
             "title": "",
-            "description": "Pegamos o melhor do colágeno e completamos exatamente o que faltava. O resultado não é colágeno com proteína — é colágeno transformado em proteína completa, com 21g em 100ml e apenas 73kcal. E o perfil de aminoácidos foi medido e comprovado em laboratório."
+            "description": "Pegamos o melhor do colágeno e completamos exatamente o que faltava. O resultado não é colágeno com proteína — é colágeno transformado em proteína completa. E o perfil de aminoácidos foi medido e comprovado em laboratório."
           }
         }
       },
       "block_order": [
+        "stat_PA8gD4",
         "stat_Lbe8dh"
       ],
       "name": "Proteína Stats",
@@ -99,7 +108,7 @@
         "image": "shopify://shop_images/af22152a7bfeedd9ce4d0cdab856ad3d.jpg",
         "image_position": "right",
         "heading": "O QUE NOS DIFERENCIA DOS DEMAIS?",
-        "paragraph": "<p>Você já tomou colágeno achando que estava tomando proteína. Ele tem benefícios reais, mas sozinho não entrega as nove peças essenciais: é como uma receita de bolo sem fermento. Todos os outros ingredientes estão lá, o bolo só não cresce.</p>",
+        "paragraph": "<p>Você já tomou colágeno achando que estava tomando proteína para seu músculo. Ele tem benefícios reais, mas sozinho não entrega as nove peças essenciais: é como uma receita de bolo sem fermento. Todos os outros ingredientes estão lá, o bolo só não cresce.</p>",
         "background_color": "#ffffff",
         "heading_color": "#000000",
         "paragraph_color": "#a3a3a3",

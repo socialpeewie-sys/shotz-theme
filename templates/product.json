@@ -469,6 +469,7 @@
                 "content_2": "",
                 "title_3": "Descrição do produto",
                 "content_3": "<p>A Shotz é diferente de qualquer proteína que você já experimentou. É um shot proteico com<strong> 23g de proteína de alta qualidade</strong> e todos os aminoácidos essenciais em uma <strong>garrafa de 100ml</strong>, criado para rotinas corridas, viagens, longos turnos de trabalho, dias de pouco apetite e tudo mais. Tem sabor de suco, sem textura arenosa e sem causar sensação de estufamento. As pessoas costumam se surpreender com o quão fácil, prática e conveniente é consumir 23g de proteína.<br/><br/></p>",
+                "allow_multiple": false,
                 "desktop_width_percent": 100,
                 "padding": 10,
                 "background_color": "#ffffff",
@@ -564,7 +565,7 @@
         "stat_CAVTHV": {
           "type": "stat",
           "settings": {
-            "number": "21g de proteína",
+            "number": "23g de proteína",
             "title": "",
             "description": "Proteína enriquecida com aminoácidos essenciais"
           }
@@ -582,7 +583,7 @@
           "settings": {
             "number": "Fácil e saboroso",
             "title": "",
-            "description": "Sem coqueteleira, sem preparo, sem limpeza, sem gosto de giz. Gostoso o suficiente pros dias em que você não está com vontade."
+            "description": "Sem coqueteleira, sem preparo, sem limpeza e sem barriga estufada."
           }
         }
       },
@@ -596,7 +597,7 @@
         "image": "shopify://shop_images/teste_pure_genius.webp",
         "image_position": "right",
         "heading": "UM JEITO MAIS SIMPLES E FÁCIL DE TOMAR SUA PROTEÍNA",
-        "paragraph": "<h5>Ninguém deixa de bater a meta de proteína por falta de disciplina. Deixa porque o produto dá trabalho: preparar, lavar coqueteleira, encarar textura farinhenta, barrinha derretida na mochila.</h5><h5>Então fomos por outro caminho: 21g de proteína em 100ml, textura de bebida leve, pra qualquer hora. Abre, bebe, segue. A melhor proteína é a que você realmente toma.</h5>",
+        "paragraph": "<h5>Ninguém deixa de bater a meta de proteína por falta de disciplina. Deixa porque consumir proteína é trabalhoso.</h5><h5>Então fomos por outro caminho: 23g de proteína em 100ml, textura de bebida leve, pra qualquer hora. Abre, bebe, segue. A melhor proteína é a que encaixa na sua rotina.</h5>",
         "background_color": "#ffffff",
         "heading_color": "#000000",
         "paragraph_color": "#696565",

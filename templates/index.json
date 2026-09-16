@@ -75,7 +75,7 @@
         "numero_4jrWUK": {
           "type": "numero",
           "settings": {
-            "number": "21",
+            "number": "23",
             "unit": "g",
             "label": "Proteína de qualidade"
           }
@@ -93,7 +93,7 @@
           "settings": {
             "number": "0",
             "unit": "g",
-            "label": "Açúcar"
+            "label": "Gorduras"
           }
         },
         "numero_zYQ6Nh": {
@@ -129,31 +129,6 @@
         "max_width": 1080,
         "padding_top": 15,
         "padding_bottom": 0
-      }
-    },
-    "stats_bar_np8Egw": {
-      "type": "stats-bar",
-      "blocks": {
-        "stat_WiW4gk": {
-          "type": "stat",
-          "settings": {
-            "text": "aminoácidos essenciais"
-          }
-        },
-        "stat_QcrYrA": {
-          "type": "stat",
-          "settings": {
-            "text": "SABORES FRUTADOS"
-          }
-        }
-      },
-      "block_order": [
-        "stat_WiW4gk",
-        "stat_QcrYrA"
-      ],
-      "name": "Barra de estatísticas",
-      "settings": {
-        "background_color": "#faf7ef"
       }
     },
     "blocks_rCKAQq": {
@@ -440,7 +415,6 @@
   "order": [
     "hero_banner_xf8AGM",
     "shotz_numeros_LEgDf3",
-    "stats_bar_np8Egw",
     "blocks_rCKAQq",
     "variants_grid_dNm8hc",
     "17824113349f43bc3c",

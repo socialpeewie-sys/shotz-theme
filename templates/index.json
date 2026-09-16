@@ -31,19 +31,13 @@
         "tag_xGCU97": {
           "type": "tag",
           "settings": {
-            "text": "Zero açúcar"
+            "text": "Zero adição de açúcar"
           }
         },
         "tag_hdLViy": {
           "type": "tag",
           "settings": {
             "text": "Zero lactose"
-          }
-        },
-        "tag_7CAk9T": {
-          "type": "tag",
-          "settings": {
-            "text": "Zero carbo"
           }
         },
         "tag_G8ck6y": {
@@ -58,7 +52,6 @@
         "button_NVYmwe",
         "tag_xGCU97",
         "tag_hdLViy",
-        "tag_7CAk9T",
         "tag_G8ck6y"
       ],
       "name": "Hero Banner",

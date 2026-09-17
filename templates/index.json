@@ -45,6 +45,12 @@
           "settings": {
             "text": "Zero gordura"
           }
+        },
+        "tag_fy8AaM": {
+          "type": "tag",
+          "settings": {
+            "text": "0.8g de carboidrato"
+          }
         }
       },
       "block_order": [
@@ -52,11 +58,12 @@
         "button_NVYmwe",
         "tag_xGCU97",
         "tag_hdLViy",
-        "tag_G8ck6y"
+        "tag_G8ck6y",
+        "tag_fy8AaM"
       ],
       "name": "Hero Banner",
       "settings": {
-        "image": "shopify://shop_images/WhatsApp_Image_2026-05-18_at_22.51.51.jpg",
+        "image": "shopify://shop_images/hf_20260917_194324_93fe51e5-cc5b-4f90-bbb3-a09937f88657.png",
         "eyebrow": "O primeiro shot de proteína do Brasil",
         "eyebrow_color": "#ffffff",
         "title_line_1": "Pequeno no tamanho",
@@ -64,7 +71,7 @@
         "title_line_3": "",
         "title_color": "#faf7ef",
         "title_accent_color": "#0094f6",
-        "paragraph": "100ml. 21 gramas de proteína. \nA proteína que realmente facilita sua rotina",
+        "paragraph": "100ml. 23g gramas de proteína.",
         "paragraph_color": "#ffffff",
         "badge_color": "#ffffff"
       }

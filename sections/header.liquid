@@ -1183,6 +1183,15 @@
     border: 1px solid var(--glass-border-color);
   }
 
+  /* Tighter floating pill on mobile */
+  @media screen and (max-width: 749px) {
+    .header {
+      --glass-side: 0.5rem; /* side inset */
+      --glass-radius: 1rem; /* corner rounding */
+      --glass-gap: 0.375rem; /* top breathing room */
+    }
+  }
+
   /* Respect users who prefer reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .header__underlay-closed {

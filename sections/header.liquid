@@ -1113,6 +1113,82 @@
     font-family: var(--menu-localization-font);
     font-size: var(--menu-localization-font-size);
   }
+
+  /* ================================
+     * Liquid glass header
+     * ================================
+     * A frosted, translucent header on every page (home, product, collection, etc.).
+     * When the page is scrolled and the header sticks, it detaches from the screen
+     * edges and its corners become rounded (a floating "pill"), instead of spanning
+     * edge to edge.
+     */
+  .header {
+    /* Frosted glass */
+    --glass-blur: 20px;
+    --glass-saturate: 180%;
+
+    /* How much transparency to blend into the header background (0% = opaque). */
+    --glass-translucency: 22%;
+
+    /* Floating pill geometry (used once scrolled) */
+    --glass-side: clamp(0.5rem, 2vw, 1rem);
+    --glass-gap: 0.5rem;
+    --glass-radius: clamp(0.875rem, 2vw, 1.375rem);
+
+    --glass-border-color: rgb(var(--color-foreground-rgb) / var(--opacity-10-25, 0.1));
+    --glass-shadow: 0 0.5rem 1.875rem rgb(0 0 0 / 0.12);
+  }
+
+  /* Frost + blur the header background layers on all pages */
+  .header__underlay-closed,
+  .header__underlay-open {
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  }
+
+  /* Make the bar background translucent so the blur reads as real glass */
+  .header__underlay-closed {
+    background: linear-gradient(
+      color-mix(in srgb, var(--color-scheme-top-row), transparent var(--glass-translucency)) 0 var(--top-row-height),
+      color-mix(in srgb, var(--color-scheme-bottom-row), transparent var(--glass-translucency)) var(--top-row-height)
+        var(--header-height)
+    );
+    transition: top var(--animation-speed-slow) var(--ease-out-cubic),
+      right var(--animation-speed-slow) var(--ease-out-cubic),
+      left var(--animation-speed-slow) var(--ease-out-cubic),
+      border-radius var(--animation-speed-slow) var(--ease-out-cubic),
+      box-shadow var(--animation-speed-slow) var(--ease-out-cubic);
+  }
+
+  /* Once scrolled (sticky is active), lift the bar into a rounded floating pill */
+  .header[sticky][data-sticky-state='active'] {
+    padding-top: var(--glass-gap);
+  }
+
+  .header[sticky][data-sticky-state='active'] :is(.header__underlay-closed, .header__underlay-open) {
+    top: var(--glass-gap);
+    right: var(--glass-side);
+    left: var(--glass-side);
+    border-radius: var(--glass-radius);
+  }
+
+  .header[sticky][data-sticky-state='active'] .header__underlay-closed {
+    bottom: 0;
+    height: auto;
+    border: 1px solid var(--glass-border-color);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .header[sticky][data-sticky-state='active'] .header__underlay-open {
+    border: 1px solid var(--glass-border-color);
+  }
+
+  /* Respect users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .header__underlay-closed {
+      transition: none;
+    }
+  }
 {% endstylesheet %}
 
 {% unless request.design_mode %}

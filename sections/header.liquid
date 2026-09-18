@@ -1139,7 +1139,7 @@
     --glass-shadow: 0 0.5rem 1.875rem rgb(0 0 0 / 0.12);
   }
 
-  /* Frost + blur the header background layers on all pages */
+  /* Liquid glass while the header sits at the top of the page (not scrolled) */
   .header__underlay-closed,
   .header__underlay-open {
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
@@ -1160,7 +1160,7 @@
       box-shadow var(--animation-speed-slow) var(--ease-out-cubic);
   }
 
-  /* Once scrolled (sticky is active), lift the bar into a rounded floating pill */
+  /* Once scrolled (sticky is active), drop the glass for a solid, rounded floating pill */
   .header[sticky][data-sticky-state='active'] {
     padding-top: var(--glass-gap);
   }
@@ -1170,6 +1170,10 @@
     right: var(--glass-side);
     left: var(--glass-side);
     border-radius: var(--glass-radius);
+
+    /* Solid: no frosted blur once scrolled */
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .header[sticky][data-sticky-state='active'] .header__underlay-closed {
@@ -1177,6 +1181,12 @@
     height: auto;
     border: 1px solid var(--glass-border-color);
     box-shadow: var(--glass-shadow);
+
+    /* Solid background from the header color scheme */
+    background: linear-gradient(
+      var(--color-scheme-top-row) 0 var(--top-row-height),
+      var(--color-scheme-bottom-row) var(--top-row-height) var(--header-height)
+    );
   }
 
   .header[sticky][data-sticky-state='active'] .header__underlay-open {

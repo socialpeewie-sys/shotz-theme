@@ -64,7 +64,7 @@
       "name": "Hero Banner",
       "settings": {
         "image": "shopify://shop_images/hf_20260917_194324_93fe51e5-cc5b-4f90-bbb3-a09937f88657.png",
-        "eyebrow": "O primeiro shot de proteína do Brasil",
+        "eyebrow": "",
         "eyebrow_color": "#ffffff",
         "title_line_1": "Pequeno no tamanho",
         "title_line_2": "Grande nos resultados",

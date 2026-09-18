@@ -9,7 +9,7 @@
  */
 {
   "current": {
-    "logo": "shopify://shop_images/LOGO_SHOTZ.png",
+    "logo": "shopify://shop_images/logo_500_2.png",
     "logo_height": 32,
     "logo_height_mobile": 28,
     "favicon": "shopify://shop_images/Design_sem_nome_6.png",
@@ -296,9 +296,9 @@
       },
       "scheme-4": {
         "settings": {
-          "background": "#0094F6",
-          "foreground_heading": "#FFFFFF",
-          "foreground": "#FFFFFFCF",
+          "background": "#0094f6",
+          "foreground_heading": "#ffffff",
+          "foreground": "#ffffffcf",
           "primary": "#000000cf",
           "primary_hover": "#000000",
           "border": "#1d368680",

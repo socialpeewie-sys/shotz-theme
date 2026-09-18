@@ -73,7 +73,7 @@
         "title_accent_color": "#0094f6",
         "paragraph": "100ml. 23g gramas de proteína.",
         "paragraph_color": "#ffffff",
-        "badge_color": "#ffffff"
+        "badge_color": "#FFFFFF"
       }
     },
     "shotz_numeros_LEgDf3": {
@@ -122,7 +122,7 @@
       "settings": {
         "heading": "Pequenas escolhas, grandes resultados",
         "subtitle": "Uma rotina que você mantém vale mais que a perfeita que você abandona. Consistência é a chave.",
-        "background_color": "#faf7ef",
+        "background_color": "#FDFDFC",
         "heading_color": "#1a2740",
         "subtitle_color": "#5a6273",
         "number_color": "#1a2740",
@@ -131,9 +131,9 @@
         "heading_size": 44,
         "subtitle_size": 16,
         "number_size": 64,
-        "label_size": 22,
+        "label_size": 16,
         "grid_gap_top": 16,
-        "max_width": 1080,
+        "max_width": 800,
         "padding_top": 15,
         "padding_bottom": 0
       }
@@ -145,7 +145,7 @@
           "type": "ai_gen_block_0453d40",
           "settings": {
             "image_position": "left",
-            "background_color": "#f8f3ec",
+            "background_color": "#F6F5F3",
             "product_image": "shopify://shop_images/hf_20260915_172153_6cb4e6c0-1c6a-4715-b0c3-fccefc2fd427.png",
             "image_background_color": "#f5f5f5",
             "image_border_radius": 20,
@@ -162,7 +162,7 @@
             "box_4_text": "",
             "button_text": "EXPERIMENTE AGORA",
             "button_link": "",
-            "button_bg_color": "#1b2030",
+            "button_bg_color": "#000000",
             "button_text_color": "#ffffff"
           },
           "blocks": {}
@@ -301,16 +301,16 @@
             "attr_6_shotz": true,
             "attr_6_whey": false,
             "attr_6_collagen": true,
-            "shotz_column_bg_color": "#f1e9de",
+            "shotz_column_bg_color": "#E9E7E2",
             "shotz_column_text_color": "#000000",
             "accent_color": "#2f5d8a",
             "divider_color": "#c9d6e3",
-            "check_icon_color": "#007cf8",
+            "check_icon_color": "#000000",
             "check_icon_stroke": "#f1e9de",
             "cross_icon_color": "#ff6b5a",
             "cross_icon_stroke": "#ffffff",
             "background_image_opacity": 15,
-            "table_background_color": "#fbf8f4",
+            "table_background_color": "#F6F5F3",
             "table_text_color": "#000000",
             "table_border_radius": 20
           },
@@ -371,7 +371,7 @@
       "settings": {
         "eyebrow_text": "",
         "heading": "Escolha o seu",
-        "background_color": "#f8f3ec",
+        "background_color": "#FFFFFF",
         "text_color": "#111111",
         "secondary_text_color": "#777777",
         "padding_block": 16,

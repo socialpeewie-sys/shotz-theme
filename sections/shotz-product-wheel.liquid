@@ -21,6 +21,7 @@
   #shopify-section-{{ section.id }} {
     background-color: {{ section.settings.background_color }};
     padding-block: {{ section.settings.section_padding }}px;
+    overflow-x: clip;
   }
 
   .spw-wrap-{{ sid }} {
@@ -52,9 +53,9 @@
   .spw-stage-{{ sid }} {
     position: relative;
     width: 100%;
-    max-width: 480px;
+    max-width: 560px;
     aspect-ratio: 1 / 1;
-    --radius: clamp(130px, 19vw, 210px);
+    container-type: inline-size;
     --spin: {{ spin }};
   }
 
@@ -69,6 +70,8 @@
   .spw-ring-{{ sid }} {
     position: absolute;
     inset: 0;
+    z-index: 2;
+    --radius: 47cqw;
     animation: spw-ring-spin-{{ sid }} {{ section.settings.wheel_speed }}s linear infinite;
   }
 
@@ -128,7 +131,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 46%;
+    z-index: 1;
+    width: {{ section.settings.center_image_size }}%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -316,7 +320,16 @@
     }
 
     .spw-stage-{{ sid }} {
-      max-width: 340px;
+      max-width: 280px;
+    }
+
+    .spw-ring-{{ sid }} {
+      --radius: 42cqw;
+    }
+
+    .spw-pill-{{ sid }} {
+      font-size: 11px;
+      padding: 6px 12px;
     }
 
     .spw-heading-{{ sid }} {
@@ -517,7 +530,18 @@
     {
       "type": "image_picker",
       "id": "center_image",
-      "label": "Imagem do produto"
+      "label": "Imagem do produto",
+      "info": "Use um PNG com fundo transparente para o melhor resultado."
+    },
+    {
+      "type": "range",
+      "id": "center_image_size",
+      "label": "Tamanho da imagem central",
+      "min": 30,
+      "max": 90,
+      "step": 2,
+      "unit": "%",
+      "default": 64
     },
     {
       "type": "header",

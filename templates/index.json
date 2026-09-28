@@ -113,7 +113,7 @@
         "height": "large",
         "height_mobile": "large",
         "gradient_enabled": true,
-        "gradient_color": "#F2F0EC",
+        "gradient_color": "#f2f0ec",
         "gradient_opacity": 85,
         "gradient_side": "auto",
         "gradient_solid": 25,
@@ -131,16 +131,16 @@
         "heading_size": 96,
         "subheading": "23g de proteína em 100ml",
         "text": "",
-        "text_color": "#0D0D0D",
-        "badge_bg": "#E9E7E2",
-        "badge_text": "#0D0D0D",
+        "text_color": "#0d0d0d",
+        "badge_bg": "#e9e7e2",
+        "badge_text": "#0d0d0d",
         "button_label": "Quero experimentar",
         "button_link": "",
         "button2_label": "",
         "button2_link": "",
-        "button_bg": "#0D0D0D",
-        "button_text": "#FFFFFF",
-        "button_accent": "#FF27CD"
+        "button_bg": "#0d0d0d",
+        "button_text": "#ffffff",
+        "button_accent": "#ff27cd"
       }
     },
     "shotz_numeros_LEgDf3": {
@@ -528,6 +528,137 @@
         "heading": "O que faz o Shotz funcionar.",
         "subheading": "Tudo o que você precisa. Em uma única dose."
       }
+    },
+    "shotz_product_wheel_rAkUCn": {
+      "type": "shotz-product-wheel",
+      "blocks": {
+        "wheel_item_K9Ayac": {
+          "type": "wheel_item",
+          "settings": {
+            "text": "Nutrientes Funcionais"
+          }
+        },
+        "wheel_item_FmJj4H": {
+          "type": "wheel_item",
+          "settings": {
+            "text": "Função Muscular"
+          }
+        },
+        "wheel_item_XYRhWk": {
+          "type": "wheel_item",
+          "settings": {
+            "text": "Equilíbrio Hormonal"
+          }
+        },
+        "wheel_item_MWNhN4": {
+          "type": "wheel_item",
+          "settings": {
+            "text": "Foco Mental"
+          }
+        },
+        "wheel_item_dBLFMQ": {
+          "type": "wheel_item",
+          "settings": {
+            "text": "Energia Diária"
+          }
+        },
+        "wheel_item_njmrF9": {
+          "type": "wheel_item",
+          "settings": {
+            "text": "Suporte à Hidratação"
+          }
+        },
+        "feature_zF7cPF": {
+          "type": "feature",
+          "settings": {
+            "icon": "bolt",
+            "label": "Proteína Diária"
+          }
+        },
+        "feature_bVCzJC": {
+          "type": "feature",
+          "settings": {
+            "icon": "droplet",
+            "label": "Suporte à Hidratação"
+          }
+        },
+        "feature_8gkyzN": {
+          "type": "feature",
+          "settings": {
+            "icon": "gear",
+            "label": "Suporte Cognitivo"
+          }
+        },
+        "feature_jP8rGW": {
+          "type": "feature",
+          "settings": {
+            "icon": "heart",
+            "label": "Nutrientes Funcionais"
+          }
+        },
+        "checklist_item_HwpDAm": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "20g de proteína por dose"
+          }
+        },
+        "checklist_item_HHkzTM": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "Aminoácidos essenciais + vitaminas"
+          }
+        },
+        "checklist_item_8GGYiP": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "Caixa com 30 doses individuais"
+          }
+        }
+      },
+      "block_order": [
+        "wheel_item_K9Ayac",
+        "wheel_item_FmJj4H",
+        "wheel_item_XYRhWk",
+        "wheel_item_MWNhN4",
+        "wheel_item_dBLFMQ",
+        "wheel_item_njmrF9",
+        "feature_zF7cPF",
+        "feature_bVCzJC",
+        "feature_8gkyzN",
+        "feature_jP8rGW",
+        "checklist_item_HwpDAm",
+        "checklist_item_HHkzTM",
+        "checklist_item_8GGYiP"
+      ],
+      "name": "Roda de benefícios",
+      "settings": {
+        "eyebrow": "SABOR PÊSSEGO",
+        "brand_name": "Shotz",
+        "heading": "Proteína + Praticidade",
+        "description": "Um shot dosado combina proteína de alta biodisponibilidade com aminoácidos essenciais, vitaminas do complexo B e zero açúcar. Feito para caber na sua rotina, sem preparo e sem crash.",
+        "center_image": "shopify://shop_images/shotzrodas.png",
+        "center_image_size": 64,
+        "wheel_speed": 36,
+        "wheel_direction": "normal",
+        "pause_on_hover": true,
+        "price_label": "A partir de",
+        "price": "R$ 89,90",
+        "primary_btn_label": "Comprar agora",
+        "primary_btn_link": "",
+        "secondary_btn_label": "Ver produto",
+        "secondary_btn_link": "",
+        "image_position": "left",
+        "max_width": 1280,
+        "section_padding": 80,
+        "heading_size": 44,
+        "background_color": "#FFFFFF",
+        "accent_color": "#9F3D49",
+        "heading_color": "#0D0D0D",
+        "text_color": "#5B5B5B",
+        "pill_background": "#FFFFFF",
+        "pill_border_color": "#111111",
+        "pill_text_color": "#561218"
+      }
     }
   },
   "order": [
@@ -541,6 +672,7 @@
     "shotz_choose_yours_Gp37ig",
     "1787857495d8ac9ebf",
     "blocks_9FNXWB",
-    "shotz_benefits_cTrneF"
+    "shotz_benefits_cTrneF",
+    "shotz_product_wheel_rAkUCn"
   ]
 }

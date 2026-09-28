@@ -162,8 +162,9 @@
           "settings": {
             "number": "95",
             "unit": "kcal",
-            "label": "apenas",
-            "sublabel": "",
+            "label": "Calorias",
+            "sublabel": "por dose",
+            "number_color": "#1A1A1A",
             "icon": "flame",
             "highlight": false
           }
@@ -174,7 +175,7 @@
             "number": "0",
             "unit": "g",
             "label": "Gorduras",
-            "sublabel": "",
+            "sublabel": "por dose",
             "icon": "ban",
             "highlight": false
           }
@@ -185,7 +186,8 @@
             "number": "0",
             "unit": "g",
             "label": "Lactose",
-            "sublabel": "",
+            "sublabel": "por dose",
+            "number_color": "#1A1A1A",
             "icon": "bottle",
             "highlight": false
           }
@@ -199,9 +201,9 @@
       ],
       "name": "Números em destaque",
       "settings": {
-        "layout_style": "cards",
-        "eyebrow": "A proteína que acompanha sua rotina.",
-        "heading": "",
+        "layout_style": "floating",
+        "eyebrow": "Por que Shotz",
+        "heading": "A proteína que acompanha sua rotina.",
         "subtitle": "",
         "bg_image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0525_2.jpg",
         "bg_position": "right",
@@ -218,17 +220,17 @@
         "number_color": "#000000",
         "accent_color": "#84898d",
         "label_color": "#1a2740",
-        "heading_size": 36,
+        "heading_size": 44,
         "subtitle_size": 15,
         "number_size": 46,
         "label_size": 15,
         "min_height": 320,
         "min_height_mobile": 520,
         "content_max_width": 600,
-        "grid_gap_top": 16,
+        "grid_gap_top": 28,
         "max_width": 1200,
-        "padding_top": 15,
-        "padding_bottom": 0
+        "padding_top": 50,
+        "padding_bottom": 40
       }
     },
     "blocks_rCKAQq": {

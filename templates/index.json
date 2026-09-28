@@ -195,7 +195,7 @@
       ],
       "name": "Números em destaque",
       "settings": {
-        "layout_style": "cards",
+        "layout_style": "floating",
         "eyebrow": "Por que Shotz",
         "heading": "A proteína que acompanha sua rotina.",
         "subtitle": "",

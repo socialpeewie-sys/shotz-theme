@@ -159,7 +159,7 @@
             "sublabel": "por dose",
             "icon": "flame",
             "number_color": "#1a1a1a",
-            "highlight": false
+            "highlight": true
           }
         },
         "numero_7xwKWx": {
@@ -242,7 +242,7 @@
         "label_size": 15,
         "min_height": 320,
         "min_height_mobile": 520,
-        "content_max_width": 600,
+        "content_max_width": 760,
         "grid_gap_top": 28,
         "max_width": 1200,
         "padding_top": 50,

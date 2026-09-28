@@ -303,9 +303,62 @@
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: {{ section.settings.accent_color }};
-    color: {{ section.settings.heading_color }};
+    background: {{ section.settings.btn_arrow_bg | default: section.settings.accent_color }};
+    color: {{ section.settings.btn_arrow_color | default: section.settings.heading_color }};
     flex-shrink: 0;
+  }
+
+  {%- liquid
+    assign bs = section.settings
+    assign primary_bg_hover = bs.btn_primary_bg_hover | default: bs.btn_primary_bg
+    assign primary_text_hover = bs.btn_primary_text_hover | default: bs.btn_primary_text
+    assign secondary_bg_hover = bs.btn_secondary_bg_hover | default: bs.btn_secondary_bg
+    assign secondary_text_hover = bs.btn_secondary_text_hover | default: bs.btn_secondary_text
+  -%}
+
+  .spw-buttons-{{ sid }} .spw-btn-primary-{{ sid }} {
+    {%- if bs.btn_primary_bg != blank %}
+      --button-background-color: {{ bs.btn_primary_bg }};
+      --button-border-color: {{ bs.btn_primary_bg }};
+    {%- endif %}
+    {%- if bs.btn_primary_text != blank %}
+      --button-color: {{ bs.btn_primary_text }};
+    {%- endif %}
+  }
+
+  .spw-buttons-{{ sid }} .spw-btn-primary-{{ sid }}:hover {
+    {%- if primary_bg_hover != blank %}
+      --button-background-color: {{ primary_bg_hover }};
+      --button-border-color: {{ primary_bg_hover }};
+    {%- endif %}
+    {%- if primary_text_hover != blank %}
+      --button-color: {{ primary_text_hover }};
+    {%- endif %}
+  }
+
+  .spw-buttons-{{ sid }} .spw-btn-secondary-{{ sid }} {
+    {%- if bs.btn_secondary_bg != blank %}
+      --button-background-color: {{ bs.btn_secondary_bg }};
+    {%- endif %}
+    {%- if bs.btn_secondary_text != blank %}
+      --button-color: {{ bs.btn_secondary_text }};
+    {%- endif %}
+    {%- if bs.btn_secondary_border != blank %}
+      --button-border-color: {{ bs.btn_secondary_border }};
+      --button-border-width: 1px;
+    {%- endif %}
+  }
+
+  .spw-buttons-{{ sid }} .spw-btn-secondary-{{ sid }}:hover {
+    {%- if secondary_bg_hover != blank %}
+      --button-background-color: {{ secondary_bg_hover }};
+    {%- endif %}
+    {%- if secondary_text_hover != blank %}
+      --button-color: {{ secondary_text_hover }};
+    {%- endif %}
+    {%- if bs.btn_secondary_border != blank %}
+      --button-border-color: {{ bs.btn_secondary_border }};
+    {%- endif %}
   }
 
   .spw-btn-arrow-{{ sid }} svg {
@@ -479,7 +532,7 @@
               </a>
             {%- endif -%}
             {%- if section.settings.secondary_btn_label != blank -%}
-              <a href="{{ section.settings.secondary_btn_link | default: '#' }}" class="button-secondary">
+              <a href="{{ section.settings.secondary_btn_link | default: '#' }}" class="button-secondary spw-btn-secondary-{{ sid }}">
                 {{ section.settings.secondary_btn_label }}
               </a>
             {%- endif -%}
@@ -614,6 +667,71 @@
       "type": "url",
       "id": "secondary_btn_link",
       "label": "Botão secundário — link"
+    },
+    {
+      "type": "header",
+      "content": "Cores dos botões"
+    },
+    {
+      "type": "paragraph",
+      "content": "Deixe uma cor vazia para usar a cor padrão dos botões do tema. Se a cor de hover ficar vazia, o botão mantém a cor normal ao passar o mouse."
+    },
+    {
+      "type": "color",
+      "id": "btn_primary_bg",
+      "label": "Primário — fundo"
+    },
+    {
+      "type": "color",
+      "id": "btn_primary_text",
+      "label": "Primário — texto"
+    },
+    {
+      "type": "color",
+      "id": "btn_primary_bg_hover",
+      "label": "Primário — fundo (hover)"
+    },
+    {
+      "type": "color",
+      "id": "btn_primary_text_hover",
+      "label": "Primário — texto (hover)"
+    },
+    {
+      "type": "color",
+      "id": "btn_arrow_bg",
+      "label": "Primário — círculo da seta",
+      "info": "Vazio usa a cor de destaque."
+    },
+    {
+      "type": "color",
+      "id": "btn_arrow_color",
+      "label": "Primário — seta",
+      "info": "Vazio usa a cor do título."
+    },
+    {
+      "type": "color",
+      "id": "btn_secondary_bg",
+      "label": "Secundário — fundo"
+    },
+    {
+      "type": "color",
+      "id": "btn_secondary_text",
+      "label": "Secundário — texto"
+    },
+    {
+      "type": "color",
+      "id": "btn_secondary_border",
+      "label": "Secundário — borda"
+    },
+    {
+      "type": "color",
+      "id": "btn_secondary_bg_hover",
+      "label": "Secundário — fundo (hover)"
+    },
+    {
+      "type": "color",
+      "id": "btn_secondary_text_hover",
+      "label": "Secundário — texto (hover)"
     },
     {
       "type": "header",

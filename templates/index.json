@@ -61,6 +61,7 @@
         "tag_G8ck6y",
         "tag_fy8AaM"
       ],
+      "disabled": true,
       "name": "Hero Banner",
       "settings": {
         "image": "shopify://shop_images/hf_20260917_194324_93fe51e5-cc5b-4f90-bbb3-a09937f88657.png",
@@ -76,6 +77,72 @@
         "badge_color": "#ffffff"
       }
     },
+    "shotz_banner_thMMnV": {
+      "type": "shotz-banner",
+      "blocks": {
+        "badge_d8BqRB": {
+          "type": "badge",
+          "settings": {
+            "icon": "protein",
+            "label": "23g de proteína"
+          }
+        },
+        "badge_GEgzQF": {
+          "type": "badge",
+          "settings": {
+            "icon": "fruit",
+            "label": "Gosto de suco"
+          }
+        },
+        "badge_9edmp3": {
+          "type": "badge",
+          "settings": {
+            "icon": "clock",
+            "label": "5 segundos"
+          }
+        }
+      },
+      "block_order": [
+        "badge_d8BqRB",
+        "badge_GEgzQF",
+        "badge_9edmp3"
+      ],
+      "name": "Shotz Banner",
+      "settings": {
+        "image": "shopify://shop_images/hf_20260917_194324_93fe51e5-cc5b-4f90-bbb3-a09937f88657.png",
+        "height": "large",
+        "height_mobile": "large",
+        "gradient_enabled": true,
+        "gradient_color": "#F2F0EC",
+        "gradient_opacity": 85,
+        "gradient_side": "auto",
+        "gradient_solid": 25,
+        "gradient_end": 65,
+        "gradient_side_mobile": "auto",
+        "gradient_solid_mobile": 35,
+        "gradient_end_mobile": 75,
+        "content_position": "left",
+        "content_vertical": "center",
+        "content_position_mobile": "top",
+        "content_width": 680,
+        "padding_block": 72,
+        "eyebrow": "DOIS GOLES E PRONTO",
+        "heading": "CRIADO PARA VIDAS <em>AGITADAS</em>",
+        "heading_size": 96,
+        "subheading": "23g de proteína em 100ml",
+        "text": "",
+        "text_color": "#0D0D0D",
+        "badge_bg": "#E9E7E2",
+        "badge_text": "#0D0D0D",
+        "button_label": "Quero experimentar",
+        "button_link": "",
+        "button2_label": "",
+        "button2_link": "",
+        "button_bg": "#0D0D0D",
+        "button_text": "#FFFFFF",
+        "button_accent": "#FF27CD"
+      }
+    },
     "shotz_numeros_LEgDf3": {
       "type": "shotz-numeros",
       "blocks": {
@@ -87,12 +154,12 @@
             "label": "Proteína de qualidade"
           }
         },
-        "numero_mhk3kF": {
+        "numero_mbUAJ6": {
           "type": "numero",
           "settings": {
-            "number": "100",
-            "unit": "ml",
-            "label": "Pronto pra tomar"
+            "number": "95",
+            "unit": "kcal",
+            "label": "apenas"
           }
         },
         "numero_7xwKWx": {
@@ -114,24 +181,24 @@
       },
       "block_order": [
         "numero_4jrWUK",
-        "numero_mhk3kF",
+        "numero_mbUAJ6",
         "numero_7xwKWx",
         "numero_zYQ6Nh"
       ],
       "name": "Números em destaque",
       "settings": {
-        "heading": "Pequenas escolhas, grandes resultados",
-        "subtitle": "Uma rotina que você mantém vale mais que a perfeita que você abandona. Consistência é a chave.",
+        "heading": "",
+        "subtitle": "",
         "background_color": "#fdfdfc",
         "heading_color": "#000000",
         "subtitle_color": "#5a6273",
         "number_color": "#000000",
         "accent_color": "#84898d",
         "label_color": "#1a2740",
-        "heading_size": 44,
-        "subtitle_size": 16,
-        "number_size": 64,
-        "label_size": 16,
+        "heading_size": 36,
+        "subtitle_size": 15,
+        "number_size": 46,
+        "label_size": 15,
         "grid_gap_top": 16,
         "max_width": 800,
         "padding_top": 15,
@@ -345,6 +412,7 @@
           "settings": {
             "product": "shot-frutas-amarelas",
             "variant_sku": "",
+            "title": "",
             "subtitle": "23g de proteína · 100ml",
             "button_label": "EXPERIMENTE AGORA",
             "background_color": "#ffb627",
@@ -358,6 +426,7 @@
           "settings": {
             "product": "shot-frutas-amarelas",
             "variant_sku": "",
+            "title": "",
             "subtitle": "21g de proteína · 100ml",
             "button_label": "EXPERIMENTE AGORA",
             "background_color": "#6b0f2a",
@@ -419,10 +488,51 @@
       ],
       "name": "Hero com benefícios",
       "settings": {}
+    },
+    "shotz_benefits_cTrneF": {
+      "type": "shotz-benefits",
+      "blocks": {
+        "card_BjpDXy": {
+          "type": "card",
+          "settings": {
+            "icon": "⚡",
+            "title": "Proteína instantânea",
+            "text": "Alta biodisponibilidade. Sem o processo lento do pó diluído."
+          }
+        },
+        "card_jWRftJ": {
+          "type": "card",
+          "settings": {
+            "icon": "🦴",
+            "title": "Colágeno Completo",
+            "text": "Tipos I, II e III. Para pele, articulações e recuperação muscular."
+          }
+        },
+        "card_JAYA4m": {
+          "type": "card",
+          "settings": {
+            "icon": "🚫",
+            "title": "Zero açúcar",
+            "text": "Sem pico de glicose. Sem crash. Energia limpa o dia todo."
+          }
+        }
+      },
+      "block_order": [
+        "card_BjpDXy",
+        "card_jWRftJ",
+        "card_JAYA4m"
+      ],
+      "name": "Shotz – Benefits",
+      "settings": {
+        "eyebrow": "A ciência por trás",
+        "heading": "O que faz o Shotz funcionar.",
+        "subheading": "Tudo o que você precisa. Em uma única dose."
+      }
     }
   },
   "order": [
     "hero_banner_xf8AGM",
+    "shotz_banner_thMMnV",
     "shotz_numeros_LEgDf3",
     "blocks_rCKAQq",
     "variants_grid_dNm8hc",
@@ -430,6 +540,7 @@
     "divider_DryE3e",
     "shotz_choose_yours_Gp37ig",
     "1787857495d8ac9ebf",
-    "blocks_9FNXWB"
+    "blocks_9FNXWB",
+    "shotz_benefits_cTrneF"
   ]
 }

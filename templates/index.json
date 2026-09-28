@@ -135,6 +135,51 @@
         "button_accent": "#faf4e4"
       }
     },
+    "shotz_choose_yours_Gp37ig": {
+      "type": "shotz-choose-yours",
+      "blocks": {
+        "card_DYaLX3": {
+          "type": "card",
+          "settings": {
+            "product": "shot-frutas-amarelas",
+            "variant_sku": "",
+            "title": "",
+            "subtitle": "23g de proteína · 100ml",
+            "button_label": "EXPERIMENTE AGORA",
+            "background_color": "#ffb627",
+            "text_color": "#0d0d0d",
+            "accent_color": "#0d0d0d",
+            "button_text_color": "#ffffff"
+          }
+        },
+        "card_PnWyPy": {
+          "type": "card",
+          "settings": {
+            "product": "shot-frutas-amarelas",
+            "variant_sku": "",
+            "title": "",
+            "subtitle": "21g de proteína · 100ml",
+            "button_label": "EXPERIMENTE AGORA",
+            "background_color": "#6b0f2a",
+            "text_color": "#ffffff",
+            "accent_color": "#ffffff",
+            "button_text_color": "#6b0f2a"
+          }
+        }
+      },
+      "block_order": [
+        "card_DYaLX3",
+        "card_PnWyPy"
+      ],
+      "name": "Escolha o seu",
+      "settings": {
+        "eyebrow_text": "",
+        "heading": "Escolha o seu",
+        "background_color": "#ffffff",
+        "padding_block": 16,
+        "padding_inline": 48
+      }
+    },
     "shotz_numeros_LEgDf3": {
       "type": "shotz-numeros",
       "blocks": {
@@ -502,51 +547,6 @@
         "padding-block-end": 16
       }
     },
-    "shotz_choose_yours_Gp37ig": {
-      "type": "shotz-choose-yours",
-      "blocks": {
-        "card_DYaLX3": {
-          "type": "card",
-          "settings": {
-            "product": "shot-frutas-amarelas",
-            "variant_sku": "",
-            "title": "",
-            "subtitle": "23g de proteína · 100ml",
-            "button_label": "EXPERIMENTE AGORA",
-            "background_color": "#ffb627",
-            "text_color": "#0d0d0d",
-            "accent_color": "#0d0d0d",
-            "button_text_color": "#ffffff"
-          }
-        },
-        "card_PnWyPy": {
-          "type": "card",
-          "settings": {
-            "product": "shot-frutas-amarelas",
-            "variant_sku": "",
-            "title": "",
-            "subtitle": "21g de proteína · 100ml",
-            "button_label": "EXPERIMENTE AGORA",
-            "background_color": "#6b0f2a",
-            "text_color": "#ffffff",
-            "accent_color": "#ffffff",
-            "button_text_color": "#6b0f2a"
-          }
-        }
-      },
-      "block_order": [
-        "card_DYaLX3",
-        "card_PnWyPy"
-      ],
-      "name": "Escolha o seu",
-      "settings": {
-        "eyebrow_text": "",
-        "heading": "Escolha o seu",
-        "background_color": "#ffffff",
-        "padding_block": 16,
-        "padding_inline": 48
-      }
-    },
     "1787857495d8ac9ebf": {
       "type": "_blocks",
       "settings": {}
@@ -722,33 +722,18 @@
         "pill_border_color": "#111111",
         "pill_text_color": "#561218"
       }
-    },
-    "divider_dm486M": {
-      "type": "divider",
-      "name": "t:names.divider_section",
-      "settings": {
-        "color_scheme": "",
-        "section_width": "full-width",
-        "thickness": 1,
-        "corner_radius": "square",
-        "width_percent": 100,
-        "alignment_horizontal": "center",
-        "padding-block-start": 16,
-        "padding-block-end": 16
-      }
     }
   },
   "order": [
     "hero_banner_xf8AGM",
     "shotz_banner_thMMnV",
-    "divider_dm486M",
+    "shotz_choose_yours_Gp37ig",
     "shotz_numeros_LEgDf3",
     "blocks_rCKAQq",
     "variants_grid_dNm8hc",
     "shotz_benefits_cTrneF",
     "17824113349f43bc3c",
     "divider_DryE3e",
-    "shotz_choose_yours_Gp37ig",
     "1787857495d8ac9ebf",
     "blocks_9FNXWB",
     "shotz_product_wheel_rAkUCn"

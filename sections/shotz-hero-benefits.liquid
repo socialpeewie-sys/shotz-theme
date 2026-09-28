@@ -143,13 +143,11 @@
   {%- comment -%} Coluna esquerda: imagem {%- endcomment -%}
   <div class="shb-image-col-{{ sid }}">
     {%- if section.settings.image != blank -%}
+      {%- assign image_alt = section.settings.image.alt | escape -%}
       {{
         section.settings.image
         | image_url: width: 1200
-        | image_tag:
-          loading: 'lazy',
-          alt: section.settings.image.alt | escape,
-          widths: '400, 600, 800, 1200'
+        | image_tag: loading: 'lazy', alt: image_alt, widths: '400, 600, 800, 1200'
       }}
     {%- else -%}
       <div class="shb-placeholder-{{ sid }}">

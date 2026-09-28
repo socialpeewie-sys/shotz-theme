@@ -143,13 +143,11 @@
   {%- comment -%} ── Coluna esquerda: imagem ── {%- endcomment -%}
   <div class="hb-image-col-{{ hb }}">
     {%- if block.settings.image != blank -%}
+      {%- assign image_alt = block.settings.image.alt | escape -%}
       {{
         block.settings.image
         | image_url: width: 1200
-        | image_tag:
-          loading: 'lazy',
-          alt: block.settings.image.alt | escape,
-          widths: '400, 600, 800, 1200'
+        | image_tag: loading: 'lazy', alt: image_alt, widths: '400, 600, 800, 1200'
       }}
     {%- else -%}
       <div class="hb-placeholder-{{ hb }}">

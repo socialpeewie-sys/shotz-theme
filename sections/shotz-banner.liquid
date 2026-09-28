@@ -1,0 +1,833 @@
+{%- comment -%}
+  Shotz Banner
+  Imagem/vídeo ocupando a seção inteira, texto em HTML por cima e um degradê
+  que garante a leitura do texto. O degradê pode acompanhar a posição do texto
+  automaticamente (desktop e mobile separados).
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+
+  # Lado onde o texto fica → lado onde o degradê é sólido.
+  assign side = s.gradient_side
+  if side == 'auto'
+    case s.content_position
+      when 'left'
+        assign side = 'left'
+      when 'right'
+        assign side = 'right'
+      else
+        case s.content_vertical
+          when 'top'
+            assign side = 'top'
+          when 'bottom'
+            assign side = 'bottom'
+          else
+            assign side = 'full'
+        endcase
+    endcase
+  endif
+
+  assign side_mobile = s.gradient_side_mobile
+  if side_mobile == 'auto'
+    case s.content_position_mobile
+      when 'top'
+        assign side_mobile = 'top'
+      when 'bottom'
+        assign side_mobile = 'bottom'
+      else
+        assign side_mobile = 'full'
+    endcase
+  endif
+
+  assign loading = 'lazy'
+  if section.index <= 2
+    assign loading = 'eager'
+  endif
+-%}
+
+{%- capture gradient_desktop -%}
+  {%- case side -%}
+    {%- when 'left' -%}linear-gradient(to right, var(--sb-grad-color) 0%, var(--sb-grad-color) var(--sb-grad-solid), transparent var(--sb-grad-end))
+    {%- when 'right' -%}linear-gradient(to left, var(--sb-grad-color) 0%, var(--sb-grad-color) var(--sb-grad-solid), transparent var(--sb-grad-end))
+    {%- when 'top' -%}linear-gradient(to bottom, var(--sb-grad-color) 0%, var(--sb-grad-color) var(--sb-grad-solid), transparent var(--sb-grad-end))
+    {%- when 'bottom' -%}linear-gradient(to top, var(--sb-grad-color) 0%, var(--sb-grad-color) var(--sb-grad-solid), transparent var(--sb-grad-end))
+    {%- else -%}linear-gradient(var(--sb-grad-color), var(--sb-grad-color))
+  {%- endcase -%}
+{%- endcapture -%}
+
+{%- capture gradient_mobile -%}
+  {%- case side_mobile -%}
+    {%- when 'top' -%}linear-gradient(to bottom, var(--sb-grad-color) 0%, var(--sb-grad-color) var(--sb-grad-solid-m), transparent var(--sb-grad-end-m))
+    {%- when 'bottom' -%}linear-gradient(to top, var(--sb-grad-color) 0%, var(--sb-grad-color) var(--sb-grad-solid-m), transparent var(--sb-grad-end-m))
+    {%- else -%}linear-gradient(var(--sb-grad-color), var(--sb-grad-color))
+  {%- endcase -%}
+{%- endcapture -%}
+
+{% style %}
+  .shotz-banner-{{ section.id }} {
+    --sb-text: {{ s.text_color }};
+    --sb-text-soft: color-mix(in srgb, {{ s.text_color }} 72%, transparent);
+    --sb-button-bg: {{ s.button_bg }};
+    --sb-button-text: {{ s.button_text }};
+    --sb-button-accent: {{ s.button_accent }};
+    --sb-badge-bg: {{ s.badge_bg }};
+    --sb-badge-text: {{ s.badge_text }};
+    --sb-heading-size: {{ s.heading_size }}px;
+    --sb-content-width: {{ s.content_width }}px;
+    --sb-grad-color: color-mix(in srgb, {{ s.gradient_color }} {{ s.gradient_opacity }}%, transparent);
+    --sb-grad-solid: {{ s.gradient_solid }}%;
+    --sb-grad-end: {{ s.gradient_end }}%;
+    --sb-grad-solid-m: {{ s.gradient_solid_mobile }}%;
+    --sb-grad-end-m: {{ s.gradient_end_mobile }}%;
+    --sb-gradient: {{ gradient_desktop | strip }};
+    --sb-gradient-m: {{ gradient_mobile | strip }};
+    --sb-padding-block: {{ s.padding_block }}px;
+  }
+{% endstyle %}
+
+<div
+  class="shotz-banner shotz-banner-{{ section.id }} shotz-banner--h-{{ s.height }} shotz-banner--hm-{{ s.height_mobile }}"
+  data-x="{{ s.content_position }}"
+  data-y="{{ s.content_vertical }}"
+  data-y-mobile="{{ s.content_position_mobile }}"
+>
+  <div class="shotz-banner__media-wrap">
+    {%- if s.video != blank -%}
+      {{
+        s.video
+        | video_tag:
+          autoplay: true,
+          loop: true,
+          muted: true,
+          playsinline: true,
+          controls: false,
+          image_size: '1920x',
+          class: 'shotz-banner__media'
+      }}
+    {%- elsif s.image != blank -%}
+      <picture>
+        {%- if s.image_mobile != blank -%}
+          <source
+            media="(max-width: 749px)"
+            srcset="
+              {{ s.image_mobile | image_url: width: 500 }} 500w,
+              {{ s.image_mobile | image_url: width: 750 }} 750w,
+              {{ s.image_mobile | image_url: width: 1100 }} 1100w,
+              {{ s.image_mobile | image_url: width: 1500 }} 1500w
+            "
+            sizes="100vw"
+          >
+        {%- endif -%}
+        {%- capture focal -%}object-position: {{ s.image.presentation.focal_point | default: 'center' }};{%- endcapture -%}
+        {{
+          s.image
+          | image_url: width: 3000
+          | image_tag:
+            widths: '750, 1100, 1500, 1920, 2400, 3000',
+            sizes: '100vw',
+            loading: loading,
+            alt: s.image.alt,
+            class: 'shotz-banner__media',
+            style: focal
+        }}
+      </picture>
+    {%- else -%}
+      {{- 'hero-apparel-1' | placeholder_svg_tag: 'shotz-banner__media shotz-banner__media--placeholder' -}}
+    {%- endif -%}
+  </div>
+
+  {%- if s.gradient_enabled -%}
+    <div class="shotz-banner__gradient" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <div class="shotz-banner__inner">
+    <div class="shotz-banner__content">
+      {%- if s.eyebrow != blank -%}
+        <p class="shotz-banner__eyebrow">{{ s.eyebrow | escape }}</p>
+      {%- endif -%}
+
+      {%- if s.heading != blank -%}
+        <h2 class="shotz-banner__heading">{{ s.heading }}</h2>
+      {%- endif -%}
+
+      {%- if s.subheading != blank -%}
+        <p class="shotz-banner__subheading">{{ s.subheading | escape }}</p>
+      {%- endif -%}
+
+      {%- if s.text != blank -%}
+        <div class="shotz-banner__text">{{ s.text }}</div>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="shotz-banner__badges" role="list">
+          {%- for block in section.blocks -%}
+            <li class="shotz-banner__badge" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon_image != blank -%}
+                {{
+                  block.settings.icon_image
+                  | image_url: width: 64
+                  | image_tag: class: 'shotz-banner__badge-icon', alt: '', loading: 'lazy', width: 20, height: 20
+                }}
+              {%- elsif block.settings.icon != 'none' -%}
+                <svg
+                  class="shotz-banner__badge-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  {%- case block.settings.icon -%}
+                    {%- when 'bolt' -%}<path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/>
+                    {%- when 'protein' -%}<path d="M6 7v10M18 7v10M3 10v4M21 10v4M6 12h12"/>
+                    {%- when 'drop' -%}<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/>
+                    {%- when 'leaf' -%}<path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15M5 19l7-7"/>
+                    {%- when 'clock' -%}<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+                    {%- when 'check' -%}<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>
+                    {%- when 'heart' -%}<path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z"/>
+                    {%- when 'no-sugar' -%}<circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/>
+                    {%- when 'fruit' -%}<circle cx="12" cy="14" r="7"/><path d="M12 7c0-2 1-4 3-4"/>
+                    {%- when 'star' -%}<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/>
+                  {%- endcase -%}
+                </svg>
+              {%- endif -%}
+              <span>{{ block.settings.label | escape }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if s.button_label != blank or s.button2_label != blank -%}
+        <div class="shotz-banner__buttons">
+          {%- if s.button_label != blank -%}
+            <a href="{{ s.button_link | default: '#' }}" class="shotz-banner__button">
+              <span>{{ s.button_label | escape }}</span>
+              <span class="shotz-banner__button-arrow" aria-hidden="true">
+                <svg viewBox="0 0 16 16" focusable="false">
+                  <path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </a>
+          {%- endif -%}
+          {%- if s.button2_label != blank -%}
+            <a href="{{ s.button2_link | default: '#' }}" class="shotz-banner__button shotz-banner__button--secondary">
+              {{ s.button2_label | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .shotz-banner {
+    position: relative;
+    display: grid;
+    min-height: var(--sb-min-height, 640px);
+    overflow: hidden;
+    isolation: isolate;
+    color: var(--sb-text);
+  }
+
+  .shotz-banner--h-small { --sb-min-height: 480px; }
+  .shotz-banner--h-medium { --sb-min-height: 640px; }
+  .shotz-banner--h-large { --sb-min-height: 80svh; }
+  .shotz-banner--h-full { --sb-min-height: 100svh; }
+
+  .shotz-banner__media-wrap,
+  .shotz-banner__media-wrap picture {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+
+  .shotz-banner__media {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .shotz-banner__media--placeholder {
+    background: #e9e6e1;
+  }
+
+  .shotz-banner__gradient {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--sb-gradient);
+    pointer-events: none;
+  }
+
+  .shotz-banner__inner {
+    display: flex;
+    padding: var(--sb-padding-block) var(--page-margin, 40px);
+  }
+
+  .shotz-banner[data-x='left'] .shotz-banner__inner { justify-content: flex-start; }
+  .shotz-banner[data-x='center'] .shotz-banner__inner { justify-content: center; text-align: center; }
+  .shotz-banner[data-x='right'] .shotz-banner__inner { justify-content: flex-end; }
+  .shotz-banner[data-y='top'] .shotz-banner__inner { align-items: flex-start; }
+  .shotz-banner[data-y='center'] .shotz-banner__inner { align-items: center; }
+  .shotz-banner[data-y='bottom'] .shotz-banner__inner { align-items: flex-end; }
+
+  .shotz-banner__content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: var(--sb-content-width);
+  }
+
+  .shotz-banner[data-x='center'] .shotz-banner__content {
+    align-items: center;
+  }
+
+  .shotz-banner__eyebrow {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sb-text-soft);
+  }
+
+  .shotz-banner__heading {
+    margin: 0;
+    font-size: clamp(36px, 6.5vw, var(--sb-heading-size));
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: inherit;
+  }
+
+  .shotz-banner__heading em {
+    font-weight: 800;
+  }
+
+  .shotz-banner__subheading {
+    margin: 4px 0 0;
+    font-size: clamp(18px, 1.8vw, 24px);
+    font-weight: 500;
+  }
+
+  .shotz-banner__text {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--sb-text-soft);
+  }
+
+  .shotz-banner__text p {
+    margin: 0;
+  }
+
+  .shotz-banner__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 4px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .shotz-banner[data-x='center'] .shotz-banner__badges {
+    justify-content: center;
+  }
+
+  .shotz-banner__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--sb-badge-bg);
+    color: var(--sb-badge-text);
+    font-size: 14px;
+    font-weight: 600;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  .shotz-banner__badge-icon {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+  }
+
+  .shotz-banner__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .shotz-banner[data-x='center'] .shotz-banner__buttons {
+    justify-content: center;
+  }
+
+  .shotz-banner__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 48px;
+    padding: 6px 6px 6px 22px;
+    border-radius: 999px;
+    background-color: var(--sb-button-bg);
+    color: var(--sb-button-text);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .shotz-banner__button:hover {
+    background-color: color-mix(in srgb, var(--sb-button-bg) 85%, #fff);
+  }
+
+  .shotz-banner__button:focus-visible {
+    outline: 2px solid var(--sb-text);
+    outline-offset: 3px;
+  }
+
+  .shotz-banner__button-arrow {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--sb-button-accent);
+    color: var(--sb-button-bg);
+  }
+
+  .shotz-banner__button-arrow svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+  }
+
+  .shotz-banner__button:hover .shotz-banner__button-arrow svg {
+    transform: translateX(3px);
+  }
+
+  .shotz-banner__button--secondary {
+    padding: 6px 22px;
+    background-color: #fff;
+    color: #0d0d0d;
+  }
+
+  .shotz-banner__button--secondary:hover {
+    background-color: #f1f1f1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .shotz-banner--hm-small { --sb-min-height: 420px; }
+    .shotz-banner--hm-medium { --sb-min-height: 560px; }
+    .shotz-banner--hm-large { --sb-min-height: 80svh; }
+    .shotz-banner--hm-full { --sb-min-height: 100svh; }
+
+    .shotz-banner__gradient {
+      background: var(--sb-gradient-m);
+    }
+
+    .shotz-banner .shotz-banner__inner {
+      justify-content: flex-start;
+      padding-inline: 20px;
+    }
+
+    .shotz-banner[data-y-mobile='top'] .shotz-banner__inner { align-items: flex-start; }
+    .shotz-banner[data-y-mobile='center'] .shotz-banner__inner { align-items: center; }
+    .shotz-banner[data-y-mobile='bottom'] .shotz-banner__inner { align-items: flex-end; }
+
+    .shotz-banner__content {
+      width: 100%;
+      gap: 12px;
+    }
+
+    .shotz-banner__heading {
+      font-size: clamp(34px, 11vw, var(--sb-heading-size));
+    }
+
+    .shotz-banner__badge {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shotz-banner * {
+      transition: none !important;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Shotz Banner",
+  "tag": "section",
+  "class": "shotz-banner-section",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Mídia"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagem (desktop)",
+      "info": "Deixe um lado da foto com fundo limpo para o texto. O ponto focal da imagem é respeitado."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Imagem (mobile, opcional)",
+      "info": "Vertical, com espaço limpo em cima ou embaixo."
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Vídeo (opcional)",
+      "info": "Substitui a imagem. Toca mudo e em loop."
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Altura (desktop)",
+      "options": [
+        { "value": "small", "label": "Pequena" },
+        { "value": "medium", "label": "Média" },
+        { "value": "large", "label": "Grande" },
+        { "value": "full", "label": "Tela cheia" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "select",
+      "id": "height_mobile",
+      "label": "Altura (mobile)",
+      "options": [
+        { "value": "small", "label": "Pequena" },
+        { "value": "medium", "label": "Média" },
+        { "value": "large", "label": "Grande" },
+        { "value": "full", "label": "Tela cheia" }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "header",
+      "content": "Degradê"
+    },
+    {
+      "type": "checkbox",
+      "id": "gradient_enabled",
+      "label": "Mostrar degradê",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "gradient_color",
+      "label": "Cor",
+      "default": "#F2F0EC",
+      "visible_if": "{{ section.settings.gradient_enabled }}"
+    },
+    {
+      "type": "range",
+      "id": "gradient_opacity",
+      "label": "Intensidade",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 85,
+      "visible_if": "{{ section.settings.gradient_enabled }}"
+    },
+    {
+      "type": "select",
+      "id": "gradient_side",
+      "label": "Lado (desktop)",
+      "options": [
+        { "value": "auto", "label": "Acompanhar o texto" },
+        { "value": "left", "label": "Esquerda" },
+        { "value": "right", "label": "Direita" },
+        { "value": "top", "label": "Cima" },
+        { "value": "bottom", "label": "Baixo" },
+        { "value": "full", "label": "Tela toda (sólido)" }
+      ],
+      "default": "auto",
+      "visible_if": "{{ section.settings.gradient_enabled }}"
+    },
+    {
+      "type": "range",
+      "id": "gradient_solid",
+      "label": "Área sólida (desktop)",
+      "min": 0,
+      "max": 70,
+      "step": 5,
+      "unit": "%",
+      "default": 25,
+      "visible_if": "{{ section.settings.gradient_enabled }}"
+    },
+    {
+      "type": "range",
+      "id": "gradient_end",
+      "label": "Onde some (desktop)",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 65,
+      "visible_if": "{{ section.settings.gradient_enabled }}"
+    },
+    {
+      "type": "select",
+      "id": "gradient_side_mobile",
+      "label": "Lado (mobile)",
+      "options": [
+        { "value": "auto", "label": "Acompanhar o texto" },
+        { "value": "top", "label": "Cima" },
+        { "value": "bottom", "label": "Baixo" },
+        { "value": "full", "label": "Tela toda (sólido)" }
+      ],
+      "default": "auto",
+      "visible_if": "{{ section.settings.gradient_enabled }}"
+    },
+    {
+      "type": "range",
+      "id": "gradient_solid_mobile",
+      "label": "Área sólida (mobile)",
+      "min": 0,
+      "max": 70,
+      "step": 5,
+      "unit": "%",
+      "default": 35,
+      "visible_if": "{{ section.settings.gradient_enabled }}"
+    },
+    {
+      "type": "range",
+      "id": "gradient_end_mobile",
+      "label": "Onde some (mobile)",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 75,
+      "visible_if": "{{ section.settings.gradient_enabled }}"
+    },
+    {
+      "type": "header",
+      "content": "Posição do texto"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Horizontal (desktop)",
+      "options": [
+        { "value": "left", "label": "Esquerda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Direita" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "content_vertical",
+      "label": "Vertical (desktop)",
+      "options": [
+        { "value": "top", "label": "Cima" },
+        { "value": "center", "label": "Centro" },
+        { "value": "bottom", "label": "Baixo" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "content_position_mobile",
+      "label": "Vertical (mobile)",
+      "options": [
+        { "value": "top", "label": "Cima" },
+        { "value": "center", "label": "Centro" },
+        { "value": "bottom", "label": "Baixo" }
+      ],
+      "default": "top"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Largura máxima do texto",
+      "min": 320,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 680
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "label": "Espaço acima/abaixo",
+      "min": 24,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "header",
+      "content": "Texto"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Título",
+      "info": "Use itálico para destacar palavras.",
+      "default": "Dois goles. <em>Pronto.</em>"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamanho do título",
+      "min": 32,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "23g de proteína em 100ml"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Texto curto (opcional)"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Cor do texto",
+      "default": "#0D0D0D"
+    },
+    {
+      "type": "header",
+      "content": "Selos"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Fundo dos selos",
+      "alpha": true,
+      "default": "#FFFFFFB3"
+    },
+    {
+      "type": "color",
+      "id": "badge_text",
+      "label": "Texto/ícone dos selos",
+      "default": "#0D0D0D"
+    },
+    {
+      "type": "header",
+      "content": "Botões"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Botão principal",
+      "default": "Quero experimentar"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link do botão principal"
+    },
+    {
+      "type": "text",
+      "id": "button2_label",
+      "label": "Botão secundário"
+    },
+    {
+      "type": "url",
+      "id": "button2_link",
+      "label": "Link do botão secundário"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Fundo do botão principal",
+      "default": "#0D0D0D"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Texto do botão principal",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_accent",
+      "label": "Círculo da seta",
+      "default": "#FFB627"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Selo",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícone",
+          "options": [
+            { "value": "none", "label": "Nenhum" },
+            { "value": "protein", "label": "Proteína (halter)" },
+            { "value": "bolt", "label": "Energia (raio)" },
+            { "value": "clock", "label": "Rápido (relógio)" },
+            { "value": "drop", "label": "Líquido (gota)" },
+            { "value": "fruit", "label": "Fruta" },
+            { "value": "leaf", "label": "Natural (folha)" },
+            { "value": "no-sugar", "label": "Sem (proibido)" },
+            { "value": "check", "label": "Check" },
+            { "value": "heart", "label": "Coração" },
+            { "value": "star", "label": "Estrela" }
+          ],
+          "default": "protein"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Ícone personalizado (opcional)",
+          "info": "Substitui o ícone acima. Use PNG/SVG quadrado."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto",
+          "default": "23g de proteína"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shotz Banner",
+      "blocks": [
+        { "type": "badge", "settings": { "icon": "protein", "label": "23g de proteína" } },
+        { "type": "badge", "settings": { "icon": "fruit", "label": "Gosto de suco" } },
+        { "type": "badge", "settings": { "icon": "clock", "label": "5 segundos" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -567,7 +567,7 @@
           "settings": {
             "number": "23g de proteína",
             "title": "",
-            "description": "Proteína enriquecida com aminoácidos essenciais"
+            "description": ""
           }
         },
         "stat_WEaiLW": {
@@ -575,7 +575,7 @@
           "settings": {
             "number": "100ml. Dois goles. 5 segundos",
             "title": "",
-            "description": "Proteína que deixa pesado é proteína que você abandona na segunda semana. Essa cabe entre reuniões, antes do treino ou em jejum."
+            "description": ""
           }
         },
         "stat_BTiEFK": {
@@ -583,7 +583,7 @@
           "settings": {
             "number": "Fácil e saboroso",
             "title": "",
-            "description": "Sem coqueteleira, sem preparo, sem limpeza e sem barriga estufada."
+            "description": ""
           }
         }
       },
@@ -597,7 +597,7 @@
         "image": "shopify://shop_images/teste_pure_genius.webp",
         "image_position": "right",
         "heading": "UM JEITO MAIS SIMPLES E FÁCIL DE TOMAR SUA PROTEÍNA",
-        "paragraph": "<h5>Ninguém deixa de bater a meta de proteína por falta de disciplina. Deixa porque consumir proteína é trabalhoso.</h5><h5>Então fomos por outro caminho: 23g de proteína em 100ml, textura de bebida leve, pra qualquer hora. Abre, bebe, segue. A melhor proteína é a que encaixa na sua rotina.</h5>",
+        "paragraph": "",
         "background_color": "#ffffff",
         "heading_color": "#000000",
         "paragraph_color": "#696565",
@@ -679,7 +679,7 @@
         "heading_tag": "h2",
         "accent_color": "#4a90b8",
         "heading_color": "#0d0d0d",
-        "background_color": "#E2E7E9",
+        "background_color": "#e2e7e9",
         "card_background": "#16202e",
         "card_text_color": "#d8dde4",
         "columns_desktop": 3,
@@ -724,7 +724,7 @@
             "attr_6_shotz": true,
             "attr_6_whey": false,
             "attr_6_collagen": true,
-            "shotz_column_bg_color": "#E9E7E2",
+            "shotz_column_bg_color": "#e9e7e2",
             "shotz_column_text_color": "#000000",
             "accent_color": "#000000",
             "divider_color": "#000000",
@@ -733,7 +733,7 @@
             "cross_icon_color": "#ff6b5a",
             "cross_icon_stroke": "#ffffff",
             "background_image_opacity": 20,
-            "table_background_color": "#F6F5F3",
+            "table_background_color": "#f6f5f3",
             "table_text_color": "#000000",
             "table_border_radius": 16
           },

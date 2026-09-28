@@ -163,7 +163,9 @@
             "number": "95",
             "unit": "kcal",
             "label": "apenas",
-            "icon": "flame"
+            "sublabel": "",
+            "icon": "flame",
+            "highlight": false
           }
         },
         "numero_7xwKWx": {
@@ -172,7 +174,9 @@
             "number": "0",
             "unit": "g",
             "label": "Gorduras",
-            "icon": "ban"
+            "sublabel": "",
+            "icon": "ban",
+            "highlight": false
           }
         },
         "numero_zYQ6Nh": {
@@ -181,7 +185,9 @@
             "number": "0",
             "unit": "g",
             "label": "Lactose",
-            "icon": "bottle"
+            "sublabel": "",
+            "icon": "bottle",
+            "highlight": false
           }
         }
       },
@@ -197,7 +203,16 @@
         "eyebrow": "A proteína que acompanha sua rotina.",
         "heading": "",
         "subtitle": "",
-        "background_color": "#fdfdfc",
+        "bg_image": "shopify://shop_images/hf_20260928_160444_7dcd6c15-a81f-4b3f-bab7-fae71d8fa3fc_2.png",
+        "bg_position": "right",
+        "fade_opacity": 70,
+        "background_color": "#FAF4E4",
+        "eyebrow_color": "#0d0d0d",
+        "highlight_bg": "#000000",
+        "highlight_text_color": "#FFFFFF",
+        "card_bg": "#ffffff",
+        "card_opacity": 75,
+        "card_text_color": "#0d0d0d",
         "heading_color": "#000000",
         "subtitle_color": "#5a6273",
         "number_color": "#000000",
@@ -207,6 +222,9 @@
         "subtitle_size": 15,
         "number_size": 46,
         "label_size": 15,
+        "min_height": 260,
+        "min_height_mobile": 520,
+        "content_max_width": 600,
         "grid_gap_top": 16,
         "max_width": 1200,
         "padding_top": 15,
@@ -356,7 +374,7 @@
           "settings": {
             "icon": "",
             "title": "Fórmula exclusiva",
-            "text": "Colágeno enriquecido com todos aminoácidos"
+            "text": "Proteína enriquecida com todos aminoácidos"
           }
         },
         "card_JAYA4m": {
@@ -379,6 +397,7 @@
         "heading": "CRIADO PARA VIDAS AGITADAS",
         "subheading": "A proteína que da match com sua rotina",
         "bg_image": "shopify://shop_images/hf_20260928_160444_7dcd6c15-a81f-4b3f-bab7-fae71d8fa3fc_2.png",
+        "bg_image_mobile": "shopify://shop_images/hf_20260928_160444_7dcd6c15-a81f-4b3f-bab7-fae71d8fa3fc_2.png",
         "bg_position": "top",
         "overlay_color": "#000000",
         "overlay_opacity": 35,
@@ -657,10 +676,10 @@
         "secondary_btn_label": "Experimente agora",
         "secondary_btn_link": "",
         "btn_primary_bg": "#000000",
-        "btn_primary_text": "#FFFFFF",
-        "btn_primary_bg_hover": "#CFCFCF",
+        "btn_primary_text": "#ffffff",
+        "btn_primary_bg_hover": "#cfcfcf",
         "btn_primary_text_hover": "#000000",
-        "btn_arrow_bg": "#FFFFFF",
+        "btn_arrow_bg": "#ffffff",
         "btn_arrow_color": "#000000",
         "btn_secondary_bg": "",
         "btn_secondary_text": "",

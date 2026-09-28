@@ -369,9 +369,10 @@
         "eyebrow": "",
         "heading": "CRIADO PARA VIDAS AGITADAS",
         "subheading": "A proteína que da match com sua rotina",
+        "bg_image": "shopify://shop_images/hf_20260928_160444_7dcd6c15-a81f-4b3f-bab7-fae71d8fa3fc_2.png",
         "bg_position": "center",
         "overlay_color": "#000000",
-        "overlay_opacity": 50,
+        "overlay_opacity": 35,
         "min_height": 0,
         "background_color": "#0d0d0d"
       }

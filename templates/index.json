@@ -151,7 +151,10 @@
           "settings": {
             "number": "23",
             "unit": "g",
-            "label": "Proteína de qualidade"
+            "label": "Proteína",
+            "sublabel": "de qualidade",
+            "icon": "bolt",
+            "highlight": true
           }
         },
         "numero_mbUAJ6": {
@@ -159,7 +162,8 @@
           "settings": {
             "number": "95",
             "unit": "kcal",
-            "label": "apenas"
+            "label": "apenas",
+            "icon": "flame"
           }
         },
         "numero_7xwKWx": {
@@ -167,7 +171,8 @@
           "settings": {
             "number": "0",
             "unit": "g",
-            "label": "Gorduras"
+            "label": "Gorduras",
+            "icon": "ban"
           }
         },
         "numero_zYQ6Nh": {
@@ -175,7 +180,8 @@
           "settings": {
             "number": "0",
             "unit": "g",
-            "label": "Lactose"
+            "label": "Lactose",
+            "icon": "bottle"
           }
         }
       },
@@ -187,6 +193,8 @@
       ],
       "name": "Números em destaque",
       "settings": {
+        "layout_style": "cards",
+        "eyebrow": "A proteína que acompanha sua rotina.",
         "heading": "",
         "subtitle": "",
         "background_color": "#fdfdfc",
@@ -200,7 +208,7 @@
         "number_size": 46,
         "label_size": 15,
         "grid_gap_top": 16,
-        "max_width": 800,
+        "max_width": 1200,
         "padding_top": 15,
         "padding_bottom": 0
       }

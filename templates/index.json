@@ -110,6 +110,7 @@
       "name": "Shotz Banner",
       "settings": {
         "image": "shopify://shop_images/hf_20260917_194324_93fe51e5-cc5b-4f90-bbb3-a09937f88657.png",
+        "video": "shopify://files/videos/WhatsApp Video 2026-09-28 at 12.44.51.mp4",
         "height": "large",
         "height_mobile": "large",
         "gradient_enabled": true,

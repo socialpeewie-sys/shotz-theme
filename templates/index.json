@@ -140,7 +140,7 @@
         "button2_link": "",
         "button_bg": "#0d0d0d",
         "button_text": "#ffffff",
-        "button_accent": "#FAF4E4"
+        "button_accent": "#faf4e4"
       }
     },
     "shotz_numeros_LEgDf3": {
@@ -210,6 +210,7 @@
       "blocks": {
         "ai_gen_block_0453d40_TQFf3b": {
           "type": "ai_gen_block_0453d40",
+          "disabled": true,
           "settings": {
             "image_position": "left",
             "background_color": "#f6f5f3",
@@ -337,25 +338,25 @@
         "card_BjpDXy": {
           "type": "card",
           "settings": {
-            "icon": "⚡",
-            "title": "Proteína instantânea",
-            "text": "Alta biodisponibilidade. Sem o processo lento do pó diluído."
+            "icon": "",
+            "title": "100ML. Dois goles",
+            "text": "Proteína pronta para beber"
           }
         },
         "card_jWRftJ": {
           "type": "card",
           "settings": {
-            "icon": "🦴",
-            "title": "Colágeno Completo",
-            "text": "Tipos I, II e III. Para pele, articulações e recuperação muscular."
+            "icon": "",
+            "title": "Fórmula exclusiva",
+            "text": "Colágeno enriquecido com todos aminoácidos"
           }
         },
         "card_JAYA4m": {
           "type": "card",
           "settings": {
-            "icon": "🚫",
-            "title": "Zero açúcar",
-            "text": "Sem pico de glicose. Sem crash. Energia limpa o dia todo."
+            "icon": "",
+            "title": "A proteína feita para sua rotina",
+            "text": "No trabalho, no café ou até mesmo antes do jantar"
           }
         }
       },
@@ -370,7 +371,7 @@
         "heading": "CRIADO PARA VIDAS AGITADAS",
         "subheading": "A proteína que da match com sua rotina",
         "bg_image": "shopify://shop_images/hf_20260928_160444_7dcd6c15-a81f-4b3f-bab7-fae71d8fa3fc_2.png",
-        "bg_position": "center",
+        "bg_position": "top",
         "overlay_color": "#000000",
         "overlay_opacity": 35,
         "min_height": 0,
@@ -504,6 +505,7 @@
       "blocks": {
         "ai_gen_block_0453d40_JLetNH": {
           "type": "ai_gen_block_0453d40",
+          "disabled": true,
           "settings": {
             "image_position": "right",
             "background_color": "#f6f5f3",
@@ -642,19 +644,19 @@
         "pause_on_hover": true,
         "price_label": "",
         "price": "",
-        "primary_btn_label": "Comprar agora",
+        "primary_btn_label": "A ciência",
         "primary_btn_link": "",
-        "secondary_btn_label": "Ver produto",
+        "secondary_btn_label": "Experimente agora",
         "secondary_btn_link": "",
-        "btn_primary_bg": "",
-        "btn_primary_text": "",
-        "btn_primary_bg_hover": "",
-        "btn_primary_text_hover": "",
-        "btn_arrow_bg": "",
-        "btn_arrow_color": "",
+        "btn_primary_bg": "#000000",
+        "btn_primary_text": "#FFFFFF",
+        "btn_primary_bg_hover": "#CFCFCF",
+        "btn_primary_text_hover": "#000000",
+        "btn_arrow_bg": "#FFFFFF",
+        "btn_arrow_color": "#000000",
         "btn_secondary_bg": "",
         "btn_secondary_text": "",
-        "btn_secondary_border": "",
+        "btn_secondary_border": "#000000",
         "btn_secondary_bg_hover": "",
         "btn_secondary_text_hover": "",
         "image_position": "left",
@@ -663,8 +665,8 @@
         "heading_size": 44,
         "background_color": "#ffffff",
         "accent_color": "#9f3d49",
-        "heading_color": "#0d0d0d",
-        "text_color": "#5b5b5b",
+        "heading_color": "#000000",
+        "text_color": "#000000",
         "pill_background": "#ffffff",
         "pill_border_color": "#111111",
         "pill_text_color": "#561218"

@@ -102,7 +102,7 @@
       "name": "Shotz Banner",
       "settings": {
         "video": "shopify://files/videos/hf_20260928_154927_572a43e3-e5fb-49b1-8800-8d56f4a97b14.mp4",
-        "height": "large",
+        "height": "full",
         "height_mobile": "large",
         "gradient_enabled": true,
         "gradient_color": "#f2f0ec",
@@ -176,6 +176,9 @@
         "eyebrow_text": "",
         "heading": "Escolha o seu",
         "background_color": "#ffffff",
+        "wave_overlap": true,
+        "wave_height": 120,
+        "wave_height_mobile": 64,
         "padding_block": 16,
         "padding_inline": 48
       }

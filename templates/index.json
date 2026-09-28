@@ -295,7 +295,7 @@
         "content_max_width": 760,
         "grid_gap_top": 28,
         "max_width": 1200,
-        "padding_top": 50,
+        "padding_top": 140,
         "padding_bottom": 40
       }
     },

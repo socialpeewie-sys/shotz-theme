@@ -335,9 +335,13 @@
     grid-row: var(--row-d);
     grid-column: 2;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 18px;
     border-radius: 16px;
-    text-align: left;
+    text-align: center;
     background: color-mix(in srgb, {{ s.float_card_bg }} {{ s.float_card_opacity }}%, transparent);
     border: 1px solid color-mix(in srgb, {{ s.float_card_bg }} 70%, transparent);
     -webkit-backdrop-filter: blur(14px) saturate(1.2);
@@ -347,7 +351,6 @@
 
   .shotz-numeros-fl-card-{{ nid }}.is-right {
     grid-column: 4;
-    text-align: right;
   }
 
   .shotz-numeros-fl-number-{{ nid }} {

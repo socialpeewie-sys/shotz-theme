@@ -2,8 +2,11 @@
   assign nid = section.id | replace: '_', '' | downcase
   assign s = section.settings
   assign is_cards = false
+  assign is_floating = false
   if s.layout_style == 'cards'
     assign is_cards = true
+  elsif s.layout_style == 'floating'
+    assign is_floating = true
   endif
   assign bg_desktop = s.bg_image | default: s.bg_image_mobile
   assign fade_opacity = s.fade_opacity | divided_by: 100.0
@@ -138,7 +141,7 @@
     margin: 0 0 18px;
     max-width: 30ch;
     font-family: var(--font-body--family), 'Plus Jakarta Sans', sans-serif;
-    font-size: 12px;
+    font-size: {{ s.eyebrow_size }}px;
     font-weight: 600;
     line-height: 1.6;
     letter-spacing: 0.22em;
@@ -265,9 +268,176 @@
     opacity: 0.8;
   }
 
+  /* ---------- Estilo: cards ao redor do produto ---------- */
+
+  .shotz-numeros-{{ nid }}.is-floating {
+    overflow: hidden;
+  }
+
+  .shotz-numeros-fl-head-{{ nid }} {
+    text-align: center;
+  }
+
+  .shotz-numeros-fl-head-{{ nid }} .shotz-numeros-subtitle-{{ nid }} {
+    margin-inline: auto;
+  }
+
+  .shotz-numeros-fl-eyebrow-{{ nid }} {
+    margin: 0 0 12px;
+    font-family: var(--font-body--family), 'Plus Jakarta Sans', sans-serif;
+    font-size: {{ s.eyebrow_size }}px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: {{ s.eyebrow_color }};
+  }
+
+  .shotz-numeros-fl-heading-{{ nid }} {
+    margin: 0;
+    font-family: var(--font-heading--family), 'Plus Jakarta Sans', sans-serif;
+    font-size: {{ s.heading_size }}px;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    color: {{ s.heading_color }};
+  }
+
+  .shotz-numeros-fl-stage-{{ nid }} {
+    position: relative;
+    max-width: {{ s.float_image_width }}px;
+    margin: {{ s.grid_gap_top }}px auto 0;
+    display: grid;
+    grid-template-columns: 1fr {{ s.float_card_width }}px {{ s.float_center_gap }}px {{ s.float_card_width }}px 1fr;
+    grid-template-rows: {{ s.float_cards_top }}px auto auto auto 1fr;
+    row-gap: {{ s.float_row_gap }}px;
+  }
+
+  .shotz-numeros-fl-media-{{ nid }} {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    align-self: end;
+    z-index: 0;
+  }
+
+  .shotz-numeros-fl-media-{{ nid }} picture,
+  .shotz-numeros-fl-media-{{ nid }} img,
+  .shotz-numeros-fl-media-{{ nid }} svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .shotz-numeros-fl-card-{{ nid }} {
+    position: relative;
+    z-index: 1;
+    grid-row: var(--row-d);
+    grid-column: 2;
+    min-width: 0;
+    padding: 18px;
+    border-radius: 16px;
+    text-align: left;
+    background: color-mix(in srgb, {{ s.float_card_bg }} {{ s.float_card_opacity }}%, transparent);
+    border: 1px solid color-mix(in srgb, {{ s.float_card_bg }} 70%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  }
+
+  .shotz-numeros-fl-card-{{ nid }}.is-right {
+    grid-column: 4;
+    text-align: right;
+  }
+
+  .shotz-numeros-fl-number-{{ nid }} {
+    display: block;
+    margin: 0 0 14px;
+    font-family: var(--font-heading--family), 'Plus Jakarta Sans', sans-serif;
+    font-size: {{ s.float_number_size }}px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--n-color);
+  }
+
+  .shotz-numeros-fl-title-{{ nid }} {
+    margin: 0 0 12px;
+    font-family: var(--font-heading--family), 'Plus Jakarta Sans', sans-serif;
+    font-size: {{ s.float_title_size }}px;
+    font-weight: 800;
+    line-height: 1.25;
+    color: {{ s.float_title_color }};
+  }
+
+  .shotz-numeros-fl-desc-{{ nid }} {
+    margin: 0;
+    font-family: var(--font-body--family), 'Plus Jakarta Sans', sans-serif;
+    font-size: {{ s.float_desc_size }}px;
+    line-height: 1.4;
+    color: {{ s.float_desc_color }};
+  }
+
   @media screen and (max-width: 749px) {
     .shotz-numeros-heading-{{ nid }} {
-      font-size: {{ s.heading_size | times: 0.62 | round }}px;
+      font-size: {{ s.heading_size_mobile }}px;
+    }
+
+    .shotz-numeros-eyebrow-{{ nid }},
+    .shotz-numeros-fl-eyebrow-{{ nid }} {
+      font-size: {{ s.eyebrow_size_mobile }}px;
+    }
+
+    .shotz-numeros-fl-heading-{{ nid }} {
+      font-size: {{ s.heading_size_mobile }}px;
+    }
+
+    .shotz-numeros-fl-stage-{{ nid }} {
+      max-width: none;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: none;
+      grid-auto-rows: auto;
+      column-gap: {{ s.float_gap_mobile }}px;
+      row-gap: {{ s.float_gap_mobile }}px;
+    }
+
+    .shotz-numeros-fl-media-{{ nid }} {
+      grid-row: 2;
+      grid-column: 1 / -1;
+      margin-inline: -24px;
+      overflow: hidden;
+    }
+
+    .shotz-numeros-fl-media-{{ nid }} img,
+    .shotz-numeros-fl-media-{{ nid }} svg {
+      width: {{ s.float_image_zoom_mobile }}%;
+      max-width: none;
+      margin-left: calc((100% - {{ s.float_image_zoom_mobile }}%) / 2);
+    }
+
+    .shotz-numeros-fl-card-{{ nid }} {
+      grid-row: var(--row-m);
+      grid-column: 1;
+      padding: 14px;
+    }
+
+    .shotz-numeros-fl-card-{{ nid }}.is-right {
+      grid-column: 2;
+    }
+
+    .shotz-numeros-fl-card-{{ nid }}.is-overlap {
+      margin-top: -{{ s.float_overlap_mobile }}px;
+    }
+
+    .shotz-numeros-fl-number-{{ nid }} {
+      font-size: {{ s.float_number_size_mobile }}px;
+    }
+
+    .shotz-numeros-fl-title-{{ nid }} {
+      font-size: {{ s.float_title_size_mobile }}px;
+    }
+
+    .shotz-numeros-fl-desc-{{ nid }} {
+      font-size: {{ s.float_desc_size_mobile }}px;
     }
 
     .shotz-numeros-grid-{{ nid }} {
@@ -320,7 +490,7 @@
   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
 {%- endcapture -%}
 
-<div class="shotz-numeros-{{ nid }}{% if is_cards %} is-cards{% endif %}">
+<div class="shotz-numeros-{{ nid }}{% if is_cards %} is-cards{% endif %}{% if is_floating %} is-floating{% endif %}">
   {%- if is_cards and bg_desktop != blank -%}
     <div class="shotz-numeros-bg-{{ nid }}">
       <picture>
@@ -412,6 +582,80 @@
           </div>
         {%- endif -%}
       </div>
+    {%- elsif is_floating -%}
+      <div class="shotz-numeros-fl-head-{{ nid }}">
+        {%- if s.eyebrow != blank -%}
+          <p class="shotz-numeros-fl-eyebrow-{{ nid }}">{{ s.eyebrow }}</p>
+        {%- endif -%}
+        {%- if s.heading != blank -%}
+          <h2 class="shotz-numeros-fl-heading-{{ nid }}">{{ s.heading }}</h2>
+        {%- endif -%}
+        {%- if s.subtitle != blank -%}
+          <p class="shotz-numeros-subtitle-{{ nid }}">{{ s.subtitle }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="shotz-numeros-fl-stage-{{ nid }}">
+        <div class="shotz-numeros-fl-media-{{ nid }}">
+          {%- assign product_main = s.product_image | default: s.product_image_mobile -%}
+          {%- if product_main != blank -%}
+            <picture>
+              {%- if s.product_image_mobile != blank -%}
+                <source
+                  media="(max-width: 749px)"
+                  srcset="
+                    {{ s.product_image_mobile | image_url: width: 600 }} 600w,
+                    {{ s.product_image_mobile | image_url: width: 900 }} 900w,
+                    {{ s.product_image_mobile | image_url: width: 1200 }} 1200w
+                  "
+                  sizes="100vw"
+                >
+              {%- endif -%}
+              {%- assign product_alt = product_main.alt | escape -%}
+              {{
+                product_main
+                | image_url: width: 1600
+                | image_tag: loading: 'lazy', alt: product_alt, sizes: '(min-width: 750px) 900px, 150vw', widths: '600, 900, 1200, 1600'
+              }}
+            </picture>
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'numero' -%}
+            {%- liquid
+              assign pair = forloop.index0 | divided_by: 2 | floor
+              assign side = forloop.index0 | modulo: 2
+              assign row_d = pair | plus: 2
+              assign row_m = pair | plus: 2
+              if pair == 0
+                assign row_m = 1
+              endif
+              assign n_color = block.settings.number_color | default: s.float_number_color
+            -%}
+            <div
+              class="shotz-numeros-fl-card-{{ nid }}{% if side == 1 %} is-right{% endif %}{% if pair == 1 %} is-overlap{% endif %}"
+              style="--row-d: {{ row_d }}; --row-m: {{ row_m }}; --n-color: {{ n_color }};"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.number != blank -%}
+                <span class="shotz-numeros-fl-number-{{ nid }}">
+                  {{- block.settings.number -}}
+                  {{- block.settings.unit -}}
+                </span>
+              {%- endif -%}
+              {%- if block.settings.label != blank -%}
+                <p class="shotz-numeros-fl-title-{{ nid }}">{{ block.settings.label }}</p>
+              {%- endif -%}
+              {%- if block.settings.sublabel != blank -%}
+                <p class="shotz-numeros-fl-desc-{{ nid }}">{{ block.settings.sublabel }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
     {%- else -%}
       {% if s.heading != blank %}
         <h2 class="shotz-numeros-heading-{{ nid }}">{{ s.heading }}</h2>
@@ -458,6 +702,7 @@
       "label": "Estilo",
       "options": [
         { "value": "cards", "label": "Cards com imagem de fundo" },
+        { "value": "floating", "label": "Cards ao redor do produto" },
         { "value": "classic", "label": "Lista simples" }
       ],
       "default": "cards"
@@ -470,7 +715,7 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Frase em destaque (acima dos cards)",
-      "info": "Só aparece no estilo \"Cards com imagem de fundo\".",
+      "info": "Aparece nos estilos \"Cards com imagem de fundo\" e \"Cards ao redor do produto\".",
       "default": "A proteína que acompanha sua rotina."
     },
     {
@@ -524,6 +769,208 @@
       "step": 5,
       "unit": "%",
       "default": 70
+    },
+    {
+      "type": "header",
+      "content": "Cards ao redor do produto"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Imagem do produto",
+      "info": "Fica no centro, com os cards por cima das laterais. Use PNG com fundo transparente ou com a mesma cor do fundo da seção."
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image_mobile",
+      "label": "Imagem do produto (celular)",
+      "info": "Opcional. Se vazio, usa a imagem acima."
+    },
+    {
+      "type": "color",
+      "id": "float_number_color",
+      "label": "Cor dos números",
+      "info": "Cada número pode ter a própria cor no bloco.",
+      "default": "#E8890C"
+    },
+    {
+      "type": "color",
+      "id": "float_title_color",
+      "label": "Cor dos títulos dos cards",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "float_desc_color",
+      "label": "Cor das descrições dos cards",
+      "default": "#8A8A8A"
+    },
+    {
+      "type": "color",
+      "id": "float_card_bg",
+      "label": "Fundo dos cards",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "float_card_opacity",
+      "label": "Opacidade do fundo dos cards",
+      "info": "Valores baixos deixam o efeito de vidro fosco sobre o produto.",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Cards ao redor do produto — Desktop"
+    },
+    {
+      "type": "range",
+      "id": "float_image_width",
+      "label": "Largura da imagem do produto",
+      "info": "A altura acompanha a proporção da imagem.",
+      "min": 360,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "float_card_width",
+      "label": "Largura dos cards",
+      "min": 100,
+      "max": 320,
+      "step": 5,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "float_center_gap",
+      "label": "Espaço livre no centro (entre as colunas de cards)",
+      "min": 0,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 230
+    },
+    {
+      "type": "range",
+      "id": "float_cards_top",
+      "label": "Distância dos cards ao topo da imagem",
+      "min": 0,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "float_row_gap",
+      "label": "Espaço entre os cards",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "float_number_size",
+      "label": "Tamanho dos números",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "float_title_size",
+      "label": "Tamanho dos títulos dos cards",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "float_desc_size",
+      "label": "Tamanho das descrições dos cards",
+      "min": 9,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Cards ao redor do produto — Celular"
+    },
+    {
+      "type": "range",
+      "id": "float_image_zoom_mobile",
+      "label": "Largura da imagem do produto",
+      "info": "Em % da tela. Acima de 100% a imagem é ampliada e as laterais são cortadas.",
+      "min": 80,
+      "max": 250,
+      "step": 5,
+      "unit": "%",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "float_overlap_mobile",
+      "label": "Quanto os cards de baixo sobem sobre a imagem",
+      "min": 0,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "float_gap_mobile",
+      "label": "Espaço entre os cards",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "float_number_size_mobile",
+      "label": "Tamanho dos números",
+      "min": 16,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "float_title_size_mobile",
+      "label": "Tamanho dos títulos dos cards",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "float_desc_size_mobile",
+      "label": "Tamanho das descrições dos cards",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 11
     },
     {
       "type": "header",
@@ -618,6 +1065,36 @@
       "step": 2,
       "unit": "px",
       "default": 44
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamanho do título no celular",
+      "min": 18,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size",
+      "label": "Tamanho da frase em destaque",
+      "min": 9,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size_mobile",
+      "label": "Tamanho da frase em destaque no celular",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 11
     },
     {
       "type": "range",
@@ -770,6 +1247,12 @@
             { "value": "clock", "label": "Relógio" }
           ],
           "default": "bolt"
+        },
+        {
+          "type": "color",
+          "id": "number_color",
+          "label": "Cor do número (cards ao redor do produto)",
+          "info": "Vazio usa a cor padrão dos números."
         },
         {
           "type": "checkbox",

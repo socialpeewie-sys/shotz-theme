@@ -1,0 +1,760 @@
+{%- comment -%}
+  Shotz — Product Wheel
+  Hero de produto com "roda de benefícios" girando sozinha ao redor da imagem
+  central (inspirado no layout Ofuel), coluna de conteúdo com eyebrow, título,
+  descrição, ícones de destaque, checklist e preço/CTAs.
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = section.id | replace: '_', '' | downcase
+  assign wheel_blocks = section.blocks | where: 'type', 'wheel_item'
+  assign feature_blocks = section.blocks | where: 'type', 'feature'
+  assign checklist_blocks = section.blocks | where: 'type', 'checklist_item'
+  assign wheel_count = wheel_blocks.size
+  assign spin = 1
+  if section.settings.wheel_direction == 'reverse'
+    assign spin = -1
+  endif
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-block: {{ section.settings.section_padding }}px;
+  }
+
+  .spw-wrap-{{ sid }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(32px, 5vw, 72px);
+    max-width: {{ section.settings.max_width }}px;
+    margin-inline: auto;
+    padding-inline: 24px;
+    {% if section.settings.image_position == 'right' %}
+      direction: rtl;
+    {% endif %}
+  }
+
+  .spw-wrap-{{ sid }} > * {
+    {% if section.settings.image_position == 'right' %}
+      direction: ltr;
+    {% endif %}
+  }
+
+  /* ---------- Roda de benefícios ---------- */
+
+  .spw-wheel-col-{{ sid }} {
+    display: flex;
+    justify-content: center;
+  }
+
+  .spw-stage-{{ sid }} {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 1 / 1;
+    --radius: clamp(130px, 19vw, 210px);
+    --spin: {{ spin }};
+  }
+
+  .spw-circle-{{ sid }} {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, {{ section.settings.accent_color }} 45%, transparent);
+    pointer-events: none;
+  }
+
+  .spw-ring-{{ sid }} {
+    position: absolute;
+    inset: 0;
+    animation: spw-ring-spin-{{ sid }} {{ section.settings.wheel_speed }}s linear infinite;
+  }
+
+  @keyframes spw-ring-spin-{{ sid }} {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(calc(360deg * var(--spin))); }
+  }
+
+  .spw-pill-pos-{{ sid }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    transform: rotate(var(--angle)) translateX(var(--radius));
+  }
+
+  .spw-pill-{{ sid }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%) rotate(calc(var(--angle) * -1));
+    animation: spw-pill-spin-{{ sid }} {{ section.settings.wheel_speed }}s linear infinite;
+    white-space: nowrap;
+    background: {{ section.settings.pill_background }};
+    color: {{ section.settings.pill_text_color }};
+    border: 1px solid {{ section.settings.pill_border_color }};
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  }
+
+  @keyframes spw-pill-spin-{{ sid }} {
+    from { transform: translate(-50%, -50%) rotate(calc(var(--angle) * -1)); }
+    to   { transform: translate(-50%, -50%) rotate(calc(var(--angle) * -1 - (360deg * var(--spin)))); }
+  }
+
+  {% if section.settings.pause_on_hover %}
+    .spw-stage-{{ sid }}:hover .spw-ring-{{ sid }},
+    .spw-stage-{{ sid }}:hover .spw-pill-{{ sid }} {
+      animation-play-state: paused;
+    }
+  {% endif %}
+
+  @media (prefers-reduced-motion: reduce) {
+    .spw-ring-{{ sid }},
+    .spw-pill-{{ sid }} {
+      animation: none;
+    }
+  }
+
+  .spw-center-{{ sid }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 46%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .spw-center-{{ sid }} img,
+  .spw-center-{{ sid }} svg {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* ---------- Conteúdo ---------- */
+
+  .spw-eyebrow-{{ sid }} {
+    font-family: var(--font-body--family);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: {{ section.settings.accent_color }};
+    margin: 0 0 10px;
+  }
+
+  .spw-heading-{{ sid }} {
+    font-family: var(--font-heading--family);
+    font-size: {{ section.settings.heading_size }}px;
+    font-weight: 700;
+    line-height: 1.12;
+    color: {{ section.settings.heading_color }};
+    margin: 0 0 16px;
+  }
+
+  .spw-brand-{{ sid }} {
+    color: {{ section.settings.accent_color }};
+  }
+
+  .spw-desc-{{ sid }} {
+    font-family: var(--font-body--family);
+    font-size: 16px;
+    line-height: 1.6;
+    color: {{ section.settings.text_color }};
+    margin: 0 0 28px;
+    max-width: 46ch;
+  }
+
+  .spw-features-{{ sid }} {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin: 0 0 28px;
+  }
+
+  .spw-feature-{{ sid }} {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .spw-feature-icon-{{ sid }} {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: color-mix(in srgb, {{ section.settings.accent_color }} 16%, transparent);
+    color: {{ section.settings.accent_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .spw-feature-icon-{{ sid }} svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .spw-feature-label-{{ sid }} {
+    font-family: var(--font-body--family);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: {{ section.settings.heading_color }};
+    line-height: 1.3;
+  }
+
+  .spw-checklist-{{ sid }} {
+    list-style: none;
+    margin: 0 0 32px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .spw-check-item-{{ sid }} {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-body--family);
+    font-size: 15px;
+    color: {{ section.settings.heading_color }};
+  }
+
+  .spw-check-icon-{{ sid }} {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: {{ section.settings.heading_color }};
+    color: {{ section.settings.background_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .spw-check-icon-{{ sid }} svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .spw-footer-{{ sid }} {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .spw-price-{{ sid }} {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .spw-price-label-{{ sid }} {
+    font-family: var(--font-body--family);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: {{ section.settings.text_color }};
+  }
+
+  .spw-price-value-{{ sid }} {
+    font-family: var(--font-heading--family);
+    font-size: 24px;
+    font-weight: 700;
+    color: {{ section.settings.heading_color }};
+  }
+
+  .spw-buttons-{{ sid }} {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .spw-btn-primary-{{ sid }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .spw-btn-arrow-{{ sid }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: {{ section.settings.accent_color }};
+    color: {{ section.settings.heading_color }};
+    flex-shrink: 0;
+  }
+
+  .spw-btn-arrow-{{ sid }} svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .spw-wrap-{{ sid }} {
+      grid-template-columns: 1fr;
+      direction: ltr;
+    }
+
+    .spw-stage-{{ sid }} {
+      max-width: 340px;
+    }
+
+    .spw-heading-{{ sid }} {
+      font-size: {{ section.settings.heading_size | times: 0.72 | round }}px;
+    }
+
+    .spw-features-{{ sid }} {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+{% endstyle %}
+
+<section class="spw-{{ sid }}" {{ section.shopify_attributes }}>
+  <div class="spw-wrap-{{ sid }}">
+
+    {%- comment -%} Coluna: roda de benefícios {%- endcomment -%}
+    <div class="spw-wheel-col-{{ sid }}">
+      <div class="spw-stage-{{ sid }}">
+        <div class="spw-circle-{{ sid }}" aria-hidden="true"></div>
+
+        {%- if wheel_count > 0 -%}
+          <div class="spw-ring-{{ sid }}">
+            {%- assign step = 360.0 | divided_by: wheel_count -%}
+            {%- for block in wheel_blocks -%}
+              {%- assign angle = step | times: forloop.index0 | minus: 90 -%}
+              <div class="spw-pill-pos-{{ sid }}" style="--angle: {{ angle }}deg;">
+                <div class="spw-pill-{{ sid }}" {{ block.shopify_attributes }}>
+                  {{ block.settings.text }}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <div class="spw-center-{{ sid }}">
+          {%- if section.settings.center_image != blank -%}
+            {{
+              section.settings.center_image
+              | image_url: width: 600
+              | image_tag:
+                loading: 'eager',
+                alt: section.settings.center_image.alt | escape,
+                widths: '200, 300, 400, 600'
+            }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} Coluna: conteúdo {%- endcomment -%}
+    <div class="spw-content-col-{{ sid }}">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="spw-eyebrow-{{ sid }}">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.brand_name != blank or section.settings.heading != blank -%}
+        <h2 class="spw-heading-{{ sid }}">
+          {%- if section.settings.brand_name != blank -%}
+            <span class="spw-brand-{{ sid }}">{{ section.settings.brand_name }}</span><br>
+          {%- endif -%}
+          {{- section.settings.heading -}}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <p class="spw-desc-{{ sid }}">{{ section.settings.description }}</p>
+      {%- endif -%}
+
+      {%- if feature_blocks.size > 0 -%}
+        <div class="spw-features-{{ sid }}">
+          {%- for block in feature_blocks -%}
+            <div class="spw-feature-{{ sid }}" {{ block.shopify_attributes }}>
+              <span class="spw-feature-icon-{{ sid }}" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                  {%- case block.settings.icon -%}
+                    {%- when 'bolt' -%}
+                      <path d="M13 2L5 14H11L9 22L19 9H12L13 2Z" fill="currentColor" stroke="none" />
+                    {%- when 'droplet' -%}
+                      <path d="M12 3L17 13A5 5 0 1 1 7 13L12 3Z" fill="currentColor" stroke="none" />
+                    {%- when 'gear' -%}
+                      <circle cx="12" cy="12" r="3.5" />
+                      <g>
+                        <line x1="12" y1="2.5" x2="12" y2="5.5" />
+                        <line x1="12" y1="18.5" x2="12" y2="21.5" />
+                        <line x1="2.5" y1="12" x2="5.5" y2="12" />
+                        <line x1="18.5" y1="12" x2="21.5" y2="12" />
+                        <line x1="5.5" y1="5.5" x2="7.6" y2="7.6" />
+                        <line x1="16.4" y1="16.4" x2="18.5" y2="18.5" />
+                        <line x1="18.5" y1="5.5" x2="16.4" y2="7.6" />
+                        <line x1="7.6" y1="16.4" x2="5.5" y2="18.5" />
+                      </g>
+                    {%- when 'heart' -%}
+                      <circle cx="8.5" cy="9" r="4" fill="currentColor" stroke="none" />
+                      <circle cx="15.5" cy="9" r="4" fill="currentColor" stroke="none" />
+                      <polygon points="4.8,10.5 19.2,10.5 12,20" fill="currentColor" stroke="none" />
+                    {%- when 'leaf' -%}
+                      <ellipse cx="12" cy="12" rx="8" ry="4.4" transform="rotate(-40 12 12)" />
+                      <line x1="6.2" y1="17.8" x2="11.6" y2="12.4" />
+                    {%- when 'star' -%}
+                      <polygon points="12,2 14.9,9.1 22,9.3 16.5,13.9 18.5,20.8 12,17 5.5,20.8 7.5,13.9 2,9.3 9.1,9.1" fill="currentColor" stroke="none" />
+                  {%- endcase -%}
+                </svg>
+              </span>
+              {%- if block.settings.label != blank -%}
+                <span class="spw-feature-label-{{ sid }}">{{ block.settings.label }}</span>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if checklist_blocks.size > 0 -%}
+        <ul class="spw-checklist-{{ sid }}">
+          {%- for block in checklist_blocks -%}
+            <li class="spw-check-item-{{ sid }}" {{ block.shopify_attributes }}>
+              <span class="spw-check-icon-{{ sid }}" aria-hidden="true">
+                <svg viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 4.5L4 7.5L10 1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <span>{{ block.settings.text }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.price != blank or section.settings.primary_btn_label != blank or section.settings.secondary_btn_label != blank -%}
+        <div class="spw-footer-{{ sid }}">
+          {%- if section.settings.price != blank -%}
+            <div class="spw-price-{{ sid }}">
+              {%- if section.settings.price_label != blank -%}
+                <span class="spw-price-label-{{ sid }}">{{ section.settings.price_label }}</span>
+              {%- endif -%}
+              <span class="spw-price-value-{{ sid }}">{{ section.settings.price }}</span>
+            </div>
+          {%- endif -%}
+
+          <div class="spw-buttons-{{ sid }}">
+            {%- if section.settings.primary_btn_label != blank -%}
+              <a href="{{ section.settings.primary_btn_link | default: '#' }}" class="button spw-btn-primary-{{ sid }}">
+                {{ section.settings.primary_btn_label }}
+                <span class="spw-btn-arrow-{{ sid }}" aria-hidden="true">
+                  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    {%- render 'icon', icon: 'arrow' -%}
+                  </svg>
+                </span>
+              </a>
+            {%- endif -%}
+            {%- if section.settings.secondary_btn_label != blank -%}
+              <a href="{{ section.settings.secondary_btn_link | default: '#' }}" class="button-secondary">
+                {{ section.settings.secondary_btn_label }}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shotz – Roda de benefícios",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Conteúdo"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "SABOR PÊSSEGO"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Nome em destaque",
+      "default": "Shotz"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Proteína + Energia em dose única"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descrição",
+      "default": "Um shot dosado combina proteína de alta biodisponibilidade com aminoácidos essenciais, vitaminas do complexo B e zero açúcar. Feito para caber na sua rotina, sem preparo e sem crash."
+    },
+    {
+      "type": "header",
+      "content": "Imagem central"
+    },
+    {
+      "type": "image_picker",
+      "id": "center_image",
+      "label": "Imagem do produto"
+    },
+    {
+      "type": "header",
+      "content": "Roda de benefícios"
+    },
+    {
+      "type": "paragraph",
+      "content": "Cada bloco \"Item da roda\" vira uma pílula que gira automaticamente ao redor da imagem central."
+    },
+    {
+      "type": "range",
+      "id": "wheel_speed",
+      "label": "Velocidade (segundos por volta)",
+      "min": 10,
+      "max": 90,
+      "step": 2,
+      "unit": "s",
+      "default": 36
+    },
+    {
+      "type": "select",
+      "id": "wheel_direction",
+      "label": "Sentido de rotação",
+      "options": [
+        { "value": "normal", "label": "Horário" },
+        { "value": "reverse", "label": "Anti-horário" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pausar ao passar o mouse",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Preço e botões"
+    },
+    {
+      "type": "text",
+      "id": "price_label",
+      "label": "Texto acima do preço",
+      "default": "A partir de"
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "label": "Preço",
+      "default": "R$ 89,90"
+    },
+    {
+      "type": "text",
+      "id": "primary_btn_label",
+      "label": "Botão primário — texto",
+      "default": "Comprar agora"
+    },
+    {
+      "type": "url",
+      "id": "primary_btn_link",
+      "label": "Botão primário — link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_btn_label",
+      "label": "Botão secundário — texto",
+      "default": "Ver produto"
+    },
+    {
+      "type": "url",
+      "id": "secondary_btn_link",
+      "label": "Botão secundário — link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Posição da roda",
+      "options": [
+        { "value": "left", "label": "Esquerda" },
+        { "value": "right", "label": "Direita" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Largura máxima",
+      "min": 900,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1280
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Espaçamento vertical",
+      "min": 20,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamanho do título",
+      "min": 28,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "header",
+      "content": "Cores"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Fundo da seção",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Cor de destaque",
+      "default": "#FFB627"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Cor do título e texto forte",
+      "default": "#0D0D0D"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Cor do texto secundário",
+      "default": "#5B5B5B"
+    },
+    {
+      "type": "color",
+      "id": "pill_background",
+      "label": "Fundo das pílulas",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "pill_border_color",
+      "label": "Borda das pílulas",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "pill_text_color",
+      "label": "Texto das pílulas",
+      "default": "#111111"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "wheel_item",
+      "name": "Item da roda",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto da pílula",
+          "default": "Benefício"
+        }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "Ícone de destaque",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícone",
+          "options": [
+            { "value": "bolt", "label": "Energia (raio)" },
+            { "value": "droplet", "label": "Hidratação (gota)" },
+            { "value": "gear", "label": "Suporte (engrenagem)" },
+            { "value": "heart", "label": "Saúde (coração)" },
+            { "value": "leaf", "label": "Natural (folha)" },
+            { "value": "star", "label": "Qualidade (estrela)" }
+          ],
+          "default": "bolt"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Legenda",
+          "default": "Energia diária"
+        }
+      ]
+    },
+    {
+      "type": "checklist_item",
+      "name": "Item da lista",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Item da lista"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shotz – Roda de benefícios",
+      "blocks": [
+        { "type": "wheel_item", "settings": { "text": "Nutrientes Funcionais" } },
+        { "type": "wheel_item", "settings": { "text": "Função Muscular" } },
+        { "type": "wheel_item", "settings": { "text": "Equilíbrio Hormonal" } },
+        { "type": "wheel_item", "settings": { "text": "Foco Mental" } },
+        { "type": "wheel_item", "settings": { "text": "Energia Diária" } },
+        { "type": "wheel_item", "settings": { "text": "Suporte à Hidratação" } },
+        { "type": "feature", "settings": { "icon": "bolt", "label": "Proteína Diária" } },
+        { "type": "feature", "settings": { "icon": "droplet", "label": "Suporte à Hidratação" } },
+        { "type": "feature", "settings": { "icon": "gear", "label": "Suporte Cognitivo" } },
+        { "type": "feature", "settings": { "icon": "heart", "label": "Nutrientes Funcionais" } },
+        { "type": "checklist_item", "settings": { "text": "20g de proteína por dose" } },
+        { "type": "checklist_item", "settings": { "text": "Aminoácidos essenciais + vitaminas" } },
+        { "type": "checklist_item", "settings": { "text": "Caixa com 30 doses individuais" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

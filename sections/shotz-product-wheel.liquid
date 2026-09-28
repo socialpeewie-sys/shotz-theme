@@ -353,13 +353,11 @@
 
         <div class="spw-center-{{ sid }}">
           {%- if section.settings.center_image != blank -%}
+            {%- assign center_alt = section.settings.center_image.alt | escape -%}
             {{
               section.settings.center_image
               | image_url: width: 600
-              | image_tag:
-                loading: 'eager',
-                alt: section.settings.center_image.alt | escape,
-                widths: '200, 300, 400, 600'
+              | image_tag: loading: 'eager', alt: center_alt, widths: '200, 300, 400, 600'
             }}
           {%- else -%}
             {{ 'product-1' | placeholder_svg_tag }}

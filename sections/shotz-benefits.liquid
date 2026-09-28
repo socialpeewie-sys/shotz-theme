@@ -1,32 +1,40 @@
 <style>
   .shotz-benefits {
     position: relative;
-    background-color: #0d0d0d;
+    background-color: var(--sb-bg-color, #0d0d0d);
     padding: 80px 20px;
+    min-height: var(--sb-min-height, auto);
+    display: flex;
+    align-items: center;
     overflow: hidden;
   }
 
   .shotz-benefits__bg {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
     pointer-events: none;
   }
 
   .shotz-benefits__bg img {
-    width: 33.33%;
-    max-width: 320px;
-    object-fit: contain;
-    opacity: 0.35;
-    filter: brightness(0.8);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--sb-bg-position, center);
+    display: block;
+  }
+
+  .shotz-benefits__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: var(--sb-overlay-color, #000);
+    opacity: var(--sb-overlay-opacity, 0.5);
+    pointer-events: none;
   }
 
   .shotz-benefits__content {
     position: relative;
     z-index: 2;
+    width: 100%;
     max-width: 1100px;
     margin: 0 auto;
     text-align: center;
@@ -103,27 +111,57 @@
     .shotz-benefits__cards {
       grid-template-columns: 1fr;
     }
-    .shotz-benefits__bg {
-      display: none;
+    .shotz-benefits {
+      min-height: var(--sb-min-height-mobile, auto);
     }
   }
 </style>
 
-<section class="shotz-benefits">
+{%- liquid
+  assign bg_desktop = section.settings.bg_image
+  assign bg_mobile = section.settings.bg_image_mobile | default: bg_desktop
+  assign overlay_opacity = section.settings.overlay_opacity | divided_by: 100.0
+  assign min_height_mobile = section.settings.min_height | times: 0.7 | round
+-%}
 
-  {% if section.settings.bg_image_1 or section.settings.bg_image_2 or section.settings.bg_image_3 %}
+<section
+  class="shotz-benefits"
+  style="
+    --sb-bg-color: {{ section.settings.background_color }};
+    --sb-bg-position: {{ section.settings.bg_position }};
+    --sb-overlay-color: {{ section.settings.overlay_color }};
+    --sb-overlay-opacity: {{ overlay_opacity }};
+    {%- if section.settings.min_height > 0 %}
+      --sb-min-height: {{ section.settings.min_height }}px;
+      --sb-min-height-mobile: {{ min_height_mobile }}px;
+    {%- endif %}
+  "
+>
+
+  {%- if bg_desktop != blank or bg_mobile != blank -%}
     <div class="shotz-benefits__bg">
-      {% if section.settings.bg_image_1 %}
-        <img src="{{ section.settings.bg_image_1 | image_url: width: 400 }}" alt="" loading="lazy">
-      {% endif %}
-      {% if section.settings.bg_image_2 %}
-        <img src="{{ section.settings.bg_image_2 | image_url: width: 400 }}" alt="" loading="lazy">
-      {% endif %}
-      {% if section.settings.bg_image_3 %}
-        <img src="{{ section.settings.bg_image_3 | image_url: width: 400 }}" alt="" loading="lazy">
-      {% endif %}
+      <picture>
+        {%- if section.settings.bg_image_mobile != blank -%}
+          <source
+            media="(max-width: 749px)"
+            srcset="
+              {{ bg_mobile | image_url: width: 600 }} 600w,
+              {{ bg_mobile | image_url: width: 900 }} 900w,
+              {{ bg_mobile | image_url: width: 1200 }} 1200w
+            "
+            sizes="100vw"
+          >
+        {%- endif -%}
+        {%- assign bg_main = bg_desktop | default: bg_mobile -%}
+        {{
+          bg_main
+          | image_url: width: 2400
+          | image_tag: loading: 'lazy', alt: '', sizes: '100vw', widths: '750, 1100, 1500, 1920, 2400'
+        }}
+      </picture>
     </div>
-  {% endif %}
+    <div class="shotz-benefits__overlay"></div>
+  {%- endif -%}
 
   <div class="shotz-benefits__content">
     {% if section.settings.eyebrow != blank %}
@@ -178,19 +216,71 @@
       "default": "Tudo o que você precisa. Em uma única dose."
     },
     {
-      "type": "image_picker",
-      "id": "bg_image_1",
-      "label": "Produto esquerda (fundo)"
+      "type": "header",
+      "content": "Imagem de fundo"
     },
     {
       "type": "image_picker",
-      "id": "bg_image_2",
-      "label": "Produto centro (fundo)"
+      "id": "bg_image",
+      "label": "Imagem de fundo",
+      "info": "Cobre a seção inteira, como um banner. Recomendado: 2400 × 1200 px."
     },
     {
       "type": "image_picker",
-      "id": "bg_image_3",
-      "label": "Produto direita (fundo)"
+      "id": "bg_image_mobile",
+      "label": "Imagem de fundo (celular)",
+      "info": "Opcional. Se vazio, usa a imagem de fundo acima."
+    },
+    {
+      "type": "select",
+      "id": "bg_position",
+      "label": "Foco da imagem",
+      "options": [
+        { "value": "center", "label": "Centro" },
+        { "value": "top", "label": "Topo" },
+        { "value": "bottom", "label": "Base" },
+        { "value": "left", "label": "Esquerda" },
+        { "value": "right", "label": "Direita" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Cor da camada sobre a imagem",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Opacidade da camada",
+      "info": "Escurece a imagem para o texto ficar legível.",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Altura mínima",
+      "info": "0 = altura automática pelo conteúdo. No celular usa 70% deste valor.",
+      "min": 0,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Cor de fundo (sem imagem)",
+      "default": "#0D0D0D"
     }
   ],
   "blocks": [

@@ -331,6 +331,49 @@
         "padding_bottom": 40
       }
     },
+    "shotz_benefits_cTrneF": {
+      "type": "shotz-benefits",
+      "blocks": {
+        "card_BjpDXy": {
+          "type": "card",
+          "settings": {
+            "icon": "⚡",
+            "title": "Proteína instantânea",
+            "text": "Alta biodisponibilidade. Sem o processo lento do pó diluído."
+          }
+        },
+        "card_jWRftJ": {
+          "type": "card",
+          "settings": {
+            "icon": "🦴",
+            "title": "Colágeno Completo",
+            "text": "Tipos I, II e III. Para pele, articulações e recuperação muscular."
+          }
+        },
+        "card_JAYA4m": {
+          "type": "card",
+          "settings": {
+            "icon": "🚫",
+            "title": "Zero açúcar",
+            "text": "Sem pico de glicose. Sem crash. Energia limpa o dia todo."
+          }
+        }
+      },
+      "block_order": [
+        "card_BjpDXy",
+        "card_jWRftJ",
+        "card_JAYA4m"
+      ],
+      "name": "Shotz – Benefits",
+      "settings": {
+        "eyebrow": "",
+        "heading": "CRIADO PARA VIDAS AGITADAS",
+        "subheading": "A proteína que da match com sua rotina",
+        "bg_image_1": "shopify://shop_images/DA195B12-D209-43F2-8808-D00FE04A534C.jpg",
+        "bg_image_2": "shopify://shop_images/hf_20260915_172153_6cb4e6c0-1c6a-4715-b0c3-fccefc2fd427.png",
+        "bg_image_3": "shopify://shop_images/hf_20260917_194324_93fe51e5-cc5b-4f90-bbb3-a09937f88657.png"
+      }
+    },
     "17824113349f43bc3c": {
       "type": "_blocks",
       "blocks": {
@@ -489,83 +532,37 @@
       "name": "Hero com benefícios",
       "settings": {}
     },
-    "shotz_benefits_cTrneF": {
-      "type": "shotz-benefits",
-      "blocks": {
-        "card_BjpDXy": {
-          "type": "card",
-          "settings": {
-            "icon": "⚡",
-            "title": "Proteína instantânea",
-            "text": "Alta biodisponibilidade. Sem o processo lento do pó diluído."
-          }
-        },
-        "card_jWRftJ": {
-          "type": "card",
-          "settings": {
-            "icon": "🦴",
-            "title": "Colágeno Completo",
-            "text": "Tipos I, II e III. Para pele, articulações e recuperação muscular."
-          }
-        },
-        "card_JAYA4m": {
-          "type": "card",
-          "settings": {
-            "icon": "🚫",
-            "title": "Zero açúcar",
-            "text": "Sem pico de glicose. Sem crash. Energia limpa o dia todo."
-          }
-        }
-      },
-      "block_order": [
-        "card_BjpDXy",
-        "card_jWRftJ",
-        "card_JAYA4m"
-      ],
-      "name": "Shotz – Benefits",
-      "settings": {
-        "eyebrow": "A ciência por trás",
-        "heading": "O que faz o Shotz funcionar.",
-        "subheading": "Tudo o que você precisa. Em uma única dose."
-      }
-    },
     "shotz_product_wheel_rAkUCn": {
       "type": "shotz-product-wheel",
       "blocks": {
-        "wheel_item_K9Ayac": {
-          "type": "wheel_item",
-          "settings": {
-            "text": "Nutrientes Funcionais"
-          }
-        },
         "wheel_item_FmJj4H": {
           "type": "wheel_item",
           "settings": {
-            "text": "Função Muscular"
+            "text": "Sabor"
           }
         },
         "wheel_item_XYRhWk": {
           "type": "wheel_item",
           "settings": {
-            "text": "Equilíbrio Hormonal"
+            "text": "Tecnologia"
           }
         },
         "wheel_item_MWNhN4": {
           "type": "wheel_item",
           "settings": {
-            "text": "Foco Mental"
+            "text": "Qualidade"
           }
         },
         "wheel_item_dBLFMQ": {
           "type": "wheel_item",
           "settings": {
-            "text": "Energia Diária"
+            "text": "Praticidade"
           }
         },
         "wheel_item_njmrF9": {
           "type": "wheel_item",
           "settings": {
-            "text": "Suporte à Hidratação"
+            "text": "Conveniência"
           }
         },
         "feature_zF7cPF": {
@@ -599,24 +596,23 @@
         "checklist_item_HwpDAm": {
           "type": "checklist_item",
           "settings": {
-            "text": "20g de proteína por dose"
+            "text": "23g de proteína por shot"
           }
         },
         "checklist_item_HHkzTM": {
           "type": "checklist_item",
           "settings": {
-            "text": "Aminoácidos essenciais + vitaminas"
+            "text": "Aminoácidos essenciais"
           }
         },
         "checklist_item_8GGYiP": {
           "type": "checklist_item",
           "settings": {
-            "text": "Caixa com 30 doses individuais"
+            "text": "Apenas 95kcal por dose"
           }
         }
       },
       "block_order": [
-        "wheel_item_K9Ayac",
         "wheel_item_FmJj4H",
         "wheel_item_XYRhWk",
         "wheel_item_MWNhN4",
@@ -632,17 +628,17 @@
       ],
       "name": "Roda de benefícios",
       "settings": {
-        "eyebrow": "SABOR PÊSSEGO",
+        "eyebrow": "A CIÊNCIA",
         "brand_name": "Shotz",
-        "heading": "Proteína + Praticidade",
-        "description": "Um shot dosado combina proteína de alta biodisponibilidade com aminoácidos essenciais, vitaminas do complexo B e zero açúcar. Feito para caber na sua rotina, sem preparo e sem crash.",
+        "heading": "Proteína + Inovação",
+        "description": "Com a consistência de uma bebida leve, saborosa e em apenas 100ml, evoluimos seu jeito de bater a meta de proteína.",
         "center_image": "shopify://shop_images/shotzrodas.png",
         "center_image_size": 64,
         "wheel_speed": 36,
         "wheel_direction": "normal",
         "pause_on_hover": true,
-        "price_label": "A partir de",
-        "price": "R$ 89,90",
+        "price_label": "",
+        "price": "",
         "primary_btn_label": "Comprar agora",
         "primary_btn_link": "",
         "secondary_btn_label": "Ver produto",
@@ -667,12 +663,12 @@
     "shotz_numeros_LEgDf3",
     "blocks_rCKAQq",
     "variants_grid_dNm8hc",
+    "shotz_benefits_cTrneF",
     "17824113349f43bc3c",
     "divider_DryE3e",
     "shotz_choose_yours_Gp37ig",
     "1787857495d8ac9ebf",
     "blocks_9FNXWB",
-    "shotz_benefits_cTrneF",
     "shotz_product_wheel_rAkUCn"
   ]
 }

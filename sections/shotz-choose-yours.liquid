@@ -16,6 +16,34 @@
     --cy-padding-block: {{ section.settings.padding_block }}px;
     --cy-padding-inline: {{ section.settings.padding_inline }}px;
   }
+
+  #shopify-section-{{ section.id }} .shotz-choose-{{ section.id }} {
+    --cy-wave-height: {{ section.settings.wave_height }}px;
+  }
+
+  {%- if section.settings.wave_overlap %}
+    #shopify-section-{{ section.id }} {
+      position: relative;
+      z-index: 2;
+      margin-block: -{{ section.settings.wave_height }}px;
+    }
+
+    #shopify-section-{{ section.id }} .shotz-choose-{{ section.id }} {
+      background-color: transparent;
+    }
+  {%- endif %}
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} .shotz-choose-{{ section.id }} {
+      --cy-wave-height: {{ section.settings.wave_height_mobile }}px;
+    }
+
+    {%- if section.settings.wave_overlap %}
+      #shopify-section-{{ section.id }} {
+        margin-block: -{{ section.settings.wave_height_mobile }}px;
+      }
+    {%- endif %}
+  }
 {% endstyle %}
 
 <div
@@ -575,8 +603,39 @@
       "type": "color",
       "id": "background_color",
       "label": "Fundo fora das ondas",
-      "info": "Use a mesma cor das seções vizinhas.",
+      "info": "Só é usado com \"Ondas por cima das seções vizinhas\" desligado. Use a mesma cor das seções vizinhas.",
       "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Ondas"
+    },
+    {
+      "type": "checkbox",
+      "id": "wave_overlap",
+      "label": "Ondas por cima das seções vizinhas",
+      "info": "A curva sai direto da seção de cima e entra na de baixo, sem faixa de fundo. A faixa das vizinhas coberta pela onda deve ficar sem texto.",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "wave_height",
+      "label": "Altura das ondas (desktop)",
+      "min": 40,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "wave_height_mobile",
+      "label": "Altura das ondas (celular)",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
     },
     {
       "type": "header",

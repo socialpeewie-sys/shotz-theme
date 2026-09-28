@@ -378,6 +378,232 @@
     color: {{ s.float_desc_color }};
   }
 
+  .shotz-numeros-fl-unit-{{ nid }} {
+    font-size: 1em;
+  }
+
+  .shotz-numeros-fl-icon-{{ nid }} {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .shotz-numeros-fl-icon-{{ nid }} svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Card em destaque: mesmo visual do estilo "Cards com imagem de fundo" */
+  .shotz-numeros-fl-card-{{ nid }}.is-highlight {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    color: {{ s.highlight_text_color }};
+    background: {{ s.highlight_bg }};
+    border-color: {{ s.highlight_bg }};
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: 0 10px 28px color-mix(in srgb, {{ s.highlight_bg }} 35%, transparent);
+  }
+
+  .shotz-numeros-fl-card-{{ nid }}.is-highlight .shotz-numeros-fl-icon-{{ nid }} {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: color-mix(in srgb, currentColor 14%, transparent);
+  }
+
+  .shotz-numeros-fl-card-{{ nid }}.is-highlight .shotz-numeros-fl-body-{{ nid }} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .shotz-numeros-fl-card-{{ nid }}.is-highlight .shotz-numeros-fl-number-{{ nid }} {
+    display: inline-flex;
+    align-items: baseline;
+    margin: 0;
+    color: inherit;
+  }
+
+  .shotz-numeros-fl-card-{{ nid }}.is-highlight .shotz-numeros-fl-unit-{{ nid }} {
+    margin-left: 2px;
+    font-size: 0.6em;
+    font-weight: 700;
+  }
+
+  .shotz-numeros-fl-card-{{ nid }}.is-highlight .shotz-numeros-fl-title-{{ nid }} {
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: inherit;
+  }
+
+  .shotz-numeros-fl-card-{{ nid }}.is-highlight .shotz-numeros-fl-desc-{{ nid }} {
+    margin: -2px 0 0;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: inherit;
+    opacity: 0.8;
+  }
+
+  .shotz-numeros-{{ nid }}.is-floating .shotz-numeros-fade-{{ nid }} {
+    display: none;
+  }
+
+  /* Desktop: cards em linha à esquerda (estrutura do estilo "Cards com imagem de fundo") */
+  @media screen and (min-width: 750px) {
+    .shotz-numeros-{{ nid }}.fl-desk-row {
+      display: flex;
+      align-items: center;
+      min-height: {{ s.min_height }}px;
+    }
+
+    .fl-desk-row .shotz-numeros-inner-{{ nid }} {
+      width: 100%;
+    }
+
+    .shotz-numeros-{{ nid }}.fl-desk-row .shotz-numeros-fade-{{ nid }} {
+      display: block;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-wrap-{{ nid }} {
+      max-width: {{ s.content_max_width }}px;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-head-{{ nid }} {
+      text-align: left;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-head-{{ nid }} .shotz-numeros-subtitle-{{ nid }} {
+      margin-inline: 0;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-eyebrow-{{ nid }} {
+      max-width: 30ch;
+      margin-bottom: 18px;
+      line-height: 1.6;
+      letter-spacing: 0.22em;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-heading-{{ nid }} {
+      margin-bottom: 18px;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-stage-{{ nid }} {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+      max-width: none;
+      margin: 0;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-media-{{ nid }} {
+      display: none;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-card-{{ nid }} {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 16px 12px;
+      text-align: center;
+      color: {{ s.card_text_color }};
+      background: color-mix(in srgb, {{ s.card_bg }} {{ s.card_opacity }}%, transparent);
+      border-color: color-mix(in srgb, {{ s.card_bg }} 70%, transparent);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .fl-desk-row .shotz-numeros-fl-icon-{{ nid }} {
+      display: inline-flex;
+      width: 26px;
+      height: 26px;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-body-{{ nid }} {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-number-{{ nid }} {
+      display: inline-flex;
+      align-items: baseline;
+      margin: 0;
+      font-size: {{ card_number_size }}px;
+      color: inherit;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-unit-{{ nid }} {
+      margin-left: 2px;
+      font-size: 0.6em;
+      font-weight: 700;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-title-{{ nid }} {
+      margin: 0;
+      font-family: var(--font-body--family), 'Plus Jakarta Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: inherit;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-desc-{{ nid }} {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: inherit;
+      opacity: 0.8;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-card-{{ nid }}.is-highlight {
+      flex: 1.8 1 0;
+      flex-direction: row;
+      gap: 14px;
+      padding: 18px 20px;
+      color: {{ s.highlight_text_color }};
+      background: {{ s.highlight_bg }};
+      border-color: {{ s.highlight_bg }};
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      box-shadow: 0 10px 28px color-mix(in srgb, {{ s.highlight_bg }} 35%, transparent);
+    }
+
+    .fl-desk-row .shotz-numeros-fl-card-{{ nid }}.is-highlight .shotz-numeros-fl-icon-{{ nid }} {
+      width: 44px;
+      height: 44px;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-card-{{ nid }}.is-highlight .shotz-numeros-fl-number-{{ nid }} {
+      font-size: {{ s.number_size }}px;
+    }
+
+    .fl-desk-row .shotz-numeros-fl-card-{{ nid }}.is-highlight .shotz-numeros-fl-title-{{ nid }} {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+  }
+
   @media screen and (max-width: 749px) {
     .shotz-numeros-heading-{{ nid }} {
       font-size: {{ s.heading_size_mobile }}px;
@@ -488,11 +714,7 @@
   }
 {% endstyle %}
 
-{%- capture icon_attrs -%}
-  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
-{%- endcapture -%}
-
-<div class="shotz-numeros-{{ nid }}{% if is_cards %} is-cards{% endif %}{% if is_floating %} is-floating{% endif %}">
+<div class="shotz-numeros-{{ nid }}{% if is_cards %} is-cards{% endif %}{% if is_floating %} is-floating fl-desk-{{ s.float_desktop_layout }}{% endif %}">
   {%- if is_floating or is_cards -%}{%- if bg_desktop != blank -%}
     <div class="shotz-numeros-bg-{{ nid }}">
       <picture>
@@ -514,9 +736,7 @@
         }}
       </picture>
     </div>
-    {%- if is_cards -%}
-      <div class="shotz-numeros-fade-{{ nid }}"></div>
-    {%- endif -%}
+    <div class="shotz-numeros-fade-{{ nid }}"></div>
   {%- endif -%}{%- endif -%}
 
   <div class="shotz-numeros-inner-{{ nid }}">
@@ -539,29 +759,7 @@
                 <div class="shotz-numeros-card-{{ nid }}{% if block.settings.highlight %} is-highlight{% endif %}" {{ block.shopify_attributes }}>
                   {%- if block.settings.icon != 'none' -%}
                     <span class="shotz-numeros-card-icon-{{ nid }}">
-                      <svg {{ icon_attrs }}>
-                        {%- case block.settings.icon -%}
-                          {%- when 'bolt' -%}
-                            <path d="M13 2L5 14H11L9 22L19 9H12L13 2Z" />
-                          {%- when 'flame' -%}
-                            <path d="M12 3C12 3 6 9 6 14A6 6 0 0 0 18 14C18 10.5 15.5 8 15.5 8C15.5 10.5 14 12 12.8 12C13.8 8.5 12 3 12 3Z" />
-                          {%- when 'ban' -%}
-                            <circle cx="12" cy="12" r="8" />
-                            <line x1="6.4" y1="6.4" x2="17.6" y2="17.6" />
-                          {%- when 'bottle' -%}
-                            <path d="M9.5 3H14.5V6.5L17 10V20A1 1 0 0 1 16 21H8A1 1 0 0 1 7 20V10L9.5 6.5V3Z" />
-                            <line x1="9.5" y1="6.5" x2="14.5" y2="6.5" />
-                            <line x1="7" y1="13" x2="17" y2="13" />
-                          {%- when 'droplet' -%}
-                            <path d="M12 3L17 13A5 5 0 1 1 7 13L12 3Z" />
-                          {%- when 'leaf' -%}
-                            <ellipse cx="12" cy="12" rx="8" ry="4.4" transform="rotate(-40 12 12)" />
-                            <line x1="6.2" y1="17.8" x2="11.6" y2="12.4" />
-                          {%- when 'clock' -%}
-                            <circle cx="12" cy="12" r="8.5" />
-                            <path d="M12 7V12L15 14" />
-                        {%- endcase -%}
-                      </svg>
+                      {%- render 'shotz-numeros-icon', icon: block.settings.icon -%}
                     </span>
                   {%- endif -%}
                   <div class="shotz-numeros-card-body-{{ nid }}">
@@ -587,6 +785,7 @@
         {%- endif -%}
       </div>
     {%- elsif is_floating -%}
+      <div class="shotz-numeros-fl-wrap-{{ nid }}">
       <div class="shotz-numeros-fl-head-{{ nid }}">
         {%- if s.eyebrow != blank -%}
           <p class="shotz-numeros-fl-eyebrow-{{ nid }}">{{ s.eyebrow }}</p>
@@ -640,25 +839,35 @@
               assign n_color = block.settings.number_color | default: s.float_number_color
             -%}
             <div
-              class="shotz-numeros-fl-card-{{ nid }}{% if side == 1 %} is-right{% endif %}{% if pair == 1 %} is-overlap{% endif %}"
+              class="shotz-numeros-fl-card-{{ nid }}{% if block.settings.highlight %} is-highlight{% endif %}{% if side == 1 %} is-right{% endif %}{% if pair == 1 %} is-overlap{% endif %}"
               style="--row-d: {{ row_d }}; --row-m: {{ row_m }}; --n-color: {{ n_color }};"
               {{ block.shopify_attributes }}
             >
-              {%- if block.settings.number != blank -%}
-                <span class="shotz-numeros-fl-number-{{ nid }}">
-                  {{- block.settings.number -}}
-                  {{- block.settings.unit -}}
+              {%- if block.settings.icon != 'none' -%}
+                <span class="shotz-numeros-fl-icon-{{ nid }}">
+                  {%- render 'shotz-numeros-icon', icon: block.settings.icon -%}
                 </span>
               {%- endif -%}
-              {%- if block.settings.label != blank -%}
-                <p class="shotz-numeros-fl-title-{{ nid }}">{{ block.settings.label }}</p>
-              {%- endif -%}
-              {%- if block.settings.sublabel != blank -%}
-                <p class="shotz-numeros-fl-desc-{{ nid }}">{{ block.settings.sublabel }}</p>
-              {%- endif -%}
+              <div class="shotz-numeros-fl-body-{{ nid }}">
+                {%- if block.settings.number != blank -%}
+                  <span class="shotz-numeros-fl-number-{{ nid }}">
+                    {{- block.settings.number -}}
+                    {%- if block.settings.unit != blank -%}
+                      <span class="shotz-numeros-fl-unit-{{ nid }}">{{ block.settings.unit }}</span>
+                    {%- endif -%}
+                  </span>
+                {%- endif -%}
+                {%- if block.settings.label != blank -%}
+                  <p class="shotz-numeros-fl-title-{{ nid }}">{{ block.settings.label }}</p>
+                {%- endif -%}
+                {%- if block.settings.sublabel != blank -%}
+                  <p class="shotz-numeros-fl-desc-{{ nid }}">{{ block.settings.sublabel }}</p>
+                {%- endif -%}
+              </div>
             </div>
           {%- endif -%}
         {%- endfor -%}
+      </div>
       </div>
     {%- else -%}
       {% if s.heading != blank %}
@@ -833,6 +1042,17 @@
     {
       "type": "header",
       "content": "Cards ao redor do produto — Desktop"
+    },
+    {
+      "type": "select",
+      "id": "float_desktop_layout",
+      "label": "Layout no desktop",
+      "info": "Em linha: mesma estrutura do estilo \"Cards com imagem de fundo\" (usa as cores dos cards, a largura dos cards, o tamanho dos números e a altura mínima de lá). No celular os cards sempre ficam ao redor do produto.",
+      "options": [
+        { "value": "row", "label": "Cards em linha à esquerda" },
+        { "value": "around", "label": "Cards ao redor do produto" }
+      ],
+      "default": "row"
     },
     {
       "type": "range",

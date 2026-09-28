@@ -80,17 +80,10 @@
     "shotz_banner_thMMnV": {
       "type": "shotz-banner",
       "blocks": {
-        "badge_d8BqRB": {
-          "type": "badge",
-          "settings": {
-            "icon": "protein",
-            "label": "23g de proteína"
-          }
-        },
         "badge_GEgzQF": {
           "type": "badge",
           "settings": {
-            "icon": "fruit",
+            "icon": "leaf",
             "label": "Gosto de suco"
           }
         },
@@ -98,12 +91,11 @@
           "type": "badge",
           "settings": {
             "icon": "clock",
-            "label": "5 segundos"
+            "label": "Tome em 2 goles"
           }
         }
       },
       "block_order": [
-        "badge_d8BqRB",
         "badge_GEgzQF",
         "badge_9edmp3"
       ],
@@ -154,6 +146,7 @@
             "label": "Proteína",
             "sublabel": "de qualidade",
             "icon": "bolt",
+            "number_color": "",
             "highlight": true
           }
         },
@@ -164,8 +157,8 @@
             "unit": "kcal",
             "label": "Calorias",
             "sublabel": "por dose",
-            "number_color": "#1A1A1A",
             "icon": "flame",
+            "number_color": "#1a1a1a",
             "highlight": false
           }
         },
@@ -177,6 +170,7 @@
             "label": "Gorduras",
             "sublabel": "por dose",
             "icon": "ban",
+            "number_color": "",
             "highlight": false
           }
         },
@@ -187,8 +181,8 @@
             "unit": "g",
             "label": "Lactose",
             "sublabel": "por dose",
-            "number_color": "#1A1A1A",
             "icon": "bottle",
+            "number_color": "#1a1a1a",
             "highlight": false
           }
         }
@@ -201,17 +195,36 @@
       ],
       "name": "Números em destaque",
       "settings": {
-        "layout_style": "floating",
+        "layout_style": "cards",
         "eyebrow": "Por que Shotz",
         "heading": "A proteína que acompanha sua rotina.",
         "subtitle": "",
-        "bg_image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0525_2.jpg",
+        "bg_image_mobile": "shopify://shop_images/hf_20260928_160444_7dcd6c15-a81f-4b3f-bab7-fae71d8fa3fc_2.png",
         "bg_position": "right",
         "fade_opacity": 70,
-        "background_color": "#FAF4E4",
+        "float_number_color": "#e8890c",
+        "float_title_color": "#1a1a1a",
+        "float_desc_color": "#8a8a8a",
+        "float_card_bg": "#ffffff",
+        "float_card_opacity": 40,
+        "float_image_width": 700,
+        "float_card_width": 160,
+        "float_center_gap": 230,
+        "float_cards_top": 100,
+        "float_row_gap": 12,
+        "float_number_size": 32,
+        "float_title_size": 14,
+        "float_desc_size": 12,
+        "float_image_zoom_mobile": 150,
+        "float_overlap_mobile": 160,
+        "float_gap_mobile": 10,
+        "float_number_size_mobile": 30,
+        "float_title_size_mobile": 13,
+        "float_desc_size_mobile": 11,
+        "background_color": "#faf4e4",
         "eyebrow_color": "#0d0d0d",
         "highlight_bg": "#000000",
-        "highlight_text_color": "#FFFFFF",
+        "highlight_text_color": "#ffffff",
         "card_bg": "#ffffff",
         "card_opacity": 75,
         "card_text_color": "#0d0d0d",
@@ -221,6 +234,9 @@
         "accent_color": "#84898d",
         "label_color": "#1a2740",
         "heading_size": 44,
+        "heading_size_mobile": 28,
+        "eyebrow_size": 12,
+        "eyebrow_size_mobile": 11,
         "subtitle_size": 15,
         "number_size": 46,
         "label_size": 15,

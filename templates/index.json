@@ -722,11 +722,26 @@
         "pill_border_color": "#111111",
         "pill_text_color": "#561218"
       }
+    },
+    "divider_dm486M": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      }
     }
   },
   "order": [
     "hero_banner_xf8AGM",
     "shotz_banner_thMMnV",
+    "divider_dm486M",
     "shotz_numeros_LEgDf3",
     "blocks_rCKAQq",
     "variants_grid_dNm8hc",

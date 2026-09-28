@@ -318,6 +318,7 @@
     grid-row: 1 / -1;
     align-self: end;
     z-index: 0;
+    min-height: {{ s.float_area_height }}px;
   }
 
   .shotz-numeros-fl-media-{{ nid }} picture,
@@ -401,6 +402,7 @@
     }
 
     .shotz-numeros-fl-media-{{ nid }} {
+      min-height: {{ s.float_area_height_mobile }}px;
       grid-row: 2;
       grid-column: 1 / -1;
       margin-inline: -24px;
@@ -491,7 +493,7 @@
 {%- endcapture -%}
 
 <div class="shotz-numeros-{{ nid }}{% if is_cards %} is-cards{% endif %}{% if is_floating %} is-floating{% endif %}">
-  {%- if is_cards and bg_desktop != blank -%}
+  {%- if is_floating or is_cards -%}{%- if bg_desktop != blank -%}
     <div class="shotz-numeros-bg-{{ nid }}">
       <picture>
         {%- if s.bg_image_mobile != blank -%}
@@ -512,8 +514,10 @@
         }}
       </picture>
     </div>
-    <div class="shotz-numeros-fade-{{ nid }}"></div>
-  {%- endif -%}
+    {%- if is_cards -%}
+      <div class="shotz-numeros-fade-{{ nid }}"></div>
+    {%- endif -%}
+  {%- endif -%}{%- endif -%}
 
   <div class="shotz-numeros-inner-{{ nid }}">
     {%- if is_cards -%}
@@ -618,7 +622,7 @@
                 | image_tag: loading: 'lazy', alt: product_alt, sizes: '(min-width: 750px) 900px, 150vw', widths: '600, 900, 1200, 1600'
               }}
             </picture>
-          {%- else -%}
+          {%- elsif bg_desktop == blank -%}
             {{ 'product-1' | placeholder_svg_tag }}
           {%- endif -%}
         </div>
@@ -732,13 +736,17 @@
     },
     {
       "type": "header",
-      "content": "Imagem de fundo (estilo cards)"
+      "content": "Imagem de fundo"
+    },
+    {
+      "type": "paragraph",
+      "content": "Vale para os estilos \"Cards com imagem de fundo\" e \"Cards ao redor do produto\". A foto cobre a seção inteira e os cards ficam por cima."
     },
     {
       "type": "image_picker",
       "id": "bg_image",
       "label": "Imagem de fundo",
-      "info": "Deixe o produto do lado direito da foto; os cards ficam à esquerda. Recomendado: 2400 × 800 px."
+      "info": "Cards com imagem de fundo: deixe o produto à direita da foto. Cards ao redor do produto: deixe o produto no centro."
     },
     {
       "type": "image_picker",
@@ -777,14 +785,14 @@
     {
       "type": "image_picker",
       "id": "product_image",
-      "label": "Imagem do produto",
-      "info": "Fica no centro, com os cards por cima das laterais. Use PNG com fundo transparente ou com a mesma cor do fundo da seção."
+      "label": "Imagem do produto (opcional)",
+      "info": "Use só se o produto não estiver na imagem de fundo: ele aparece recortado no centro, com os cards por cima das laterais. Use PNG com fundo transparente."
     },
     {
       "type": "image_picker",
       "id": "product_image_mobile",
-      "label": "Imagem do produto (celular)",
-      "info": "Opcional. Se vazio, usa a imagem acima."
+      "label": "Imagem do produto (celular, opcional)",
+      "info": "Se vazio, usa a imagem acima."
     },
     {
       "type": "color",
@@ -828,9 +836,20 @@
     },
     {
       "type": "range",
+      "id": "float_area_height",
+      "label": "Altura da área do produto",
+      "info": "Espaço entre o título e o fim da seção onde o produto da foto aparece. Com imagem do produto, a altura acompanha a imagem.",
+      "min": 0,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 460
+    },
+    {
+      "type": "range",
       "id": "float_image_width",
-      "label": "Largura da imagem do produto",
-      "info": "A altura acompanha a proporção da imagem.",
+      "label": "Largura da área dos cards e do produto",
+      "info": "Os cards se distribuem dentro desta largura. Com imagem do produto, é também a largura dela.",
       "min": 360,
       "max": 1400,
       "step": 20,
@@ -913,8 +932,19 @@
     },
     {
       "type": "range",
+      "id": "float_area_height_mobile",
+      "label": "Altura da área do produto",
+      "info": "Espaço entre os cards de cima e os de baixo onde o produto da foto aparece.",
+      "min": 0,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "default": 300
+    },
+    {
+      "type": "range",
       "id": "float_image_zoom_mobile",
-      "label": "Largura da imagem do produto",
+      "label": "Largura da imagem do produto (se houver)",
       "info": "Em % da tela. Acima de 100% a imagem é ampliada e as laterais são cortadas.",
       "min": 80,
       "max": 250,

@@ -1,343 +1,98 @@
-{%- liquid
-  assign flavor_blocks = section.blocks | where: 'type', 'card'
-  assign flavor_count = flavor_blocks.size
-  assign last_index = flavor_count | minus: 1
-  assign first_flavor = flavor_blocks.first.settings
-  assign stage_label = section.settings.heading | default: 'Sabores'
--%}
-
 {% style %}
   .shotz-choose-{{ section.id }} {
-    --shotz-page-bg: {{ section.settings.background_color }};
-    --shotz-flavor-bg: {{ first_flavor.background_color | default: '#FFB627' }};
-    --shotz-flavor-text: {{ first_flavor.text_color | default: '#0D0D0D' }};
-    --shotz-flavor-accent: {{ first_flavor.accent_color | default: '#0D0D0D' }};
-    --shotz-flavor-accent-text: {{ first_flavor.button_text_color | default: '#FFFFFF' }};
+    --cy-bg: {{ section.settings.background_color }};
+    --cy-text: {{ section.settings.text_color }};
+    --cy-text-secondary: {{ section.settings.secondary_text_color }};
     --cy-padding-block: {{ section.settings.padding_block }}px;
     --cy-padding-inline: {{ section.settings.padding_inline }}px;
-  }
-
-  #shopify-section-{{ section.id }} .shotz-choose-{{ section.id }} {
-    --cy-wave-height: {{ section.settings.wave_height }}px;
-  }
-
-  {%- if section.settings.wave_overlap %}
-    #shopify-section-{{ section.id }} {
-      position: relative;
-      z-index: 2;
-      margin-block: -{{ section.settings.wave_height }}px;
-    }
-
-    #shopify-section-{{ section.id }} .shotz-choose-{{ section.id }} {
-      background-color: transparent;
-    }
-  {%- endif %}
-
-  @media screen and (max-width: 749px) {
-    #shopify-section-{{ section.id }} .shotz-choose-{{ section.id }} {
-      --cy-wave-height: {{ section.settings.wave_height_mobile }}px;
-    }
-
-    {%- if section.settings.wave_overlap %}
-      #shopify-section-{{ section.id }} {
-        margin-block: -{{ section.settings.wave_height_mobile }}px;
-      }
-    {%- endif %}
+    background-color: var(--cy-bg);
+    padding: var(--cy-padding-block) var(--cy-padding-inline);
   }
 {% endstyle %}
 
-<div
-  class="shotz-choose shotz-choose-{{ section.id }}"
-  data-shotz-choose
-  {{ section.shopify_attributes }}
->
-  <svg
-    class="shotz-choose__wave shotz-choose__wave--top"
-    viewBox="0 0 1440 120"
-    preserveAspectRatio="none"
-    aria-hidden="true"
-    focusable="false"
-  >
-    <path fill="currentColor" d="M0 70C180 22 360 4 540 26s360 82 540 82 270-46 360-78v90H0Z"/>
-  </svg>
+<div class="shotz-choose shotz-choose-{{ section.id }}" {{ section.shopify_attributes }}>
 
-  <div class="shotz-choose__body">
-    {%- if section.settings.eyebrow_text != blank or section.settings.heading != blank -%}
-      <div class="shotz-choose__header">
-        {%- if section.settings.eyebrow_text != blank -%}
-          <p class="shotz-choose__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
-        {%- endif -%}
-        {%- if section.settings.heading != blank -%}
-          <h2 class="shotz-choose__heading">{{ section.settings.heading | escape }}</h2>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
+  {%- if section.settings.eyebrow_text != blank or section.settings.heading != blank -%}
+    <div class="shotz-choose__header">
+      {%- if section.settings.eyebrow_text != blank -%}
+        <p class="shotz-choose__eyebrow">{{ section.settings.eyebrow_text | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="shotz-choose__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
 
-    {%- if flavor_count > 0 -%}
-      {%- capture slides_html -%}{%- endcapture -%}
-      {%- capture cards_html -%}{%- endcapture -%}
-
-      {%- for block in flavor_blocks -%}
-        {%- liquid
-          assign i = forloop.index0
-          assign card_product = block.settings.product
-          assign card_variant = nil
-          assign wanted_sku = block.settings.variant_sku | strip
-          if wanted_sku != blank
-            for variant in card_product.variants
-              if variant.sku == wanted_sku
-                assign card_variant = variant
-                break
-              endif
-            endfor
-          endif
-
-          assign price_variant = card_variant | default: card_product.selected_or_first_available_variant
-          assign card_image = card_variant.featured_image | default: card_product.featured_image
-
-          assign card_title = card_product.title
-          if card_variant != nil and card_variant.title != 'Default Title'
-            assign card_title = card_variant.title
-          endif
-          if block.settings.title != blank
-            assign card_title = block.settings.title
-          endif
-          assign card_title = card_title | default: 'Selecione um produto'
-
-          assign card_url = card_product.url
-          if card_variant != nil
-            assign card_url = card_url | append: '?variant=' | append: card_variant.id
-          endif
-
-          # Posição inicial renderizada no servidor (sem salto antes do JS):
-          # 0 = ativo, 1 = vizinho à direita, último = vizinho à esquerda (com 3+ sabores).
-          assign pos = 'hidden'
-          assign x = 'calc(var(--cy-neighbor-x) * 2)'
-          assign s = 'var(--cy-neighbor-scale)'
-          assign o = '0'
-          assign z = 1
-          if i == 0
-            assign pos = 'active'
-            assign x = '0%'
-            assign s = '1'
-            assign o = '1'
-            assign z = 3
-          elsif i == 1
-            assign pos = 'next'
-            assign x = 'var(--cy-neighbor-x)'
-            assign o = 'var(--cy-neighbor-opacity)'
-            assign z = 2
-          elsif i == last_index and flavor_count > 2
-            assign pos = 'prev'
-            assign x = 'calc(var(--cy-neighbor-x) * -1)'
-            assign o = 'var(--cy-neighbor-opacity)'
-            assign z = 2
-          endif
-
-          assign loading = 'lazy'
-          if i == 0
-            assign loading = 'eager'
-          endif
-          assign slide_label = i | plus: 1 | append: ' de ' | append: flavor_count
-        -%}
-
-        {%- capture slide -%}
-          <div
-            class="shotz-choose__slide"
-            role="group"
-            aria-roledescription="slide"
-            aria-label="{{ slide_label }}: {{ card_title | escape }}"
-            data-flavor-slide
-            data-block-id="{{ block.id }}"
-            data-title="{{ card_title | escape }}"
-            data-bg="{{ block.settings.background_color }}"
-            data-text="{{ block.settings.text_color }}"
-            data-accent="{{ block.settings.accent_color }}"
-            data-accent-text="{{ block.settings.button_text_color }}"
-            data-pos="{{ pos }}"
-            style="--x: {{ x }}; --s: {{ s }}; --o: {{ o }}; z-index: {{ z }};"
-            {% if i != 0 %}inert aria-hidden="true"{% endif %}
+  {%- if section.blocks.size > 0 -%}
+    <div class="shotz-choose__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'card' -%}
+          {%- assign card_product = block.settings.product -%}
+          {%- assign card_variant = nil -%}
+          {%- assign wanted_sku = block.settings.variant_sku | strip -%}
+          {%- if wanted_sku != blank -%}
+            {%- for variant in card_product.variants -%}
+              {%- if variant.sku == wanted_sku -%}
+                {%- assign card_variant = variant -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+          {%- assign card_image = card_variant.featured_image | default: card_product.featured_image -%}
+          {%- assign card_title = card_product.title -%}
+          {%- if card_variant != nil and card_variant.title != 'Default Title' -%}
+            {%- assign card_title = card_variant.title -%}
+          {%- endif -%}
+          {%- assign card_url = card_product.url -%}
+          {%- if card_variant != nil -%}
+            {%- assign card_url = card_url | append: '?variant=' | append: card_variant.id -%}
+          {%- endif -%}
+          <a
+            href="{{ card_url | default: '#' }}"
+            class="shotz-choose__card"
+            style="--cy-accent: {{ block.settings.accent_color }}; --cy-pill-text: {{ block.settings.button_text_color }};"
             {{ block.shopify_attributes }}
           >
-            {%- if card_image != blank -%}
-              {{
-                card_image
-                | image_url: width: 1000
-                | image_tag:
-                  widths: '300, 400, 500, 600, 800, 1000',
-                  sizes: '(min-width: 750px) min(400px, 34vw), 60vw',
-                  loading: loading,
-                  alt: card_title,
-                  class: 'shotz-choose__img',
-                  draggable: 'false'
-              }}
-            {%- else -%}
-              {{- 'product-1' | placeholder_svg_tag: 'shotz-choose__img shotz-choose__img--placeholder' -}}
-            {%- endif -%}
-          </div>
-        {%- endcapture -%}
-        {%- assign slides_html = slides_html | append: slide -%}
+            <div class="shotz-choose__img-wrap">
+              {%- if card_image != blank -%}
+                <img
+                  src="{{ card_image | image_url: width: 800 }}"
+                  alt="{{ card_image.alt | escape | default: card_title }}"
+                  class="shotz-choose__img"
+                  width="{{ card_image.width }}"
+                  height="{{ card_image.height }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="shotz-choose__img shotz-choose__img--placeholder">
+                  {{- 'product-1' | placeholder_svg_tag: 'placeholder-svg' -}}
+                </div>
+              {%- endif -%}
+            </div>
 
-        {%- capture card -%}
-          <div
-            class="shotz-choose__card{% if i == 0 %} is-active{% endif %}"
-            data-flavor-card
-            {% if i != 0 %}inert aria-hidden="true"{% endif %}
-          >
-            <h3 class="shotz-choose__title">{{ card_title | escape }}</h3>
-            {%- if block.settings.subtitle != blank -%}
-              <p class="shotz-choose__subtitle">{{ block.settings.subtitle | escape }}</p>
-            {%- endif -%}
-            {%- if price_variant != blank -%}
-              <p class="shotz-choose__price">
-                {%- if price_variant.compare_at_price > price_variant.price -%}
-                  <s class="shotz-choose__price-compare">
-                    <span class="visually-hidden">De</span>
-                    {{ price_variant.compare_at_price | money }}
-                  </s>
-                  <span class="shotz-choose__price-current">
-                    <span class="visually-hidden">Por</span>
-                    {{ price_variant.price | money }}
-                  </span>
-                {%- else -%}
-                  <span class="shotz-choose__price-current">{{ price_variant.price | money }}</span>
+            <div class="shotz-choose__footer">
+              <div class="shotz-choose__info">
+                <span class="shotz-choose__title">{{ card_title | default: 'Selecione um produto' }}</span>
+                {%- if block.settings.subtitle != blank -%}
+                  <span class="shotz-choose__subtitle">{{ block.settings.subtitle | escape }}</span>
                 {%- endif -%}
-              </p>
-            {%- endif -%}
-            {%- if block.settings.button_label != blank -%}
-              <a href="{{ card_url | default: '#' }}" class="shotz-choose__button">
-                <span>{{ block.settings.button_label | escape }}</span>
-                <svg class="shotz-choose__button-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                  <path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </a>
-            {%- endif -%}
-          </div>
-        {%- endcapture -%}
-        {%- assign cards_html = cards_html | append: card -%}
-      {%- endfor -%}
-
-      <shotz-flavor-stage
-        class="shotz-choose__stage"
-        role="region"
-        aria-roledescription="carousel"
-        aria-label="{{ stage_label | escape }}"
-        data-section-id="{{ section.id }}"
-        {% if flavor_count > 1 %}tabindex="0"{% endif %}
-      >
-        <div class="shotz-choose__viewport" id="ShotzFlavorSlides-{{ section.id }}" data-flavor-viewport>
-          {{ slides_html }}
-        </div>
-
-        {%- if flavor_count > 1 -%}
-          <button
-            type="button"
-            class="shotz-choose__arrow shotz-choose__arrow--prev"
-            aria-label="Sabor anterior"
-            aria-controls="ShotzFlavorSlides-{{ section.id }}"
-            data-flavor-prev
-          >
-            <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-              <path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <button
-            type="button"
-            class="shotz-choose__arrow shotz-choose__arrow--next"
-            aria-label="Próximo sabor"
-            aria-controls="ShotzFlavorSlides-{{ section.id }}"
-            data-flavor-next
-          >
-            <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-              <path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
+              </div>
+              {%- if block.settings.button_label != blank -%}
+                <span class="shotz-choose__pill">{{ block.settings.button_label | escape }}</span>
+              {%- endif -%}
+            </div>
+          </a>
         {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
 
-        <div class="visually-hidden" aria-live="polite" aria-atomic="true" data-flavor-live></div>
-      </shotz-flavor-stage>
-
-      <div class="shotz-choose__cards">
-        {{ cards_html }}
-      </div>
-    {%- endif -%}
-  </div>
-
-  <svg
-    class="shotz-choose__wave shotz-choose__wave--bottom"
-    viewBox="0 0 1440 120"
-    preserveAspectRatio="none"
-    aria-hidden="true"
-    focusable="false"
-  >
-    <path fill="currentColor" d="M0 70C180 22 360 4 540 26s360 82 540 82 270-46 360-78v90H0Z"/>
-  </svg>
 </div>
 
-<script src="{{ 'shotz-flavor-stage.js' | asset_url }}" type="module" fetchpriority="low"></script>
-
 {% stylesheet %}
-  /* ------------------------------------------------------------------
-     Ajustes de movimento — mude aqui.
-     ------------------------------------------------------------------ */
-  .shotz-choose {
-    --cy-duration: 0.45s;
-    --cy-ease: cubic-bezier(0.16, 1, 0.3, 1);
-    --cy-card-duration: 0.35s;
-    --cy-hover-duration: 0.2s;
-    --cy-neighbor-x: 62%;
-    --cy-neighbor-scale: 0.8;
-    --cy-neighbor-opacity: 0.55;
-    --cy-wave-height: 120px;
-    --cy-slide-width: clamp(240px, 34vw, 400px);
-    --cy-arrow-size: 56px;
-  }
-
-  @media screen and (max-width: 749px) {
-    .shotz-choose {
-      --cy-neighbor-x: 48%;
-      --cy-wave-height: 64px;
-      --cy-slide-width: 58vw;
-      --cy-arrow-size: 40px;
-    }
-  }
-
-  /* ------------------------------------------------------------------ */
-
-  .shotz-choose {
-    background-color: var(--shotz-page-bg);
-    overflow-x: clip;
-  }
-
-  .shotz-choose__wave {
-    display: block;
-    width: 100%;
-    height: var(--cy-wave-height);
-    color: var(--shotz-flavor-bg);
-    transition: color var(--cy-duration) ease;
-  }
-
-  .shotz-choose__wave--top {
-    margin-bottom: -1px;
-  }
-
-  .shotz-choose__wave--bottom {
-    margin-top: -1px;
-    transform: scaleY(-1);
-  }
-
-  .shotz-choose__body {
-    background-color: var(--shotz-flavor-bg);
-    color: var(--shotz-flavor-text);
-    padding: var(--cy-padding-block) var(--cy-padding-inline);
-    transition:
-      background-color var(--cy-duration) ease,
-      color var(--cy-duration) ease;
-  }
-
   .shotz-choose__header {
     text-align: center;
-    margin-bottom: 32px;
+    margin-bottom: 44px;
   }
 
   .shotz-choose__eyebrow {
@@ -345,228 +100,108 @@
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: inherit;
-    opacity: 0.75;
+    color: #D9186B;
     margin: 0 0 10px;
   }
 
   .shotz-choose__heading {
     font-size: 38px;
     margin: 0;
-    color: inherit;
+    color: var(--cy-text);
   }
 
-  /* Palco */
-  .shotz-choose__stage {
-    position: relative;
-    display: block;
+  .shotz-choose__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
     max-width: 1000px;
     margin: 0 auto;
-    border-radius: 16px;
-  }
-
-  .shotz-choose__stage:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 4px;
-  }
-
-  .shotz-choose__viewport {
-    position: relative;
-    height: var(--cy-slide-width);
-    touch-action: pan-y;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-
-  .shotz-choose__slide {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: var(--cy-slide-width);
-    height: 100%;
-    transform: translateX(-50%) translateX(var(--x, 0)) scale(var(--s, 1));
-    opacity: var(--o, 1);
-    transition:
-      transform var(--cy-duration) var(--cy-ease),
-      opacity var(--cy-duration) var(--cy-ease);
-    will-change: transform, opacity;
-  }
-
-  .shotz-choose__slide[data-pos='hidden'] {
-    pointer-events: none;
-  }
-
-  .shotz-choose__img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    -webkit-user-drag: none;
-  }
-
-  .shotz-choose__img--placeholder {
-    opacity: 0.3;
-  }
-
-  /* Setas */
-  .shotz-choose__arrow {
-    position: absolute;
-    top: 50%;
-    z-index: 4;
-    display: grid;
-    place-items: center;
-    width: var(--cy-arrow-size);
-    height: var(--cy-arrow-size);
-    margin-top: calc(var(--cy-arrow-size) / -2);
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    background-color: var(--shotz-flavor-accent);
-    color: var(--shotz-flavor-accent-text);
-    cursor: pointer;
-    transition:
-      background-color var(--cy-hover-duration) ease,
-      color var(--cy-hover-duration) ease,
-      transform var(--cy-hover-duration) ease;
-  }
-
-  .shotz-choose__arrow svg {
-    width: 40%;
-    height: 40%;
-  }
-
-  .shotz-choose__arrow--prev {
-    left: 0;
-  }
-
-  .shotz-choose__arrow--next {
-    right: 0;
-  }
-
-  .shotz-choose__arrow:hover {
-    background-color: color-mix(in srgb, var(--shotz-flavor-accent) 82%, var(--shotz-flavor-bg));
-    transform: scale(1.06);
-  }
-
-  .shotz-choose__arrow:focus-visible {
-    outline: 2px solid var(--shotz-flavor-text);
-    outline-offset: 3px;
-  }
-
-  /* Cards: todos na mesma célula do grid, só o ativo aparece */
-  .shotz-choose__cards {
-    display: grid;
-    max-width: 520px;
-    margin: 28px auto 0;
-    text-align: center;
   }
 
   .shotz-choose__card {
-    grid-area: 1 / 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    opacity: 0;
-    transform: translateY(8px);
-    visibility: hidden;
-    pointer-events: none;
-    transition:
-      opacity var(--cy-card-duration) var(--cy-ease),
-      transform var(--cy-card-duration) var(--cy-ease),
-      visibility 0s linear var(--cy-card-duration);
+    background: #fff;
+    border: 2px solid var(--cy-text);
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
   }
 
-  .shotz-choose__card.is-active {
-    opacity: 1;
-    transform: none;
-    visibility: visible;
-    pointer-events: auto;
-    transition-delay: 0s;
+  .shotz-choose__card:hover {
+    border-color: var(--cy-accent);
+  }
+
+  .shotz-choose__img-wrap {
+    width: 100%;
+  }
+
+  .shotz-choose__img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+  }
+
+  .shotz-choose__img--placeholder {
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .shotz-choose__img--placeholder .placeholder-svg {
+    width: 50%;
+    height: 50%;
+    opacity: 0.3;
+  }
+
+  .shotz-choose__footer {
+    border-top: 2px solid var(--cy-text);
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .shotz-choose__info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
   }
 
   .shotz-choose__title {
-    font-size: 28px;
-    font-weight: 800;
-    margin: 0;
-    color: inherit;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--cy-text);
   }
 
   .shotz-choose__subtitle {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
-    margin: 0;
-    opacity: 0.8;
+    color: var(--cy-text-secondary);
   }
 
-  .shotz-choose__price {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-    margin: 4px 0 8px;
-  }
-
-  .shotz-choose__price-compare {
-    font-size: 15px;
-    opacity: 0.65;
-  }
-
-  .shotz-choose__price-current {
-    font-size: 22px;
-    font-weight: 800;
-  }
-
-  .shotz-choose__button {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 28px;
+  .shotz-choose__pill {
+    flex: 0 0 auto;
+    background: var(--cy-accent);
+    color: var(--cy-pill-text);
+    padding: 10px 18px;
     border-radius: 999px;
-    background-color: var(--shotz-flavor-accent);
-    color: var(--shotz-flavor-accent-text);
     font-weight: 900;
     font-size: 14px;
-    letter-spacing: 0.04em;
-    text-decoration: none;
     white-space: nowrap;
-    transition: background-color var(--cy-hover-duration) ease;
-  }
-
-  .shotz-choose__button:hover {
-    background-color: color-mix(in srgb, var(--shotz-flavor-accent) 82%, var(--shotz-flavor-bg));
-  }
-
-  .shotz-choose__button:focus-visible {
-    outline: 2px solid var(--shotz-flavor-text);
-    outline-offset: 3px;
-  }
-
-  .shotz-choose__button-arrow {
-    width: 16px;
-    height: 16px;
-    transition: transform var(--cy-hover-duration) ease;
-  }
-
-  .shotz-choose__button:hover .shotz-choose__button-arrow {
-    transform: translateX(4px);
   }
 
   @media screen and (max-width: 749px) {
+    .shotz-choose__grid {
+      grid-template-columns: 1fr;
+    }
+
     .shotz-choose__heading {
       font-size: 28px;
-    }
-
-    .shotz-choose__title {
-      font-size: 22px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .shotz-choose,
-    .shotz-choose *,
-    .shotz-choose *::before,
-    .shotz-choose *::after {
-      transition: none !important;
     }
   }
 {% endstylesheet %}
@@ -576,7 +211,7 @@
   "name": "Escolha o seu",
   "tag": "section",
   "class": "shotz-choose-yours-section",
-  "max_blocks": 8,
+  "max_blocks": 2,
   "settings": [
     {
       "type": "header",
@@ -596,46 +231,25 @@
     },
     {
       "type": "header",
-      "content": "Cores",
-      "info": "Fundo, texto e destaque mudam por sabor (em cada bloco de sabor)."
+      "content": "Cores"
     },
     {
       "type": "color",
       "id": "background_color",
-      "label": "Fundo fora das ondas",
-      "info": "Só é usado com \"Ondas por cima das seções vizinhas\" desligado. Use a mesma cor das seções vizinhas.",
-      "default": "#FFFFFF"
+      "label": "Fundo da seção",
+      "default": "#FAF7EF"
     },
     {
-      "type": "header",
-      "content": "Ondas"
+      "type": "color",
+      "id": "text_color",
+      "label": "Texto principal / bordas",
+      "default": "#111111"
     },
     {
-      "type": "checkbox",
-      "id": "wave_overlap",
-      "label": "Ondas por cima das seções vizinhas",
-      "info": "A curva sai direto da seção de cima e entra na de baixo, sem faixa de fundo. A faixa das vizinhas coberta pela onda deve ficar sem texto.",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "wave_height",
-      "label": "Altura das ondas (desktop)",
-      "min": 40,
-      "max": 200,
-      "step": 4,
-      "unit": "px",
-      "default": 120
-    },
-    {
-      "type": "range",
-      "id": "wave_height_mobile",
-      "label": "Altura das ondas (celular)",
-      "min": 24,
-      "max": 120,
-      "step": 4,
-      "unit": "px",
-      "default": 64
+      "type": "color",
+      "id": "secondary_text_color",
+      "label": "Texto secundário",
+      "default": "#777777"
     },
     {
       "type": "header",
@@ -649,7 +263,7 @@
       "max": 160,
       "step": 4,
       "unit": "px",
-      "default": 24
+      "default": 80
     },
     {
       "type": "range",
@@ -659,13 +273,13 @@
       "max": 120,
       "step": 4,
       "unit": "px",
-      "default": 24
+      "default": 48
     }
   ],
   "blocks": [
     {
       "type": "card",
-      "name": "Sabor",
+      "name": "Card de produto",
       "settings": [
         {
           "type": "product",
@@ -676,13 +290,7 @@
           "type": "text",
           "id": "variant_sku",
           "label": "SKU da variante (opcional)",
-          "info": "Se preenchido, usa a imagem, o preço e o link dessa variante específica."
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Nome do sabor (opcional)",
-          "info": "Se vazio, usa o nome do produto/variante."
+          "info": "Se preenchido, usa a imagem e o link dessa variante específica em vez da imagem padrão do produto."
         },
         {
           "type": "text",
@@ -697,32 +305,16 @@
           "default": "EXPERIMENTE AGORA"
         },
         {
-          "type": "header",
-          "content": "Cores do sabor"
-        },
-        {
-          "type": "color",
-          "id": "background_color",
-          "label": "Fundo",
-          "default": "#FFB627"
-        },
-        {
-          "type": "color",
-          "id": "text_color",
-          "label": "Texto",
-          "default": "#0D0D0D"
-        },
-        {
           "type": "color",
           "id": "accent_color",
-          "label": "Destaque (botão e setas)",
-          "default": "#0D0D0D"
+          "label": "Cor de destaque (borda no hover / fundo do botão)",
+          "default": "#F5B301"
         },
         {
           "type": "color",
           "id": "button_text_color",
-          "label": "Texto/ícone do botão e setas",
-          "default": "#FFFFFF"
+          "label": "Cor do texto do botão",
+          "default": "#111111"
         }
       ]
     }
@@ -734,21 +326,15 @@
         {
           "type": "card",
           "settings": {
-            "title": "Frutas Amarelas",
-            "background_color": "#FFB627",
-            "text_color": "#0D0D0D",
-            "accent_color": "#0D0D0D",
-            "button_text_color": "#FFFFFF"
+            "accent_color": "#F5B301",
+            "button_text_color": "#111111"
           }
         },
         {
           "type": "card",
           "settings": {
-            "title": "Cranberry",
-            "background_color": "#6B0F2A",
-            "text_color": "#FFFFFF",
-            "accent_color": "#FFFFFF",
-            "button_text_color": "#6B0F2A"
+            "accent_color": "#D9186B",
+            "button_text_color": "#ffffff"
           }
         }
       ]

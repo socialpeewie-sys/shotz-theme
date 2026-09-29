@@ -143,13 +143,10 @@
           "settings": {
             "product": "shot-frutas-amarelas",
             "variant_sku": "",
-            "title": "",
             "subtitle": "23g de proteína · 100ml",
             "button_label": "EXPERIMENTE AGORA",
-            "background_color": "#ffb627",
-            "text_color": "#0d0d0d",
-            "accent_color": "#0d0d0d",
-            "button_text_color": "#ffffff"
+            "accent_color": "#f5b301",
+            "button_text_color": "#111111"
           }
         },
         "card_PnWyPy": {
@@ -157,13 +154,10 @@
           "settings": {
             "product": "shot-frutas-amarelas",
             "variant_sku": "",
-            "title": "",
             "subtitle": "21g de proteína · 100ml",
             "button_label": "EXPERIMENTE AGORA",
-            "background_color": "#6b0f2a",
-            "text_color": "#ffffff",
-            "accent_color": "#ffffff",
-            "button_text_color": "#6b0f2a"
+            "accent_color": "#d9186b",
+            "button_text_color": "#ffffff"
           }
         }
       },
@@ -176,9 +170,8 @@
         "eyebrow_text": "",
         "heading": "Escolha o seu",
         "background_color": "#ffffff",
-        "wave_overlap": true,
-        "wave_height": 120,
-        "wave_height_mobile": 64,
+        "text_color": "#111111",
+        "secondary_text_color": "#777777",
         "padding_block": 16,
         "padding_inline": 48
       }

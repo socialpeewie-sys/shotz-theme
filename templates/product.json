@@ -18,7 +18,7 @@
           "settings": {
             "media_presentation": "grid",
             "media_columns": "two",
-            "image_gap": 4,
+            "image_gap": 12,
             "large_first_image": true,
             "icons_style": "arrow",
             "slideshow_controls_style": "thumbnails",
@@ -35,7 +35,7 @@
             "video_loop": false,
             "hide_variants": false,
             "show_highlights": true,
-            "highlights_max_images": 4,
+            "highlights_max_images": 8,
             "highlight_1_icon": "muscle",
             "highlight_1_title": "23g de proteína",
             "highlight_1_text": "por shot",

@@ -122,12 +122,21 @@
   }
 {% endstyle %}
 
+{%- liquid
+  assign rv = ''
+  assign rv_stagger = ''
+  if block.settings.reveal_on_scroll and section.index != 1
+    assign rv = ' reveal'
+    assign rv_stagger = ' data-reveal-stagger'
+  endif
+-%}
+
 <text-image-split-{{ ai_gen_id }}
   class="ai-text-image-split-{{ ai_gen_id }}"
   {{ block.shopify_attributes }}
 >
   <div class="ai-text-image-split__container-{{ ai_gen_id }}">
-    <div class="ai-text-image-split__image-wrapper-{{ ai_gen_id }}">
+    <div class="ai-text-image-split__image-wrapper-{{ ai_gen_id }}{{ rv }}">
       {% if block.settings.image %}
         <img
           src="{{ block.settings.image | image_url: width: 1200 }}"
@@ -148,7 +157,7 @@
     </div>
 
     <div class="ai-text-image-split__content-wrapper-{{ ai_gen_id }}">
-      <div class="ai-text-image-split__text-blocks-{{ ai_gen_id }}">
+      <div class="ai-text-image-split__text-blocks-{{ ai_gen_id }}"{{ rv_stagger }}>
         {% for i in (1..5) %}
           {% liquid
             assign title_key = 'text_block_' | append: i | append: '_title'
@@ -161,7 +170,7 @@
           %}
 
           {% if enabled %}
-            <div class="ai-text-image-split__text-block-{{ ai_gen_id }}">
+            <div class="ai-text-image-split__text-block-{{ ai_gen_id }}{{ rv }}">
               {% if title != blank %}
                 <h3 class="ai-text-image-split__title-{{ ai_gen_id }}">{{ title }}</h3>
               {% endif %}
@@ -426,6 +435,17 @@
       "type": "richtext",
       "id": "text_block_5_text",
       "label": "Texto"
+    },
+    {
+      "type": "header",
+      "content": "Animação"
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal_on_scroll",
+      "label": "Animar ao rolar",
+      "info": "Os elementos aparecem suavemente de baixo para cima quando entram na tela.",
+      "default": true
     }
   ],
   "presets": [

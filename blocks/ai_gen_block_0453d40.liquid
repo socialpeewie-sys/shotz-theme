@@ -201,9 +201,18 @@
   }
 {% endstyle %}
 
+{%- liquid
+  assign rv = ''
+  assign rv_stagger = ''
+  if block.settings.reveal_on_scroll and section.index != 1
+    assign rv = ' reveal'
+    assign rv_stagger = ' data-reveal-stagger'
+  endif
+-%}
+
 <div class="ai-hero-benefits-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
   <div class="ai-hero-benefits-container-{{ ai_gen_id }}">
-    <div class="ai-hero-benefits-image-column-{{ ai_gen_id }}">
+    <div class="ai-hero-benefits-image-column-{{ ai_gen_id }}{{ rv }}">
       <div class="ai-hero-benefits-image-wrapper-{{ ai_gen_id }}">
         {% if block.settings.product_image %}
           <img
@@ -224,19 +233,19 @@
 
     <div class="ai-hero-benefits-content-column-{{ ai_gen_id }}">
       {% if block.settings.headline != blank %}
-        <h2 class="ai-hero-benefits-headline-{{ ai_gen_id }}">{{ block.settings.headline }}</h2>
+        <h2 class="ai-hero-benefits-headline-{{ ai_gen_id }}{{ rv }}">{{ block.settings.headline }}</h2>
       {% endif %}
 
       {% if block.settings.subtitle != blank %}
-        <p class="ai-hero-benefits-subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle }}</p>
+        <p class="ai-hero-benefits-subtitle-{{ ai_gen_id }}{{ rv }}">{{ block.settings.subtitle }}</p>
       {% endif %}
 
-      <div class="ai-hero-benefits-boxes-{{ ai_gen_id }}">
+      <div class="ai-hero-benefits-boxes-{{ ai_gen_id }}"{{ rv_stagger }}>
         {% for i in (1..4) %}
           {% assign box_subtitle_key = 'box_' | append: i | append: '_subtitle' %}
           {% assign box_text_key = 'box_' | append: i | append: '_text' %}
           {% if block.settings[box_subtitle_key] != blank or block.settings[box_text_key] != blank %}
-            <div class="ai-hero-benefits-box-{{ ai_gen_id }}">
+            <div class="ai-hero-benefits-box-{{ ai_gen_id }}{{ rv }}">
               {% if block.settings[box_subtitle_key] != blank %}
                 <h3 class="ai-hero-benefits-box-subtitle-{{ ai_gen_id }}">{{ block.settings[box_subtitle_key] }}</h3>
               {% endif %}
@@ -419,6 +428,17 @@
       "id": "button_text_color",
       "label": "Cor do texto do botão",
       "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Animação"
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal_on_scroll",
+      "label": "Animar ao rolar",
+      "info": "Os elementos aparecem suavemente de baixo para cima quando entram na tela.",
+      "default": true
     }
   ],
   "presets": [

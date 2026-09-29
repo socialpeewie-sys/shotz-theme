@@ -15,6 +15,12 @@
   if section.settings.wheel_direction == 'reverse'
     assign spin = -1
   endif
+  assign rv = ''
+  assign rv_stagger = ''
+  if section.settings.reveal_on_scroll and section.index != 1
+    assign rv = ' reveal'
+    assign rv_stagger = ' data-reveal-stagger'
+  endif
 -%}
 
 {% style %}
@@ -399,7 +405,7 @@
   <div class="spw-wrap-{{ sid }}">
 
     {%- comment -%} Coluna: roda de benefícios {%- endcomment -%}
-    <div class="spw-wheel-col-{{ sid }}">
+    <div class="spw-wheel-col-{{ sid }}{{ rv }}">
       <div class="spw-stage-{{ sid }}">
         <div class="spw-circle-{{ sid }}" aria-hidden="true"></div>
 
@@ -435,11 +441,11 @@
     {%- comment -%} Coluna: conteúdo {%- endcomment -%}
     <div class="spw-content-col-{{ sid }}">
       {%- if section.settings.eyebrow != blank -%}
-        <p class="spw-eyebrow-{{ sid }}">{{ section.settings.eyebrow }}</p>
+        <p class="spw-eyebrow-{{ sid }}{{ rv }}">{{ section.settings.eyebrow }}</p>
       {%- endif -%}
 
       {%- if section.settings.brand_name != blank or section.settings.heading != blank -%}
-        <h2 class="spw-heading-{{ sid }}">
+        <h2 class="spw-heading-{{ sid }}{{ rv }}">
           {%- if section.settings.brand_name != blank -%}
             <span class="spw-brand-{{ sid }}">{{ section.settings.brand_name }}</span><br>
           {%- endif -%}
@@ -448,13 +454,13 @@
       {%- endif -%}
 
       {%- if section.settings.description != blank -%}
-        <p class="spw-desc-{{ sid }}">{{ section.settings.description }}</p>
+        <p class="spw-desc-{{ sid }}{{ rv }}">{{ section.settings.description }}</p>
       {%- endif -%}
 
       {%- if feature_blocks.size > 0 -%}
-        <div class="spw-features-{{ sid }}">
+        <div class="spw-features-{{ sid }}"{{ rv_stagger }}>
           {%- for block in feature_blocks -%}
-            <div class="spw-feature-{{ sid }}" {{ block.shopify_attributes }}>
+            <div class="spw-feature-{{ sid }}{% if rv != blank %} reveal reveal--pop{% endif %}" {{ block.shopify_attributes }}>
               <span class="spw-feature-icon-{{ sid }}" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
                   {%- case block.settings.icon -%}
@@ -495,9 +501,9 @@
       {%- endif -%}
 
       {%- if checklist_blocks.size > 0 -%}
-        <ul class="spw-checklist-{{ sid }}">
+        <ul class="spw-checklist-{{ sid }}"{{ rv_stagger }}>
           {%- for block in checklist_blocks -%}
-            <li class="spw-check-item-{{ sid }}" {{ block.shopify_attributes }}>
+            <li class="spw-check-item-{{ sid }}{{ rv }}" {{ block.shopify_attributes }}>
               <span class="spw-check-icon-{{ sid }}" aria-hidden="true">
                 <svg viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M1 4.5L4 7.5L10 1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
@@ -822,6 +828,17 @@
       "id": "pill_text_color",
       "label": "Texto das pílulas",
       "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Animação"
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal_on_scroll",
+      "label": "Animar ao rolar",
+      "info": "Os elementos aparecem suavemente de baixo para cima quando entram na tela.",
+      "default": true
     }
   ],
   "blocks": [

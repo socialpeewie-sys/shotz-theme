@@ -2,6 +2,9 @@
 
 {% assign block_settings = block.settings %}
 <div
+  {% if block_settings.reveal_on_scroll and section.index != 1 %}
+    data-reveal-stagger=":scope > accordion-custom > details"
+  {% endif %}
   class="accordion accordion--{{ block.id }} accordion--{{ block_settings.icon }} border-style spacing-style{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}{% if block_settings.dividers %} accordion--dividers{% endif %}"
   style="
     --summary-font-family: var(--font-{{ block_settings.type_preset }}--family);
@@ -249,6 +252,17 @@
       "step": 1,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Animação"
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal_on_scroll",
+      "label": "Animar ao rolar",
+      "info": "Os elementos aparecem suavemente de baixo para cima quando entram na tela.",
+      "default": true
     }
   ],
   "presets": [

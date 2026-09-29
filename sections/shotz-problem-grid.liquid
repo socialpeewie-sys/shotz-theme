@@ -186,10 +186,19 @@
   }
 {% endstyle %}
 
+{%- liquid
+  assign rv = ''
+  assign rv_stagger = ''
+  if section.settings.reveal_on_scroll and section.index != 1
+    assign rv = ' reveal'
+    assign rv_stagger = ' data-reveal-stagger'
+  endif
+-%}
+
 <div class="shotz-problem-grid" {{ section.shopify_attributes }}>
   <div class="shotz-problem-grid__inner">
     {%- if section.settings.heading_part_1 != blank or section.settings.heading_part_2 != blank -%}
-      <{{ heading_tag }} class="shotz-problem-grid__heading">
+      <{{ heading_tag }} class="shotz-problem-grid__heading{{ rv }}">
         {%- if section.settings.heading_part_1 != blank -%}
           <span class="shotz-problem-grid__heading-1">{{ section.settings.heading_part_1 }}</span>
         {%- endif -%}
@@ -203,10 +212,10 @@
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
-      <div class="shotz-problem-grid__grid">
+      <div class="shotz-problem-grid__grid"{{ rv_stagger }}>
         {%- for block in section.blocks -%}
           {%- if block.type == 'card' -%}
-            <details class="shotz-problem-grid__card" {{ block.shopify_attributes }}>
+            <details class="shotz-problem-grid__card{{ rv }}" {{ block.shopify_attributes }}>
               <summary class="shotz-problem-grid__card-head">
                 {%- if block.settings.custom_icon != blank -%}
                   <span class="shotz-problem-grid__icon">
@@ -400,6 +409,17 @@
       "step": 4,
       "unit": "px",
       "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Animação"
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal_on_scroll",
+      "label": "Animar ao rolar",
+      "info": "Os elementos aparecem suavemente de baixo para cima quando entram na tela.",
+      "default": true
     }
   ],
   "blocks": [

@@ -1,0 +1,36 @@
+/*
+ * Reveal on scroll — fade-up suave quando o bloco entra na tela.
+ *
+ * Uso:
+ *   .reveal                 → opacity 0 + translateY(22px) → visível
+ *   .reveal.reveal--pop     → translateY(8px) scale(0.9) → visível (badges, ícones, selos)
+ *   [data-reveal-stagger]   → container cujos filhos .reveal entram em sequência (~80ms)
+ *   style="--reveal-delay: 120ms" → atraso manual
+ *
+ * O estado oculto só existe quando o reveal.js roda (classe .js-reveal no <html>)
+ * e o usuário não pediu movimento reduzido. Sem JS, tudo fica visível.
+ */
+:root {
+  --reveal-duration: 0.6s;
+  --reveal-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --reveal-distance: 22px;
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .js-reveal .reveal:not(.is-in) {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+
+  .js-reveal .reveal.reveal--pop:not(.is-in) {
+    transform: translateY(8px) scale(0.9);
+  }
+
+  /* A transição só vale durante a entrada; depois o elemento recupera as próprias transições (hover etc.) */
+  .js-reveal .reveal.is-in:not(.reveal-done) {
+    transition:
+      opacity var(--reveal-duration) var(--reveal-ease),
+      transform var(--reveal-duration) var(--reveal-ease);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+}

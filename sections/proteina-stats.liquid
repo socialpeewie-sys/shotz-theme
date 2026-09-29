@@ -211,9 +211,18 @@
   }
 {% endstyle %}
 
+{%- liquid
+  assign rv = ''
+  assign rv_stagger = ''
+  if section.settings.reveal_on_scroll and section.index != 1
+    assign rv = ' reveal'
+    assign rv_stagger = ' data-reveal-stagger'
+  endif
+-%}
+
 <div class="proteina-stats proteina-stats-{{ section.id }}" {{ section.shopify_attributes }}>
   <div class="proteina-stats-container-{{ section.id }}">
-    <div class="proteina-stats-image-col-{{ section.id }}">
+    <div class="proteina-stats-image-col-{{ section.id }}{{ rv }}">
       {% if section.settings.image %}
         <img
           src="{{ section.settings.image | image_url: width: 900 }}"
@@ -238,18 +247,18 @@
 
     <div class="proteina-stats-content-col-{{ section.id }}">
       {% if section.settings.heading != blank %}
-        <h2 class="proteina-stats-headline-{{ section.id }}">{{ section.settings.heading }}</h2>
+        <h2 class="proteina-stats-headline-{{ section.id }}{{ rv }}">{{ section.settings.heading }}</h2>
       {% endif %}
 
       {% if section.settings.paragraph != blank %}
-        <div class="proteina-stats-paragraph-{{ section.id }}">{{ section.settings.paragraph }}</div>
+        <div class="proteina-stats-paragraph-{{ section.id }}{{ rv }}">{{ section.settings.paragraph }}</div>
       {% endif %}
 
       {% if section.blocks.size > 0 %}
-        <ul class="proteina-stats-list-{{ section.id }}">
+        <ul class="proteina-stats-list-{{ section.id }}"{{ rv_stagger }}>
           {% for block in section.blocks %}
             {% if block.type == 'stat' %}
-              <li class="proteina-stats-item-{{ section.id }}" {{ block.shopify_attributes }}>
+              <li class="proteina-stats-item-{{ section.id }}{{ rv }}" {{ block.shopify_attributes }}>
                 {% if block.settings.number != blank %}
                   <span class="proteina-stats-number-{{ section.id }}">{{ block.settings.number }}</span>
                 {% endif %}
@@ -402,6 +411,17 @@
       "step": 5,
       "unit": "px",
       "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Animação"
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal_on_scroll",
+      "label": "Animar ao rolar",
+      "info": "Os elementos aparecem suavemente de baixo para cima quando entram na tela.",
+      "default": true
     }
   ],
   "blocks": [

@@ -11,6 +11,12 @@
   assign bg_desktop = s.bg_image | default: s.bg_image_mobile
   assign fade_opacity = s.fade_opacity | divided_by: 100.0
   assign card_number_size = s.number_size | times: 0.62 | round
+  assign rv = ''
+  assign rv_stagger = ''
+  if s.reveal_on_scroll and section.index != 1
+    assign rv = ' reveal'
+    assign rv_stagger = ' data-reveal-stagger'
+  endif
 -%}
 
 {% style %}
@@ -746,20 +752,20 @@
     {%- if is_cards -%}
       <div class="shotz-numeros-content-{{ nid }}">
         {%- if s.eyebrow != blank -%}
-          <p class="shotz-numeros-eyebrow-{{ nid }}">{{ s.eyebrow }}</p>
+          <p class="shotz-numeros-eyebrow-{{ nid }}{{ rv }}">{{ s.eyebrow }}</p>
         {%- endif -%}
         {%- if s.heading != blank -%}
-          <h2 class="shotz-numeros-heading-{{ nid }}">{{ s.heading }}</h2>
+          <h2 class="shotz-numeros-heading-{{ nid }}{{ rv }}">{{ s.heading }}</h2>
         {%- endif -%}
         {%- if s.subtitle != blank -%}
-          <p class="shotz-numeros-subtitle-{{ nid }}">{{ s.subtitle }}</p>
+          <p class="shotz-numeros-subtitle-{{ nid }}{{ rv }}">{{ s.subtitle }}</p>
         {%- endif -%}
 
         {%- if section.blocks.size > 0 -%}
-          <div class="shotz-numeros-cards-{{ nid }}">
+          <div class="shotz-numeros-cards-{{ nid }}"{{ rv_stagger }}>
             {%- for block in section.blocks -%}
               {%- if block.type == 'numero' -%}
-                <div class="shotz-numeros-card-{{ nid }}{% if block.settings.highlight %} is-highlight{% endif %}" {{ block.shopify_attributes }}>
+                <div class="shotz-numeros-card-{{ nid }}{% if block.settings.highlight %} is-highlight{% endif %}{{ rv }}" {{ block.shopify_attributes }}>
                   {%- if block.settings.icon != 'none' -%}
                     <span class="shotz-numeros-card-icon-{{ nid }}">
                       {%- render 'shotz-numeros-icon', icon: block.settings.icon -%}
@@ -789,7 +795,7 @@
       </div>
     {%- elsif is_floating -%}
       <div class="shotz-numeros-fl-wrap-{{ nid }}">
-      <div class="shotz-numeros-fl-head-{{ nid }}">
+      <div class="shotz-numeros-fl-head-{{ nid }}{{ rv }}">
         {%- if s.eyebrow != blank -%}
           <p class="shotz-numeros-fl-eyebrow-{{ nid }}">{{ s.eyebrow }}</p>
         {%- endif -%}
@@ -801,8 +807,8 @@
         {%- endif -%}
       </div>
 
-      <div class="shotz-numeros-fl-stage-{{ nid }}">
-        <div class="shotz-numeros-fl-media-{{ nid }}">
+      <div class="shotz-numeros-fl-stage-{{ nid }}"{{ rv_stagger }}>
+        <div class="shotz-numeros-fl-media-{{ nid }}{{ rv }}">
           {%- assign product_main = s.product_image | default: s.product_image_mobile -%}
           {%- if product_main != blank -%}
             <picture>
@@ -842,7 +848,7 @@
               assign n_color = block.settings.number_color | default: s.float_number_color
             -%}
             <div
-              class="shotz-numeros-fl-card-{{ nid }}{% if block.settings.highlight %} is-highlight{% endif %}{% if side == 1 %} is-right{% endif %}{% if pair == 1 %} is-overlap{% endif %}"
+              class="shotz-numeros-fl-card-{{ nid }}{% if block.settings.highlight %} is-highlight{% endif %}{% if side == 1 %} is-right{% endif %}{% if pair == 1 %} is-overlap{% endif %}{{ rv }}"
               style="--row-d: {{ row_d }}; --row-m: {{ row_m }}; --n-color: {{ n_color }};"
               {{ block.shopify_attributes }}
             >
@@ -874,18 +880,18 @@
       </div>
     {%- else -%}
       {% if s.heading != blank %}
-        <h2 class="shotz-numeros-heading-{{ nid }}">{{ s.heading }}</h2>
+        <h2 class="shotz-numeros-heading-{{ nid }}{{ rv }}">{{ s.heading }}</h2>
       {% endif %}
 
       {% if s.subtitle != blank %}
-        <p class="shotz-numeros-subtitle-{{ nid }}">{{ s.subtitle }}</p>
+        <p class="shotz-numeros-subtitle-{{ nid }}{{ rv }}">{{ s.subtitle }}</p>
       {% endif %}
 
       {% if section.blocks.size > 0 %}
-        <div class="shotz-numeros-grid-{{ nid }}">
+        <div class="shotz-numeros-grid-{{ nid }}"{{ rv_stagger }}>
           {% for block in section.blocks %}
             {% if block.type == 'numero' %}
-              <div class="shotz-numeros-item-{{ nid }}" {{ block.shopify_attributes }}>
+              <div class="shotz-numeros-item-{{ nid }}{{ rv }}" {{ block.shopify_attributes }}>
                 {% if block.settings.number != blank %}
                   <span class="shotz-numeros-number-{{ nid }}">
                     {{- block.settings.number -}}
@@ -1454,6 +1460,17 @@
       "step": 5,
       "unit": "px",
       "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Animação"
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal_on_scroll",
+      "label": "Animar ao rolar",
+      "info": "Os elementos aparecem suavemente de baixo para cima quando entram na tela.",
+      "default": true
     }
   ],
   "blocks": [

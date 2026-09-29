@@ -385,13 +385,22 @@
   }
 {% endstyle %}
 
+{%- liquid
+  assign rv = ''
+  assign rv_stagger = ''
+  if block.settings.reveal_on_scroll and section.index != 1
+    assign rv = ' reveal'
+    assign rv_stagger = ' data-reveal-stagger'
+  endif
+-%}
+
 <shotz-comparison-{{ ai_gen_id }} class="shotz-comparison-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
   <div class="shotz-comparison__container-{{ ai_gen_id }}">
     {% if block.settings.title != blank %}
-      <h2 class="shotz-comparison__title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+      <h2 class="shotz-comparison__title-{{ ai_gen_id }}{{ rv }}">{{ block.settings.title }}</h2>
     {% endif %}
 
-    <div class="shotz-comparison__table-wrapper-{{ ai_gen_id }}">
+    <div class="shotz-comparison__table-wrapper-{{ ai_gen_id }}{{ rv }}">
       <div class="shotz-comparison__highlight-{{ ai_gen_id }}" aria-hidden="true"></div>
       <table class="shotz-comparison__table-{{ ai_gen_id }}">
         <thead>
@@ -1109,6 +1118,17 @@
       "step": 2,
       "unit": "px",
       "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Animação"
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal_on_scroll",
+      "label": "Animar ao rolar",
+      "info": "Os elementos aparecem suavemente de baixo para cima quando entram na tela.",
+      "default": true
     }
   ],
   "presets": [

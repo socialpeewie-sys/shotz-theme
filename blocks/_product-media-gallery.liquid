@@ -279,6 +279,102 @@
     },
     {
       "type": "header",
+      "content": "Destaques"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_highlights",
+      "label": "Mostrar cards de destaque",
+      "info": "Desktop: ao lado da primeira imagem (use o tipo Grade, 2 colunas). Mobile: abaixo do carrossel.",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "highlight_1_icon",
+      "label": "Destaque 1 — ícone",
+      "options": [
+        { "value": "none", "label": "Nenhum" },
+        { "value": "muscle", "label": "Músculo" },
+        { "value": "flame", "label": "Chama" },
+        { "value": "bolt", "label": "Raio" },
+        { "value": "leaf", "label": "Folha" },
+        { "value": "droplet", "label": "Gota" },
+        { "value": "bottle", "label": "Garrafa" },
+        { "value": "clock", "label": "Relógio" },
+        { "value": "ban", "label": "Proibido" }
+      ],
+      "default": "muscle",
+      "visible_if": "{{ block.settings.show_highlights }}"
+    },
+    {
+      "type": "text",
+      "id": "highlight_1_title",
+      "label": "Destaque 1 — título",
+      "default": "23g de proteína",
+      "visible_if": "{{ block.settings.show_highlights }}"
+    },
+    {
+      "type": "text",
+      "id": "highlight_1_text",
+      "label": "Destaque 1 — texto",
+      "default": "por shot",
+      "visible_if": "{{ block.settings.show_highlights }}"
+    },
+    {
+      "type": "select",
+      "id": "highlight_2_icon",
+      "label": "Destaque 2 — ícone",
+      "options": [
+        { "value": "none", "label": "Nenhum" },
+        { "value": "muscle", "label": "Músculo" },
+        { "value": "flame", "label": "Chama" },
+        { "value": "bolt", "label": "Raio" },
+        { "value": "leaf", "label": "Folha" },
+        { "value": "droplet", "label": "Gota" },
+        { "value": "bottle", "label": "Garrafa" },
+        { "value": "clock", "label": "Relógio" },
+        { "value": "ban", "label": "Proibido" }
+      ],
+      "default": "flame",
+      "visible_if": "{{ block.settings.show_highlights }}"
+    },
+    {
+      "type": "text",
+      "id": "highlight_2_title",
+      "label": "Destaque 2 — título",
+      "default": "95 kcal",
+      "visible_if": "{{ block.settings.show_highlights }}"
+    },
+    {
+      "type": "text",
+      "id": "highlight_2_text",
+      "label": "Destaque 2 — texto",
+      "default": "por shot",
+      "visible_if": "{{ block.settings.show_highlights }}"
+    },
+    {
+      "type": "color",
+      "id": "highlight_background",
+      "label": "Fundo dos cards",
+      "default": "#F3EDE3",
+      "visible_if": "{{ block.settings.show_highlights }}"
+    },
+    {
+      "type": "color",
+      "id": "highlight_icon_background",
+      "label": "Fundo do ícone",
+      "default": "#D9BFA3",
+      "visible_if": "{{ block.settings.show_highlights }}"
+    },
+    {
+      "type": "color",
+      "id": "highlight_icon_color",
+      "label": "Cor do ícone",
+      "default": "#3B2A1E",
+      "visible_if": "{{ block.settings.show_highlights }}"
+    },
+    {
+      "type": "header",
       "content": "t:content.padding"
     },
     {

@@ -120,6 +120,13 @@
   endif
   assign has_image_drop = sorted_media | has: 'media_type', 'image'
 
+  assign show_highlights = false
+  if block_settings.show_highlights
+    if block_settings.highlight_1_title != blank or block_settings.highlight_2_title != blank
+      assign show_highlights = true
+    endif
+  endif
+
   # Determine if we're in single column mode (carousel or grid with one column)
   assign is_single_column = false
   if media_presentation == 'carousel' or sorted_media.size == 1 or media_presentation == 'grid' and block_settings.media_columns == 'one'
@@ -349,6 +356,9 @@
       {% if block_settings.extend_media %}
         media-gallery--extend
       {% endif %}
+      {% if show_highlights %}
+        media-gallery--highlights
+      {% endif %}
     "
     style="{% render 'spacing-style', settings: block_settings %} --thumbnail-width: {{ block_settings.thumbnail_width }}px; --media-radius: {{ block_settings.media_radius }}px;{% if block_settings.icons_style contains 'large' %} --slideshow-icon-padding: 0px;{% endif %}--image-gap: {{ block_settings.image_gap }}px;{% unless block_settings.aspect_ratio == 'adapt' %} --gallery-aspect-ratio: {{ block_settings.aspect_ratio }};{% endunless %}"
     data-presentation="{{ media_presentation }}"
@@ -444,6 +454,14 @@
       controls: controls
     %}
 
+    {% if show_highlights %}
+      {% render 'shotz-media-highlights',
+        block_settings: block_settings,
+        tag: 'div',
+        class: 'media-gallery__highlights--mobile'
+      %}
+    {% endif %}
+
     {% if media_presentation == 'grid' %}
       <ul
         class="media-gallery__grid list-unstyled"
@@ -488,6 +506,9 @@
               {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
             {% endif %}
           </li>
+          {% if forloop.first and show_highlights %}
+            {% render 'shotz-media-highlights', block_settings: block_settings, tag: 'li' %}
+          {% endif %}
         {% endfor %}
       </ul>
     {% endif %}

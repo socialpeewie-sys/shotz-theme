@@ -184,7 +184,7 @@
               "type": "custom-liquid",
               "name": "CLAIMS \"ZERO\"",
               "settings": {
-                "custom_liquid": "<style>\n  .shotz-claims {\n    display: flex;\n    gap: 8px;\n    flex-wrap: nowrap;\n    margin-bottom: 4px;\n  }\n  .shotz-claims span {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    background: #F5F5F5;\n    color: #0D0D0D;\n    border: 2px solid #0D0D0D;\n    padding: 6px 16px;\n    border-radius: 100px;\n    font-size: 13px;\n    font-weight: 800;\n    letter-spacing: 0.3px;\n    font-family: 'Plus Jakarta Sans', sans-serif;\n    text-transform: uppercase;\n    white-space: nowrap;\n  }\n  @media (max-width: 749px) {\n    .shotz-claims {\n      flex-wrap: wrap;\n    }\n    .shotz-claims span {\n      flex: 1 1 calc(50% - 4px);\n    }\n  }\n</style>\n<div class=\"shotz-claims\">\n  <span>Zero Carbo</span>\n  <span>Zero Gordura</span>\n  <span>Zero Lactose</span>\n  <span>Zero Açúcar</span>\n</div>"
+                "custom_liquid": "<style>\n  .shotz-claims {\n    display: flex;\n    gap: 8px;\n    flex-wrap: nowrap;\n    margin-bottom: 4px;\n  }\n  .shotz-claims span {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    background: #F5F5F5;\n    color: #0D0D0D;\n    border: 2px solid #0D0D0D;\n    padding: 6px 16px;\n    border-radius: 100px;\n    font-size: 13px;\n    font-weight: 800;\n    letter-spacing: 0.3px;\n    font-family: 'Plus Jakarta Sans', sans-serif;\n    text-transform: uppercase;\n    white-space: nowrap;\n  }\n  @media (max-width: 749px) {\n    .shotz-claims {\n      flex-wrap: wrap;\n    }\n    .shotz-claims span {\n      flex: 1 1 calc(50% - 4px);\n    }\n  }\n</style>\n<div class=\"shotz-claims\">\n  <span>Zero Gordura</span>\n  <span>Zero Lactose</span>\n  <span>Zero Adição de Açúcares </span>\n</div>"
               },
               "blocks": {}
             },
@@ -547,7 +547,8 @@
             "text_block_4_text": "",
             "text_block_5_enabled": false,
             "text_block_5_title": "",
-            "text_block_5_text": ""
+            "text_block_5_text": "",
+            "reveal_on_scroll": true
           },
           "blocks": {}
         }
@@ -609,7 +610,8 @@
         "button_bg_color": "#1b2030",
         "button_text_color": "#ffffff",
         "padding_top": 80,
-        "padding_bottom": 80
+        "padding_bottom": 80,
+        "reveal_on_scroll": true
       }
     },
     "shotz_problem_grid_mFgaUC": {
@@ -684,7 +686,8 @@
         "card_text_color": "#d8dde4",
         "columns_desktop": 3,
         "padding_top": 80,
-        "padding_bottom": 80
+        "padding_bottom": 80,
+        "reveal_on_scroll": true
       }
     },
     "blocks_GCR7Li": {
@@ -735,7 +738,8 @@
             "background_image_opacity": 20,
             "table_background_color": "#f6f5f3",
             "table_text_color": "#000000",
-            "table_border_radius": 16
+            "table_border_radius": 16,
+            "reveal_on_scroll": true
           },
           "blocks": {}
         }
@@ -791,7 +795,8 @@
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-end": 0,
+            "reveal_on_scroll": true
           },
           "blocks": {
             "accordion_row_8cfHPH": {

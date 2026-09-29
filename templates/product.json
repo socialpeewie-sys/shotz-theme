@@ -35,6 +35,7 @@
             "video_loop": false,
             "hide_variants": false,
             "show_highlights": true,
+            "highlights_max_images": 4,
             "highlight_1_icon": "muscle",
             "highlight_1_title": "23g de proteína",
             "highlight_1_text": "por shot",

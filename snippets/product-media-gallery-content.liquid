@@ -468,6 +468,7 @@
         data-testid="media-gallery-grid"
       >
         {% for media in sorted_media %}
+          {% if show_highlights and forloop.index > block_settings.highlights_max_images %}{% break %}{% endif %}
           <li
             ref="media[]"
             class="{{ product_media_container_class }} product-media-container--{{ media.media_type }} {% unless block_settings.aspect_ratio == 'adapt' %}product-media-container--force-aspect{% endunless %}"

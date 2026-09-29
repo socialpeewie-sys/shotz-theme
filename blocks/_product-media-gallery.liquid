@@ -289,6 +289,16 @@
       "default": false
     },
     {
+      "type": "range",
+      "id": "highlights_max_images",
+      "label": "Imagens no grid (desktop)",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 4,
+      "visible_if": "{{ block.settings.show_highlights }}"
+    },
+    {
       "type": "select",
       "id": "highlight_1_icon",
       "label": "Destaque 1 — ícone",

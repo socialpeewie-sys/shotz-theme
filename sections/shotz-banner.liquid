@@ -7,6 +7,10 @@
 
 {%- liquid
   assign s = section.settings
+  assign rl = ''
+  if s.animate_text
+    assign rl = ' reveal-load'
+  endif
 
   # Lado onde o texto fica → lado onde o degradê é sólido.
   assign side = s.gradient_side
@@ -144,25 +148,28 @@
   <div class="shotz-banner__inner">
     <div class="shotz-banner__content">
       {%- if s.eyebrow != blank -%}
-        <p class="shotz-banner__eyebrow">{{ s.eyebrow | escape }}</p>
+        <p class="shotz-banner__eyebrow{{ rl }}">{{ s.eyebrow | escape }}</p>
       {%- endif -%}
 
       {%- if s.heading != blank -%}
-        <h2 class="shotz-banner__heading">{{ s.heading }}</h2>
+        <h2 class="shotz-banner__heading{{ rl }}" style="--reveal-delay: 80ms;">{{ s.heading }}</h2>
       {%- endif -%}
 
       {%- if s.subheading != blank -%}
-        <p class="shotz-banner__subheading">{{ s.subheading | escape }}</p>
+        <p class="shotz-banner__subheading{{ rl }}" style="--reveal-delay: 160ms;">{{ s.subheading | escape }}</p>
       {%- endif -%}
 
       {%- if s.text != blank -%}
-        <div class="shotz-banner__text">{{ s.text }}</div>
+        <div class="shotz-banner__text{{ rl }}" style="--reveal-delay: 240ms;">{{ s.text }}</div>
       {%- endif -%}
 
       {%- if section.blocks.size > 0 -%}
         <ul class="shotz-banner__badges" role="list">
           {%- for block in section.blocks -%}
-            <li class="shotz-banner__badge" {{ block.shopify_attributes }}>
+            <li
+              class="shotz-banner__badge{% if rl != blank %} reveal-load reveal--pop{% endif %}"
+              style="--reveal-delay: {{ forloop.index0 | times: 80 | plus: 320 }}ms;"
+              {{ block.shopify_attributes }}>
               {%- if block.settings.icon_image != blank -%}
                 {{
                   block.settings.icon_image
@@ -778,6 +785,17 @@
       "id": "button_accent",
       "label": "Círculo da seta",
       "default": "#FFB627"
+    },
+    {
+      "type": "header",
+      "content": "Animação"
+    },
+    {
+      "type": "checkbox",
+      "id": "animate_text",
+      "label": "Animar texto ao carregar",
+      "info": "Título, textos e selos aparecem suavemente de baixo para cima quando a página abre.",
+      "default": true
     }
   ],
   "blocks": [

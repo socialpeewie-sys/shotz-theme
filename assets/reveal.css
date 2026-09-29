@@ -7,7 +7,10 @@
  *   [data-reveal-stagger]   → container cujos filhos .reveal entram em sequência (~80ms)
  *   style="--reveal-delay: 120ms" → atraso manual
  *
- * O estado oculto só existe quando o reveal.js roda (classe .js-reveal no <html>)
+ *   .reveal-load            → mesma entrada, mas ao carregar a página (conteúdo acima da dobra, ex.: banner)
+ *                             Animação CSS pura: termina visível mesmo sem JS.
+ *
+ * O estado oculto do .reveal só existe quando o reveal.js roda (classe .js-reveal no <html>)
  * e o usuário não pediu movimento reduzido. Sem JS, tudo fica visível.
  */
 :root {
@@ -32,5 +35,36 @@
       opacity var(--reveal-duration) var(--reveal-ease),
       transform var(--reveal-duration) var(--reveal-ease);
     transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* Entrada ao carregar (acima da dobra) — não depende de JS */
+  .reveal-load {
+    animation: reveal-fade-up var(--reveal-duration) var(--reveal-ease) var(--reveal-delay, 0ms) both;
+  }
+
+  .reveal-load.reveal--pop {
+    animation-name: reveal-pop;
+  }
+}
+
+@keyframes reveal-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes reveal-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }

@@ -82,3 +82,118 @@
     max-width: 120px;
   }
 }
+
+/* =============================================================
+   HEADER — barra em pílula (fundo branco, cantos arredondados)
+   Desktop: logo + menu numa pílula à esquerda, ações numa pílula à direita.
+   Mobile: logo + hambúrguer numa pílula à esquerda, ações à direita.
+   ============================================================= */
+.header__row--top .header__column--left,
+.header__row--top .header__column--right {
+  --shotz-pill-bg: #ffffff;
+}
+
+/* --- Desktop --- */
+@media screen and (min-width: 750px) {
+  #header-component:not([data-menu-style='drawer']) .header__row--top .header__columns {
+    padding-block: 16px;
+  }
+
+  #header-component:not([data-menu-style='drawer']) .header__row--top .header__column--left,
+  #header-component:not([data-menu-style='drawer']) .header__row--top .header__column--right {
+    background: var(--shotz-pill-bg);
+    border-radius: 999px;
+    min-height: 56px;
+    width: max-content;
+    max-width: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+
+  #header-component:not([data-menu-style='drawer']) .header__row--top .header__column--left {
+    justify-self: start;
+    gap: 28px;
+    padding: 8px 32px 8px 28px;
+  }
+
+  #header-component:not([data-menu-style='drawer']) .header__row--top .header__column--right {
+    justify-self: end;
+    gap: 12px;
+    padding: 6px 16px;
+  }
+
+  #header-component:not([data-menu-style='drawer']) .header__row--top .header-logo {
+    justify-content: flex-start;
+  }
+
+  #header-component:not([data-menu-style='drawer']) .header__row--top .menu-list__link {
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* --- Mobile (e desktop quando o menu vira gaveta) --- */
+@media screen and (max-width: 749px) {
+  #header-component .header__row--top .header__columns {
+    --header-template-columns: auto auto 1fr auto auto;
+    grid-template-areas: 'logo menu . search actions';
+    isolation: isolate;
+    padding-block: 12px;
+  }
+
+  #header-component .header__row--top .header__columns::before,
+  #header-component .header__row--top .header__columns::after {
+    content: '';
+    grid-row: 1;
+    align-self: stretch;
+    z-index: -1;
+    background: #ffffff;
+    border-radius: 999px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+
+  #header-component .header__row--top .header__columns::before { grid-column: 1 / 3; }
+  #header-component .header__row--top .header__columns::after { grid-column: 4 / 6; }
+
+  #header-component .header__row--top .header-logo {
+    grid-area: logo;
+    justify-content: flex-start;
+    padding-inline: 20px 4px;
+  }
+
+  #header-component .header__row--top header-drawer { grid-area: menu; }
+  #header-component .header__row--top .header__icon--menu { padding-inline: 12px 18px; }
+  #header-component .header__row--top .search-action { grid-area: search; padding-inline-start: 6px; }
+  #header-component .header__row--top header-actions { grid-area: actions; padding-inline-end: 6px; }
+}
+
+#header-component[data-menu-style='drawer'] .header__row--top .header__columns {
+  --header-template-columns: auto auto 1fr auto auto;
+  grid-template-areas: 'logo menu . search actions';
+  isolation: isolate;
+  padding-block: 12px;
+}
+
+#header-component[data-menu-style='drawer'] .header__row--top .header__columns::before,
+#header-component[data-menu-style='drawer'] .header__row--top .header__columns::after {
+  content: '';
+  grid-row: 1;
+  align-self: stretch;
+  z-index: -1;
+  background: #ffffff;
+  border-radius: 999px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+#header-component[data-menu-style='drawer'] .header__row--top .header__columns::before { grid-column: 1 / 3; }
+#header-component[data-menu-style='drawer'] .header__row--top .header__columns::after { grid-column: 4 / 6; }
+
+#header-component[data-menu-style='drawer'] .header__row--top .header-logo {
+  grid-area: logo;
+  justify-content: flex-start;
+  padding-inline: 20px 4px;
+}
+
+#header-component[data-menu-style='drawer'] .header__row--top header-drawer { grid-area: menu; }
+#header-component[data-menu-style='drawer'] .header__row--top .header__icon--menu { padding-inline: 12px 18px; }
+#header-component[data-menu-style='drawer'] .header__row--top .search-action { grid-area: search; padding-inline-start: 6px; }
+#header-component[data-menu-style='drawer'] .header__row--top header-actions { grid-area: actions; padding-inline-end: 6px; }

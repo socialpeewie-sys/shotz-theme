@@ -42,9 +42,9 @@
             "highlight_2_icon": "flame",
             "highlight_2_title": "95 kcal",
             "highlight_2_text": "por shot",
-            "highlight_background": "#ECECEC",
+            "highlight_background": "#ececec",
             "highlight_icon_background": "#000000",
-            "highlight_icon_color": "#ECECEC",
+            "highlight_icon_color": "#ececec",
             "padding-block-start": 22,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -571,6 +571,53 @@
       "name": "Texto e imagem divididos",
       "settings": {}
     },
+    "shotz_benefits_bgxU7C": {
+      "type": "shotz-benefits",
+      "blocks": {
+        "card_RNd3Tq": {
+          "type": "card",
+          "settings": {
+            "icon": "",
+            "title": "23G DE PROTEÍNA",
+            "text": ""
+          }
+        },
+        "card_YJTUk3": {
+          "type": "card",
+          "settings": {
+            "icon": "",
+            "title": "100ML. Dois goles. 5 segundos",
+            "text": ""
+          }
+        },
+        "card_yMj4EK": {
+          "type": "card",
+          "settings": {
+            "icon": "",
+            "title": "Fácil e saboroso",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_RNd3Tq",
+        "card_YJTUk3",
+        "card_yMj4EK"
+      ],
+      "name": "Shotz – Benefits",
+      "settings": {
+        "eyebrow": "Por que SHOTZ é a escolha certa",
+        "heading": "Um jeito mais simples e fácil de tomar sua proteína",
+        "subheading": "",
+        "bg_image": "shopify://shop_images/hf_20260915_172153_6cb4e6c0-1c6a-4715-b0c3-fccefc2fd427.png",
+        "bg_image_mobile": "shopify://shop_images/hf_20260915_172153_6cb4e6c0-1c6a-4715-b0c3-fccefc2fd427.png",
+        "bg_position": "center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 50,
+        "min_height": 0,
+        "background_color": "#0D0D0D"
+      }
+    },
     "proteina_stats_KecjAk": {
       "type": "proteina-stats",
       "blocks": {
@@ -604,13 +651,14 @@
         "stat_WEaiLW",
         "stat_BTiEFK"
       ],
+      "disabled": true,
       "name": "Proteína Stats",
       "settings": {
         "image": "shopify://shop_images/teste_pure_genius.webp",
         "image_position": "right",
         "heading": "UM JEITO MAIS SIMPLES E FÁCIL DE TOMAR SUA PROTEÍNA",
         "paragraph": "",
-        "background_color": "#F0EFEB",
+        "background_color": "#f0efeb",
         "heading_color": "#000000",
         "paragraph_color": "#696565",
         "accent_color": "#000000",
@@ -690,10 +738,10 @@
         "heading_part_1": "Proteína no dia a dia",
         "heading_part_2": "­­­­ne­­­m sempre é simples.",
         "heading_tag": "h2",
-        "accent_color": "#4a90b8",
+        "accent_color": "#000000",
         "heading_color": "#0d0d0d",
-        "background_color": "#e2e7e9",
-        "card_background": "#16202e",
+        "background_color": "#F0EFEB",
+        "card_background": "#000000",
         "card_text_color": "#d8dde4",
         "columns_desktop": 3,
         "padding_top": 80,
@@ -1058,6 +1106,7 @@
   "order": [
     "main",
     "blocks_tBwT3X",
+    "shotz_benefits_bgxU7C",
     "proteina_stats_KecjAk",
     "shotz_problem_grid_mFgaUC",
     "blocks_GCR7Li",

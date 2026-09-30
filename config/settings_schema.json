@@ -1379,6 +1379,17 @@
           }
         ],
         "default": "narrow"
+      },
+      {
+        "type": "range",
+        "id": "shotz_content_width",
+        "label": "Largura do conteúdo (seções Shotz)",
+        "info": "Largura máxima usada por todas as seções personalizadas da Shotz em telas grandes.",
+        "min": 1000,
+        "max": 1800,
+        "step": 20,
+        "unit": "px",
+        "default": 1400
       }
     ]
   },

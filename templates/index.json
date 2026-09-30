@@ -290,7 +290,7 @@
         "min_height_mobile": 380,
         "content_max_width": 760,
         "grid_gap_top": 28,
-        "max_width": 1200,
+        "max_width": 1400,
         "padding_top": 140,
         "padding_bottom": 40
       }
@@ -707,7 +707,7 @@
         "btn_secondary_bg_hover": "",
         "btn_secondary_text_hover": "",
         "image_position": "left",
-        "max_width": 1280,
+        "max_width": 1400,
         "section_padding": 80,
         "heading_size": 44,
         "background_color": "#ffffff",

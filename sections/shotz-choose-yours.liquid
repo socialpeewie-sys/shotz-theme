@@ -8,6 +8,11 @@
     background-color: var(--cy-bg);
     padding: var(--cy-padding-block) var(--cy-padding-inline);
   }
+  @media screen and (max-width: 749px) {
+    .shotz-choose-{{ section.id }} {
+      padding-inline: min(var(--cy-padding-inline), 16px);
+    }
+  }
 {% endstyle %}
 
 {%- liquid
@@ -211,6 +216,17 @@
 
     .shotz-choose__heading {
       font-size: 28px;
+    }
+    .shotz-choose__footer {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 14px;
+      padding: 18px 20px 20px;
+    }
+    .shotz-choose__pill {
+      text-align: center;
+      white-space: normal;
+      padding: 12px 18px;
     }
   }
 {% endstylesheet %}

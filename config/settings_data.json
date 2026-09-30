@@ -43,7 +43,8 @@
     "type_font_h6": "subheading",
     "type_size_h6": "12",
     "type_line_height_h6": "display-loose",
-    "page_width": "normal",
+    "page_width": "wide",
+    "shotz_content_width": 1500,
     "page_transition_enabled": false,
     "transition_to_main_product": true,
     "add_to_cart_animation": false,
@@ -179,7 +180,7 @@
     "color_schemes": {
       "scheme-1": {
         "settings": {
-          "background": "#F0EFEB",
+          "background": "#f0efeb",
           "foreground_heading": "#000000",
           "foreground": "#000000",
           "primary": "#000000",

@@ -1,0 +1,614 @@
+{%- liquid
+  assign s = section.settings
+  assign rv = ''
+  assign rv_stagger = ''
+  if s.reveal_on_scroll and section.index != 1
+    assign rv = ' reveal'
+    assign rv_stagger = ' data-reveal-stagger'
+  endif
+-%}
+
+{% style %}
+  #shotz-pg-{{ section.id }} {
+    --pg-bg: {{ s.background_color }};
+    --pg-media-bg: {{ s.media_bg }};
+    --pg-heading: {{ s.heading_color }};
+    --pg-text: {{ s.text_color }};
+    --pg-card-bg: {{ s.card_bg }};
+    --pg-card-divider: {{ s.card_divider }};
+    --pg-button-bg: {{ s.button_bg }};
+    --pg-button-text: {{ s.button_text }};
+    --pg-heading-size: {{ s.heading_size_mobile }}px;
+    --pg-button-gap: {{ s.button_gap_mobile }}px;
+    background-color: var(--pg-bg);
+    padding-top: {{ s.padding_top_mobile }}px;
+    padding-bottom: {{ s.padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 990px) {
+    #shotz-pg-{{ section.id }} {
+      --pg-heading-size: {{ s.heading_size }}px;
+      --pg-button-gap: {{ s.button_gap }}px;
+      padding-top: {{ s.padding_top }}px;
+      padding-bottom: {{ s.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+
+<div id="shotz-pg-{{ section.id }}" class="shotz-pg" {{ section.shopify_attributes }}>
+  <div class="shotz-pg__inner{% if s.image_position == 'left' %} shotz-pg__inner--media-left{% endif %}">
+    <div class="shotz-pg__media{{ rv }}">
+      {%- if s.image != blank -%}
+        {%- if s.image_mobile != blank -%}
+          {{
+            s.image_mobile
+            | image_url: width: 1200
+            | image_tag:
+              class: 'shotz-pg__img shotz-pg__img--mobile',
+              loading: 'lazy',
+              sizes: '100vw',
+              widths: '400, 600, 800, 1000, 1200',
+              alt: s.image_mobile.alt
+          }}
+          {{
+            s.image
+            | image_url: width: 1600
+            | image_tag:
+              class: 'shotz-pg__img shotz-pg__img--desktop',
+              loading: 'lazy',
+              sizes: '(min-width: 990px) 50vw, 100vw',
+              widths: '600, 800, 1000, 1200, 1600',
+              alt: s.image.alt
+          }}
+        {%- else -%}
+          {{
+            s.image
+            | image_url: width: 1600
+            | image_tag:
+              class: 'shotz-pg__img',
+              loading: 'lazy',
+              sizes: '(min-width: 990px) 50vw, 100vw',
+              widths: '400, 600, 800, 1000, 1200, 1600',
+              alt: s.image.alt
+          }}
+        {%- endif -%}
+      {%- elsif s.image_mobile != blank -%}
+        {{
+          s.image_mobile
+          | image_url: width: 1600
+          | image_tag:
+            class: 'shotz-pg__img',
+            loading: 'lazy',
+            sizes: '(min-width: 990px) 50vw, 100vw',
+            widths: '400, 600, 800, 1000, 1200, 1600',
+            alt: s.image_mobile.alt
+        }}
+      {%- else -%}
+        <div class="shotz-pg__placeholder">
+          <span>[Foto do Shotz em destaque]</span>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="shotz-pg__content"{{ rv_stagger }}>
+      {%- if s.heading != blank -%}
+        <h2 class="shotz-pg__heading{{ rv }}">{{ s.heading }}</h2>
+      {%- endif -%}
+
+      {%- if s.subheading != blank -%}
+        <div class="shotz-pg__subheading{{ rv }}">{{ s.subheading }}</div>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="shotz-pg__stats{{ rv }}" role="list">
+          {%- for block in section.blocks -%}
+            <li class="shotz-pg__stat" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != 'none' -%}
+                <span class="shotz-pg__stat-icon">
+                  {%- render 'shotz-numeros-icon', icon: block.settings.icon -%}
+                </span>
+              {%- endif -%}
+              {%- if block.settings.value != blank -%}
+                <span class="shotz-pg__stat-value">{{ block.settings.value }}</span>
+              {%- endif -%}
+              {%- if block.settings.label != blank -%}
+                <span class="shotz-pg__stat-label">{{ block.settings.label }}</span>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if s.button_label != blank -%}
+        <a href="{{ s.button_link | default: '#' }}" class="shotz-pg__button{{ rv }}">
+          {{- s.button_label | escape -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .shotz-pg__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .shotz-pg__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 6 / 5;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: var(--pg-media-bg);
+  }
+
+  .shotz-pg__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .shotz-pg__img--desktop {
+    display: none;
+  }
+
+  .shotz-pg__placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .shotz-pg__placeholder span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32%;
+    aspect-ratio: 9 / 16;
+    max-height: 80%;
+    padding: 12px;
+    border: 2px dashed rgb(0 0 0 / 0.35);
+    border-radius: 24px;
+    font-size: 13px;
+    line-height: 1.4;
+    text-align: center;
+    color: rgb(0 0 0 / 0.55);
+  }
+
+  .shotz-pg__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .shotz-pg__heading {
+    margin: 0;
+    font-family: var(--font-heading--family), 'Plus Jakarta Sans', sans-serif;
+    font-size: var(--pg-heading-size);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--pg-heading);
+  }
+
+  .shotz-pg__subheading {
+    margin-top: 10px;
+    font-family: var(--font-body--family), 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--pg-text);
+  }
+
+  .shotz-pg__subheading p {
+    margin: 0;
+  }
+
+  .shotz-pg__stats {
+    display: flex;
+    margin: 20px 0 0;
+    padding: 16px 0;
+    list-style: none;
+    background-color: var(--pg-card-bg);
+    border-radius: 16px;
+  }
+
+  .shotz-pg__stat {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    text-align: center;
+    color: var(--pg-heading);
+  }
+
+  .shotz-pg__stat + .shotz-pg__stat {
+    border-left: 1px solid var(--pg-card-divider);
+  }
+
+  .shotz-pg__stat-icon {
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+  }
+
+  .shotz-pg__stat-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .shotz-pg__stat-value {
+    font-family: var(--font-heading--family), 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(24px, 8vw, 34px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+
+  .shotz-pg__stat-label {
+    font-size: 12px;
+    line-height: 1.3;
+    color: var(--pg-text);
+  }
+
+  .shotz-pg__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--pg-button-gap);
+    min-height: 52px;
+    padding: 14px 32px;
+    border-radius: 12px;
+    background-color: var(--pg-button-bg);
+    color: var(--pg-button-text);
+    font-family: var(--font-heading--family), 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .shotz-pg__button:hover {
+    background-color: color-mix(in srgb, var(--pg-button-bg) 85%, #fff);
+  }
+
+  .shotz-pg__button:focus-visible {
+    outline: 2px solid var(--pg-button-bg);
+    outline-offset: 3px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .shotz-pg__inner {
+      flex-direction: row-reverse;
+      align-items: center;
+      gap: 64px;
+      padding: 0 32px;
+    }
+
+    .shotz-pg__inner--media-left {
+      flex-direction: row;
+    }
+
+    .shotz-pg__media,
+    .shotz-pg__content {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    .shotz-pg__media {
+      aspect-ratio: 23 / 20;
+      border-radius: 24px;
+    }
+
+    .shotz-pg__img--mobile {
+      display: none;
+    }
+
+    .shotz-pg__img--desktop {
+      display: block;
+    }
+
+    .shotz-pg__placeholder span {
+      width: 34%;
+    }
+
+    .shotz-pg__subheading {
+      font-size: 17px;
+    }
+
+    .shotz-pg__stats {
+      margin-top: 24px;
+      padding: 20px 0;
+      max-width: 520px;
+    }
+
+    .shotz-pg__stat-value {
+      font-size: 40px;
+    }
+
+    .shotz-pg__stat-label {
+      font-size: 13px;
+    }
+
+    .shotz-pg__button {
+      align-self: flex-start;
+      min-width: 240px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Proteína em dois goles",
+  "tag": "section",
+  "class": "section-shotz-proteina-goles",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Imagem"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagem (desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Imagem (mobile)",
+      "info": "Opcional. Se vazio, usa a imagem do desktop."
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Posição da imagem no desktop",
+      "options": [
+        { "value": "right", "label": "Direita" },
+        { "value": "left", "label": "Esquerda" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "header",
+      "content": "Textos"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "Proteína em dois goles."
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subtítulo",
+      "default": "<p>Fácil, saboroso e sem açúcar adicionado.</p>"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Tamanho do título (mobile)",
+      "min": 20,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Tamanho do título (desktop)",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Botão"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto do botão",
+      "default": "Quero experimentar"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link do botão"
+    },
+    {
+      "type": "range",
+      "id": "button_gap_mobile",
+      "label": "Espaço acima do botão (mobile)",
+      "min": 8,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "button_gap",
+      "label": "Espaço acima do botão (desktop)",
+      "min": 8,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Cores"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Fundo da seção",
+      "default": "#F2F0EB"
+    },
+    {
+      "type": "color",
+      "id": "media_bg",
+      "label": "Fundo da imagem",
+      "default": "#F5E39E"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Título e números",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Textos secundários",
+      "default": "#555555"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Fundo do card de números",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_divider",
+      "label": "Divisórias do card",
+      "default": "#E6E3DC"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Fundo do botão",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Texto do botão",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Espaçamento"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Espaço acima (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Espaço abaixo (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaço acima (desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaço abaixo (desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal_on_scroll",
+      "label": "Animar ao rolar a página",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Número",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícone",
+          "options": [
+            { "value": "none", "label": "Nenhum" },
+            { "value": "dumbbell", "label": "Haltere" },
+            { "value": "droplet", "label": "Gota" },
+            { "value": "ban", "label": "Proibido" },
+            { "value": "bolt", "label": "Raio" },
+            { "value": "flame", "label": "Chama" },
+            { "value": "bottle", "label": "Garrafa" },
+            { "value": "leaf", "label": "Folha" },
+            { "value": "clock", "label": "Relógio" },
+            { "value": "muscle", "label": "Músculo" }
+          ],
+          "default": "dumbbell"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Número",
+          "default": "23g"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Legenda",
+          "default": "de proteína"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Proteína em dois goles",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": { "icon": "dumbbell", "value": "23g", "label": "de proteína" }
+        },
+        {
+          "type": "stat",
+          "settings": { "icon": "droplet", "value": "100ml", "label": "um shot" }
+        },
+        {
+          "type": "stat",
+          "settings": { "icon": "ban", "value": "0g", "label": "açúcar adic." }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

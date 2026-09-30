@@ -571,6 +571,67 @@
       "name": "Texto e imagem divididos",
       "settings": {}
     },
+    "shotz_benefits_pdp_xh4QbY": {
+      "type": "shotz-benefits-pdp",
+      "blocks": {
+        "stat_JhtdpV": {
+          "type": "stat",
+          "settings": {
+            "icon": "dumbbell",
+            "value": "23g",
+            "label": "de proteína"
+          }
+        },
+        "stat_hcmGCC": {
+          "type": "stat",
+          "settings": {
+            "icon": "droplet",
+            "value": "100ml",
+            "label": "um shot"
+          }
+        },
+        "stat_h8nLJG": {
+          "type": "stat",
+          "settings": {
+            "icon": "flame",
+            "value": "0.8g",
+            "label": "carboidratos"
+          }
+        }
+      },
+      "block_order": [
+        "stat_JhtdpV",
+        "stat_hcmGCC",
+        "stat_h8nLJG"
+      ],
+      "name": "shotz-benefits-pdp",
+      "settings": {
+        "image": "shopify://shop_images/color-graded.png",
+        "image_mobile": "shopify://shop_images/pomelli_photoshoot_image_1_1_0525_3.jpg",
+        "image_position": "right",
+        "heading": "Proteína em dois goles.",
+        "subheading": "<p>Fácil, saboroso e sem açúcar adicionado.</p>",
+        "heading_size_mobile": 30,
+        "heading_size": 48,
+        "button_label": "Quero experimentar",
+        "button_link": "",
+        "button_gap_mobile": 24,
+        "button_gap": 24,
+        "background_color": "#F2F0EB",
+        "media_bg": "#F5E39E",
+        "heading_color": "#111111",
+        "text_color": "#555555",
+        "card_bg": "#FFFFFF",
+        "card_divider": "#E6E3DC",
+        "button_bg": "#111111",
+        "button_text": "#FFFFFF",
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 32,
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "reveal_on_scroll": true
+      }
+    },
     "shotz_benefits_bgxU7C": {
       "type": "shotz-benefits",
       "blocks": {
@@ -615,7 +676,7 @@
         "overlay_color": "#000000",
         "overlay_opacity": 50,
         "min_height": 0,
-        "background_color": "#0D0D0D"
+        "background_color": "#0d0d0d"
       }
     },
     "proteina_stats_KecjAk": {
@@ -740,7 +801,7 @@
         "heading_tag": "h2",
         "accent_color": "#000000",
         "heading_color": "#0d0d0d",
-        "background_color": "#F0EFEB",
+        "background_color": "#f0efeb",
         "card_background": "#000000",
         "card_text_color": "#d8dde4",
         "columns_desktop": 3,
@@ -1106,6 +1167,7 @@
   "order": [
     "main",
     "blocks_tBwT3X",
+    "shotz_benefits_pdp_xh4QbY",
     "shotz_benefits_bgxU7C",
     "proteina_stats_KecjAk",
     "shotz_problem_grid_mFgaUC",

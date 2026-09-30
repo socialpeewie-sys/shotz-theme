@@ -305,6 +305,7 @@
       "options": [
         { "value": "none", "label": "Nenhum" },
         { "value": "muscle", "label": "Músculo" },
+        { "value": "wheat", "label": "Trigo" },
         { "value": "flame", "label": "Chama" },
         { "value": "bolt", "label": "Raio" },
         { "value": "leaf", "label": "Folha" },
@@ -337,6 +338,7 @@
       "options": [
         { "value": "none", "label": "Nenhum" },
         { "value": "muscle", "label": "Músculo" },
+        { "value": "wheat", "label": "Trigo" },
         { "value": "flame", "label": "Chama" },
         { "value": "bolt", "label": "Raio" },
         { "value": "leaf", "label": "Folha" },
@@ -359,6 +361,39 @@
       "type": "text",
       "id": "highlight_2_text",
       "label": "Destaque 2 — texto",
+      "default": "por shot",
+      "visible_if": "{{ block.settings.show_highlights }}"
+    },
+    {
+      "type": "select",
+      "id": "highlight_3_icon",
+      "label": "Destaque 3 — ícone",
+      "options": [
+        { "value": "none", "label": "Nenhum" },
+        { "value": "muscle", "label": "Músculo" },
+        { "value": "wheat", "label": "Trigo" },
+        { "value": "flame", "label": "Chama" },
+        { "value": "bolt", "label": "Raio" },
+        { "value": "leaf", "label": "Folha" },
+        { "value": "droplet", "label": "Gota" },
+        { "value": "bottle", "label": "Garrafa" },
+        { "value": "clock", "label": "Relógio" },
+        { "value": "ban", "label": "Proibido" }
+      ],
+      "default": "wheat",
+      "visible_if": "{{ block.settings.show_highlights }}"
+    },
+    {
+      "type": "text",
+      "id": "highlight_3_title",
+      "label": "Destaque 3 — título",
+      "default": "0.8g de carboidrato",
+      "visible_if": "{{ block.settings.show_highlights }}"
+    },
+    {
+      "type": "text",
+      "id": "highlight_3_text",
+      "label": "Destaque 3 — texto",
       "default": "por shot",
       "visible_if": "{{ block.settings.show_highlights }}"
     },

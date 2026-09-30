@@ -58,7 +58,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 6px;
     padding: 16px 8px;
     text-align: center;
@@ -86,9 +86,10 @@
 
   .media-gallery__highlight-title {
     margin: 0;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     line-height: 1.2;
+    overflow-wrap: anywhere;
   }
 
   .media-gallery__highlight-text {
@@ -139,6 +140,10 @@
 
     media-gallery.media-gallery--grid .media-gallery__highlights--mobile {
       display: none;
+    }
+
+    .media-gallery__highlights > .media-gallery__highlight {
+      justify-content: center;
     }
 
     .media-gallery__highlight-title {

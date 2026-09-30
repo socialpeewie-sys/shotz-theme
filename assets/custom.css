@@ -93,6 +93,13 @@
   --shotz-pill-bg: #ffffff;
 }
 
+/* Sem barra de fundo atrás das pílulas (só as pílulas aparecem) */
+#header-component .header__underlay-closed {
+  background: none;
+  box-shadow: none;
+  border: 0;
+}
+
 /* --- Desktop --- */
 @media screen and (min-width: 750px) {
   #header-component:not([data-menu-style='drawer']) .header__row--top .header__columns {
@@ -160,7 +167,7 @@
     padding-inline: 20px 4px;
   }
 
-  #header-component .header__row--top header-drawer { grid-area: menu; }
+  #header-component .header__row--top .header__drawer { grid-area: menu; }
   #header-component .header__row--top .header__icon--menu { padding-inline: 12px 18px; }
   #header-component .header__row--top .search-action { grid-area: search; padding-inline-start: 6px; }
   #header-component .header__row--top header-actions { grid-area: actions; padding-inline-end: 6px; }
@@ -193,7 +200,7 @@
   padding-inline: 20px 4px;
 }
 
-#header-component[data-menu-style='drawer'] .header__row--top header-drawer { grid-area: menu; }
+#header-component[data-menu-style='drawer'] .header__row--top .header__drawer { grid-area: menu; }
 #header-component[data-menu-style='drawer'] .header__row--top .header__icon--menu { padding-inline: 12px 18px; }
 #header-component[data-menu-style='drawer'] .header__row--top .search-action { grid-area: search; padding-inline-start: 6px; }
 #header-component[data-menu-style='drawer'] .header__row--top header-actions { grid-area: actions; padding-inline-end: 6px; }

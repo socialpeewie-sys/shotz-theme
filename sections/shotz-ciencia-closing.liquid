@@ -2,9 +2,12 @@
   Imagem de fechamento (foto lifestyle, corte cover). Pode ser ocultada pelo editor.
 {% enddoc %}
 
+{{ 'shotz-ciencia.css' | asset_url | stylesheet_tag }}
+
 {% if section.settings.enabled %}
   <div class="sci-closing-image">
     {% if section.settings.closing_image %}
+      {%- assign image_alt = section.settings.closing_image.alt | default: 'Shotz — lifestyle' -%}
       {{
         section.settings.closing_image
         | image_url: width: 1400
@@ -12,7 +15,7 @@
           loading: 'lazy',
           widths: '620, 900, 1240, 1400',
           sizes: '(min-width: 620px) 620px, 100vw',
-          alt: 'Shotz — lifestyle'
+          alt: image_alt
       }}
     {% else %}
       <div class="sci-full-placeholder" aria-hidden="true">
@@ -25,6 +28,7 @@
 {% schema %}
 {
   "name": "A ciência — Fechamento",
+  "class": "sci-column",
   "settings": [
     {
       "type": "checkbox",

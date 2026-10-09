@@ -1,0 +1,38 @@
+{
+  "layout": "shotz-ciencia",
+  "sections": {
+    "hero": {
+      "type": "shotz-ciencia-hero",
+      "settings": {}
+    },
+    "diferencial": {
+      "type": "shotz-ciencia-diferencial",
+      "blocks": {
+        "bullet_1": { "type": "bullet", "settings": { "icon": "⚡", "text": "Proteína completa" } },
+        "bullet_2": { "type": "bullet", "settings": { "icon": "⚡", "text": "Benefícios do colágeno" } },
+        "bullet_3": { "type": "bullet", "settings": { "icon": "⚡", "text": "12g de proteína em 100ml" } },
+        "bullet_4": { "type": "bullet", "settings": { "icon": "⚡", "text": "Só 60kcal" } },
+        "bullet_5": { "type": "bullet", "settings": { "icon": "⚡", "text": "Pronto pra tomar em 3 segundos" } }
+      },
+      "block_order": ["bullet_1", "bullet_2", "bullet_3", "bullet_4", "bullet_5"],
+      "settings": {}
+    },
+    "packshot": {
+      "type": "shotz-ciencia-packshot",
+      "settings": {}
+    },
+    "laudo": {
+      "type": "shotz-ciencia-laudo",
+      "settings": {}
+    },
+    "closing": {
+      "type": "shotz-ciencia-closing",
+      "settings": {}
+    },
+    "footer": {
+      "type": "shotz-ciencia-footer",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "diferencial", "packshot", "laudo", "closing", "footer"]
+}

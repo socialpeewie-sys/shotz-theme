@@ -2,25 +2,36 @@
   Prova / laudo: "A gente não pede confiança. A gente mostra o laudo."
 {% enddoc %}
 
+{{ 'shotz-ciencia.css' | asset_url | stylesheet_tag }}
+
 <section class="sci-proof" id="laudo">
-  <h2>{{ section.settings.headline }}</h2>
+  {% if section.settings.headline != blank %}
+    <h2>{{ section.settings.headline }}</h2>
+  {% endif %}
 
-  <p class="sci-lead">Escrever "proteína completa" no rótulo é fácil. Provar é que é difícil.</p>
-  <p>Nosso perfil de aminoácidos foi medido em laboratório, não estimado na planilha.</p>
-  <p class="sci-fine">
-    E o que a ciência não promete, a gente também não promete: proteína não substitui treino nem sono. Ela só fecha a conta quando o resto já está de pé.
-  </p>
+  {% if section.settings.lead != blank %}
+    <p class="sci-lead">{{ section.settings.lead }}</p>
+  {% endif %}
+  {% if section.settings.text != blank %}
+    <p>{{ section.settings.text }}</p>
+  {% endif %}
+  {% if section.settings.fine_print != blank %}
+    <p class="sci-fine">{{ section.settings.fine_print }}</p>
+  {% endif %}
 
-  <div class="sci-btn-row">
-    <a class="sci-btn" href="{{ section.settings.laudo_link | default: '#laudo' }}">
-      {{ section.settings.cta_label }}
-    </a>
-  </div>
+  {% if section.settings.cta_label != blank %}
+    <div class="sci-btn-row">
+      <a class="sci-btn" href="{{ section.settings.laudo_link | default: '#laudo' }}">
+        {{ section.settings.cta_label }}
+      </a>
+    </div>
+  {% endif %}
 </section>
 
 {% schema %}
 {
   "name": "A ciência — Laudo",
+  "class": "sci-column",
   "settings": [
     {
       "type": "html",
@@ -30,9 +41,28 @@
       "default": "A gente não pede confiança.<br>A gente mostra o <strong>laudo</strong>."
     },
     {
+      "type": "inline_richtext",
+      "id": "lead",
+      "label": "Parágrafo 1",
+      "default": "Escrever \"proteína completa\" no rótulo é fácil. Provar é que é difícil."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "Parágrafo 2",
+      "default": "Nosso perfil de aminoácidos foi medido em laboratório, não estimado na planilha."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "fine_print",
+      "label": "Parágrafo 3 (texto suave)",
+      "default": "E o que a ciência não promete, a gente também não promete: proteína não substitui treino nem sono. Ela só fecha a conta quando o resto já está de pé."
+    },
+    {
       "type": "text",
       "id": "cta_label",
       "label": "Texto do botão",
+      "info": "Deixe vazio para ocultar o botão.",
       "default": "VER O LAUDO →"
     },
     {

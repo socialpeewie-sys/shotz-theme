@@ -2,41 +2,69 @@
   Hero da landing "A ciência": tese "seu corpo usa aminoácidos, não proteína".
 {% enddoc %}
 
+{{ 'shotz-ciencia.css' | asset_url | stylesheet_tag }}
+
 <section class="sci-hero">
   {% if section.settings.logo_image %}
     <div class="sci-logo">
-      {{ section.settings.logo_image | image_url: width: 400 | image_tag: loading: 'eager', alt: 'SHOTZ' }}
+      {{ section.settings.logo_image | image_url: width: 400 | image_tag: loading: 'eager', alt: section.settings.logo_text }}
     </div>
-  {% else %}
-    <div class="sci-logo">SHOTZ<sup>®</sup></div>
+  {% elsif section.settings.logo_text != blank %}
+    <div class="sci-logo">
+      {{- section.settings.logo_text -}}
+      {%- if section.settings.show_registered -%}<sup>®</sup>{%- endif -%}
+    </div>
   {% endif %}
 
-  <div class="sci-eyebrow">{{ section.settings.eyebrow }}</div>
+  {% if section.settings.eyebrow != blank %}
+    <div class="sci-eyebrow">{{ section.settings.eyebrow }}</div>
+  {% endif %}
 
-  <h1>{{ section.settings.headline }}</h1>
+  {% if section.settings.headline != blank %}
+    <h1>{{ section.settings.headline }}</h1>
+  {% endif %}
 
-  <p class="sci-lead">
-    Toda proteína que você toma é desmontada em peças. São essas peças que viram músculo, pele, cabelo e unha.
-  </p>
-  <p class="sci-emphasis">São 9 peças essenciais. Seu corpo não fabrica nenhuma delas.</p>
-  <p>Então a pergunta não é quantos gramas tem. É quais peças vêm dentro.</p>
+  {% if section.settings.lead != blank %}
+    <p class="sci-lead">{{ section.settings.lead }}</p>
+  {% endif %}
+  {% if section.settings.emphasis != blank %}
+    <p class="sci-emphasis">{{ section.settings.emphasis }}</p>
+  {% endif %}
+  {% if section.settings.text != blank %}
+    <p>{{ section.settings.text }}</p>
+  {% endif %}
 
-  <div class="sci-btn-row">
-    <a class="sci-btn" href="{{ section.settings.cta_link | default: '#laudo' }}">
-      {{ section.settings.cta_label }}
-    </a>
-  </div>
+  {% if section.settings.cta_label != blank %}
+    <div class="sci-btn-row">
+      <a class="sci-btn" href="{{ section.settings.cta_link | default: '#laudo' }}">
+        {{ section.settings.cta_label }}
+      </a>
+    </div>
+  {% endif %}
 </section>
 
 {% schema %}
 {
   "name": "A ciência — Hero",
+  "class": "sci-column",
   "settings": [
     {
       "type": "image_picker",
       "id": "logo_image",
       "label": "Logo (PNG)",
-      "info": "Se definido, substitui o texto \"SHOTZ®\"."
+      "info": "Se definido, substitui o texto do logo."
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo — texto",
+      "default": "SHOTZ"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_registered",
+      "label": "Exibir ® no logo",
+      "default": true
     },
     {
       "type": "text",
@@ -52,9 +80,28 @@
       "default": "Seu corpo não usa proteína.<br>Ele usa <strong>aminoácidos</strong>."
     },
     {
+      "type": "inline_richtext",
+      "id": "lead",
+      "label": "Parágrafo 1",
+      "default": "Toda proteína que você toma é desmontada em peças. São essas peças que viram músculo, pele, cabelo e unha."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "emphasis",
+      "label": "Parágrafo 2 (destaque)",
+      "default": "São 9 peças essenciais. Seu corpo não fabrica nenhuma delas."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "Parágrafo 3",
+      "default": "Então a pergunta não é quantos gramas tem. É quais peças vêm dentro."
+    },
+    {
       "type": "text",
       "id": "cta_label",
       "label": "Texto do botão",
+      "info": "Deixe vazio para ocultar o botão.",
       "default": "QUERO SHOTZ"
     },
     {

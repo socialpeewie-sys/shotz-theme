@@ -94,20 +94,20 @@
       "shotz-prelaunch-hero": {
         "type": "shotz-prelaunch-hero",
         "settings": {
-          "logo_image": "shopify://shop_images/Sem_nome_1200_x_300_px_1.png",
-          "hero_video": "shopify://files/videos/kling_20260716_VIDEO_create_a_a_5557_0.mp4"
+          "hero_video": "shopify://files/videos/hf_20261009_144655_a70be74a-c4a6-4266-b257-e2b1bc34c74f.mp4",
+          "hero_image": "shopify://shop_images/hf_20261005_131751_7a59ba51-dc3c-4564-b165-8ebc6d8f271e_4.png"
         }
       },
       "shotz-prelaunch-para-quem-e": {
         "type": "shotz-prelaunch-para-quem-e",
         "settings": {
-          "section2_image": "shopify://shop_images/magnific_change-the-background-to-_2974965545_fb898ebb-49ab-4868-b8ea-d8a6ebec3b4a.png"
+          "section2_image": "shopify://shop_images/hf_20261005_131751_7a59ba51-dc3c-4564-b165-8ebc6d8f271e_4.png"
         }
       },
       "shotz-prelaunch-o-que-e": {
         "type": "shotz-prelaunch-o-que-e",
         "settings": {
-          "section3_image": "shopify://shop_images/pomelli_photoshoot_image_1_1_0525_2.jpg"
+          "section3_image": "shopify://shop_images/hf_20260928_160444_7dcd6c15-a81f-4b3f-bab7-fae71d8fa3fc_2.png"
         }
       },
       "shotz-prelaunch-fechamento": {

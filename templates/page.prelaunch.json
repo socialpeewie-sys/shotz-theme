@@ -1,0 +1,47 @@
+{
+  "layout": "shotz-prelaunch",
+  "sections": {
+    "hero": {
+      "type": "shotz-prelaunch-hero",
+      "settings": {
+        "hero_video": "shopify://files/videos/hf_20261009_144655_a70be74a-c4a6-4266-b257-e2b1bc34c74f.mp4",
+        "hero_image": "shopify://shop_images/hf_20261005_131751_7a59ba51-dc3c-4564-b165-8ebc6d8f271e_4.png"
+      }
+    },
+    "para_quem_e": {
+      "type": "shotz-prelaunch-para-quem-e",
+      "settings": {
+        "section2_image": "shopify://shop_images/hf_20261005_131751_7a59ba51-dc3c-4564-b165-8ebc6d8f271e_4.png"
+      }
+    },
+    "o_que_e": {
+      "type": "shotz-prelaunch-o-que-e",
+      "blocks": {
+        "badge_1": { "type": "badge", "settings": { "text": "Alta concentração de proteína" } },
+        "badge_2": { "type": "badge", "settings": { "text": "Apenas 100 ml" } },
+        "badge_3": { "type": "badge", "settings": { "text": "Zero açúcar" } },
+        "badge_4": { "type": "badge", "settings": { "text": "Zero gordura" } },
+        "badge_5": { "type": "badge", "settings": { "text": "Zero carboidratos" } },
+        "badge_6": { "type": "badge", "settings": { "text": "Zero lactose" } },
+        "badge_7": { "type": "badge", "settings": { "text": "Sabores frutados e refrescantes" } },
+        "badge_8": { "type": "badge", "settings": { "text": "20g de proteína por shot" } }
+      },
+      "block_order": ["badge_1", "badge_2", "badge_3", "badge_4", "badge_5", "badge_6", "badge_7", "badge_8"],
+      "settings": {
+        "section3_image": "shopify://shop_images/hf_20260928_160444_7dcd6c15-a81f-4b3f-bab7-fae71d8fa3fc_2.png"
+      }
+    },
+    "fechamento": {
+      "type": "shotz-prelaunch-fechamento",
+      "blocks": {
+        "benefit_1": { "type": "benefit", "settings": { "icon": "✓", "text": "Acesso antecipado ao lançamento" } },
+        "benefit_2": { "type": "benefit", "settings": { "icon": "✓", "text": "10% OFF na sua primeira compra" } },
+        "benefit_3": { "type": "benefit", "settings": { "icon": "✓", "text": "Comunidade exclusiva no WhatsApp" } },
+        "benefit_4": { "type": "benefit", "settings": { "icon": "✓", "text": "Novidades e bastidores antes da abertura" } }
+      },
+      "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4"],
+      "settings": {}
+    }
+  },
+  "order": ["hero", "para_quem_e", "o_que_e", "fechamento"]
+}

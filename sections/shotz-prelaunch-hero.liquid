@@ -2,6 +2,8 @@
   Hero section for the Shotz pre-launch landing page.
 {% enddoc %}
 
+{{ 'shotz-prelaunch.css' | asset_url | stylesheet_tag }}
+
 <section class="spl-card-full spl-hero">
   <div class="spl-hero__bg">
     {% if section.settings.hero_video %}
@@ -39,49 +41,74 @@
       <div class="spl-hero__logo">
         {{ section.settings.logo_image | image_url: width: 400 | image_tag: loading: 'eager' }}
       </div>
-    {% else %}
-      <div class="spl-wordmark">SHOTZ</div>
+    {% elsif section.settings.logo_text != blank %}
+      <div class="spl-wordmark">{{ section.settings.logo_text }}</div>
     {% endif %}
 
-    <h1 class="spl-hero__headline">Sua rotina já é complexa.<br>Consumir proteína não precisa ser.</h1>
+    {% if section.settings.headline != blank %}
+      <h1 class="spl-hero__headline">{{ section.settings.headline }}</h1>
+    {% endif %}
 
-    <p class="spl-hero__subheadline">
-      Shotz é um shot proteico com 20g de proteína criado para tornar o consumo de proteína mais simples.
-    </p>
+    {% if section.settings.subheadline != blank %}
+      <p class="spl-hero__subheadline">{{ section.settings.subheadline }}</p>
+    {% endif %}
 
-    <p class="spl-tagline">
-      <span class="spl-tagline__white">Pronto.</span>
-      <span class="spl-tagline__accent">Prático.</span>
-      <span class="spl-tagline__white">Proteico.</span>
-    </p>
+    {% if section.settings.tagline_1 != blank
+      or section.settings.tagline_2 != blank
+      or section.settings.tagline_3 != blank
+    %}
+      <p class="spl-tagline">
+        {% if section.settings.tagline_1 != blank %}
+          <span class="spl-tagline__white">{{ section.settings.tagline_1 }}</span>
+        {% endif %}
+        {% if section.settings.tagline_2 != blank %}
+          <span class="spl-tagline__accent">{{ section.settings.tagline_2 }}</span>
+        {% endif %}
+        {% if section.settings.tagline_3 != blank %}
+          <span class="spl-tagline__white">{{ section.settings.tagline_3 }}</span>
+        {% endif %}
+      </p>
+    {% endif %}
 
-    <span class="spl-glass-pill">
-      Cadastre-se para ter acesso antecipado ao lançamento e garanta 10% OFF na sua primeira compra.
-    </span>
+    {% if section.settings.pill_text != blank %}
+      <span class="spl-glass-pill">{{ section.settings.pill_text }}</span>
+    {% endif %}
 
-    <div>
-      <button
-        type="button"
-        class="spl-btn"
-        data-spl-open-modal
-      >
-        Quero acesso antecipado <span class="spl-btn__arrow" aria-hidden="true">→</span>
-      </button>
-    </div>
+    {% if section.settings.button_label != blank %}
+      <div>
+        {% render 'shotz-prelaunch-button',
+          label: section.settings.button_label,
+          link: section.settings.button_link
+        %}
+      </div>
+    {% endif %}
 
-    <p class="spl-caption">Vagas limitadas</p>
+    {% if section.settings.caption != blank %}
+      <p class="spl-caption">{{ section.settings.caption }}</p>
+    {% endif %}
   </div>
 </section>
 
 {% schema %}
 {
   "name": "Prelaunch — Hero",
+  "class": "spl-scope spl-section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Mídia"
+    },
     {
       "type": "image_picker",
       "id": "logo_image",
       "label": "Logo (PNG)",
-      "info": "Se definido, substitui o texto \"SHOTZ\"."
+      "info": "Se definido, substitui o texto do logo."
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo — texto",
+      "default": "SHOTZ"
     },
     {
       "type": "video",
@@ -94,6 +121,75 @@
       "id": "hero_image",
       "label": "Foto de fundo",
       "info": "Usada quando nenhum vídeo é definido."
+    },
+    {
+      "type": "header",
+      "content": "Textos"
+    },
+    {
+      "type": "html",
+      "id": "headline",
+      "label": "Título (H1)",
+      "info": "Use <br> para quebra de linha.",
+      "default": "Sua rotina já é complexa.<br>Consumir proteína não precisa ser."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subheadline",
+      "label": "Subtítulo",
+      "default": "Shotz é um shot proteico com 20g de proteína criado para tornar o consumo de proteína mais simples."
+    },
+    {
+      "type": "text",
+      "id": "tagline_1",
+      "label": "Tagline — palavra 1",
+      "default": "Pronto."
+    },
+    {
+      "type": "text",
+      "id": "tagline_2",
+      "label": "Tagline — palavra 2 (azul)",
+      "default": "Prático."
+    },
+    {
+      "type": "text",
+      "id": "tagline_3",
+      "label": "Tagline — palavra 3",
+      "default": "Proteico."
+    },
+    {
+      "type": "textarea",
+      "id": "pill_text",
+      "label": "Texto da pílula",
+      "default": "Cadastre-se para ter acesso antecipado ao lançamento e garanta 10% OFF na sua primeira compra."
+    },
+    {
+      "type": "header",
+      "content": "Botão"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto do botão",
+      "info": "Deixe vazio para ocultar o botão.",
+      "default": "Quero acesso antecipado"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link do botão",
+      "info": "Deixe vazio para abrir o formulário de cadastro."
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Legenda abaixo do botão",
+      "default": "Vagas limitadas"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Prelaunch — Hero"
     }
   ]
 }

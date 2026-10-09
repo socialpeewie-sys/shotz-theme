@@ -2,6 +2,8 @@
   "O que é" section for the Shotz pre-launch landing page.
 {% enddoc %}
 
+{{ 'shotz-prelaunch.css' | asset_url | stylesheet_tag }}
+
 <section class="spl-card-full spl-s3">
   <div class="spl-s3__bg">
     {% if section.settings.section3_image %}
@@ -23,37 +25,94 @@
   </div>
 
   <div class="spl-s3__content">
-    <h2>Uma nova forma<br>de consumir proteína.</h2>
+    {% if section.settings.headline != blank %}
+      <h2>{{ section.settings.headline }}</h2>
+    {% endif %}
 
-    <p class="spl-s3__intro">
-      Shotz é um shot proteico criado para tornar o consumo de proteína mais simples, prático e parte da sua rotina.
-    </p>
+    {% if section.settings.intro != blank %}
+      <p class="spl-s3__intro">{{ section.settings.intro }}</p>
+    {% endif %}
 
-    <div class="spl-badge-row">
-      {% assign checklist_items = 'Alta concentração de proteína|Apenas 100 ml|Zero açúcar|Zero gordura|Zero carboidratos|Zero lactose|Sabores frutados e refrescantes|20g de proteína por shot' | split: '|' %}
-      {% for item in checklist_items %}
-        <span class="spl-badge-pill">{{ item }}</span>
-      {% endfor %}
-    </div>
+    {% if section.blocks.size > 0 %}
+      <div class="spl-badge-row">
+        {% for block in section.blocks %}
+          <span class="spl-badge-pill" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
 
-    <button
-      type="button"
-      class="spl-btn"
-      data-spl-open-modal
-    >
-      Quero conhecer a Shotz <span class="spl-btn__arrow" aria-hidden="true">→</span>
-    </button>
+    {% render 'shotz-prelaunch-button',
+      label: section.settings.button_label,
+      link: section.settings.button_link
+    %}
   </div>
 </section>
 
 {% schema %}
 {
   "name": "Prelaunch — O que é",
+  "class": "spl-scope spl-section",
+  "max_blocks": 16,
   "settings": [
     {
       "type": "image_picker",
       "id": "section3_image",
       "label": "Imagem de fundo"
+    },
+    {
+      "type": "html",
+      "id": "headline",
+      "label": "Título (H2)",
+      "info": "Use <br> para quebra de linha.",
+      "default": "Uma nova forma<br>de consumir proteína."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "intro",
+      "label": "Texto",
+      "default": "Shotz é um shot proteico criado para tornar o consumo de proteína mais simples, prático e parte da sua rotina."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto do botão",
+      "info": "Deixe vazio para ocultar o botão.",
+      "default": "Quero conhecer a Shotz"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link do botão",
+      "info": "Deixe vazio para abrir o formulário de cadastro."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Selo",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Zero açúcar"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Prelaunch — O que é",
+      "blocks": [
+        { "type": "badge", "settings": { "text": "Alta concentração de proteína" } },
+        { "type": "badge", "settings": { "text": "Apenas 100 ml" } },
+        { "type": "badge", "settings": { "text": "Zero açúcar" } },
+        { "type": "badge", "settings": { "text": "Zero gordura" } },
+        { "type": "badge", "settings": { "text": "Zero carboidratos" } },
+        { "type": "badge", "settings": { "text": "Zero lactose" } },
+        { "type": "badge", "settings": { "text": "Sabores frutados e refrescantes" } },
+        { "type": "badge", "settings": { "text": "20g de proteína por shot" } }
+      ]
     }
   ]
 }

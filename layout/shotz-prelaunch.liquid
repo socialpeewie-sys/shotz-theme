@@ -1,0 +1,58 @@
+{% comment %}
+  Layout da landing de pré-lançamento — sem header/footer do tema, mas com os
+  estilos, fontes, variáveis e scripts globais carregados, para que as seções
+  Shotz da HOME e da PDP também funcionem quando adicionadas pelo editor.
+  Usado por templates/page.prelaunch.json ("layout": "shotz-prelaunch").
+{% endcomment %}
+<!doctype html>
+<html
+  {% if request.design_mode %}
+    class="shopify-design-mode"
+  {% endif %}
+  lang="{{ request.locale.iso_code }}"
+>
+  <head>
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="icon"
+        type="image/png"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+      >
+    {%- endif -%}
+
+    {%- render 'meta-tags' -%}
+    {%- render 'stylesheets' -%}
+    {%- render 'fonts' -%}
+    {%- render 'scripts' -%}
+    {%- render 'theme-styles-variables' -%}
+    {%- render 'color-schemes' -%}
+
+    {{ 'reveal.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'reveal.js' | asset_url }}" defer></script>
+
+    {{ 'shotz-prelaunch.css' | asset_url | stylesheet_tag }}
+
+    {% if request.design_mode %}
+      {%- render 'theme-editor' -%}
+    {% endif %}
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="shotz-prelaunch-page page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+    <main
+      id="MainContent"
+      class="content-for-layout"
+      role="main"
+      data-template="{{ template }}"
+    >
+      {{ content_for_layout }}
+    </main>
+
+    <div class="spl-scope">
+      {% render 'shotz-prelaunch-modal' %}
+    </div>
+
+    <script src="{{ 'shotz-prelaunch.js' | asset_url }}" defer></script>
+  </body>
+</html>

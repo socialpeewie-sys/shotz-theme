@@ -1,6 +1,9 @@
 /* Shotz — Landing page de pré-lançamento */
 
-.shotz-prelaunch {
+/* Tokens e tipografia: .shotz-prelaunch é o <body> da página /obrigado;
+   .spl-scope é o wrapper de cada seção de pré-lançamento (schema "class") e
+   do modal, para não vazar estilos nas seções da HOME/PDP da mesma página. */
+:is(.shotz-prelaunch, .spl-scope) {
   --spl-cream: #F5F2EA;
   --spl-white: #FFFFFF;
   --spl-black: #1A1A1A;
@@ -18,29 +21,31 @@
   overflow-x: hidden;
 }
 
-.shotz-prelaunch *,
-.shotz-prelaunch *::before,
-.shotz-prelaunch *::after {
+:is(.shotz-prelaunch, .spl-scope) *,
+:is(.shotz-prelaunch, .spl-scope) *::before,
+:is(.shotz-prelaunch, .spl-scope) *::after {
   box-sizing: border-box;
 }
 
-.shotz-prelaunch img {
+:is(.shotz-prelaunch, .spl-scope) img {
   max-width: 100%;
   display: block;
 }
 
 /* Typography helpers */
 
-.shotz-prelaunch h1,
-.shotz-prelaunch h2,
-.shotz-prelaunch h3 {
+:is(.shotz-prelaunch, .spl-scope) :is(h1, h2, h3) {
+  font-style: normal;
+  letter-spacing: normal;
+  text-transform: none;
+  line-height: inherit;
   font-family: var(--font-heading--family, inherit);
   font-weight: 700;
   color: var(--spl-black);
   margin: 0 0 16px;
 }
 
-.shotz-prelaunch p {
+:is(.shotz-prelaunch, .spl-scope) p {
   margin: 0 0 16px;
   color: var(--spl-black);
 }
@@ -142,6 +147,44 @@
 }
 
 /* ---------------- PAGE CONTAINER ---------------- */
+
+/* Página de pré-lançamento (layout shotz-prelaunch): cada seção vira um
+   "card" dentro do container, reproduzindo o padding/gap do .spl-page. */
+body.shotz-prelaunch-page {
+  margin: 0;
+  background: #F5F2EA;
+  overflow-x: hidden;
+}
+
+.spl-section {
+  font-size: 16px;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 48px;
+}
+
+.spl-section:first-child {
+  padding-top: 48px;
+}
+
+.spl-section:last-child {
+  padding-bottom: 48px;
+}
+
+@media screen and (max-width: 767px) {
+  .spl-section {
+    padding: 12px 20px;
+  }
+
+  .spl-section:first-child {
+    padding-top: 20px;
+  }
+
+  .spl-section:last-child {
+    padding-bottom: 20px;
+  }
+}
 
 .spl-page {
   max-width: 1440px;

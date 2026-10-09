@@ -2,46 +2,110 @@
   Closing section for the Shotz pre-launch landing page.
 {% enddoc %}
 
+{{ 'shotz-prelaunch.css' | asset_url | stylesheet_tag }}
+
 <section class="spl-card-split spl-s4">
   <div class="spl-s4__text">
-    <h2>Faça parte<br class="spl-linebreak">desse começo.</h2>
-    <p>
-      Se você também acredita que consumir proteína deveria ser mais simples, queremos que conheça a Shotz antes de
-      todo mundo.
-    </p>
-    <p class="spl-s4__legal">Preencha seus dados e venha construir essa história com a gente.</p>
+    {% if section.settings.headline != blank %}
+      <h2>{{ section.settings.headline }}</h2>
+    {% endif %}
+    {% if section.settings.text != blank %}
+      <p>{{ section.settings.text }}</p>
+    {% endif %}
+    {% if section.settings.legal != blank %}
+      <p class="spl-s4__legal">{{ section.settings.legal }}</p>
+    {% endif %}
 
-    <button
-      type="button"
-      class="spl-btn spl-btn--sm"
-      data-spl-open-modal
-    >
-      Quero fazer parte <span class="spl-btn__arrow" aria-hidden="true">→</span>
-    </button>
+    {% render 'shotz-prelaunch-button',
+      label: section.settings.button_label,
+      link: section.settings.button_link,
+      class: 'spl-btn--sm'
+    %}
   </div>
 
-  <div class="spl-s4__benefits">
-    <div class="spl-benefit-card">
-      <span class="spl-benefit-card__icon" aria-hidden="true">&#10003;</span>
-      <span>Acesso antecipado ao lançamento</span>
+  {% if section.blocks.size > 0 %}
+    <div class="spl-s4__benefits">
+      {% for block in section.blocks %}
+        <div class="spl-benefit-card" {{ block.shopify_attributes }}>
+          {% if block.settings.icon != blank %}
+            <span class="spl-benefit-card__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+          {% endif %}
+          <span>{{ block.settings.text }}</span>
+        </div>
+      {% endfor %}
     </div>
-    <div class="spl-benefit-card">
-      <span class="spl-benefit-card__icon" aria-hidden="true">&#10003;</span>
-      <span>10% OFF na sua primeira compra</span>
-    </div>
-    <div class="spl-benefit-card">
-      <span class="spl-benefit-card__icon" aria-hidden="true">&#10003;</span>
-      <span>Comunidade exclusiva no WhatsApp</span>
-    </div>
-    <div class="spl-benefit-card">
-      <span class="spl-benefit-card__icon" aria-hidden="true">&#10003;</span>
-      <span>Novidades e bastidores antes da abertura</span>
-    </div>
-  </div>
+  {% endif %}
 </section>
 
 {% schema %}
 {
-  "name": "Prelaunch — Fechamento"
+  "name": "Prelaunch — Fechamento",
+  "class": "spl-scope spl-section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "html",
+      "id": "headline",
+      "label": "Título (H2)",
+      "info": "Use <br class=\"spl-linebreak\"> para quebra de linha só no desktop.",
+      "default": "Faça parte<br class=\"spl-linebreak\">desse começo."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text",
+      "label": "Texto",
+      "default": "Se você também acredita que consumir proteína deveria ser mais simples, queremos que conheça a Shotz antes de todo mundo."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "legal",
+      "label": "Texto menor",
+      "default": "Preencha seus dados e venha construir essa história com a gente."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto do botão",
+      "info": "Deixe vazio para ocultar o botão.",
+      "default": "Quero fazer parte"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link do botão",
+      "info": "Deixe vazio para abrir o formulário de cadastro."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefício",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Ícone",
+          "default": "✓"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "Benefício"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Prelaunch — Fechamento",
+      "blocks": [
+        { "type": "benefit", "settings": { "text": "Acesso antecipado ao lançamento" } },
+        { "type": "benefit", "settings": { "text": "10% OFF na sua primeira compra" } },
+        { "type": "benefit", "settings": { "text": "Comunidade exclusiva no WhatsApp" } },
+        { "type": "benefit", "settings": { "text": "Novidades e bastidores antes da abertura" } }
+      ]
+    }
+  ]
 }
 {% endschema %}

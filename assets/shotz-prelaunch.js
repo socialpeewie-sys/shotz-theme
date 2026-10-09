@@ -27,8 +27,9 @@
     if (lastFocusedElement) lastFocusedElement.focus();
   }
 
-  document.querySelectorAll('[data-spl-open-modal]').forEach(function (btn) {
-    btn.addEventListener('click', openModal);
+  // Delegação: funciona também para botões de seções adicionadas/re-renderizadas no editor.
+  document.addEventListener('click', function (event) {
+    if (event.target.closest('[data-spl-open-modal]')) openModal();
   });
 
   if (overlay) {

@@ -1,0 +1,20 @@
+{% doc %}
+  Botão das seções de pré-lançamento: abre o modal de cadastro ou, se houver
+  link definido, leva ao link.
+
+  @param {string} label - Texto do botão
+  @param {string} [link] - URL opcional; vazio abre o modal de cadastro
+  @param {string} [class] - Classes extras (ex.: 'spl-btn--sm')
+{% enddoc %}
+
+{%- if label != blank -%}
+  {%- if link != blank -%}
+    <a href="{{ link }}" class="spl-btn {{ class }}">
+      {{- label }} <span class="spl-btn__arrow" aria-hidden="true">→</span>
+    </a>
+  {%- else -%}
+    <button type="button" class="spl-btn {{ class }}" data-spl-open-modal>
+      {{- label }} <span class="spl-btn__arrow" aria-hidden="true">→</span>
+    </button>
+  {%- endif -%}
+{%- endif -%}

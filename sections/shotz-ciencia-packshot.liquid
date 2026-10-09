@@ -2,12 +2,9 @@
   Pack shot full-bleed (sem texto). Pode ser ocultado pelo editor.
 {% enddoc %}
 
-{{ 'shotz-ciencia.css' | asset_url | stylesheet_tag }}
-
 {% if section.settings.enabled %}
   <div class="sci-full-image">
     {% if section.settings.pack_image %}
-      {%- assign image_alt = section.settings.pack_image.alt | default: 'Shotz — pack shot' -%}
       {%- assign fit_class = 'sci-fit-' | append: section.settings.image_fit -%}
       {{
         section.settings.pack_image
@@ -16,7 +13,7 @@
           loading: 'lazy',
           widths: '620, 900, 1240, 1400',
           sizes: '(min-width: 620px) 620px, 100vw',
-          alt: image_alt,
+          alt: 'Shotz — pack shot',
           class: fit_class
       }}
     {% else %}
@@ -30,7 +27,6 @@
 {% schema %}
 {
   "name": "A ciência — Pack shot",
-  "class": "sci-column",
   "settings": [
     {
       "type": "checkbox",

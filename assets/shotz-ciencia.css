@@ -4,18 +4,7 @@
  * e imagens de produto transbordando (overflow) sobre o card.
  * Base visual: landing-shotz.html (tokens de cor/tipografia preservados). */
 
-/* Fundo da página (layout shotz-ciencia) */
-body.shotz-ciencia {
-  margin: 0;
-  background: #e2d8c8;
-  overflow-x: hidden;
-}
-
-/* Tokens e base das seções "A ciência". A classe .sci-column é aplicada no
-   wrapper de cada seção (schema "class"), então nada aqui vaza para seções da
-   HOME/PDP adicionadas na mesma página — e as seções funcionam em qualquer
-   template. */
-.sci-column {
+.shotz-ciencia {
   --sci-page-bg: #e2d8c8;
   --sci-cream: #ede4d6;
   --sci-cream-card: #f5f0e8;
@@ -32,39 +21,42 @@ body.shotz-ciencia {
   /* Gutter lateral fluido das seções */
   --sci-gutter: clamp(20px, 5vw, 48px);
 
-  width: 100%;
-  background: var(--sci-white);
-  overflow: hidden;
+  margin: 0;
+  background: var(--sci-page-bg);
   font-family: 'Outfit', Helvetica, sans-serif;
   color: var(--sci-ink);
-  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-.sci-column *,
-.sci-column *::before,
-.sci-column *::after {
+.shotz-ciencia *,
+.shotz-ciencia *::before,
+.shotz-ciencia *::after {
   box-sizing: border-box;
 }
 
-/* Neutraliza a tipografia global do tema (base.css) dentro das seções */
-.sci-column :is(h1, h2, h3, p, li, ul) {
-  font-family: inherit;
-  font-style: normal;
-  letter-spacing: normal;
-  text-transform: none;
-}
-
-.sci-column a {
+.shotz-ciencia a {
   color: var(--sci-ink);
   text-decoration: none;
 }
 
-.sci-column a:hover {
+.shotz-ciencia a:hover {
   color: #4c554e;
 }
 
-.sci-column img {
+.shotz-ciencia img {
   max-width: 100%;
+}
+
+/* Container — full-bleed (as seções ocupam a largura toda) */
+
+.sci-page {
+  width: 100%;
+}
+
+.sci-column {
+  width: 100%;
+  background: var(--sci-white);
+  overflow: hidden;
 }
 
 /* Tipografia base */
@@ -76,10 +68,6 @@ body.shotz-ciencia {
   line-height: 1.6;
   color: var(--sci-ink-soft);
   text-wrap: pretty;
-}
-
-.sci-column .sci-rte p:first-child {
-  margin-top: 16px;
 }
 
 .sci-column p.sci-lead {
@@ -117,7 +105,7 @@ body.shotz-ciencia {
   padding: 30px 0 34px;
 }
 
-.sci-column .sci-btn {
+.shotz-ciencia .sci-btn {
   display: inline-block;
   background: var(--sci-ink);
   color: var(--sci-white);
@@ -129,7 +117,7 @@ body.shotz-ciencia {
   transition: background-color 0.2s ease;
 }
 
-.sci-column .sci-btn:hover {
+.shotz-ciencia .sci-btn:hover {
   background: #333;
   color: var(--sci-white);
 }

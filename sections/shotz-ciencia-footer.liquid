@@ -2,16 +2,8 @@
   Footer da landing "A ciência": wordmark, navegação e copyright.
 {% enddoc %}
 
-{{ 'shotz-ciencia.css' | asset_url | stylesheet_tag }}
-
 <footer class="sci-footer">
-  {% if section.settings.logo_image %}
-    <div class="sci-logo">
-      {{ section.settings.logo_image | image_url: width: 300 | image_tag: loading: 'lazy', alt: section.settings.logo_text }}
-    </div>
-  {% elsif section.settings.logo_text != blank %}
-    <div class="sci-logo">{{ section.settings.logo_text }}</div>
-  {% endif %}
+  <div class="sci-logo">SHOTZ</div>
 
   <nav class="sci-footer-nav">
     <a href="{{ section.settings.shop_link | default: '#laudo' }}">{{ section.settings.shop_label }}</a>
@@ -25,20 +17,7 @@
 {% schema %}
 {
   "name": "A ciência — Footer",
-  "class": "sci-column",
   "settings": [
-    {
-      "type": "image_picker",
-      "id": "logo_image",
-      "label": "Logo (PNG)",
-      "info": "Se definido, substitui o texto do logo."
-    },
-    {
-      "type": "text",
-      "id": "logo_text",
-      "label": "Logo — texto",
-      "default": "SHOTZ"
-    },
     {
       "type": "text",
       "id": "shop_label",

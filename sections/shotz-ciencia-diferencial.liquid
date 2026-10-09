@@ -1,10 +1,8 @@
 {% doc %}
   Bloco "O que nos diferencia": card creme com a imagem do produto transbordando
   (full-bleed) por cima, contraste colágeno puro vs. blend completo e lista de
-  benefícios (blocos). O padding-top da section reserva o espaço da imagem.
+  benefícios. O padding-top da section reserva o espaço da imagem.
 {% enddoc %}
-
-{{ 'shotz-ciencia.css' | asset_url | stylesheet_tag }}
 
 <section class="sci-overflow-section">
   <div class="sci-overflow-card">
@@ -16,7 +14,8 @@
           | image_tag:
             loading: 'lazy',
             widths: '620, 900, 1200',
-            sizes: '(min-width: 620px) 620px, 100vw'
+            sizes: '(min-width: 620px) 620px, 100vw',
+            alt: 'Shotz — produto'
         }}
       {% else %}
         <div class="sci-bleed-placeholder" aria-hidden="true">
@@ -25,104 +24,63 @@
       {% endif %}
     </div>
 
-    {% if section.settings.headline != blank %}
-      <h2>{{ section.settings.headline }}</h2>
-    {% endif %}
+    <h2>O que nos <strong>diferencia</strong><br>dos demais?</h2>
 
-    {% if section.settings.lead != blank %}
-      <p class="sci-lead">{{ section.settings.lead }}</p>
-    {% endif %}
-    {% if section.settings.text != blank %}
-      <div class="sci-rte">{{ section.settings.text }}</div>
-    {% endif %}
+    <p class="sci-lead">
+      Você já tomou colágeno achando que estava tomando proteína. O colágeno sozinho não tem todas as 9 peças essenciais.
+    </p>
+    <p>É como uma receita de bolo faltando o fermento. Todos os outros ingredientes estão lá. O bolo só não cresce.</p>
+    <p>
+      Foi aí que fizemos diferente. Pegamos o colágeno, com todos os benefícios que ele já tem, e completamos o que faltava: um blend com os 9 aminoácidos essenciais.
+    </p>
 
-    {% if section.settings.kicker != blank %}
-      <p class="sci-kicker">{{ section.settings.kicker }}</p>
-    {% endif %}
+    <p class="sci-kicker">O resultado: uma categoria nova.</p>
 
-    {% if section.blocks.size > 0 %}
-      <ul class="sci-bullets">
-        {% for block in section.blocks %}
-          <li {{ block.shopify_attributes }}>
-            {% if block.settings.icon != blank %}
-              <span class="sci-bolt" aria-hidden="true">{{ block.settings.icon }}</span>
-            {% endif %}
-            <span>{{ block.settings.text }}</span>
-          </li>
-        {% endfor %}
-      </ul>
-    {% endif %}
+    <ul class="sci-bullets">
+      <li><span class="sci-bolt" aria-hidden="true">⚡</span><span>Proteína completa</span></li>
+      <li><span class="sci-bolt" aria-hidden="true">⚡</span><span>Benefícios do colágeno</span></li>
+      <li>
+        <span class="sci-bolt" aria-hidden="true">⚡</span>
+        <span>{{ section.settings.protein_grams }}g de proteína em {{ section.settings.protein_volume }}</span>
+      </li>
+      <li><span class="sci-bolt" aria-hidden="true">⚡</span><span>Só {{ section.settings.kcal }}kcal</span></li>
+      <li><span class="sci-bolt" aria-hidden="true">⚡</span><span>Pronto pra tomar em 3 segundos</span></li>
+    </ul>
   </div>
 </section>
 
 {% schema %}
 {
   "name": "A ciência — Diferencial",
-  "class": "sci-column",
-  "max_blocks": 12,
   "settings": [
     {
       "type": "image_picker",
       "id": "product_image",
       "label": "Imagem do produto (PNG transparente)",
-      "info": "Transborda por cima do card. A sombra é gerada por CSS. O texto alternativo é editado na própria imagem."
+      "info": "Transborda por cima do card. A sombra é gerada por CSS."
     },
     {
-      "type": "html",
-      "id": "headline",
-      "label": "Título (H2)",
-      "info": "Use <strong> para destaque e <br> para quebra de linha.",
-      "default": "O que nos <strong>diferencia</strong><br>dos demais?"
+      "type": "text",
+      "id": "protein_grams",
+      "label": "Gramas de proteína",
+      "default": "12"
     },
     {
-      "type": "inline_richtext",
-      "id": "lead",
-      "label": "Parágrafo de abertura",
-      "default": "Você já tomou colágeno achando que estava tomando proteína. O colágeno sozinho não tem todas as 9 peças essenciais."
+      "type": "text",
+      "id": "protein_volume",
+      "label": "Volume",
+      "default": "100ml"
     },
     {
-      "type": "richtext",
-      "id": "text",
-      "label": "Texto",
-      "default": "<p>É como uma receita de bolo faltando o fermento. Todos os outros ingredientes estão lá. O bolo só não cresce.</p><p>Foi aí que fizemos diferente. Pegamos o colágeno, com todos os benefícios que ele já tem, e completamos o que faltava: um blend com os 9 aminoácidos essenciais.</p>"
-    },
-    {
-      "type": "inline_richtext",
-      "id": "kicker",
-      "label": "Frase de destaque",
-      "default": "O resultado: uma categoria nova."
-    }
-  ],
-  "blocks": [
-    {
-      "type": "bullet",
-      "name": "Benefício",
-      "settings": [
-        {
-          "type": "text",
-          "id": "icon",
-          "label": "Ícone (emoji)",
-          "default": "⚡"
-        },
-        {
-          "type": "inline_richtext",
-          "id": "text",
-          "label": "Texto",
-          "default": "Benefício"
-        }
-      ]
+      "type": "text",
+      "id": "kcal",
+      "label": "Calorias (kcal)",
+      "default": "60"
     }
   ],
   "presets": [
     {
-      "name": "A ciência — Diferencial",
-      "blocks": [
-        { "type": "bullet", "settings": { "text": "Proteína completa" } },
-        { "type": "bullet", "settings": { "text": "Benefícios do colágeno" } },
-        { "type": "bullet", "settings": { "text": "12g de proteína em 100ml" } },
-        { "type": "bullet", "settings": { "text": "Só 60kcal" } },
-        { "type": "bullet", "settings": { "text": "Pronto pra tomar em 3 segundos" } }
-      ]
+      "name": "A ciência — Diferencial"
     }
   ]
 }

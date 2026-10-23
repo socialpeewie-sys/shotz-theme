@@ -634,21 +634,14 @@
           "type": "feature",
           "settings": {
             "icon": "droplet",
-            "label": "Suporte à Hidratação"
-          }
-        },
-        "feature_8gkyzN": {
-          "type": "feature",
-          "settings": {
-            "icon": "gear",
-            "label": "Suporte Cognitivo"
+            "label": "Textura Leve"
           }
         },
         "feature_jP8rGW": {
           "type": "feature",
           "settings": {
             "icon": "heart",
-            "label": "Nutrientes Funcionais"
+            "label": "nutrientes essenciais"
           }
         },
         "checklist_item_HwpDAm": {
@@ -678,7 +671,6 @@
         "wheel_item_njmrF9",
         "feature_zF7cPF",
         "feature_bVCzJC",
-        "feature_8gkyzN",
         "feature_jP8rGW",
         "checklist_item_HwpDAm",
         "checklist_item_HHkzTM",

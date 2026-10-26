@@ -8,729 +8,156 @@
  * ------------------------------------------------------------
  */
 {
+  "layout": "shotz-prelaunch",
   "sections": {
-    "hero_banner_xf8AGM": {
-      "type": "hero-banner",
+    "hero": {
+      "type": "shotz-prelaunch-hero",
+      "settings": {
+        "logo_text": "",
+        "hero_video": "shopify://files/videos/hf_20261009_144655_a70be74a-c4a6-4266-b257-e2b1bc34c74f.mp4",
+        "hero_image": "shopify://shop_images/hf_20261005_131751_7a59ba51-dc3c-4564-b165-8ebc6d8f271e_4.png",
+        "headline": "Sua rotina já é complexa.<br>Consumir proteína não precisa ser.",
+        "subheadline": "SHOTZ é um shot proteico com 23g de proteína criado para tornar o consumo de proteína mais simples.",
+        "tagline_1": "",
+        "tagline_2": "",
+        "tagline_3": "",
+        "pill_text": "Cadastre-se para ter acesso antecipado ao lançamento e garanta condições especiais na sua primeira compra.",
+        "button_label": "Quero acesso antecipado",
+        "button_link": "",
+        "caption": "Vagas limitadas"
+      }
+    },
+    "o_que_e": {
+      "type": "shotz-prelaunch-o-que-e",
       "blocks": {
-        "button_yxkihb": {
-          "type": "button",
+        "badge_1": {
+          "type": "badge",
           "settings": {
-            "text": "Comprar agora",
-            "url": "",
-            "style": "solid"
+            "text": "Alta concentração de proteína"
           }
         },
-        "button_NVYmwe": {
-          "type": "button",
+        "badge_2": {
+          "type": "badge",
           "settings": {
-            "text": "DESCUBRA A CIÊNCIA POR TRÁS",
-            "url": "shopify://pages/a-ciencia-por-tras-da-shotz",
-            "style": "outline"
+            "text": "Apenas 100 ml"
           }
         },
-        "tag_xGCU97": {
-          "type": "tag",
+        "badge_3": {
+          "type": "badge",
           "settings": {
-            "text": "Zero adição de açúcar"
+            "text": "Zero ad. açúcar"
           }
         },
-        "tag_hdLViy": {
-          "type": "tag",
-          "settings": {
-            "text": "Zero lactose"
-          }
-        },
-        "tag_G8ck6y": {
-          "type": "tag",
+        "badge_4": {
+          "type": "badge",
           "settings": {
             "text": "Zero gordura"
           }
         },
-        "tag_fy8AaM": {
-          "type": "tag",
-          "settings": {
-            "text": "0.8g de carboidrato"
-          }
-        }
-      },
-      "block_order": [
-        "button_yxkihb",
-        "button_NVYmwe",
-        "tag_xGCU97",
-        "tag_hdLViy",
-        "tag_G8ck6y",
-        "tag_fy8AaM"
-      ],
-      "disabled": true,
-      "name": "Hero Banner",
-      "settings": {
-        "image": "shopify://shop_images/hf_20260917_194324_93fe51e5-cc5b-4f90-bbb3-a09937f88657.png",
-        "eyebrow": "",
-        "eyebrow_color": "#ffffff",
-        "title_line_1": "Pequeno no tamanho",
-        "title_line_2": "Grande nos resultados",
-        "title_line_3": "",
-        "title_color": "#faf7ef",
-        "title_accent_color": "#0094f6",
-        "paragraph": "100ml. 23g gramas de proteína.",
-        "paragraph_color": "#ffffff",
-        "badge_color": "#ffffff"
-      }
-    },
-    "shotz_banner_thMMnV": {
-      "type": "shotz-banner",
-      "blocks": {
-        "badge_GEgzQF": {
+        "badge_5": {
           "type": "badge",
           "settings": {
-            "icon": "leaf",
-            "label": "Gosto de suco"
+            "text": "Menos de 1g de carbo"
           }
         },
-        "badge_9edmp3": {
+        "badge_6": {
           "type": "badge",
           "settings": {
-            "icon": "clock",
-            "label": "Tome em 2 goles"
-          }
-        }
-      },
-      "block_order": [
-        "badge_GEgzQF",
-        "badge_9edmp3"
-      ],
-      "name": "Shotz Banner",
-      "settings": {
-        "video": "shopify://files/videos/hf_20260928_154927_572a43e3-e5fb-49b1-8800-8d56f4a97b14.mp4",
-        "height": "full",
-        "height_mobile": "large",
-        "gradient_enabled": true,
-        "gradient_color": "#f2f0ec",
-        "gradient_opacity": 85,
-        "gradient_side": "auto",
-        "gradient_solid": 25,
-        "gradient_end": 65,
-        "gradient_side_mobile": "auto",
-        "gradient_solid_mobile": 35,
-        "gradient_end_mobile": 75,
-        "content_position": "left",
-        "content_vertical": "center",
-        "content_position_mobile": "top",
-        "content_width": 680,
-        "padding_block": 72,
-        "eyebrow": "DOIS GOLES E PRONTO",
-        "heading": "CRIADO PARA <strong>VIDAS AGITADAS</strong>",
-        "heading_size": 72,
-        "subheading": "23g de proteína em 100ml",
-        "text": "",
-        "text_color": "#0d0d0d",
-        "badge_bg": "#e9e7e2",
-        "badge_text": "#0d0d0d",
-        "button_label": "Quero experimentar",
-        "button_link": "",
-        "button2_label": "",
-        "button2_link": "",
-        "button_bg": "#0d0d0d",
-        "button_text": "#ffffff",
-        "button_accent": "#faf4e4",
-        "animate_text": true
-      }
-    },
-    "shotz_choose_yours_Gp37ig": {
-      "type": "shotz-choose-yours",
-      "blocks": {
-        "card_DYaLX3": {
-          "type": "card",
-          "settings": {
-            "product": "shot-frutas-amarelas",
-            "variant_sku": "46217103442117",
-            "subtitle": "23g de proteína · 100ml",
-            "button_label": "EXPERIMENTE AGORA",
-            "accent_color": "#f5b301",
-            "button_text_color": "#111111"
+            "text": "Zero lactose"
           }
         },
-        "card_PnWyPy": {
-          "type": "card",
+        "badge_7": {
+          "type": "badge",
           "settings": {
-            "product": "shot-frutas-amarelas",
-            "variant_sku": "46217103442117",
-            "subtitle": "23g de proteína · 100ml",
-            "button_label": "EXPERIMENTE AGORA",
-            "accent_color": "#d9186b",
-            "button_text_color": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "card_DYaLX3",
-        "card_PnWyPy"
-      ],
-      "name": "Escolha o seu",
-      "settings": {
-        "eyebrow_text": "",
-        "heading": "Escolha o seu",
-        "background_color": "#ffffff",
-        "text_color": "#111111",
-        "secondary_text_color": "#777777",
-        "padding_block": 16,
-        "padding_inline": 48,
-        "reveal_on_scroll": true
-      }
-    },
-    "shotz_numeros_LEgDf3": {
-      "type": "shotz-numeros",
-      "blocks": {
-        "numero_4jrWUK": {
-          "type": "numero",
-          "settings": {
-            "number": "23",
-            "unit": "g",
-            "label": "Proteína",
-            "sublabel": "enriquecida",
-            "icon": "bolt",
-            "number_color": "",
-            "highlight": true
+            "text": "Sabores frutados e refrescantes"
           }
         },
-        "numero_mbUAJ6": {
-          "type": "numero",
-          "settings": {
-            "number": "95",
-            "unit": "kcal",
-            "label": "por shot",
-            "sublabel": "",
-            "icon": "flame",
-            "number_color": "#1a1a1a",
-            "highlight": true
-          }
-        },
-        "numero_7xwKWx": {
-          "type": "numero",
-          "settings": {
-            "number": "0",
-            "unit": "g",
-            "label": "Gorduras",
-            "sublabel": "por shot",
-            "icon": "ban",
-            "number_color": "#000000",
-            "highlight": false
-          }
-        },
-        "numero_zYQ6Nh": {
-          "type": "numero",
-          "settings": {
-            "number": "0",
-            "unit": "g",
-            "label": "Lactose",
-            "sublabel": "por shot",
-            "icon": "bottle",
-            "number_color": "#1a1a1a",
-            "highlight": false
-          }
-        }
-      },
-      "block_order": [
-        "numero_4jrWUK",
-        "numero_mbUAJ6",
-        "numero_7xwKWx",
-        "numero_zYQ6Nh"
-      ],
-      "custom_css": [],
-      "name": "Números em destaque",
-      "settings": {
-        "layout_style": "floating",
-        "eyebrow": "Por que Shotz",
-        "heading": "A proteína que acompanha sua rotina.",
-        "subtitle": "",
-        "bg_image": "shopify://shop_images/hf_20260928_160444_7dcd6c15-a81f-4b3f-bab7-fae71d8fa3fc_2.png",
-        "bg_image_mobile": "shopify://shop_images/hf_20260928_160444_7dcd6c15-a81f-4b3f-bab7-fae71d8fa3fc_2.png",
-        "bg_position": "right",
-        "fade_opacity": 70,
-        "float_number_color": "#e8890c",
-        "float_title_color": "#1a1a1a",
-        "float_desc_color": "#8a8a8a",
-        "float_card_bg": "#ffffff",
-        "float_card_opacity": 40,
-        "float_desktop_layout": "around",
-        "float_area_height": 180,
-        "float_image_width": 780,
-        "float_card_width": 160,
-        "float_center_gap": 280,
-        "float_cards_top": 140,
-        "float_row_gap": 60,
-        "float_number_size": 32,
-        "float_title_size": 14,
-        "float_desc_size": 12,
-        "float_area_height_mobile": 330,
-        "float_image_zoom_mobile": 150,
-        "float_overlap_mobile": 160,
-        "float_gap_mobile": 10,
-        "float_number_size_mobile": 30,
-        "float_title_size_mobile": 13,
-        "float_desc_size_mobile": 11,
-        "background_color": "#faf4e4",
-        "eyebrow_color": "#0d0d0d",
-        "highlight_bg": "#000000",
-        "highlight_text_color": "#ffffff",
-        "card_bg": "#ffffff",
-        "card_opacity": 75,
-        "card_text_color": "#0d0d0d",
-        "heading_color": "#000000",
-        "subtitle_color": "#5a6273",
-        "number_color": "#000000",
-        "accent_color": "#84898d",
-        "label_color": "#1a2740",
-        "heading_size": 50,
-        "heading_size_mobile": 28,
-        "eyebrow_size": 12,
-        "eyebrow_size_mobile": 11,
-        "subtitle_size": 15,
-        "number_size": 52,
-        "label_size": 15,
-        "min_height": 300,
-        "min_height_mobile": 380,
-        "content_max_width": 760,
-        "grid_gap_top": 28,
-        "max_width": 1400,
-        "padding_top": 140,
-        "padding_bottom": 40,
-        "reveal_on_scroll": true
-      }
-    },
-    "blocks_rCKAQq": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_0453d40_TQFf3b": {
-          "type": "ai_gen_block_0453d40",
-          "disabled": true,
-          "settings": {
-            "image_position": "left",
-            "background_color": "#f6f5f3",
-            "product_image": "shopify://shop_images/hf_20260915_172153_6cb4e6c0-1c6a-4715-b0c3-fccefc2fd427.png",
-            "image_background_color": "#f5f5f5",
-            "image_border_radius": 20,
-            "headline": "CRIADO PARA VIDAS AGITADAS",
-            "subtitle": "A proteína que dá match com a sua rotina",
-            "box_subtitle_color": "#1b2030",
-            "box_1_subtitle": "100ML. Dois goles. 5 segundos",
-            "box_1_text": "Proteína pronta para beber. Abre, bebe e segue o dia.\nSem coqueteleira, sem bagunça, sem preparo.",
-            "box_2_subtitle": "SHOTZ tem apenas o que você busca. PROTEÍNA",
-            "box_2_text": "Fórmula exclusiva trazendo proteína enriquecida do colágeno com todos aminoácidos essenciais.",
-            "box_3_subtitle": "A proteína feita para sua rotina",
-            "box_3_text": "100ml prontos para tomar. Com gelo ou sem gelo. Na corrida, no treino, no trabalho, no café ou até mesmo antes do jantar.",
-            "box_4_subtitle": "",
-            "box_4_text": "",
-            "button_text": "EXPERIMENTE AGORA",
-            "button_link": "",
-            "button_bg_color": "#000000",
-            "button_text_color": "#ffffff",
-            "reveal_on_scroll": true
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_0453d40_TQFf3b"
-      ],
-      "name": "Hero com benefícios",
-      "settings": {}
-    },
-    "variants_grid_dNm8hc": {
-      "type": "variants-grid",
-      "blocks": {
-        "variant_item_KzhCmw": {
-          "type": "variant_item",
-          "settings": {
-            "variant_id": "46217103474885"
-          }
-        },
-        "variant_item_8C9RBD": {
-          "type": "variant_item",
-          "settings": {
-            "variant_id": "46217103442117"
-          }
-        },
-        "variant_item_mfRhg3": {
-          "type": "variant_item",
-          "settings": {
-            "variant_id": "46217103376581"
-          }
-        },
-        "variant_item_JC6D7N": {
-          "type": "variant_item",
-          "settings": {
-            "variant_id": ""
-          }
-        },
-        "variant_item_xc9xiV": {
-          "type": "variant_item",
-          "settings": {
-            "variant_id": "46217103343813"
-          }
-        }
-      },
-      "block_order": [
-        "variant_item_KzhCmw",
-        "variant_item_8C9RBD",
-        "variant_item_mfRhg3",
-        "variant_item_JC6D7N",
-        "variant_item_xc9xiV"
-      ],
-      "disabled": true,
-      "name": "Grade de Variantes",
-      "settings": {
-        "title": "Nossos Produtos",
-        "product": "shot-frutas-amarelas",
-        "section_bg_color": "#ffffff",
-        "card_bg_color": "#ffffff",
-        "card_border_color": "#e0e0e0",
-        "card_border_width": 1,
-        "card_border_radius": 8,
-        "image_bg_color": "#f8f8f8",
-        "image_height": 280,
-        "image_fit": "contain",
-        "title_font_family": "inherit",
-        "title_font_weight": "700",
-        "title_font_size": 28,
-        "body_font_family": "inherit",
-        "product_title_font_size": 12,
-        "variant_title_font_size": 16,
-        "price_font_size": 16,
-        "title_color": "#111111",
-        "product_title_color": "#888888",
-        "variant_title_color": "#111111",
-        "price_color": "#111111",
-        "compare_price_color": "#999999",
-        "button_label": "Adicionar ao carrinho",
-        "button_label_soldout": "Esgotado",
-        "button_bg_color": "#111111",
-        "button_text_color": "#ffffff",
-        "button_bg_hover_color": "#333333",
-        "button_text_hover_color": "#ffffff",
-        "button_border_color": "#111111",
-        "button_border_width": 0,
-        "button_border_radius": 4,
-        "button_font_size": 15,
-        "button_font_weight": "600",
-        "button_text_transform": "none",
-        "button_letter_spacing": 0,
-        "button_padding_v": 12,
-        "button_padding_h": 16,
-        "button_disabled_bg_color": "#cccccc",
-        "button_disabled_text_color": "#666666",
-        "columns_desktop": 4,
-        "columns_mobile": 2,
-        "card_gap": 24,
-        "padding_top": 40,
-        "padding_bottom": 40
-      }
-    },
-    "shotz_benefits_cTrneF": {
-      "type": "shotz-benefits",
-      "blocks": {
-        "card_BjpDXy": {
-          "type": "card",
-          "settings": {
-            "icon": "",
-            "title": "100ML. Dois goles",
-            "text": "Proteína pronta para beber"
-          }
-        },
-        "card_jWRftJ": {
-          "type": "card",
-          "settings": {
-            "icon": "",
-            "title": "Fórmula exclusiva",
-            "text": "Proteína enriquecida com todos aminoácidos"
-          }
-        },
-        "card_JAYA4m": {
-          "type": "card",
-          "settings": {
-            "icon": "",
-            "title": "A proteína feita para sua rotina",
-            "text": "No trabalho, no café ou até mesmo antes do jantar"
-          }
-        }
-      },
-      "block_order": [
-        "card_BjpDXy",
-        "card_jWRftJ",
-        "card_JAYA4m"
-      ],
-      "disabled": true,
-      "name": "Shotz – Benefits",
-      "settings": {
-        "eyebrow": "",
-        "heading": "CRIADO PARA VIDAS AGITADAS",
-        "subheading": "A proteína que da match com sua rotina",
-        "bg_image": "shopify://shop_images/hf_20260928_160444_7dcd6c15-a81f-4b3f-bab7-fae71d8fa3fc_2.png",
-        "bg_image_mobile": "shopify://shop_images/hf_20260928_160444_7dcd6c15-a81f-4b3f-bab7-fae71d8fa3fc_2.png",
-        "bg_position": "top",
-        "overlay_color": "#000000",
-        "overlay_opacity": 35,
-        "min_height": 0,
-        "background_color": "#0d0d0d"
-      }
-    },
-    "17824113349f43bc3c": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_f3d7375_yhkHXd": {
-          "type": "ai_gen_block_f3d7375",
-          "settings": {
-            "title": "Nós contra eles",
-            "title_size": 36,
-            "title_color": "#000000",
-            "shotz_name": "",
-            "shotz_image": "shopify://shop_images/Sem_nome_1200_x_300_px_1.png",
-            "whey_name": "Whey tradicional",
-            "collagen_name": "Bebidas de colágeno",
-            "attr_1_name": "23g de proteína enriquecida",
-            "attr_1_shotz": true,
-            "attr_1_whey": true,
-            "attr_1_collagen": false,
-            "attr_2_name": "",
-            "attr_2_shotz": true,
-            "attr_2_whey": true,
-            "attr_2_collagen": false,
-            "attr_3_name": "Menos de 1g de carboidrato",
-            "attr_3_shotz": true,
-            "attr_3_whey": false,
-            "attr_3_collagen": false,
-            "attr_4_name": "Textura leve, pronta pra beber",
-            "attr_4_shotz": true,
-            "attr_4_whey": false,
-            "attr_4_collagen": true,
-            "attr_5_name": "Gosto de suco, sem sabor artificial",
-            "attr_5_shotz": true,
-            "attr_5_whey": false,
-            "attr_5_collagen": true,
-            "attr_6_name": "Sem lactose, não estufa",
-            "attr_6_shotz": true,
-            "attr_6_whey": false,
-            "attr_6_collagen": true,
-            "shotz_column_bg_color": "#e9e7e2",
-            "shotz_column_text_color": "#000000",
-            "accent_color": "#000000",
-            "divider_color": "#000000",
-            "check_icon_color": "#000000",
-            "check_icon_stroke": "#ffffff",
-            "cross_icon_color": "#ff6b5a",
-            "cross_icon_stroke": "#ffffff",
-            "background_image_opacity": 15,
-            "table_background_color": "#f6f5f3",
-            "table_text_color": "#000000",
-            "table_border_radius": 20,
-            "reveal_on_scroll": true
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_f3d7375_yhkHXd"
-      ],
-      "name": "Comparativo",
-      "settings": {}
-    },
-    "divider_DryE3e": {
-      "type": "divider",
-      "name": "t:names.divider_section",
-      "settings": {
-        "color_scheme": "",
-        "section_width": "full-width",
-        "thickness": 1,
-        "corner_radius": "square",
-        "width_percent": 100,
-        "alignment_horizontal": "center",
-        "padding-block-start": 16,
-        "padding-block-end": 16
-      }
-    },
-    "1787857495d8ac9ebf": {
-      "type": "_blocks",
-      "settings": {}
-    },
-    "blocks_9FNXWB": {
-      "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_0453d40_JLetNH": {
-          "type": "ai_gen_block_0453d40",
-          "disabled": true,
-          "settings": {
-            "image_position": "right",
-            "background_color": "#f6f5f3",
-            "product_image": "shopify://shop_images/5539c8cf-856d-4601-b6d1-1cdbc0e09587.jpg",
-            "image_background_color": "#f5f5f5",
-            "image_border_radius": 20,
-            "headline": "A CIÊNCIA POR TRÁS",
-            "subtitle": "Trabalhando em conjunto com engenheiros de alimentos e laboratórios parcerios, criamos uma solução proteica que oferece nutrição de verdade e ganhando praticidade. Com a consistência de uma bebida leve, saborosa e em apenas 100ml, evoluimos seu jeito de bater a meta de proteína.",
-            "box_subtitle_color": "#000000",
-            "box_1_subtitle": "A opção mais saudável também pode ser a mais fácil.",
-            "box_1_text": "",
-            "box_2_subtitle": "",
-            "box_2_text": "",
-            "box_3_subtitle": "",
-            "box_3_text": "",
-            "box_4_subtitle": "",
-            "box_4_text": "",
-            "button_text": "A CIÊNCIA",
-            "button_link": "shopify://pages/a-ciencia-por-tras-da-shotz",
-            "button_bg_color": "#000000",
-            "button_text_color": "#ffffff",
-            "reveal_on_scroll": true
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_0453d40_JLetNH"
-      ],
-      "name": "Hero com benefícios",
-      "settings": {}
-    },
-    "shotz_product_wheel_rAkUCn": {
-      "type": "shotz-product-wheel",
-      "blocks": {
-        "wheel_item_FmJj4H": {
-          "type": "wheel_item",
-          "settings": {
-            "text": "Sabor"
-          }
-        },
-        "wheel_item_XYRhWk": {
-          "type": "wheel_item",
-          "settings": {
-            "text": "Tecnologia"
-          }
-        },
-        "wheel_item_MWNhN4": {
-          "type": "wheel_item",
-          "settings": {
-            "text": "Qualidade"
-          }
-        },
-        "wheel_item_dBLFMQ": {
-          "type": "wheel_item",
-          "settings": {
-            "text": "Praticidade"
-          }
-        },
-        "wheel_item_njmrF9": {
-          "type": "wheel_item",
-          "settings": {
-            "text": "Conveniência"
-          }
-        },
-        "feature_zF7cPF": {
-          "type": "feature",
-          "settings": {
-            "icon": "bolt",
-            "label": "Proteína Diária"
-          }
-        },
-        "feature_bVCzJC": {
-          "type": "feature",
-          "settings": {
-            "icon": "droplet",
-            "label": "Textura Leve"
-          }
-        },
-        "feature_jP8rGW": {
-          "type": "feature",
-          "settings": {
-            "icon": "heart",
-            "label": "nutrientes essenciais"
-          }
-        },
-        "checklist_item_HwpDAm": {
-          "type": "checklist_item",
+        "badge_8": {
+          "type": "badge",
           "settings": {
             "text": "23g de proteína por shot"
           }
-        },
-        "checklist_item_HHkzTM": {
-          "type": "checklist_item",
+        }
+      },
+      "block_order": [
+        "badge_1",
+        "badge_2",
+        "badge_3",
+        "badge_4",
+        "badge_5",
+        "badge_6",
+        "badge_7",
+        "badge_8"
+      ],
+      "settings": {
+        "section3_image": "shopify://shop_images/hf_20261009_132940_abc3020f-f798-49b0-bda0-33ccfe4ea751.png",
+        "headline": "Uma nova forma<br>de consumir proteína.",
+        "intro": "",
+        "button_label": "Quero conhecer o SHOTZ",
+        "button_link": ""
+      }
+    },
+    "para_quem_e": {
+      "type": "shotz-prelaunch-para-quem-e",
+      "settings": {
+        "section2_image": "shopify://shop_images/hf_20261005_131751_7a59ba51-dc3c-4564-b165-8ebc6d8f271e_4.png",
+        "headline": "Para quem acredita que performance<br class=\"spl-linebreak\">acontece todos os dias.",
+        "text": "<p>Shotz foi criado para pessoas que vivem em movimento — que conciliam trabalho, treinos e uma rotina intensa, mas ainda escolhem cuidar da própria saúde.</p><p>Porque evoluir não depende de grandes mudanças, e sim de pequenas escolhas feitas todos os dias. Consumir proteína deveria ser uma delas.</p>",
+        "button_label": "Quero fazer parte desse movimento",
+        "button_link": ""
+      }
+    },
+    "fechamento": {
+      "type": "shotz-prelaunch-fechamento",
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
           "settings": {
-            "text": "Aminoácidos essenciais"
+            "icon": "✓",
+            "text": "Acesso antecipado ao lançamento"
           }
         },
-        "checklist_item_8GGYiP": {
-          "type": "checklist_item",
+        "benefit_2": {
+          "type": "benefit",
           "settings": {
-            "text": "Apenas 95kcal por dose"
+            "icon": "✓",
+            "text": "10% OFF na sua primeira compra"
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "✓",
+            "text": "Comunidade exclusiva no WhatsApp"
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "✓",
+            "text": "Novidades e bastidores antes da abertura"
           }
         }
       },
       "block_order": [
-        "wheel_item_FmJj4H",
-        "wheel_item_XYRhWk",
-        "wheel_item_MWNhN4",
-        "wheel_item_dBLFMQ",
-        "wheel_item_njmrF9",
-        "feature_zF7cPF",
-        "feature_bVCzJC",
-        "feature_jP8rGW",
-        "checklist_item_HwpDAm",
-        "checklist_item_HHkzTM",
-        "checklist_item_8GGYiP"
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4"
       ],
-      "name": "Roda de benefícios",
       "settings": {
-        "eyebrow": "A CIÊNCIA",
-        "brand_name": "Shotz",
-        "heading": "Proteína + Inovação",
-        "description": "Com a consistência de uma bebida leve, saborosa e em apenas 100ml, evoluimos seu jeito de bater a meta de proteína.",
-        "center_image": "shopify://shop_images/shotzrodas.png",
-        "center_image_size": 64,
-        "wheel_speed": 36,
-        "wheel_direction": "normal",
-        "pause_on_hover": true,
-        "price_label": "",
-        "price": "",
-        "primary_btn_label": "A ciência",
-        "primary_btn_link": "",
-        "secondary_btn_label": "Experimente agora",
-        "secondary_btn_link": "",
-        "btn_primary_bg": "#000000",
-        "btn_primary_text": "#ffffff",
-        "btn_primary_bg_hover": "#cfcfcf",
-        "btn_primary_text_hover": "#000000",
-        "btn_arrow_bg": "#ffffff",
-        "btn_arrow_color": "#000000",
-        "btn_secondary_bg": "",
-        "btn_secondary_text": "",
-        "btn_secondary_border": "#000000",
-        "btn_secondary_bg_hover": "",
-        "btn_secondary_text_hover": "",
-        "image_position": "left",
-        "max_width": 1400,
-        "section_padding": 80,
-        "heading_size": 44,
-        "background_color": "#ffffff",
-        "accent_color": "#9f3d49",
-        "heading_color": "#000000",
-        "text_color": "#000000",
-        "pill_background": "#ffffff",
-        "pill_border_color": "#111111",
-        "pill_text_color": "#561218",
-        "reveal_on_scroll": true
+        "headline": "Faça parte<br class=\"spl-linebreak\">desse começo.",
+        "text": "Se você também acredita que consumir proteína deveria ser mais simples, queremos que conheça a Shotz antes de todo mundo.",
+        "legal": "Preencha seus dados e venha construir essa história com a gente.",
+        "button_label": "Quero fazer parte",
+        "button_link": ""
       }
     }
   },
   "order": [
-    "hero_banner_xf8AGM",
-    "shotz_banner_thMMnV",
-    "shotz_choose_yours_Gp37ig",
-    "shotz_numeros_LEgDf3",
-    "blocks_rCKAQq",
-    "variants_grid_dNm8hc",
-    "shotz_benefits_cTrneF",
-    "17824113349f43bc3c",
-    "divider_DryE3e",
-    "1787857495d8ac9ebf",
-    "blocks_9FNXWB",
-    "shotz_product_wheel_rAkUCn"
+    "hero",
+    "o_que_e",
+    "para_quem_e",
+    "fechamento"
   ]
 }

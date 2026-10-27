@@ -30,10 +30,16 @@
     "o_que_e": {
       "type": "shotz-prelaunch-o-que-e",
       "blocks": {
+        "badge_8": {
+          "type": "badge",
+          "settings": {
+            "text": "23g de proteína por shot"
+          }
+        },
         "badge_1": {
           "type": "badge",
           "settings": {
-            "text": "Alta concentração de proteína"
+            "text": "Apenas 95kcal"
           }
         },
         "badge_2": {
@@ -45,7 +51,7 @@
         "badge_3": {
           "type": "badge",
           "settings": {
-            "text": "Zero ad. açúcar"
+            "text": "Zero adição de açúcar"
           }
         },
         "badge_4": {
@@ -71,23 +77,17 @@
           "settings": {
             "text": "Sabores frutados e refrescantes"
           }
-        },
-        "badge_8": {
-          "type": "badge",
-          "settings": {
-            "text": "23g de proteína por shot"
-          }
         }
       },
       "block_order": [
+        "badge_8",
         "badge_1",
         "badge_2",
         "badge_3",
         "badge_4",
         "badge_5",
         "badge_6",
-        "badge_7",
-        "badge_8"
+        "badge_7"
       ],
       "settings": {
         "section3_image": "shopify://shop_images/hf_20261009_132940_abc3020f-f798-49b0-bda0-33ccfe4ea751.png",

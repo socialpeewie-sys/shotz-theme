@@ -464,13 +464,30 @@
       `.variant-picker input[type="radio"][aria-label="${optionValue}"],
        .variant-picker input[type="radio"][value="${optionValue}"]`
     );
+    let changed = false;
     radios.forEach(radio => {
       if (!radio.checked) {
         radio.checked = true;
         radio.dispatchEvent(new Event('change', { bubbles: true }));
         radio.dispatchEvent(new Event('input', { bubbles: true }));
+        changed = true;
       }
     });
+    return changed;
+  }
+
+  // Executa cb depois que o Horizon terminar de atualizar a variante
+  // (evento variant:update), com fallback caso o evento não chegue.
+  function afterVariantUpdate(cb) {
+    let done = false;
+    const run = () => {
+      if (done) return;
+      done = true;
+      document.removeEventListener('variant:update', run);
+      cb();
+    };
+    document.addEventListener('variant:update', run);
+    setTimeout(run, 2000);
   }
 
   function applyQuantitySelection(variantId) {
@@ -569,14 +586,18 @@
     const titleEl = document.querySelector('[data-flavor-title]');
     if (titleEl) titleEl.textContent = flavor;
 
-    triggerNativeRadio(flavor);
+    const flavorChanged = triggerNativeRadio(flavor);
+    updateQuantityCards(flavor);
 
-    // Aguarda Horizon atualizar input[name="id"] antes de reconstruir os cards
-    setTimeout(() => {
-      updateQuantityCards(flavor);
+    // Só seleciona a quantidade depois que o Horizon aplicar o novo sabor.
+    // Antes isso rodava no mesmo instante, com o seletor nativo ainda no
+    // sabor anterior, e a URL (?variant=) ficava com a variante errada.
+    const selectFirstQuantity = () => {
       const firstCard = document.querySelector(`.ai-quantity-card-${id}`);
       if (firstCard) triggerNativeRadio(firstCard.dataset.option2);
-    }, 0);
+    };
+    if (flavorChanged) afterVariantUpdate(selectFirstQuantity);
+    else selectFirstQuantity();
   }
 
   function selectQuantity(card) {

@@ -214,9 +214,13 @@ h1.textContent = title;
   // Atualiza ao carregar
   updateTitle();
 
-  // Observa mudanças no DOM
-  document.addEventListener('change', function() {
-    setTimeout(updateTitle, 100);
+  // Usa a variante que o Horizon realmente selecionou (evento variant:update).
+  // Antes lia ?variant= da URL 100ms após o "change", que podia estar
+  // desatualizada e mostrar o nome de outra variante (ex.: Starter Kit).
+  document.addEventListener('variant:update', function(e) {
+    var resource = e.detail && e.detail.resource;
+    var variant = resource && (getVariantById(resource.id) || resource);
+    if (variant) buildTitle(variant);
   });
 
   // Observa mudança da URL (?variant=)

@@ -381,10 +381,8 @@
 
         {% if variant_flavor == current_flavor %}
           {% assign quantity_number = variant_quantity | remove: ' unidades' | remove: 'unidades' | strip | times: 1 %}
-          {% assign unit_price = 0 %}
-          {% if quantity_number > 0 %}
-            {% assign unit_price = variant.price | divided_by: quantity_number %}
-          {% endif %}
+          {%- comment -%} Preço unitário vem do campo nativo da Shopify (Variante > Preço unitário) {%- endcomment -%}
+          {% assign unit_price = variant.unit_price | default: 0 %}
 
           {% assign discount_percent = 0 %}
           {% if variant.compare_at_price > variant.price %}
@@ -443,6 +441,8 @@
 (function() {
   const id = '{{ ai_gen_id }}';
   const productVariants = {{ product.variants | json }};
+  // Preço unitário nativo da Shopify por variante (0 = não configurado)
+  const unitPrices = { {%- for v in product.variants -%}"{{ v.id }}":{{ v.unit_price | default: 0 }}{% unless forloop.last %},{% endunless %}{%- endfor -%} };
 
   function formatMoney(cents) {
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(cents / 100);
@@ -498,7 +498,7 @@
     flavorVariants.forEach(variant => {
       const qty = variant.option2 || variant.option1;
       const qtyNum = parseInt(qty.replace(/[^0-9]/g, '')) || 0;
-      const unitPrice = qtyNum > 0 ? variant.price / qtyNum : 0;
+      const unitPrice = unitPrices[variant.id] || 0;
 
       let discountPct = 0;
       if (variant.compare_at_price > variant.price) {

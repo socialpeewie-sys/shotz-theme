@@ -240,16 +240,13 @@ h1.textContent = title;
   if (!document.querySelector('.variant-picker')) return;
 
   const variants = {{ product.variants | json }};
+  // Preço unitário nativo da Shopify por variante (0 = não configurado)
+  const unitPrices = { {%- for v in product.variants -%}"{{ v.id }}":{{ v.unit_price | default: 0 }}{% unless forloop.last %},{% endunless %}{%- endfor -%} };
 
   function formatMoney(cents) {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency', currency: 'BRL'
     }).format(cents / 100);
-  }
-
-  function getQtyFromTitle(title) {
-    const match = title.match(/(\d+)\s*unidades?/i);
-    return match ? parseInt(match[1]) : 0;
   }
 
   function applyBadges() {
@@ -291,9 +288,8 @@ h1.textContent = title;
       }
 
       // Preço por unidade
-      const qty = getQtyFromTitle(variant.title);
-      if (qty > 0 && !label.querySelector('.custom-unit-price')) {
-        const unitPrice = variant.price / qty;
+      const unitPrice = unitPrices[variant.id] || 0;
+      if (unitPrice > 0 && !label.querySelector('.custom-unit-price')) {
         const priceEl = document.createElement('span');
         priceEl.className = 'custom-unit-price';
         priceEl.textContent = formatMoney(unitPrice) + '/cada';

@@ -347,7 +347,15 @@
               data-flavor="{{ flavor }}"
               data-option1="{{ flavor }}"
             >
-              {% if variant.featured_image %}
+              {%- comment -%}
+                Prioridade: metacampo da variante "Imagem fruta" (custom.imagem_fruta)
+                → imagem da variante → imagem principal do produto.
+                O metacampo não entra na galeria da PDP.
+              {%- endcomment -%}
+              {% assign imagem_fruta = variant.metafields.custom.imagem_fruta.value %}
+              {% if imagem_fruta %}
+                <img src="{{ imagem_fruta | image_url: width: 200 }}" alt="{{ flavor }}" class="ai-flavor-image-{{ ai_gen_id }}" loading="lazy">
+              {% elsif variant.featured_image %}
                 <img src="{{ variant.featured_image | image_url: width: 200 }}" alt="{{ flavor }}" class="ai-flavor-image-{{ ai_gen_id }}" loading="lazy">
               {% elsif product.featured_image %}
                 <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ flavor }}" class="ai-flavor-image-{{ ai_gen_id }}" loading="lazy">

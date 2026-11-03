@@ -380,7 +380,8 @@
         {% assign variant_quantity = variant.option2 | default: variant.option1 %}
 
         {% if variant_flavor == current_flavor %}
-          {% assign quantity_number = variant_quantity | remove: ' unidades' | remove: 'unidades' | strip | times: 1 %}
+          {%- comment -%} Quantidade vem da "Medida total do produto" configurada no Preço unitário da variante {%- endcomment -%}
+          {% assign quantity_number = variant.unit_price_measurement.quantity_value | default: 0 %}
           {%- comment -%} Preço unitário vem do campo nativo da Shopify (Variante > Preço unitário) {%- endcomment -%}
           {% assign unit_price = variant.unit_price | default: 0 %}
 
@@ -443,6 +444,8 @@
   const productVariants = {{ product.variants | json }};
   // Preço unitário nativo da Shopify por variante (0 = não configurado)
   const unitPrices = { {%- for v in product.variants -%}"{{ v.id }}":{{ v.unit_price | default: 0 }}{% unless forloop.last %},{% endunless %}{%- endfor -%} };
+  // Quantidade por variante = "Medida total do produto" do Preço unitário (0 = não configurado)
+  const unitQuantities = { {%- for v in product.variants -%}"{{ v.id }}":{{ v.unit_price_measurement.quantity_value | default: 0 }}{% unless forloop.last %},{% endunless %}{%- endfor -%} };
 
   function formatMoney(cents) {
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(cents / 100);
@@ -497,7 +500,7 @@
 
     flavorVariants.forEach(variant => {
       const qty = variant.option2 || variant.option1;
-      const qtyNum = parseInt(qty.replace(/[^0-9]/g, '')) || 0;
+      const qtyNum = Number(unitQuantities[variant.id]) || 0;
       const unitPrice = unitPrices[variant.id] || 0;
 
       let discountPct = 0;

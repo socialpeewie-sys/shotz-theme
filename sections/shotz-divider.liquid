@@ -72,6 +72,7 @@
   .shotz-divider svg {
     position: relative;
     display: block;
+    max-width: none;
     width: calc(var(--divider-width, 100%) + 1.3px);
     height: var(--divider-height, 60px);
   }
@@ -99,14 +100,35 @@
   .shotz-divider__hint[hidden] { display: none; }
 {% endstyle %}
 
+{%- liquid
+  if s.position == 'top'
+    assign side_style = 'top: 0; bottom: auto; transform: none;'
+  else
+    assign side_style = 'bottom: 0; top: auto; transform: rotate(180deg);'
+  endif
+  assign svg_transform = 'none'
+  if s.flip
+    assign svg_transform = 'rotateY(180deg)'
+  endif
+-%}
+{%- comment -%}
+  Estilos críticos inline (vencem regras globais do tema, como svg { max-width: 100% }).
+{%- endcomment -%}
 <div
   class="shotz-divider shotz-divider--{{ s.position }}{% if s.flip %} shotz-divider--flip{% endif %}"
   data-position="{{ s.position }}"
   {% if s.color_mode == 'auto' %}data-auto-color{% endif %}
-  style="--divider-width: {{ s.width }}%;"
+  style="--divider-width: {{ s.width }}%; position: absolute; left: 0; right: 0; width: 100%; overflow: hidden; line-height: 0; pointer-events: none; {{ side_style }}{% if s.color_mode == 'custom' %} color: {{ s.color }};{% endif %}"
   aria-hidden="true"
 >
-  <svg viewBox="0 0 1200 120" preserveAspectRatio="none" focusable="false">
+  <svg
+    viewBox="0 0 1200 120"
+    preserveAspectRatio="none"
+    focusable="false"
+    width="100%"
+    height="{{ s.height }}"
+    style="position: relative; display: block; max-width: none; min-height: 1px; width: calc({{ s.width }}% + 1.3px); height: var(--divider-height, {{ s.height }}px); transform: {{ svg_transform }};"
+  >
     <path d="{{ path }}" fill="{{ fill }}"{% if s.invert %} fill-rule="evenodd"{% endif %}></path>
   </svg>
 </div>
@@ -184,6 +206,9 @@
       divider.dataset.position = pos;
       divider.classList.toggle('shotz-divider--bottom', pos === 'bottom');
       divider.classList.toggle('shotz-divider--top', pos === 'top');
+      divider.style.top = pos === 'top' ? '0' : 'auto';
+      divider.style.bottom = pos === 'top' ? 'auto' : '0';
+      divider.style.transform = pos === 'top' ? 'none' : 'rotate(180deg)';
       divider.style.color = color;
 
       if (hint) {

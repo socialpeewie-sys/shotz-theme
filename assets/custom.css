@@ -55,6 +55,16 @@
   .product-information__media {
     align-self: start;
   }
+
+  /* Galeria fixa enquanto a coluna de compra (mais alta) rola: evita o espaço
+     vazio abaixo das fotos e mantém as imagens visíveis durante a escolha. */
+  #shopify-section-main .product-information__media {
+    position: sticky;
+    /* --sz-media-top é calculado em shotz-custom.js: se a galeria for mais alta
+       que a tela, ela rola até a última foto aparecer e só então fixa. */
+    top: var(--sz-media-top, calc(var(--sticky-header-offset, 0px) + 16px));
+    z-index: var(--layer-flat, 1);
+  }
 }
 
 /* --- PDP: image fills the full left column, thumbnails fill available width (desktop only) ---

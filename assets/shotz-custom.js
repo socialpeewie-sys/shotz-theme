@@ -381,3 +381,43 @@
     scanAndWatch();
   }
 })();
+
+/* ─────────────────────────────────────────────────────────────────
+   PDP — galeria fixa (desktop) que respeita a altura da tela.
+   Se a galeria couber na tela, fixa no topo (abaixo do header).
+   Se for mais alta, o "top" fica negativo: ela rola até a última foto
+   aparecer e então fixa — nenhuma imagem fica escondida.
+   ───────────────────────────────────────────────────────────────── */
+(function () {
+  var GAP = 16;
+  var media = null;
+
+  function update() {
+    if (!media) return;
+    if (window.innerWidth < 750) {
+      media.style.removeProperty('--sz-media-top');
+      return;
+    }
+    var header = parseFloat(getComputedStyle(media).getPropertyValue('--sticky-header-offset')) || 0;
+    var top = Math.min(header + GAP, window.innerHeight - media.offsetHeight - GAP);
+    media.style.setProperty('--sz-media-top', Math.round(top) + 'px');
+  }
+
+  function init() {
+    media = document.querySelector('#shopify-section-main .product-information__media');
+    if (!media) return;
+    update();
+    if ('ResizeObserver' in window) new ResizeObserver(update).observe(media);
+    window.addEventListener('resize', update, { passive: true });
+    window.addEventListener('scroll', function () {
+      // o header pode mudar de altura ao rolar (header fixo/encolhido)
+      window.requestAnimationFrame(update);
+    }, { passive: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();

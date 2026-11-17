@@ -581,6 +581,21 @@
         "padding-block-end": 0
       }
     },
+    "shotz_divider_mttDDJ": {
+      "type": "shotz-divider",
+      "name": "Divisor",
+      "settings": {
+        "shape": "triangle",
+        "position": "bottom",
+        "flip": false,
+        "invert": false,
+        "height": 60,
+        "height_mobile": 30,
+        "width": 136,
+        "color_mode": "auto",
+        "color": "#F0EFEB"
+      }
+    },
     "blocks_tBwT3X": {
       "type": "_blocks",
       "blocks": {
@@ -690,21 +705,6 @@
         "padding_top": 64,
         "padding_bottom": 64,
         "reveal_on_scroll": true
-      }
-    },
-    "shotz_divider_yBmyWy": {
-      "type": "shotz-divider",
-      "name": "Divisor",
-      "settings": {
-        "shape": "waves",
-        "position": "bottom",
-        "flip": false,
-        "invert": false,
-        "height": 120,
-        "height_mobile": 30,
-        "width": 234,
-        "color_mode": "custom",
-        "color": "#000000"
       }
     },
     "shotz_benefits_bgxU7C": {
@@ -1302,18 +1302,34 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "shotz_divider_rArEVh": {
+      "type": "shotz-divider",
+      "name": "Divisor",
+      "settings": {
+        "shape": "triangle",
+        "position": "bottom",
+        "flip": false,
+        "invert": false,
+        "height": 110,
+        "height_mobile": 30,
+        "width": 136,
+        "color_mode": "auto",
+        "color": "#F0EFEB"
+      }
     }
   },
   "order": [
     "main",
+    "shotz_divider_mttDDJ",
     "blocks_tBwT3X",
     "shotz_benefits_pdp_xh4QbY",
-    "shotz_divider_yBmyWy",
     "shotz_benefits_bgxU7C",
     "proteina_stats_KecjAk",
     "proteina_stats_48PbKL",
     "shotz_problem_grid_mFgaUC",
     "blocks_GCR7Li",
-    "section_tdzjcT"
+    "section_tdzjcT",
+    "shotz_divider_rArEVh"
   ]
 }

@@ -1,4 +1,4 @@
-{%- doc -%}
+{%- comment -%}
   Divisor entre seções (estilo shapedivider.app).
 
   Adicione esta seção ENTRE duas seções. Ela não ocupa espaço: o desenho é
@@ -9,7 +9,7 @@
     pintado com a cor da seção de CIMA.
   Cor automática: lida do fundo real da seção vizinha (funciona com cores
   diferentes por seção). Se a vizinha for uma imagem, use a outra posição.
-{%- enddoc -%}
+{%- endcomment -%}
 
 {%- liquid
   assign s = section.settings
@@ -205,9 +205,9 @@
       "label": "Largura",
       "min": 100,
       "max": 300,
-      "step": 1,
+      "step": 2,
       "unit": "%",
-      "default": 137
+      "default": 136
     },
     {
       "type": "select",

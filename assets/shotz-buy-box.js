@@ -173,6 +173,9 @@
       this.setText('[data-one-price]', this.fmt(v.price));
       this.setText('[data-one-meta]', each(v.price));
 
+      const planWrap = this.querySelector('[data-plan-wrap]');
+      if (planWrap) planWrap.hidden = this.data.plansOnlyOnSubscription ? !this.subscription : false;
+
       const flag = this.querySelector('[data-sub-flag]');
       if (flag) {
         flag.hidden = subPct <= 0;

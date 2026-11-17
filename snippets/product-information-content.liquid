@@ -97,7 +97,6 @@
         data-testid="product-information-media"
       >
         {{ media_gallery }}
-        {%- render 'shotz-diferenciais', settings: settings, placement: 'desktop' -%}
       </div>
     {% endcapture %}
 
@@ -108,9 +107,6 @@
         {{ product_details }}
       {% endif %}
     {% endfor %}
-
-    {%- comment -%} Mobile: "Diferenciais" logo abaixo dos detalhes (depois do acordeão) {%- endcomment -%}
-    {%- render 'shotz-diferenciais', settings: settings, placement: 'mobile' -%}
   </div>
 
   {{ additional_blocks }}

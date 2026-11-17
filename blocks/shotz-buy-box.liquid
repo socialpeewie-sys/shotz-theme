@@ -196,8 +196,8 @@
         {%- endunless -%}
       </div>
 
-      {%- comment -%} Sempre visível; escolher um plano ativa a assinatura {%- endcomment -%}
-      <div class="sz-bb__plan" data-plan-wrap>
+      {%- comment -%} Planos de entrega: por padrão só aparecem com a assinatura selecionada {%- endcomment -%}
+      <div class="sz-bb__plan" data-plan-wrap{% if block.settings.plans_only_on_subscription and start_sub == false %} hidden{% endif %}>
         <label class="sz-bb__plan-label" for="sz-plan-{{ bid }}">{{ block.settings.plan_select_label }}</label>
         <div class="sz-bb__plan-select">
           <select id="sz-plan-{{ bid }}" data-kind="plan">
@@ -302,6 +302,7 @@
       "soldOutText": {{ block.settings.sold_out_text | json }},
       "eachText": {{ block.settings.each_text | json }},
       "requiresPlan": {{ product.requires_selling_plan | json }},
+      "plansOnlyOnSubscription": {{ block.settings.plans_only_on_subscription | json }},
       "values": [
         {%- for option in product.options_with_values -%}
           [{%- for value in option.values -%}{{ value.name | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
@@ -353,6 +354,7 @@
     { "type": "text", "id": "subscribe_label", "label": "Texto da assinatura", "default": "Assine e economize", "info": "Pode usar [pct] para mostrar a % de desconto" },
     { "type": "text", "id": "subscribe_badge_text", "label": "Selo de destaque da assinatura", "default": "Economize [pct]%", "info": "Aparece no topo do card. [pct] vira a % de desconto. Vazio = sem selo" },
     { "type": "text", "id": "one_time_label", "label": "Texto da compra única", "default": "Compra única" },
+    { "type": "checkbox", "id": "plans_only_on_subscription", "label": "Mostrar planos de entrega só com a assinatura selecionada", "default": true },
     { "type": "text", "id": "plan_select_label", "label": "Rótulo do seletor de entrega", "default": "Entregar a cada:" },
     { "type": "text", "id": "subscription_note", "label": "Nota da assinatura", "default": "Pause ou cancele quando quiser, sem taxas." },
     {

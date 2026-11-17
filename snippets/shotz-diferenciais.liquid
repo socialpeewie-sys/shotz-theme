@@ -1,11 +1,11 @@
 {%- doc -%}
   Painel "O que torna o Shotz diferente" — título, subtítulo opcional e 3 números.
   As configurações ficam na seção product-information (grupo "Diferenciais").
-  Renderizado duas vezes: dentro da coluna de fotos (só desktop) e depois dos
-  detalhes do produto / acordeão (só mobile).
+  Renderizado no fim dos detalhes do produto (abaixo do acordeão), no desktop
+  e no mobile — ver blocks/_product-details.liquid.
 
   @param {object} settings - Configurações da seção product-information
-  @param {string} placement - 'desktop' ou 'mobile'
+  @param {string} placement - 'details' (padrão)
 {%- enddoc -%}
 
 {%- liquid
@@ -134,28 +134,19 @@
     color: var(--dif-muted);
   }
 
-  /* Desktop: abaixo das fotos | Mobile: abaixo do acordeão */
-  .shotz-dif--desktop { display: none; margin-top: 24px; }
-  .shotz-dif--mobile {
-    grid-column: 2 / 3;
-    order: 2;
-    margin-top: 8px;
-  }
+  .shotz-dif--details { width: 100%; margin-top: 8px; }
 
   @media screen and (min-width: 750px) {
-    .shotz-dif--desktop { display: flex; }
-    .shotz-dif--mobile { display: none; }
-
     .shotz-dif {
       gap: 20px;
-      padding: 40px;
+      padding: 32px;
       border-radius: 32px;
     }
-    .shotz-dif__heading { font-size: 40px; }
+    .shotz-dif__heading { font-size: 32px; }
     .shotz-dif__subheading { font-size: 16px; }
     .shotz-dif__stats { gap: 12px; }
-    .shotz-dif__stat { min-height: 140px; gap: 10px; border-radius: 18px; }
-    .shotz-dif__value { font-size: 48px; }
+    .shotz-dif__stat { min-height: 120px; gap: 10px; border-radius: 18px; }
+    .shotz-dif__value { font-size: clamp(28px, 3vw, 42px); }
     .shotz-dif__label { font-size: 12px; }
   }
 {% endstylesheet %}

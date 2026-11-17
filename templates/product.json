@@ -288,6 +288,7 @@
                 "subscribe_label": "Assine e economize",
                 "subscribe_badge_text": "Economize [pct]%",
                 "one_time_label": "Compra única",
+                "plans_only_on_subscription": true,
                 "plan_select_label": "Entregar a cada:",
                 "subscription_note": "Pause ou cancele quando quiser, sem taxas.",
                 "default_frequency": "one-time",

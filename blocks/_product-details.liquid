@@ -24,6 +24,8 @@
       </a>
     </div>
     {% content_for 'blocks' %}
+    {%- comment -%} Diferenciais (3 números): abaixo do acordeão, no desktop e no mobile {%- endcomment -%}
+    {%- render 'shotz-diferenciais', settings: section.settings, placement: 'details' -%}
   {% endcapture %}
 
   {% render 'group', children: children, settings: block_settings, shopify_attributes: block.shopify_attributes %}

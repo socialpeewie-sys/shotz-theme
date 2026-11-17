@@ -590,8 +590,8 @@
         "flip": false,
         "invert": false,
         "height": 25,
-        "height_mobile": 30,
-        "width": 136,
+        "height_mobile": 16,
+        "width": 100,
         "color_mode": "auto",
         "color": "#f0efeb"
       }
@@ -819,8 +819,8 @@
         "flip": false,
         "invert": false,
         "height": 35,
-        "height_mobile": 30,
-        "width": 136,
+        "height_mobile": 16,
+        "width": 152,
         "color_mode": "auto",
         "color": "#F0EFEB"
       }
@@ -897,7 +897,7 @@
         "flip": true,
         "invert": false,
         "height": 40,
-        "height_mobile": 30,
+        "height_mobile": 16,
         "width": 136,
         "color_mode": "auto",
         "color": "#000000"

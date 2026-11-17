@@ -38,20 +38,21 @@
     height: 0;
     pointer-events: none;
   }
-  #shopify-section-{{ section.id }} .shotz-divider {
+  #shopify-section-{{ section.id }} .sz-shape-divider {
     --divider-height: {{ s.height_mobile }}px;
     {%- if s.color_mode == 'custom' %}
       color: {{ s.color }};
     {%- endif %}
   }
   @media screen and (min-width: 750px) {
-    #shopify-section-{{ section.id }} .shotz-divider {
+    #shopify-section-{{ section.id }} .sz-shape-divider {
       --divider-height: {{ s.height }}px;
     }
   }
 
   /* Mesma estrutura do shapedivider.app, para o resultado bater com a prévia */
-  .shotz-divider {
+  /* Nome exclusivo: ".shotz-divider" já é usado no base.css (linha de 1px do widget de assinatura) */
+  .sz-shape-divider {
     position: absolute;
     left: 0;
     width: 100%;
@@ -60,16 +61,16 @@
     color: var(--color-background, #f0efeb);
   }
 
-  .shotz-divider--bottom {
+  .sz-shape-divider--bottom {
     bottom: 0;
     transform: rotate(180deg);
   }
 
-  .shotz-divider--top {
+  .sz-shape-divider--top {
     top: 0;
   }
 
-  .shotz-divider svg {
+  .sz-shape-divider svg {
     position: relative;
     display: block;
     max-width: none;
@@ -77,11 +78,11 @@
     height: var(--divider-height, 60px);
   }
 
-  .shotz-divider--flip svg {
+  .sz-shape-divider--flip svg {
     transform: rotateY(180deg);
   }
 
-  .shotz-divider__hint {
+  .sz-shape-divider__hint {
     position: absolute;
     left: 50%;
     top: 0;
@@ -97,7 +98,7 @@
     text-align: center;
     pointer-events: none;
   }
-  .shotz-divider__hint[hidden] { display: none; }
+  .sz-shape-divider__hint[hidden] { display: none; }
 {% endstyle %}
 
 {%- liquid
@@ -115,7 +116,7 @@
   Estilos críticos inline (vencem regras globais do tema, como svg { max-width: 100% }).
 {%- endcomment -%}
 <div
-  class="shotz-divider shotz-divider--{{ s.position }}{% if s.flip %} shotz-divider--flip{% endif %}"
+  class="sz-shape-divider sz-shape-divider--{{ s.position }}{% if s.flip %} sz-shape-divider--flip{% endif %}"
   data-position="{{ s.position }}"
   {% if s.color_mode == 'auto' %}data-auto-color{% endif %}
   style="--divider-width: {{ s.width }}%; position: absolute; left: 0; right: 0; width: 100%; overflow: hidden; line-height: 0; pointer-events: none; {{ side_style }}{% if s.color_mode == 'custom' %} color: {{ s.color }};{% endif %}"
@@ -134,7 +135,7 @@
 </div>
 
 {%- if request.design_mode -%}
-  <p class="shotz-divider__hint" data-divider-hint hidden></p>
+  <p class="sz-shape-divider__hint" data-divider-hint hidden></p>
 {%- endif -%}
 
 <script>
@@ -148,7 +149,7 @@
     var preferred = divider.dataset.position;
 
     function isDivider(el) {
-      return el && el.querySelector && el.querySelector(':scope > .shotz-divider');
+      return el && el.querySelector && el.querySelector(':scope > .sz-shape-divider');
     }
 
     function sibling(dir) {
@@ -204,8 +205,8 @@
       var under = pos === 'bottom' ? above : below;
 
       divider.dataset.position = pos;
-      divider.classList.toggle('shotz-divider--bottom', pos === 'bottom');
-      divider.classList.toggle('shotz-divider--top', pos === 'top');
+      divider.classList.toggle('sz-shape-divider--bottom', pos === 'bottom');
+      divider.classList.toggle('sz-shape-divider--top', pos === 'top');
       divider.style.top = pos === 'top' ? '0' : 'auto';
       divider.style.bottom = pos === 'top' ? 'auto' : '0';
       divider.style.transform = pos === 'top' ? 'none' : 'rotate(180deg)';
@@ -233,7 +234,7 @@
 {
   "name": "Divisor",
   "tag": "div",
-  "class": "shotz-divider-section",
+  "class": "sz-shape-divider-section",
   "settings": [
     {
       "type": "paragraph",

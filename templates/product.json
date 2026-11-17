@@ -279,9 +279,42 @@
               },
               "blocks": {}
             },
+            "shotz_buy_box_Vk7Pd2": {
+              "type": "shotz-buy-box",
+              "settings": {
+                "flavor_label": "Sabor",
+                "flavor_subtitle": "23g de proteína",
+                "frequency_label": "Frequência",
+                "subscribe_label": "Assine e economize [pct]%",
+                "one_time_label": "Compra única",
+                "plan_select_label": "Entregar a cada:",
+                "subscription_note": "Pause ou cancele quando quiser, sem taxas.",
+                "default_frequency": "one-time",
+                "quantity_label": "Escolha a quantidade:",
+                "unit_singular": "shot",
+                "unit_plural": "shots",
+                "each_text": "cada",
+                "save_badge_text": "Economize [pct]%",
+                "free_shipping_text": "Frete grátis",
+                "free_shipping_min_qty": 12,
+                "sold_out_text": "Esgotado",
+                "hide_quantity_stepper": true,
+                "accent_color": "#0094f6",
+                "accent_text_color": "#ffffff",
+                "card_background": "#ffffff",
+                "card_selected_background": "#f2f9ff",
+                "border_color": "#d9d6cf",
+                "text_color": "#0d0d0d",
+                "muted_color": "#6d6d6d",
+                "shipping_badge_background": "#1d9e75",
+                "shipping_badge_text": "#ffffff"
+              },
+              "blocks": {}
+            },
             "ai_gen_block_7ba48f4_fzPx9B": {
               "type": "ai_gen_block_7ba48f4",
               "name": "Seletor de variantes teste",
+              "disabled": true,
               "settings": {
                 "section_spacing": 16,
                 "show_flavor_label": true,
@@ -371,6 +404,7 @@
             },
             "subscriptions_app_block_gb6Mkz": {
               "type": "shopify://apps/subscriptions/blocks/app-block/a3bfe9ec-96f8-4508-a003-df608a36d2ad",
+              "disabled": true,
               "settings": {
                 "widget_style": "card",
                 "widget_style_card_selector": "radio_button",
@@ -507,6 +541,7 @@
             "divider_VJhene",
             "custom_liquid_PfYBx8",
             "ai_gen_block_7ba48f4_kWcUkw",
+            "shotz_buy_box_Vk7Pd2",
             "ai_gen_block_7ba48f4_fzPx9B",
             "variant_picker_R3rGDr",
             "subscriptions_app_block_gb6Mkz",

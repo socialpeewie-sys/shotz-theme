@@ -1,0 +1,394 @@
+{% doc %}
+  Shotz — Buy box da PDP (sabor → frequência → quantidade).
+
+  Estrutura inspirada em PDPs de bebidas funcionais: cards de sabor com miniatura,
+  escolha de frequência (assinatura x compra única) lado a lado e lista de
+  quantidades com preço total, preço por shot e % de economia.
+
+  - Sabor  = 1ª opção do produto. Miniatura: metacampo da variante
+    custom.imagem_fruta → imagem da variante → imagem do produto.
+  - Quantidade = 2ª opção do produto. Nº de shots vem da "Medida total do
+    produto" (Preço unitário da variante).
+  - Frequência = planos de venda (Shopify Subscriptions). O plano escolhido
+    entra no formulário de compra via <input name="selling_plan">.
+  - O seletor nativo do Horizon continua na página (oculto) e é acionado a
+    cada escolha, para manter preço, galeria, URL e botão de compra em sincronia.
+{% enddoc %}
+
+{%- liquid
+  assign product = closest.product
+  assign bid = block.id | replace: '_', '' | downcase
+  assign current = product.selected_or_first_available_variant
+  assign form_id = 'BuyButtons-ProductForm-' | append: section.id
+  assign unit_plural = block.settings.unit_plural | default: 'shots'
+  assign unit_singular = block.settings.unit_singular | default: 'shot'
+
+  assign flavor_option = product.options_with_values[0]
+  assign qty_option = nil
+  if product.options_with_values.size > 1
+    assign qty_option = product.options_with_values[1]
+  endif
+
+  assign has_plans = false
+  if product.selling_plan_groups.size > 0
+    assign has_plans = true
+  endif
+
+  assign start_sub = false
+  if has_plans
+    if product.requires_selling_plan or block.settings.default_frequency == 'subscription'
+      assign start_sub = true
+    endif
+  endif
+
+  assign first_plan = nil
+  if has_plans
+    assign first_plan = product.selling_plan_groups[0].selling_plans[0]
+  endif
+
+  assign sub_price = current.price
+  if first_plan
+    for a in current.selling_plan_allocations
+      if a.selling_plan.id == first_plan.id
+        assign sub_price = a.price
+      endif
+    endfor
+  endif
+  assign sub_pct = 0
+  if current.price > sub_price
+    assign sub_pct = current.price | minus: sub_price | times: 100.0 | divided_by: current.price | round
+  endif
+
+  assign flavor_label = block.settings.flavor_label | default: flavor_option.name
+  assign qty_label = block.settings.quantity_label
+  if qty_label == blank and qty_option
+    assign qty_label = qty_option.name
+  endif
+-%}
+
+{% style %}
+  .sz-bb-{{ bid }} {
+    --sz-accent: {{ block.settings.accent_color }};
+    --sz-accent-contrast: {{ block.settings.accent_text_color }};
+    --sz-card-bg: {{ block.settings.card_background }};
+    --sz-card-bg-selected: {{ block.settings.card_selected_background }};
+    --sz-border: {{ block.settings.border_color }};
+    --sz-text: {{ block.settings.text_color }};
+    --sz-muted: {{ block.settings.muted_color }};
+    --sz-ship-bg: {{ block.settings.shipping_badge_background }};
+    --sz-ship-text: {{ block.settings.shipping_badge_text }};
+  }
+
+  /* O seletor nativo continua funcionando, apenas fica invisível */
+  #shopify-section-{{ section.id }} .variant-picker { display: none !important; }
+  {%- if block.settings.hide_quantity_stepper %}
+    #shopify-section-{{ section.id }} .buy-buttons-block .quantity-selector-wrapper { display: none !important; }
+  {%- endif %}
+{% endstyle %}
+
+<shotz-buy-box
+  class="sz-bb sz-bb-{{ bid }}"
+  data-section-id="{{ section.id }}"
+  data-form-id="{{ form_id }}"
+  {{ block.shopify_attributes }}
+>
+  {%- comment -%} ───────── SABOR ───────── {%- endcomment -%}
+  <fieldset class="sz-bb__group">
+    <legend class="sz-bb__heading">
+      {{ flavor_label }}<span class="sz-bb__heading-sep">:</span>
+      <span class="sz-bb__heading-value" data-flavor-name>{{ current.options[0] }}</span>
+    </legend>
+
+    <div class="sz-bb__flavors" style="--sz-cols: {{ flavor_option.values.size | at_most: 4 }}">
+      {%- for value in flavor_option.values -%}
+        {%- liquid
+          assign fv = nil
+          assign flavor_available = false
+          for v in product.variants
+            if v.options[0] == value.name
+              if fv == nil
+                assign fv = v
+              endif
+              if v.available
+                assign flavor_available = true
+              endif
+            endif
+          endfor
+          assign thumb = fv.metafields.custom.imagem_fruta.value | default: fv.featured_image | default: product.featured_image
+        -%}
+        <label class="sz-bb__flavor{% unless flavor_available %} is-unavailable{% endunless %}">
+          <input
+            class="sz-bb__input"
+            type="radio"
+            name="sz-flavor-{{ bid }}"
+            value="{{ value.name | escape }}"
+            data-kind="flavor"
+            {% if value.name == current.options[0] %}checked{% endif %}
+          >
+          <span class="sz-bb__flavor-media">
+            {%- if thumb -%}
+              {{ thumb | image_url: width: 160 | image_tag: alt: '', loading: 'lazy', width: 80, height: 80 }}
+            {%- endif -%}
+          </span>
+          <span class="sz-bb__flavor-text">
+            <span class="sz-bb__flavor-name">{{ value }}</span>
+            {%- if flavor_available -%}
+              {%- if block.settings.flavor_subtitle != blank -%}
+                <span class="sz-bb__flavor-sub">{{ block.settings.flavor_subtitle }}</span>
+              {%- endif -%}
+            {%- else -%}
+              <span class="sz-bb__flavor-sub">{{ block.settings.sold_out_text }}</span>
+            {%- endif -%}
+          </span>
+        </label>
+      {%- endfor -%}
+    </div>
+  </fieldset>
+
+  {%- comment -%} ───────── FREQUÊNCIA ───────── {%- endcomment -%}
+  {%- if has_plans -%}
+    <fieldset class="sz-bb__group">
+      <legend class="sz-bb__heading">{{ block.settings.frequency_label }}</legend>
+
+      <div class="sz-bb__freqs{% if product.requires_selling_plan %} sz-bb__freqs--single{% endif %}">
+        <label class="sz-bb__freq">
+          <input
+            class="sz-bb__input"
+            type="radio"
+            name="sz-freq-{{ bid }}"
+            value="subscription"
+            data-kind="frequency"
+            {% if start_sub %}checked{% endif %}
+          >
+          <span class="sz-bb__radio" aria-hidden="true"></span>
+          <span class="sz-bb__freq-body">
+            <span class="sz-bb__freq-title" data-sub-title>{{ block.settings.subscribe_label | replace: '[pct]', sub_pct }}</span>
+            <span class="sz-bb__freq-price" data-sub-price>{{ sub_price | money }}</span>
+            <span class="sz-bb__freq-meta" data-sub-meta></span>
+          </span>
+        </label>
+
+        {%- unless product.requires_selling_plan -%}
+          <label class="sz-bb__freq">
+            <input
+              class="sz-bb__input"
+              type="radio"
+              name="sz-freq-{{ bid }}"
+              value="one-time"
+              data-kind="frequency"
+              {% unless start_sub %}checked{% endunless %}
+            >
+            <span class="sz-bb__radio" aria-hidden="true"></span>
+            <span class="sz-bb__freq-body">
+              <span class="sz-bb__freq-title">{{ block.settings.one_time_label }}</span>
+              <span class="sz-bb__freq-price" data-one-price>{{ current.price | money }}</span>
+              <span class="sz-bb__freq-meta" data-one-meta></span>
+            </span>
+          </label>
+        {%- endunless -%}
+      </div>
+
+      {%- liquid
+        assign plan_count = 0
+        for group in product.selling_plan_groups
+          assign plan_count = plan_count | plus: group.selling_plans.size
+        endfor
+      -%}
+      {%- if plan_count > 1 -%}
+        <div class="sz-bb__plan" data-plan-wrap{% unless start_sub %} hidden{% endunless %}>
+          <label class="sz-bb__plan-label" for="sz-plan-{{ bid }}">{{ block.settings.plan_select_label }}</label>
+          <div class="sz-bb__plan-select">
+            <select id="sz-plan-{{ bid }}" data-kind="plan">
+              {%- for group in product.selling_plan_groups -%}
+                {%- for plan in group.selling_plans -%}
+                  <option value="{{ plan.id }}">{{ plan.name }}</option>
+                {%- endfor -%}
+              {%- endfor -%}
+            </select>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- if block.settings.subscription_note != blank -%}
+        <p class="sz-bb__note" data-sub-note{% unless start_sub %} hidden{% endunless %}>{{ block.settings.subscription_note }}</p>
+      {%- endif -%}
+    </fieldset>
+
+    <input
+      type="hidden"
+      name="selling_plan"
+      form="{{ form_id }}"
+      value="{{ first_plan.id }}"
+      data-selling-plan-input
+      {% unless start_sub %}disabled{% endunless %}
+    >
+  {%- endif -%}
+
+  {%- comment -%} ───────── QUANTIDADE ───────── {%- endcomment -%}
+  {%- if qty_option -%}
+    <fieldset class="sz-bb__group">
+      <legend class="sz-bb__heading sz-bb__heading--small">{{ qty_label }}</legend>
+
+      <div class="sz-bb__qtys">
+        {%- for value in qty_option.values -%}
+          {%- liquid
+            assign qv = nil
+            for v in product.variants
+              if v.options[0] == current.options[0] and v.options[1] == value.name
+                assign qv = v
+              endif
+            endfor
+            if qv == nil
+              for v in product.variants
+                if v.options[1] == value.name
+                  assign qv = v
+                  break
+                endif
+              endfor
+            endif
+            assign shots = qv.unit_price_measurement.quantity_value | default: 0 | round
+            assign pct = 0
+            if qv.compare_at_price > qv.price
+              assign pct = qv.compare_at_price | minus: qv.price | times: 100.0 | divided_by: qv.compare_at_price | round
+            endif
+          -%}
+          <label class="sz-bb__qty" data-qty-card data-value="{{ value.name | escape }}">
+            <input
+              class="sz-bb__input"
+              type="radio"
+              name="sz-qty-{{ bid }}"
+              value="{{ value.name | escape }}"
+              data-kind="quantity"
+              {% if value.name == current.options[1] %}checked{% endif %}
+            >
+            <span class="sz-bb__radio" aria-hidden="true"></span>
+            <span class="sz-bb__qty-main">
+              <span class="sz-bb__qty-row">
+                <span class="sz-bb__qty-title">{{ value }}</span>
+                <span class="sz-bb__badge" data-badge-save{% if pct == 0 %} hidden{% endif %}>
+                  {{- block.settings.save_badge_text | replace: '[pct]', pct -}}
+                </span>
+                {%- if block.settings.free_shipping_min_qty > 0 and shots >= block.settings.free_shipping_min_qty -%}
+                  <span class="sz-bb__badge sz-bb__badge--ship">{{ block.settings.free_shipping_text }}</span>
+                {%- endif -%}
+              </span>
+              <span class="sz-bb__qty-meta" data-qty-meta>
+                {%- if shots > 0 -%}
+                  {{ shots }} {% if shots == 1 %}{{ unit_singular }}{% else %}{{ unit_plural }}{% endif %}
+                  · {{ qv.price | divided_by: shots | round | money }}/{{ unit_singular }}
+                {%- endif -%}
+              </span>
+            </span>
+            <span class="sz-bb__qty-prices">
+              <span class="sz-bb__qty-price" data-qty-price>{{ qv.price | money }}</span>
+              <s class="sz-bb__qty-compare" data-qty-compare{% if pct == 0 %} hidden{% endif %}>{{ qv.compare_at_price | money }}</s>
+            </span>
+          </label>
+        {%- endfor -%}
+      </div>
+    </fieldset>
+  {%- endif -%}
+
+  <script type="application/json" data-buy-box-data>
+    {
+      "locale": {{ request.locale.iso_code | json }},
+      "currency": {{ cart.currency.iso_code | json }},
+      "unitSingular": {{ unit_singular | json }},
+      "unitPlural": {{ unit_plural | json }},
+      "saveText": {{ block.settings.save_badge_text | json }},
+      "subscribeText": {{ block.settings.subscribe_label | json }},
+      "soldOutText": {{ block.settings.sold_out_text | json }},
+      "eachText": {{ block.settings.each_text | json }},
+      "requiresPlan": {{ product.requires_selling_plan | json }},
+      "values": [
+        {%- for option in product.options_with_values -%}
+          [{%- for value in option.values -%}{{ value.name | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+          {%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ],
+      "variants": [
+        {%- for v in product.variants -%}
+          {
+            "id": {{ v.id }},
+            "available": {{ v.available | json }},
+            "options": {{ v.options | json }},
+            "price": {{ v.price }},
+            "compare": {{ v.compare_at_price | default: 0 }},
+            "shots": {{ v.unit_price_measurement.quantity_value | default: 0 }},
+            "plans": {
+              {%- for a in v.selling_plan_allocations -%}
+                "{{ a.selling_plan.id }}": {{ a.price }}{%- unless forloop.last -%},{%- endunless -%}
+              {%- endfor -%}
+            }
+          }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ],
+      "initial": {
+        "variant": {{ current.id }},
+        "subscription": {{ start_sub | json }},
+        "plan": {{ first_plan.id | default: 'null' }}
+      }
+    }
+  </script>
+</shotz-buy-box>
+
+{{ 'shotz-buy-box.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'shotz-buy-box.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Shotz — Seletor de compra",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Sabor → Frequência → Quantidade. Usa as opções do produto (1ª = sabor, 2ª = quantidade) e os planos de assinatura do Shopify Subscriptions. Remova/oculte o bloco do app de assinaturas para não duplicar a escolha."
+    },
+    { "type": "header", "content": "Sabor" },
+    { "type": "text", "id": "flavor_label", "label": "Título", "default": "Sabor", "info": "Vazio = nome da opção do produto" },
+    { "type": "text", "id": "flavor_subtitle", "label": "Subtítulo dos cards", "default": "23g de proteína" },
+    { "type": "header", "content": "Frequência" },
+    { "type": "text", "id": "frequency_label", "label": "Título", "default": "Frequência" },
+    { "type": "text", "id": "subscribe_label", "label": "Texto da assinatura", "default": "Assine e economize [pct]%", "info": "[pct] vira a % de desconto da assinatura" },
+    { "type": "text", "id": "one_time_label", "label": "Texto da compra única", "default": "Compra única" },
+    { "type": "text", "id": "plan_select_label", "label": "Rótulo do seletor de entrega", "default": "Entregar a cada:" },
+    { "type": "text", "id": "subscription_note", "label": "Nota da assinatura", "default": "Pause ou cancele quando quiser, sem taxas." },
+    {
+      "type": "select",
+      "id": "default_frequency",
+      "label": "Opção selecionada ao abrir",
+      "options": [
+        { "value": "one-time", "label": "Compra única" },
+        { "value": "subscription", "label": "Assinatura" }
+      ],
+      "default": "one-time"
+    },
+    { "type": "header", "content": "Quantidade" },
+    { "type": "text", "id": "quantity_label", "label": "Título", "default": "Escolha a quantidade:" },
+    { "type": "text", "id": "unit_singular", "label": "Unidade (singular)", "default": "shot" },
+    { "type": "text", "id": "unit_plural", "label": "Unidade (plural)", "default": "shots" },
+    { "type": "text", "id": "each_text", "label": "Texto \"cada\"", "default": "cada" },
+    { "type": "text", "id": "save_badge_text", "label": "Selo de economia", "default": "Economize [pct]%", "info": "[pct] vira a % de desconto" },
+    { "type": "text", "id": "free_shipping_text", "label": "Selo de frete grátis", "default": "Frete grátis" },
+    {
+      "type": "number",
+      "id": "free_shipping_min_qty",
+      "label": "Frete grátis a partir de (shots)",
+      "info": "0 desativa o selo",
+      "default": 12
+    },
+    { "type": "text", "id": "sold_out_text", "label": "Texto de esgotado", "default": "Esgotado" },
+    { "type": "checkbox", "id": "hide_quantity_stepper", "label": "Ocultar seletor +/− do botão de compra", "default": true },
+    { "type": "header", "content": "Cores" },
+    { "type": "color", "id": "accent_color", "label": "Destaque (seleção e selos)", "default": "#0094F6" },
+    { "type": "color", "id": "accent_text_color", "label": "Texto sobre o destaque", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_background", "label": "Fundo dos cards", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_selected_background", "label": "Fundo do card selecionado", "default": "#F2F9FF" },
+    { "type": "color", "id": "border_color", "label": "Borda", "default": "#D9D6CF" },
+    { "type": "color", "id": "text_color", "label": "Texto", "default": "#0D0D0D" },
+    { "type": "color", "id": "muted_color", "label": "Texto secundário", "default": "#6D6D6D" },
+    { "type": "color", "id": "shipping_badge_background", "label": "Fundo do selo de frete", "default": "#1D9E75" },
+    { "type": "color", "id": "shipping_badge_text", "label": "Texto do selo de frete", "default": "#FFFFFF" }
+  ],
+  "presets": [{ "name": "Shotz — Seletor de compra" }]
+}
+{% endschema %}

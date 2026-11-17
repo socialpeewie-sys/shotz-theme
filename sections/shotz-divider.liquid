@@ -49,69 +49,7 @@
       --divider-height: {{ s.height }}px;
     }
   }
-{% endstyle %}
 
-<div
-  class="shotz-divider shotz-divider--{{ s.position }}{% if s.flip %} shotz-divider--flip{% endif %}"
-  data-position="{{ s.position }}"
-  {% if s.color_mode == 'auto' %}data-auto-color{% endif %}
-  style="--divider-width: {{ s.width }}%;"
-  aria-hidden="true"
->
-  <svg viewBox="0 0 1200 120" preserveAspectRatio="none" focusable="false">
-    <path d="{{ path }}" fill="{{ fill }}"{% if s.invert %} fill-rule="evenodd"{% endif %}></path>
-  </svg>
-</div>
-
-<script>
-  (function () {
-    var root = document.getElementById('shopify-section-{{ section.id }}');
-    if (!root) return;
-    var divider = root.querySelector('[data-auto-color]');
-    if (!divider) return;
-
-    function isDivider(el) {
-      return el && el.querySelector && el.querySelector(':scope > .shotz-divider');
-    }
-
-    function solid(c) {
-      var m = c && c.match(/rgba?\(([^)]+)\)/);
-      if (!m) return false;
-      var p = m[1].split(',');
-      return p.length < 4 || parseFloat(p[3]) > 0.95;
-    }
-
-    /* Primeiro fundo sólido que cobre a largura da seção (busca em largura) */
-    function backgroundOf(section) {
-      var width = section.getBoundingClientRect().width;
-      var queue = [section];
-      var seen = 0;
-      while (queue.length && seen < 80) {
-        var el = queue.shift();
-        seen++;
-        var bg = getComputedStyle(el).backgroundColor;
-        if (solid(bg) && el.getBoundingClientRect().width >= width * 0.9) return bg;
-        for (var i = 0; i < el.children.length; i++) queue.push(el.children[i]);
-      }
-      return getComputedStyle(document.body).backgroundColor;
-    }
-
-    function apply() {
-      var target = divider.dataset.position === 'top' ? root.previousElementSibling : root.nextElementSibling;
-      while (target && (isDivider(target) || target.offsetHeight === 0)) {
-        target = divider.dataset.position === 'top' ? target.previousElementSibling : target.nextElementSibling;
-      }
-      if (target) divider.style.color = backgroundOf(target);
-    }
-
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply);
-    else apply();
-    window.addEventListener('load', apply);
-    document.addEventListener('shopify:section:load', apply);
-  })();
-</script>
-
-{% stylesheet %}
   /* Mesma estrutura do shapedivider.app, para o resultado bater com a prévia */
   .shotz-divider {
     position: absolute;
@@ -141,7 +79,130 @@
   .shotz-divider--flip svg {
     transform: rotateY(180deg);
   }
-{% endstylesheet %}
+
+  .shotz-divider__hint {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    max-width: calc(100% - 32px);
+    padding: 6px 12px;
+    font: 600 12px/1.3 var(--font-body--family, sans-serif);
+    color: #fff;
+    background: #d9480f;
+    border-radius: 999px;
+    white-space: normal;
+    text-align: center;
+    pointer-events: none;
+  }
+  .shotz-divider__hint[hidden] { display: none; }
+{% endstyle %}
+
+<div
+  class="shotz-divider shotz-divider--{{ s.position }}{% if s.flip %} shotz-divider--flip{% endif %}"
+  data-position="{{ s.position }}"
+  {% if s.color_mode == 'auto' %}data-auto-color{% endif %}
+  style="--divider-width: {{ s.width }}%;"
+  aria-hidden="true"
+>
+  <svg viewBox="0 0 1200 120" preserveAspectRatio="none" focusable="false">
+    <path d="{{ path }}" fill="{{ fill }}"{% if s.invert %} fill-rule="evenodd"{% endif %}></path>
+  </svg>
+</div>
+
+{%- if request.design_mode -%}
+  <p class="shotz-divider__hint" data-divider-hint hidden></p>
+{%- endif -%}
+
+<script>
+  (function () {
+    var root = document.getElementById('shopify-section-{{ section.id }}');
+    if (!root) return;
+    var divider = root.querySelector('[data-auto-color]');
+    if (!divider) return;
+
+    var hint = root.querySelector('[data-divider-hint]');
+    var preferred = divider.dataset.position;
+
+    function isDivider(el) {
+      return el && el.querySelector && el.querySelector(':scope > .shotz-divider');
+    }
+
+    function sibling(dir) {
+      var el = root;
+      do {
+        el = dir < 0 ? el.previousElementSibling : el.nextElementSibling;
+      } while (el && (isDivider(el) || !el.classList.contains('shopify-section') || el.offsetHeight === 0));
+      return el;
+    }
+
+    function solid(c) {
+      var m = c && c.match(/rgba?\(([^)]+)\)/);
+      if (!m) return false;
+      var p = m[1].split(',');
+      return p.length < 4 || parseFloat(p[3]) > 0.95;
+    }
+
+    /* Cor de fundo sólida da seção e se ela é "de imagem" (foto/vídeo ocupando a largura) */
+    function inspect(section) {
+      var info = { color: null, image: false };
+      if (!section) return info;
+      var width = section.getBoundingClientRect().width;
+      var queue = [section];
+      var seen = 0;
+      while (queue.length && seen < 200) {
+        var el = queue.shift();
+        seen++;
+        var r = el.getBoundingClientRect();
+        var wide = r.width >= width * 0.9;
+        var cs = getComputedStyle(el);
+        if (wide && r.height >= 120) {
+          if (/^(IMG|VIDEO|PICTURE)$/.test(el.tagName) || (cs.backgroundImage && cs.backgroundImage.indexOf('url(') !== -1)) {
+            info.image = true;
+          }
+        }
+        if (!info.color && wide && solid(cs.backgroundColor)) info.color = cs.backgroundColor;
+        for (var i = 0; i < el.children.length; i++) queue.push(el.children[i]);
+      }
+      if (!info.color) info.color = getComputedStyle(document.body).backgroundColor;
+      return info;
+    }
+
+    function apply() {
+      var above = inspect(sibling(-1));
+      var below = inspect(sibling(1));
+
+      // Escolhe o lado: o formato é desenhado SOBRE a seção de imagem, na cor da seção lisa
+      var pos = preferred;
+      if (pos === 'bottom' && below.image && !above.image) pos = 'top';
+      if (pos === 'top' && above.image && !below.image) pos = 'bottom';
+
+      var color = pos === 'bottom' ? below.color : above.color;
+      var under = pos === 'bottom' ? above : below;
+
+      divider.dataset.position = pos;
+      divider.classList.toggle('shotz-divider--bottom', pos === 'bottom');
+      divider.classList.toggle('shotz-divider--top', pos === 'top');
+      divider.style.color = color;
+
+      if (hint) {
+        var invisible = !under.image && under.color === color;
+        hint.hidden = !invisible;
+        hint.textContent = invisible
+          ? 'Divisor invisível: as duas seções têm a mesma cor. Mude a cor de uma delas ou mova o divisor.'
+          : '';
+      }
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply);
+    else apply();
+    window.addEventListener('load', apply);
+    document.addEventListener('shopify:section:load', apply);
+  })();
+</script>
+
+
 
 {% schema %}
 {

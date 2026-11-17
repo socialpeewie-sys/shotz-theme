@@ -740,6 +740,20 @@
         "background_color": "#0d0d0d"
       }
     },
+    "shotz_divider_Tr1aNg": {
+      "type": "shotz-divider",
+      "settings": {
+        "shape": "triangle",
+        "position": "bottom",
+        "flip": false,
+        "invert": false,
+        "height": 60,
+        "height_mobile": 24,
+        "width": 137,
+        "color_mode": "auto",
+        "color": "#f0efeb"
+      }
+    },
     "proteina_stats_KecjAk": {
       "type": "proteina-stats",
       "blocks": {
@@ -1293,6 +1307,7 @@
     "main",
     "blocks_tBwT3X",
     "shotz_benefits_pdp_xh4QbY",
+    "shotz_divider_Tr1aNg",
     "shotz_benefits_bgxU7C",
     "proteina_stats_KecjAk",
     "proteina_stats_48PbKL",

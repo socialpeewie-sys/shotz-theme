@@ -1,0 +1,232 @@
+{%- doc -%}
+  Divisor entre seções (estilo shapedivider.app).
+
+  Adicione esta seção ENTRE duas seções. Ela não ocupa espaço: o desenho é
+  sobreposto à borda da seção vizinha.
+  - Posição "Embaixo": o formato sobe a partir do fim da seção de CIMA, pintado
+    com a cor da seção de BAIXO (a seção de baixo "invade" a de cima).
+  - Posição "Em cima": o formato desce a partir do início da seção de BAIXO,
+    pintado com a cor da seção de CIMA.
+  Cor automática: lida do fundo real da seção vizinha (funciona com cores
+  diferentes por seção). Se a vizinha for uma imagem, use a outra posição.
+{%- enddoc -%}
+
+{%- liquid
+  assign s = section.settings
+  case s.shape
+    when 'triangle'
+      assign path = 'M1200 0L0 0 598.97 114.72 1200 0z'
+    when 'tilt'
+      assign path = 'M1200 120L0 16.48 0 0 1200 0 1200 120z'
+    when 'curve'
+      assign path = 'M0,0V7.23C0,65.52,268.63,112.77,600,112.77S1200,65.52,1200,7.23V0Z'
+    when 'waves'
+      assign path = 'M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z'
+    when 'arrow'
+      assign path = 'M649.97 0L550.03 0 599.91 54.12 649.97 0z'
+  endcase
+  if s.invert
+    assign path = 'M0 0H1200V120H0Z ' | append: path
+  endif
+  assign fill = 'currentColor'
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    position: relative;
+    z-index: 3;
+    height: 0;
+    pointer-events: none;
+  }
+  #shopify-section-{{ section.id }} .shotz-divider {
+    --divider-height: {{ s.height_mobile }}px;
+    {%- if s.color_mode == 'custom' %}
+      color: {{ s.color }};
+    {%- endif %}
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .shotz-divider {
+      --divider-height: {{ s.height }}px;
+    }
+  }
+{% endstyle %}
+
+<div
+  class="shotz-divider shotz-divider--{{ s.position }}{% if s.flip %} shotz-divider--flip{% endif %}"
+  data-position="{{ s.position }}"
+  {% if s.color_mode == 'auto' %}data-auto-color{% endif %}
+  style="--divider-width: {{ s.width }}%;"
+  aria-hidden="true"
+>
+  <svg viewBox="0 0 1200 120" preserveAspectRatio="none" focusable="false">
+    <path d="{{ path }}" fill="{{ fill }}"{% if s.invert %} fill-rule="evenodd"{% endif %}></path>
+  </svg>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('shopify-section-{{ section.id }}');
+    if (!root) return;
+    var divider = root.querySelector('[data-auto-color]');
+    if (!divider) return;
+
+    function isDivider(el) {
+      return el && el.querySelector && el.querySelector(':scope > .shotz-divider');
+    }
+
+    function solid(c) {
+      var m = c && c.match(/rgba?\(([^)]+)\)/);
+      if (!m) return false;
+      var p = m[1].split(',');
+      return p.length < 4 || parseFloat(p[3]) > 0.95;
+    }
+
+    /* Primeiro fundo sólido que cobre a largura da seção (busca em largura) */
+    function backgroundOf(section) {
+      var width = section.getBoundingClientRect().width;
+      var queue = [section];
+      var seen = 0;
+      while (queue.length && seen < 80) {
+        var el = queue.shift();
+        seen++;
+        var bg = getComputedStyle(el).backgroundColor;
+        if (solid(bg) && el.getBoundingClientRect().width >= width * 0.9) return bg;
+        for (var i = 0; i < el.children.length; i++) queue.push(el.children[i]);
+      }
+      return getComputedStyle(document.body).backgroundColor;
+    }
+
+    function apply() {
+      var target = divider.dataset.position === 'top' ? root.previousElementSibling : root.nextElementSibling;
+      while (target && (isDivider(target) || target.offsetHeight === 0)) {
+        target = divider.dataset.position === 'top' ? target.previousElementSibling : target.nextElementSibling;
+      }
+      if (target) divider.style.color = backgroundOf(target);
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply);
+    else apply();
+    window.addEventListener('load', apply);
+    document.addEventListener('shopify:section:load', apply);
+  })();
+</script>
+
+{% stylesheet %}
+  /* Mesma estrutura do shapedivider.app, para o resultado bater com a prévia */
+  .shotz-divider {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    color: var(--color-background, #f0efeb);
+  }
+
+  .shotz-divider--bottom {
+    bottom: 0;
+    transform: rotate(180deg);
+  }
+
+  .shotz-divider--top {
+    top: 0;
+  }
+
+  .shotz-divider svg {
+    position: relative;
+    display: block;
+    width: calc(var(--divider-width, 100%) + 1.3px);
+    height: var(--divider-height, 60px);
+  }
+
+  .shotz-divider--flip svg {
+    transform: rotateY(180deg);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Divisor",
+  "tag": "div",
+  "class": "shotz-divider-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Coloque esta seção entre duas seções. Ela não ocupa espaço: o formato fica sobre a borda da seção vizinha."
+    },
+    {
+      "type": "select",
+      "id": "shape",
+      "label": "Formato",
+      "options": [
+        { "value": "triangle", "label": "Triângulo" },
+        { "value": "tilt", "label": "Inclinado" },
+        { "value": "curve", "label": "Curva" },
+        { "value": "waves", "label": "Ondas" },
+        { "value": "arrow", "label": "Seta" }
+      ],
+      "default": "triangle"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Posição",
+      "info": "Embaixo: o formato sobe sobre o fim da seção de cima, na cor da seção de baixo. Em cima: desce sobre o início da seção de baixo, na cor da seção de cima.",
+      "options": [
+        { "value": "bottom", "label": "Embaixo" },
+        { "value": "top", "label": "Em cima" }
+      ],
+      "default": "bottom"
+    },
+    { "type": "checkbox", "id": "flip", "label": "Espelhar (flip)", "default": false },
+    { "type": "checkbox", "id": "invert", "label": "Inverter", "default": false },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Altura (desktop)",
+      "min": 10,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "label": "Altura (mobile)",
+      "min": 10,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "width",
+      "label": "Largura",
+      "min": 100,
+      "max": 300,
+      "step": 1,
+      "unit": "%",
+      "default": 137
+    },
+    {
+      "type": "select",
+      "id": "color_mode",
+      "label": "Cor",
+      "options": [
+        { "value": "auto", "label": "Automática (cor da seção vizinha)" },
+        { "value": "custom", "label": "Personalizada" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Cor personalizada",
+      "default": "#F0EFEB",
+      "visible_if": "{{ section.settings.color_mode == 'custom' }}"
+    }
+  ],
+  "presets": [{ "name": "Divisor" }]
+}
+{% endschema %}

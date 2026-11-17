@@ -45,7 +45,7 @@
             "highlight_3_icon": "wheat",
             "highlight_3_title": "0.8g de carboidratos",
             "highlight_3_text": "por shot",
-            "highlight_background": "#FFFFFF",
+            "highlight_background": "#ffffff",
             "highlight_icon_background": "#000000",
             "highlight_icon_color": "#ececec",
             "padding-block-start": 22,
@@ -645,16 +645,16 @@
       ],
       "name": "shotz-benefits-pdp",
       "settings": {
-        "image": "shopify://shop_images/hf_20261009_132940_abc3020f-f798-49b0-bda0-33ccfe4ea751.png",
-        "image_mobile": "shopify://shop_images/hf_20261009_132940_abc3020f-f798-49b0-bda0-33ccfe4ea751.png",
-        "image_position": "right",
         "layout": "banner",
         "content_position": "left",
         "banner_height": 640,
         "banner_height_mobile": 620,
-        "overlay_opacity": 85,
+        "overlay_opacity": 45,
+        "image": "shopify://shop_images/hf_20261117_144322_c1177122-3794-41d1-8e1b-02eede213ceb.png",
+        "image_mobile": "shopify://shop_images/hf_20261009_132940_abc3020f-f798-49b0-bda0-33ccfe4ea751.png",
+        "image_position": "right",
         "heading": "Proteína em dois goles.",
-        "subheading": "<p>Fácil, saboroso e sem açúcar adicionado.</p>",
+        "subheading": "<p>Diga adeus para o shake de proteína</p>",
         "heading_size_mobile": 30,
         "heading_size": 48,
         "button_label": "Quero experimentar",
@@ -663,9 +663,9 @@
         "button_gap": 24,
         "background_color": "#f2f0eb",
         "media_bg": "#f5e39e",
-        "heading_color": "#111111",
-        "text_color": "#555555",
-        "card_bg": "#ffffff",
+        "heading_color": "#FFFFFF",
+        "text_color": "#FFFFFF",
+        "card_bg": "#000000",
         "card_divider": "#e6e3dc",
         "button_bg": "#111111",
         "button_text": "#ffffff",
@@ -762,7 +762,7 @@
       "settings": {
         "image": "shopify://shop_images/teste_pure_genius.webp",
         "image_position": "right",
-        "heading": "UM JEITO MAIS SIMPLES E FÁCIL DE TOMAR SUA PROTEÍNA",
+        "heading": "",
         "paragraph": "",
         "background_color": "#f0efeb",
         "heading_color": "#000000",
@@ -774,6 +774,69 @@
         "button_link": "",
         "button_bg_color": "#1b2030",
         "button_text_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "reveal_on_scroll": true
+      }
+    },
+    "proteina_stats_48PbKL": {
+      "type": "proteina-stats",
+      "blocks": {
+        "stat_eipniz": {
+          "type": "stat",
+          "settings": {
+            "number": "Rotina corrida",
+            "title": "Sem tempo para refeição? Proteína em três segundos, entre uma reunião, viagem ou compromisso.",
+            "description": ""
+          }
+        },
+        "stat_TTwmPP": {
+          "type": "stat",
+          "settings": {
+            "number": "Treino",
+            "title": "Proteína prática e leve para complementar sua rotina antes ou depois da atividade física.",
+            "description": ""
+          }
+        },
+        "stat_kRtfcV": {
+          "type": "stat",
+          "settings": {
+            "number": "Controle calórico",
+            "title": "Apenas 95 calorias. Uma dose prática de proteína que cabe na sua estratégia alimentar.",
+            "description": ""
+          }
+        },
+        "stat_EUfdX8": {
+          "type": "stat",
+          "settings": {
+            "number": "Pouco apetite",
+            "title": "Para quem tem dificuldade em consumir proteína em refeições maiores. Leve, líquida e fácil de consumir.",
+            "description": ""
+          }
+        }
+      },
+      "block_order": [
+        "stat_eipniz",
+        "stat_TTwmPP",
+        "stat_kRtfcV",
+        "stat_EUfdX8"
+      ],
+      "name": "Proteína Stats",
+      "settings": {
+        "image": "shopify://shop_images/hf_20261117_150152_d061142f-6a0a-40e9-a8ca-c4df4526214e.png",
+        "image_position": "left",
+        "heading": "Proteína no dia a dia ­­­­ne­­­m sempre é simples.",
+        "paragraph": "",
+        "background_color": "#F0EFEB",
+        "heading_color": "#000000",
+        "paragraph_color": "#000000",
+        "accent_color": "#1A8EE1",
+        "stat_title_color": "#000000",
+        "stat_description_color": "#000000",
+        "button_text": "Quero experimentar",
+        "button_link": "",
+        "button_bg_color": "#1A8EE1",
+        "button_text_color": "#FFFFFF",
         "padding_top": 80,
         "padding_bottom": 80,
         "reveal_on_scroll": true
@@ -839,6 +902,7 @@
         "card_bg3E8y",
         "card_6xLbxD"
       ],
+      "disabled": true,
       "name": "Grade de Problemas",
       "settings": {
         "heading_part_1": "Proteína no dia a dia",
@@ -1215,6 +1279,7 @@
     "shotz_benefits_pdp_xh4QbY",
     "shotz_benefits_bgxU7C",
     "proteina_stats_KecjAk",
+    "proteina_stats_48PbKL",
     "shotz_problem_grid_mFgaUC",
     "blocks_GCR7Li",
     "section_tdzjcT"

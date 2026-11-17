@@ -174,6 +174,47 @@
   gap: 10px;
 }
 .sz-bb__freqs--single { grid-template-columns: 1fr; }
+
+/* Espaço para o selo que fica sobre a borda do card de assinatura */
+.sz-bb__freqs:has(.sz-bb__flag:not([hidden])) { padding-top: 8px; }
+
+.sz-bb__flag {
+  position: absolute;
+  top: 0;
+  right: 12px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: var(--sz-accent-contrast);
+  background: var(--sz-accent);
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 148, 246, 0.35);
+  pointer-events: none;
+}
+.sz-bb__flag[hidden] { display: none; }
+
+.sz-bb__freq-prices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 6px;
+}
+.sz-bb__freq-compare {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--sz-muted);
+  font-variant-numeric: tabular-nums;
+}
+.sz-bb__freq-compare[hidden] { display: none; }
+.sz-bb__freq--sub .sz-bb__freq-price { color: var(--sz-accent); }
 @container (max-width: 330px) {
   .sz-bb__freqs { grid-template-columns: 1fr; }
 }

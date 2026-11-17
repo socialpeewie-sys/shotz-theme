@@ -283,9 +283,10 @@
               "type": "shotz-buy-box",
               "settings": {
                 "flavor_label": "Sabor",
-                "flavor_subtitle": "23g de proteína",
+                "flavor_subtitle": "",
                 "frequency_label": "Frequência",
-                "subscribe_label": "Assine e economize [pct]%",
+                "subscribe_label": "Assine e economize",
+                "subscribe_badge_text": "Economize [pct]%",
                 "one_time_label": "Compra única",
                 "plan_select_label": "Entregar a cada:",
                 "subscription_note": "Pause ou cancele quando quiser, sem taxas.",

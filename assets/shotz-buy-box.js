@@ -96,6 +96,7 @@
         this.render();
       } else if (kind === 'plan') {
         this.plan = t.value;
+        this.subscription = true;
         this.render();
       }
     };
@@ -172,8 +173,16 @@
       this.setText('[data-one-price]', this.fmt(v.price));
       this.setText('[data-one-meta]', each(v.price));
 
-      const planWrap = this.querySelector('[data-plan-wrap]');
-      if (planWrap) planWrap.hidden = !this.subscription;
+      const flag = this.querySelector('[data-sub-flag]');
+      if (flag) {
+        flag.hidden = subPct <= 0;
+        flag.textContent = (this.data.subscribeBadgeText || '').replace('[pct]', subPct);
+      }
+      const subCmp = this.querySelector('[data-sub-compare]');
+      if (subCmp) {
+        subCmp.hidden = subPct <= 0;
+        subCmp.textContent = this.fmt(v.price);
+      }
       const note = this.querySelector('[data-sub-note]');
       if (note) note.hidden = !this.subscription;
       const planSelect = this.querySelector('select[data-kind="plan"]');

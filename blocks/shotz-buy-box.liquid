@@ -151,7 +151,12 @@
       <legend class="sz-bb__heading">{{ block.settings.frequency_label }}</legend>
 
       <div class="sz-bb__freqs{% if product.requires_selling_plan %} sz-bb__freqs--single{% endif %}">
-        <label class="sz-bb__freq">
+        <label class="sz-bb__freq sz-bb__freq--sub">
+          {%- if block.settings.subscribe_badge_text != blank -%}
+            <span class="sz-bb__flag" data-sub-flag{% if sub_pct == 0 %} hidden{% endif %}>
+              {{- block.settings.subscribe_badge_text | replace: '[pct]', sub_pct -}}
+            </span>
+          {%- endif -%}
           <input
             class="sz-bb__input"
             type="radio"
@@ -163,7 +168,10 @@
           <span class="sz-bb__radio" aria-hidden="true"></span>
           <span class="sz-bb__freq-body">
             <span class="sz-bb__freq-title" data-sub-title>{{ block.settings.subscribe_label | replace: '[pct]', sub_pct }}</span>
-            <span class="sz-bb__freq-price" data-sub-price>{{ sub_price | money }}</span>
+            <span class="sz-bb__freq-prices">
+              <span class="sz-bb__freq-price" data-sub-price>{{ sub_price | money }}</span>
+              <s class="sz-bb__freq-compare" data-sub-compare{% if sub_pct == 0 %} hidden{% endif %}>{{ current.price | money }}</s>
+            </span>
             <span class="sz-bb__freq-meta" data-sub-meta></span>
           </span>
         </label>
@@ -188,26 +196,19 @@
         {%- endunless -%}
       </div>
 
-      {%- liquid
-        assign plan_count = 0
-        for group in product.selling_plan_groups
-          assign plan_count = plan_count | plus: group.selling_plans.size
-        endfor
-      -%}
-      {%- if plan_count > 1 -%}
-        <div class="sz-bb__plan" data-plan-wrap{% unless start_sub %} hidden{% endunless %}>
-          <label class="sz-bb__plan-label" for="sz-plan-{{ bid }}">{{ block.settings.plan_select_label }}</label>
-          <div class="sz-bb__plan-select">
-            <select id="sz-plan-{{ bid }}" data-kind="plan">
-              {%- for group in product.selling_plan_groups -%}
-                {%- for plan in group.selling_plans -%}
-                  <option value="{{ plan.id }}">{{ plan.name }}</option>
-                {%- endfor -%}
+      {%- comment -%} Sempre visível; escolher um plano ativa a assinatura {%- endcomment -%}
+      <div class="sz-bb__plan" data-plan-wrap>
+        <label class="sz-bb__plan-label" for="sz-plan-{{ bid }}">{{ block.settings.plan_select_label }}</label>
+        <div class="sz-bb__plan-select">
+          <select id="sz-plan-{{ bid }}" data-kind="plan">
+            {%- for group in product.selling_plan_groups -%}
+              {%- for plan in group.selling_plans -%}
+                <option value="{{ plan.id }}">{{ plan.name }}</option>
               {%- endfor -%}
-            </select>
-          </div>
+            {%- endfor -%}
+          </select>
         </div>
-      {%- endif -%}
+      </div>
 
       {%- if block.settings.subscription_note != blank -%}
         <p class="sz-bb__note" data-sub-note{% unless start_sub %} hidden{% endunless %}>{{ block.settings.subscription_note }}</p>
@@ -297,6 +298,7 @@
       "unitPlural": {{ unit_plural | json }},
       "saveText": {{ block.settings.save_badge_text | json }},
       "subscribeText": {{ block.settings.subscribe_label | json }},
+      "subscribeBadgeText": {{ block.settings.subscribe_badge_text | json }},
       "soldOutText": {{ block.settings.sold_out_text | json }},
       "eachText": {{ block.settings.each_text | json }},
       "requiresPlan": {{ product.requires_selling_plan | json }},
@@ -345,10 +347,11 @@
     },
     { "type": "header", "content": "Sabor" },
     { "type": "text", "id": "flavor_label", "label": "Título", "default": "Sabor", "info": "Vazio = nome da opção do produto" },
-    { "type": "text", "id": "flavor_subtitle", "label": "Subtítulo dos cards", "default": "23g de proteína" },
+    { "type": "text", "id": "flavor_subtitle", "label": "Subtítulo dos cards", "info": "Opcional. Vazio = só o nome do sabor" },
     { "type": "header", "content": "Frequência" },
     { "type": "text", "id": "frequency_label", "label": "Título", "default": "Frequência" },
-    { "type": "text", "id": "subscribe_label", "label": "Texto da assinatura", "default": "Assine e economize [pct]%", "info": "[pct] vira a % de desconto da assinatura" },
+    { "type": "text", "id": "subscribe_label", "label": "Texto da assinatura", "default": "Assine e economize", "info": "Pode usar [pct] para mostrar a % de desconto" },
+    { "type": "text", "id": "subscribe_badge_text", "label": "Selo de destaque da assinatura", "default": "Economize [pct]%", "info": "Aparece no topo do card. [pct] vira a % de desconto. Vazio = sem selo" },
     { "type": "text", "id": "one_time_label", "label": "Texto da compra única", "default": "Compra única" },
     { "type": "text", "id": "plan_select_label", "label": "Rótulo do seletor de entrega", "default": "Entregar a cada:" },
     { "type": "text", "id": "subscription_note", "label": "Nota da assinatura", "default": "Pause ou cancele quando quiser, sem taxas." },

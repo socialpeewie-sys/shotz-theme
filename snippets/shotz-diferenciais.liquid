@@ -1,0 +1,161 @@
+{%- doc -%}
+  Painel "O que torna o Shotz diferente" — título, subtítulo opcional e 3 números.
+  As configurações ficam na seção product-information (grupo "Diferenciais").
+  Renderizado duas vezes: dentro da coluna de fotos (só desktop) e depois dos
+  detalhes do produto / acordeão (só mobile).
+
+  @param {object} settings - Configurações da seção product-information
+  @param {string} placement - 'desktop' ou 'mobile'
+{%- enddoc -%}
+
+{%- liquid
+  assign has_values = false
+  for i in (1..3)
+    assign key = 'dif_' | append: i | append: '_value'
+    if settings[key] != blank
+      assign has_values = true
+    endif
+  endfor
+  assign show = false
+  if settings.dif_enabled
+    if has_values or request.design_mode
+      assign show = true
+    endif
+  endif
+-%}
+
+{%- if show -%}
+  <div
+    class="shotz-dif shotz-dif--{{ placement }}"
+    style="--dif-bg: {{ settings.dif_background }}; --dif-card: {{ settings.dif_card_background }}; --dif-border: {{ settings.dif_card_border }}; --dif-text: {{ settings.dif_text_color }}; --dif-muted: {{ settings.dif_muted_color }}; --dif-accent: {{ settings.dif_accent_color }};"
+  >
+    {%- if settings.dif_heading != blank -%}
+      <h2 class="shotz-dif__heading">{{ settings.dif_heading }}</h2>
+    {%- endif -%}
+    {%- if settings.dif_subheading != blank -%}
+      <div class="shotz-dif__subheading">{{ settings.dif_subheading }}</div>
+    {%- endif -%}
+
+    <ul class="shotz-dif__stats" role="list">
+      {%- for i in (1..3) -%}
+        {%- liquid
+          assign vkey = 'dif_' | append: i | append: '_value'
+          assign lkey = 'dif_' | append: i | append: '_label'
+          assign value = settings[vkey]
+          assign label = settings[lkey]
+        -%}
+        {%- if value != blank or request.design_mode -%}
+          <li class="shotz-dif__stat">
+            <span class="shotz-dif__value{% if value == blank %} shotz-dif__value--empty{% endif %}">
+              {{- value | default: '00%' -}}
+            </span>
+            {%- if label != blank -%}
+              <span class="shotz-dif__label">{{ label }}</span>
+            {%- endif -%}
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .shotz-dif {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 28px 20px;
+    background: var(--dif-bg);
+    color: var(--dif-text);
+    border-radius: 24px;
+    font-family: var(--font-body--family), 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .shotz-dif__heading {
+    margin: 0;
+    font-family: var(--font-heading--family), 'Plus Jakarta Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--dif-text);
+  }
+
+  .shotz-dif__subheading {
+    margin-top: -6px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--dif-muted);
+  }
+  .shotz-dif__subheading p { margin: 0; }
+
+  .shotz-dif__stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 4px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .shotz-dif__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 104px;
+    padding: 18px 6px;
+    text-align: center;
+    background: var(--dif-card);
+    border: 1px solid var(--dif-border);
+    border-radius: 14px;
+  }
+
+  .shotz-dif__value {
+    font-family: var(--font-heading--family), 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(26px, 8vw, 34px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--dif-accent);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .shotz-dif__value--empty { opacity: 0.35; }
+
+  .shotz-dif__label {
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--dif-muted);
+  }
+
+  /* Desktop: abaixo das fotos | Mobile: abaixo do acordeão */
+  .shotz-dif--desktop { display: none; margin-top: 24px; }
+  .shotz-dif--mobile {
+    grid-column: 2 / 3;
+    order: 2;
+    margin-top: 8px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .shotz-dif--desktop { display: flex; }
+    .shotz-dif--mobile { display: none; }
+
+    .shotz-dif {
+      gap: 20px;
+      padding: 40px;
+      border-radius: 32px;
+    }
+    .shotz-dif__heading { font-size: 40px; }
+    .shotz-dif__subheading { font-size: 16px; }
+    .shotz-dif__stats { gap: 12px; }
+    .shotz-dif__stat { min-height: 140px; gap: 10px; border-radius: 18px; }
+    .shotz-dif__value { font-size: 48px; }
+    .shotz-dif__label { font-size: 12px; }
+  }
+{% endstylesheet %}

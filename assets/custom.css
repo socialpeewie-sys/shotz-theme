@@ -58,7 +58,9 @@
 
   /* Galeria fixa enquanto a coluna de compra (mais alta) rola: evita o espaço
      vazio abaixo das fotos e mantém as imagens visíveis durante a escolha. */
-  /* O id real da seção é "shopify-section-template--…__main" */
+  /* Aceita os dois formatos de id da seção principal:
+     "shopify-section-main" e "shopify-section-template--…__main" */
+  #shopify-section-main .product-information__media,
   .shopify-section[id$="__main"] .product-information__media {
     position: sticky;
     /* --sz-media-top é calculado em shotz-custom.js: se a galeria for mais alta

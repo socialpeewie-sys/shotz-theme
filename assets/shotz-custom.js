@@ -404,7 +404,9 @@
   }
 
   function init() {
-    media = document.querySelector('.shopify-section[id$="__main"] .product-information__media');
+    media = document.querySelector(
+      '#shopify-section-main .product-information__media, .shopify-section[id$="__main"] .product-information__media'
+    );
     if (!media) return;
     update();
     if ('ResizeObserver' in window) new ResizeObserver(update).observe(media);

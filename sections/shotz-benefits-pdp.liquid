@@ -6,6 +6,15 @@
     assign rv = ' reveal'
     assign rv_stagger = ' data-reveal-stagger'
   endif
+
+  assign is_banner = false
+  if s.layout == 'banner'
+    assign is_banner = true
+  endif
+  assign img_sizes = '(min-width: 990px) 50vw, 100vw'
+  if is_banner
+    assign img_sizes = '100vw'
+  endif
 -%}
 
 {% style %}
@@ -23,6 +32,8 @@
     background-color: var(--pg-bg);
     padding-top: {{ s.padding_top_mobile }}px;
     padding-bottom: {{ s.padding_bottom_mobile }}px;
+    --pg-banner-height: {{ s.banner_height_mobile }}px;
+    --pg-overlay: {{ s.overlay_opacity }}%;
   }
 
   @media screen and (min-width: 990px) {
@@ -31,11 +42,16 @@
       --pg-button-gap: {{ s.button_gap }}px;
       padding-top: {{ s.padding_top }}px;
       padding-bottom: {{ s.padding_bottom }}px;
+      --pg-banner-height: {{ s.banner_height }}px;
     }
   }
 {% endstyle %}
 
-<div id="shotz-pg-{{ section.id }}" class="shotz-pg" {{ section.shopify_attributes }}>
+<div
+  id="shotz-pg-{{ section.id }}"
+  class="shotz-pg{% if is_banner %} shotz-pg--banner shotz-pg--content-{{ s.content_position }}{% endif %}"
+  {{ section.shopify_attributes }}
+>
   <div class="shotz-pg__inner{% if s.image_position == 'left' %} shotz-pg__inner--media-left{% endif %}">
     <div class="shotz-pg__media{{ rv }}">
       {%- if s.image != blank -%}
@@ -52,12 +68,12 @@
           }}
           {{
             s.image
-            | image_url: width: 1600
+            | image_url: width: 2400
             | image_tag:
               class: 'shotz-pg__img shotz-pg__img--desktop',
               loading: 'lazy',
-              sizes: '(min-width: 990px) 50vw, 100vw',
-              widths: '600, 800, 1000, 1200, 1600',
+              sizes: img_sizes,
+              widths: '600, 800, 1000, 1200, 1600, 2000, 2400',
               alt: s.image.alt
           }}
         {%- else -%}
@@ -67,8 +83,8 @@
             | image_tag:
               class: 'shotz-pg__img',
               loading: 'lazy',
-              sizes: '(min-width: 990px) 50vw, 100vw',
-              widths: '400, 600, 800, 1000, 1200, 1600',
+              sizes: img_sizes,
+              widths: '400, 600, 800, 1000, 1200, 1600, 2000, 2400',
               alt: s.image.alt
           }}
         {%- endif -%}
@@ -79,8 +95,8 @@
           | image_tag:
             class: 'shotz-pg__img',
             loading: 'lazy',
-            sizes: '(min-width: 990px) 50vw, 100vw',
-            widths: '400, 600, 800, 1000, 1200, 1600',
+            sizes: img_sizes,
+            widths: '400, 600, 800, 1000, 1200, 1600, 2000, 2400',
             alt: s.image_mobile.alt
         }}
       {%- else -%}
@@ -350,6 +366,107 @@
       min-width: 240px;
     }
   }
+
+  /* ───────── Layout "Banner": imagem de fundo ocupando a seção inteira ───────── */
+  .shotz-pg--banner {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: var(--pg-banner-height);
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .shotz-pg--banner .shotz-pg__inner {
+    position: static;
+    width: 100%;
+  }
+
+  .shotz-pg--banner .shotz-pg__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    aspect-ratio: auto;
+    border-radius: 0;
+  }
+
+  /* Degradê na cor do fundo para garantir leitura do texto sobre a foto */
+  .shotz-pg--banner .shotz-pg__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--pg-bg) var(--pg-overlay), transparent) 0%,
+      color-mix(in srgb, var(--pg-bg) calc(var(--pg-overlay) * 0.6), transparent) 45%,
+      transparent 75%
+    );
+    pointer-events: none;
+  }
+
+  .shotz-pg--banner .shotz-pg__content {
+    position: relative;
+    max-width: 560px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .shotz-pg--banner {
+      align-items: center;
+    }
+
+    .shotz-pg--banner .shotz-pg__inner,
+    .shotz-pg--banner .shotz-pg__inner--media-left {
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+
+    .shotz-pg--banner .shotz-pg__media {
+      flex: none;
+    }
+
+    .shotz-pg--banner .shotz-pg__content {
+      flex: 0 1 520px;
+    }
+
+    .shotz-pg--content-right .shotz-pg__inner {
+      justify-content: flex-end;
+    }
+
+    .shotz-pg--content-center .shotz-pg__inner {
+      justify-content: center;
+    }
+
+    .shotz-pg--content-center .shotz-pg__content {
+      align-items: center;
+      text-align: center;
+    }
+
+    .shotz-pg--content-center .shotz-pg__button {
+      align-self: center;
+    }
+
+    .shotz-pg--banner .shotz-pg__media::after {
+      background: linear-gradient(
+        to right,
+        color-mix(in srgb, var(--pg-bg) var(--pg-overlay), transparent) 0%,
+        color-mix(in srgb, var(--pg-bg) calc(var(--pg-overlay) * 0.6), transparent) 35%,
+        transparent 65%
+      );
+    }
+
+    .shotz-pg--content-right .shotz-pg__media::after {
+      background: linear-gradient(
+        to left,
+        color-mix(in srgb, var(--pg-bg) var(--pg-overlay), transparent) 0%,
+        color-mix(in srgb, var(--pg-bg) calc(var(--pg-overlay) * 0.6), transparent) 35%,
+        transparent 65%
+      );
+    }
+
+    .shotz-pg--content-center .shotz-pg__media::after {
+      background: color-mix(in srgb, var(--pg-bg) calc(var(--pg-overlay) * 0.7), transparent);
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -359,6 +476,63 @@
   "class": "section-shotz-benefits-pdp",
   "max_blocks": 4,
   "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Formato",
+      "options": [
+        { "value": "banner", "label": "Banner (imagem na seção inteira)" },
+        { "value": "split", "label": "Lado a lado (imagem + texto)" }
+      ],
+      "default": "banner"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Posição do texto no banner (desktop)",
+      "info": "No mobile o texto fica sempre na parte de baixo.",
+      "options": [
+        { "value": "left", "label": "Esquerda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right", "label": "Direita" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "banner_height",
+      "label": "Altura do banner (desktop)",
+      "min": 400,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 640
+    },
+    {
+      "type": "range",
+      "id": "banner_height_mobile",
+      "label": "Altura do banner (mobile)",
+      "min": 360,
+      "max": 840,
+      "step": 20,
+      "unit": "px",
+      "default": 620
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Degradê sobre a imagem",
+      "info": "Suaviza a foto atrás do texto para facilitar a leitura. 0 = sem degradê.",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 85
+    },
     {
       "type": "header",
       "content": "Imagem"
@@ -377,7 +551,7 @@
     {
       "type": "select",
       "id": "image_position",
-      "label": "Posição da imagem no desktop",
+      "label": "Posição da imagem no desktop (lado a lado)",
       "options": [
         { "value": "right", "label": "Direita" },
         { "value": "left", "label": "Esquerda" }

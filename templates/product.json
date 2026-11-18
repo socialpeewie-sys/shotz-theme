@@ -283,9 +283,9 @@
               "type": "shotz-buy-box",
               "settings": {
                 "flavor_products": [
-                  "kit-experimentacao",
+                  "shot-frutas-amarelas",
                   "shotz-cranberry",
-                  "shot-frutas-amarelas"
+                  "kit-experimentacao"
                 ],
                 "flavor_label": "Sabor",
                 "flavor_subtitle": "",

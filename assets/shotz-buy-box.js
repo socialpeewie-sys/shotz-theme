@@ -87,6 +87,9 @@
 
         const { morph } = await import('@theme/morph');
         morph(main, newMain);
+        // O morph devolve às seções as classes do HTML novo, sem o .is-in do
+        // efeito "aparecer ao rolar": sem isso elas ficariam invisíveis.
+        if (window.ShotzReveal) window.ShotzReveal.init(main);
         if (html.title) document.title = html.title;
         history.replaceState({}, '', url);
 

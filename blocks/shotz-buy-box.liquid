@@ -44,10 +44,21 @@
   assign qty_option = nil
   assign qty_index = -1
   if multi
-    unless product.has_only_default_variant
-      assign qty_option = product.options_with_values[0]
-      assign qty_index = 0
-    endunless
+    comment
+      Um produto por sabor: a quantidade é a opção com mais valores (o produto
+      pode manter "Sabor" como opção com um valor só). Com uma única variante
+      não há o que escolher e a lista de quantidades fica oculta.
+    endcomment
+    if product.variants.size > 1
+      assign qty_max = 0
+      for option in product.options_with_values
+        if option.values.size > qty_max
+          assign qty_max = option.values.size
+          assign qty_option = option
+          assign qty_index = forloop.index0
+        endif
+      endfor
+    endif
   else
     assign flavor_option = product.options_with_values[0]
     if product.options_with_values.size > 1
@@ -312,6 +323,7 @@
               if v.options[qty_index] == value.name
                 if multi or v.options[0] == current.options[0]
                   assign qv = v
+                  break
                 endif
               endif
             endfor

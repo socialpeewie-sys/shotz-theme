@@ -282,6 +282,11 @@
             "shotz_buy_box_Vk7Pd2": {
               "type": "shotz-buy-box",
               "settings": {
+                "flavor_products": [
+                  "kit-experimentacao",
+                  "shotz-cranberry",
+                  "shot-frutas-amarelas"
+                ],
                 "flavor_label": "Sabor",
                 "flavor_subtitle": "",
                 "frequency_label": "Frequência",
@@ -822,7 +827,7 @@
         "height_mobile": 16,
         "width": 152,
         "color_mode": "auto",
-        "color": "#F0EFEB"
+        "color": "#f0efeb"
       }
     },
     "proteina_stats_48PbKL": {

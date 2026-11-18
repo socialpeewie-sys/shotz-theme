@@ -13,6 +13,14 @@
     entra no formulário de compra via <input name="selling_plan">.
   - O seletor nativo do Horizon continua na página (oculto) e é acionado a
     cada escolha, para manter preço, galeria, URL e botão de compra em sincronia.
+
+  Modo "um produto por sabor": se a configuração "Produtos de sabor" tiver
+  produtos (e incluir o produto atual), cada card de sabor é um produto
+  diferente. Trocar o sabor carrega o outro produto na mesma página (sem
+  recarregar), mantendo quantidade e frequência. Nesse modo a quantidade é a
+  1ª opção do produto. Nome do card: metacampo do produto custom.sabor → título.
+  Miniatura: custom.imagem_fruta do produto → da 1ª variante → imagem do produto.
+  Os produtos precisam usar o mesmo modelo de página de produto.
 {% enddoc %}
 
 {%- liquid
@@ -23,10 +31,36 @@
   assign unit_plural = block.settings.unit_plural | default: 'shots'
   assign unit_singular = block.settings.unit_singular | default: 'shot'
 
-  assign flavor_option = product.options_with_values[0]
+  assign flavor_products = block.settings.flavor_products
+  assign multi = false
+  for p in flavor_products
+    if p.id == product.id
+      assign multi = true
+    endif
+  endfor
+
+  assign flavor_option = nil
   assign qty_option = nil
-  if product.options_with_values.size > 1
-    assign qty_option = product.options_with_values[1]
+  assign qty_index = -1
+  if multi
+    unless product.has_only_default_variant
+      assign qty_option = product.options_with_values[0]
+      assign qty_index = 0
+    endunless
+  else
+    assign flavor_option = product.options_with_values[0]
+    if product.options_with_values.size > 1
+      assign qty_option = product.options_with_values[1]
+      assign qty_index = 1
+    endif
+  endif
+  assign current_qty = nil
+  if qty_index >= 0
+    assign current_qty = current.options[qty_index]
+  endif
+  assign current_flavor = current.options[0]
+  if multi
+    assign current_flavor = product.metafields.custom.sabor.value | default: product.title
   endif
 
   assign has_plans = false
@@ -59,7 +93,7 @@
     assign sub_pct = current.price | minus: sub_price | times: 100.0 | divided_by: current.price | round
   endif
 
-  assign flavor_label = block.settings.flavor_label | default: flavor_option.name
+  assign flavor_label = block.settings.flavor_label | default: flavor_option.name | default: 'Sabor'
   assign qty_label = block.settings.quantity_label
   if qty_label == blank and qty_option
     assign qty_label = qty_option.name
@@ -96,9 +130,46 @@
   <fieldset class="sz-bb__group">
     <legend class="sz-bb__heading">
       {{ flavor_label }}<span class="sz-bb__heading-sep">:</span>
-      <span class="sz-bb__heading-value" data-flavor-name>{{ current.options[0] }}</span>
+      <span class="sz-bb__heading-value" data-flavor-name>{{ current_flavor }}</span>
     </legend>
 
+    {%- if multi -%}
+    <div class="sz-bb__flavors" style="--sz-cols: {{ flavor_products.size | at_most: 4 }}">
+      {%- for p in flavor_products -%}
+        {%- liquid
+          assign p_name = p.metafields.custom.sabor.value | default: p.title
+          assign thumb = p.metafields.custom.imagem_fruta.value | default: p.variants.first.metafields.custom.imagem_fruta.value | default: p.featured_image
+        -%}
+        <label class="sz-bb__flavor{% unless p.available %} is-unavailable{% endunless %}">
+          <input
+            class="sz-bb__input"
+            type="radio"
+            name="sz-flavor-{{ bid }}"
+            value="{{ p.handle }}"
+            data-kind="product"
+            data-url="{{ p.url }}"
+            data-name="{{ p_name | escape }}"
+            {% if p.id == product.id %}checked{% endif %}
+          >
+          <span class="sz-bb__flavor-media">
+            {%- if thumb -%}
+              {{ thumb | image_url: width: 160 | image_tag: alt: '', loading: 'lazy', width: 80, height: 80 }}
+            {%- endif -%}
+          </span>
+          <span class="sz-bb__flavor-text">
+            <span class="sz-bb__flavor-name">{{ p_name }}</span>
+            {%- if p.available -%}
+              {%- if block.settings.flavor_subtitle != blank -%}
+                <span class="sz-bb__flavor-sub">{{ block.settings.flavor_subtitle }}</span>
+              {%- endif -%}
+            {%- else -%}
+              <span class="sz-bb__flavor-sub">{{ block.settings.sold_out_text }}</span>
+            {%- endif -%}
+          </span>
+        </label>
+      {%- endfor -%}
+    </div>
+    {%- else -%}
     <div class="sz-bb__flavors" style="--sz-cols: {{ flavor_option.values.size | at_most: 4 }}">
       {%- for value in flavor_option.values -%}
         {%- liquid
@@ -143,6 +214,7 @@
         </label>
       {%- endfor -%}
     </div>
+    {%- endif -%}
   </fieldset>
 
   {%- comment -%} ───────── FREQUÊNCIA ───────── {%- endcomment -%}
@@ -235,13 +307,15 @@
           {%- liquid
             assign qv = nil
             for v in product.variants
-              if v.options[0] == current.options[0] and v.options[1] == value.name
-                assign qv = v
+              if v.options[qty_index] == value.name
+                if multi or v.options[0] == current.options[0]
+                  assign qv = v
+                endif
               endif
             endfor
             if qv == nil
               for v in product.variants
-                if v.options[1] == value.name
+                if v.options[qty_index] == value.name
                   assign qv = v
                   break
                 endif
@@ -260,7 +334,7 @@
               name="sz-qty-{{ bid }}"
               value="{{ value.name | escape }}"
               data-kind="quantity"
-              {% if value.name == current.options[1] %}checked{% endif %}
+              {% if value.name == current_qty %}checked{% endif %}
             >
             <span class="sz-bb__radio" aria-hidden="true"></span>
             <span class="sz-bb__qty-main">
@@ -303,6 +377,17 @@
       "eachText": {{ block.settings.each_text | json }},
       "requiresPlan": {{ product.requires_selling_plan | json }},
       "plansOnlyOnSubscription": {{ block.settings.plans_only_on_subscription | json }},
+      "multi": {{ multi | json }},
+      "handle": {{ product.handle | json }},
+      "flavorName": {{ current_flavor | json }},
+      "qtyIndex": {{ qty_index }},
+      "planNames": {
+        {%- for group in product.selling_plan_groups -%}
+          {%- for plan in group.selling_plans -%}
+            "{{ plan.id }}": {{ plan.name | json }}{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      },
       "values": [
         {%- for option in product.options_with_values -%}
           [{%- for value in option.values -%}{{ value.name | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
@@ -347,6 +432,13 @@
       "content": "Sabor → Frequência → Quantidade. Usa as opções do produto (1ª = sabor, 2ª = quantidade) e os planos de assinatura do Shopify Subscriptions. Remova/oculte o bloco do app de assinaturas para não duplicar a escolha."
     },
     { "type": "header", "content": "Sabor" },
+    {
+      "type": "product_list",
+      "id": "flavor_products",
+      "label": "Produtos de sabor",
+      "limit": 8,
+      "info": "Um produto por sabor/opção (ex.: Frutas Tropicais, Cranberry, Kit). Todos devem usar este mesmo modelo de produto. Vazio = sabores vêm da 1ª opção do produto. Nome do card: metacampo custom.sabor do produto ou o título."
+    },
     { "type": "text", "id": "flavor_label", "label": "Título", "default": "Sabor", "info": "Vazio = nome da opção do produto" },
     { "type": "text", "id": "flavor_subtitle", "label": "Subtítulo dos cards", "info": "Opcional. Vazio = só o nome do sabor" },
     { "type": "header", "content": "Frequência" },

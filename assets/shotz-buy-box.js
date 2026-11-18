@@ -11,10 +11,18 @@
   class ShotzBuyBox extends HTMLElement {
     connectedCallback() {
       if (this._ready) return;
-      const raw = this.querySelector('script[data-buy-box-data]');
-      if (!raw) return;
+      if (!this.load()) return;
       this._ready = true;
+      this.addEventListener('change', this.onChange);
+      this.section.addEventListener('variant:update', this.onVariantUpdate);
+      this.render();
+      this.applyPending();
+    }
 
+    /** Lê os dados do produto atual (também após trocar de produto) */
+    load() {
+      const raw = this.querySelector('script[data-buy-box-data]');
+      if (!raw) return false;
       this.data = JSON.parse(raw.textContent);
       this.section = document.getElementById('shopify-section-' + this.dataset.sectionId) || document;
       this.money = new Intl.NumberFormat(this.data.locale || 'pt-BR', {
@@ -26,10 +34,96 @@
       this.variant = this.findById(init.variant) || this.data.variants[0];
       this.subscription = !!init.subscription;
       this.plan = init.plan ? String(init.plan) : null;
+      this._handle = this.data.handle;
+      this.applyCarry();
+      return true;
+    }
 
-      this.addEventListener('change', this.onChange);
+    /** Mantém frequência, plano e quantidade ao trocar de produto */
+    applyCarry() {
+      const c = ShotzBuyBox.carry;
+      if (!c) return;
+      ShotzBuyBox.carry = null;
+      const names = this.data.planNames || {};
+      const ids = Object.keys(names);
+      if (ids.length) {
+        this.subscription = this.data.requiresPlan || c.subscription;
+        if (c.plan && names[c.plan] !== undefined) this.plan = c.plan;
+        else if (c.planName) this.plan = ids.find((id) => names[id] === c.planName) || this.plan;
+      } else {
+        this.subscription = false;
+      }
+      const qi = this.data.qtyIndex;
+      if (c.qty != null && qi >= 0) {
+        const v = this.data.variants.find((x) => x.options[qi] === c.qty && x.available);
+        if (v && v.id !== this.variant.id) this._pendingVariant = v;
+      }
+    }
+
+    /* ── Troca de produto (um produto por sabor) ───────────── */
+    async swapProduct(input) {
+      const url = input.dataset.url;
+      if (!url) return;
+      ShotzBuyBox.carry = {
+        subscription: this.subscription,
+        plan: this.plan,
+        planName: this.plan ? (this.data.planNames || {})[this.plan] : null,
+        qty: this.data.qtyIndex >= 0 ? this.variant.options[this.data.qtyIndex] : null,
+      };
+      const name = this.querySelector('[data-flavor-name]');
+      if (name && input.dataset.name) name.textContent = input.dataset.name;
+      this.classList.add('is-loading');
+
+      this._swapAbort?.abort();
+      this._swapAbort = new AbortController();
+      try {
+        const res = await fetch(url, { signal: this._swapAbort.signal });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const html = new DOMParser().parseFromString(await res.text(), 'text/html');
+        const main = document.querySelector('main');
+        const newMain = html.querySelector('main');
+        if (!main || !newMain || !newMain.querySelector('shotz-buy-box')) throw new Error('layout');
+        html.querySelector('overflow-list[defer]')?.removeAttribute('defer');
+
+        const { morph } = await import('@theme/morph');
+        morph(main, newMain);
+        if (html.title) document.title = html.title;
+        history.replaceState({}, '', url);
+
+        // Se o elemento foi reaproveitado pelo morph, recarrega os dados nele
+        document.querySelectorAll('shotz-buy-box').forEach((el) => el.refresh && el.refresh());
+        window.dispatchEvent(new CustomEvent('shotz:product-swap', { detail: { url } }));
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+        console.error(err);
+        window.location.href = url; // plano B: navegação normal
+      } finally {
+        this.classList.remove('is-loading');
+      }
+    }
+
+    refresh() {
+      const raw = this.querySelector('script[data-buy-box-data]');
+      if (!raw) return;
+      let handle;
+      try {
+        handle = JSON.parse(raw.textContent).handle;
+      } catch (e) {
+        return;
+      }
+      // Elemento novo (connectedCallback já leu) ou mesmo produto: nada a fazer
+      if (!this._ready || handle === this._handle) return;
+      this.section.removeEventListener('variant:update', this.onVariantUpdate);
+      this.load();
       this.section.addEventListener('variant:update', this.onVariantUpdate);
       this.render();
+      this.applyPending();
+    }
+
+    applyPending() {
+      const v = this._pendingVariant;
+      this._pendingVariant = null;
+      if (v) this.select(v);
     }
 
     disconnectedCallback() {
@@ -44,9 +138,20 @@
     }
 
     find(flavor, qty) {
+      const qi = this.data.qtyIndex;
       return this.data.variants.find(
-        (v) => v.options[0] === flavor && (qty === undefined || v.options.length < 2 || v.options[1] === qty)
+        (v) =>
+          (this.data.multi || v.options[0] === flavor) &&
+          (qty === undefined || qi < 0 || v.options[qi] === qty)
       );
+    }
+
+    get flavor() {
+      return this.data.multi ? this.data.flavorName : this.variant.options[0];
+    }
+
+    get qty() {
+      return this.data.qtyIndex >= 0 ? this.variant.options[this.data.qtyIndex] : undefined;
     }
 
     priceOf(v) {
@@ -78,8 +183,10 @@
       if (!kind) return;
       e.stopPropagation();
 
-      if (kind === 'flavor') {
-        const qty = this.variant.options[1];
+      if (kind === 'product') {
+        if (t.value !== this.data.handle) this.swapProduct(t);
+      } else if (kind === 'flavor') {
+        const qty = this.qty;
         let v = this.find(t.value, qty);
         if (!v || !v.available) {
           v =
@@ -89,7 +196,7 @@
         }
         if (v) this.select(v);
       } else if (kind === 'quantity') {
-        const v = this.find(this.variant.options[0], t.value);
+        const v = this.find(this.flavor, t.value);
         if (v) this.select(v);
       } else if (kind === 'frequency') {
         this.subscription = t.value === 'subscription';
@@ -149,13 +256,14 @@
     /* ── Render ────────────────────────────────────────────── */
     render() {
       const v = this.variant;
-      const flavor = v.options[0];
-      const qty = v.options[1];
+      const flavor = this.flavor;
+      const qty = this.qty;
 
       // Sabor
       const name = this.querySelector('[data-flavor-name]');
       if (name) name.textContent = flavor;
       this.querySelectorAll('input[data-kind="flavor"]').forEach((i) => (i.checked = i.value === flavor));
+      this.querySelectorAll('input[data-kind="product"]').forEach((i) => (i.checked = i.value === this.data.handle));
 
       // Frequência
       this.querySelectorAll('input[data-kind="frequency"]').forEach(

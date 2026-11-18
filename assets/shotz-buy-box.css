@@ -401,3 +401,7 @@
 @media (prefers-reduced-motion: reduce) {
   .sz-bb * { transition: none !important; }
 }
+
+/* Trocando de produto (um produto por sabor) */
+.sz-bb.is-loading { pointer-events: none; }
+.sz-bb.is-loading .sz-bb__group:not(:first-child) { opacity: .55; transition: opacity .15s; }

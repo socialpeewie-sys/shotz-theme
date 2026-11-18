@@ -19,7 +19,8 @@
   diferente. Trocar o sabor carrega o outro produto na mesma página (sem
   recarregar), mantendo quantidade e frequência. Nesse modo a quantidade é a
   1ª opção do produto. Nome do card: metacampo do produto custom.sabor → título.
-  Miniatura: custom.imagem_fruta do produto → da 1ª variante → imagem do produto.
+  Miniatura: custom.imagem_fruta do produto → da variante → imagem da variante
+  → imagem do produto.
   Os produtos precisam usar o mesmo modelo de página de produto.
 {% enddoc %}
 
@@ -138,7 +139,8 @@
       {%- for p in flavor_products -%}
         {%- liquid
           assign p_name = p.metafields.custom.sabor.value | default: p.title
-          assign thumb = p.metafields.custom.imagem_fruta.value | default: p.variants.first.metafields.custom.imagem_fruta.value | default: p.featured_image
+          assign pv = p.selected_or_first_available_variant
+          assign thumb = p.metafields.custom.imagem_fruta.value | default: pv.metafields.custom.imagem_fruta.value | default: pv.featured_image | default: p.featured_image
         -%}
         <label class="sz-bb__flavor{% unless p.available %} is-unavailable{% endunless %}">
           <input

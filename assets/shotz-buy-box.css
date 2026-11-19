@@ -36,8 +36,9 @@
 }
 .sz-bb__heading + * { clear: both; }
 .sz-bb__heading-sep { margin-right: 0.3em; }
-.sz-bb__heading-value { font-weight: 600; }
-.sz-bb__heading--small { font-size: 14px; font-weight: 700; }
+.sz-bb__heading-value { font-weight: 500; }
+/* "Quantidade" usa o mesmo estilo de "Sabor" e "Frequência" */
+.sz-bb__heading--small { font-size: 18px; font-weight: 800; }
 
 /* Inputs nativos ficam acessíveis (teclado/leitor de tela), mas invisíveis */
 .sz-bb__input {
@@ -154,14 +155,14 @@
   min-width: 0;
 }
 .sz-bb__flavor-name {
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 14px;
+  font-weight: 700;
   line-height: 1.2;
   overflow-wrap: break-word;
   hyphens: auto;
 }
 .sz-bb__flavor-sub {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 1.25;
   color: var(--sz-muted);
@@ -187,7 +188,7 @@
   align-items: center;
   gap: 4px;
   padding: 4px 10px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   line-height: 1.2;
   text-transform: uppercase;
@@ -211,7 +212,6 @@
   font-size: 12px;
   font-weight: 500;
   color: var(--sz-muted);
-  font-variant-numeric: tabular-nums;
 }
 .sz-bb__freq-compare[hidden] { display: none; }
 .sz-bb__freq--sub .sz-bb__freq-price { color: var(--sz-accent); }
@@ -233,18 +233,18 @@
   min-width: 0;
 }
 .sz-bb__freq-title {
-  font-size: 14px;
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 700;
   line-height: 1.25;
 }
 .sz-bb__freq-price {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 800;
   line-height: 1.3;
-  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
 }
 .sz-bb__freq-meta {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.35;
   color: var(--sz-muted);
 }
@@ -265,8 +265,8 @@
   to { opacity: 1; transform: none; }
 }
 .sz-bb__plan-label {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   color: var(--sz-muted);
 }
 .sz-bb__plan-select { position: relative; }
@@ -300,7 +300,7 @@
 
 .sz-bb__note {
   margin: 10px 0 0;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--sz-muted);
 }
 .sz-bb__note[hidden] { display: none; }
@@ -332,20 +332,16 @@
   gap: 6px 8px;
 }
 .sz-bb__qty-title {
-  font-size: 17px;
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 700;
   line-height: 1.2;
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
+  text-transform: lowercase; /* "1 CAIXA" → "1 caixa" */
 }
 .sz-bb__qty-meta {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   line-height: 1.3;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
   color: var(--sz-muted);
-  font-variant-numeric: tabular-nums;
 }
 .sz-bb__qty-meta:empty { display: none; }
 
@@ -353,7 +349,7 @@
   display: inline-flex;
   align-items: center;
   padding: 3px 8px;
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 800;
   line-height: 1.2;
   text-transform: uppercase;
@@ -377,25 +373,21 @@
   text-align: right;
 }
 .sz-bb__qty-price {
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 800;
   line-height: 1.2;
-  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
 }
 .sz-bb__qty-compare {
   font-size: 12px;
   font-weight: 500;
   color: var(--sz-muted);
-  font-variant-numeric: tabular-nums;
 }
 .sz-bb__qty-compare[hidden] { display: none; }
 
 @container (max-width: 380px) {
   .sz-bb__qty { padding: 14px 12px; gap: 10px; }
-  .sz-bb__qty-title { font-size: 15px; }
-  .sz-bb__qty-price { font-size: 17px; }
   .sz-bb__freq { padding: 12px; }
-  .sz-bb__freq-price { font-size: 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -127,6 +127,20 @@
 
   /* O seletor nativo continua funcionando, apenas fica invisível */
   #shopify-section-{{ section.id }} .variant-picker { display: none !important; }
+  /* Botão "Adicionar ao carrinho" no mesmo estilo dos cartões: azul de destaque, negrito, 16px */
+  #shopify-section-{{ section.id }} .add-to-cart-button {
+    --button-color: {{ block.settings.accent_text_color }};
+    --button-background-color: {{ block.settings.accent_color }};
+    --button-border-color: {{ block.settings.accent_color }};
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  #shopify-section-{{ section.id }} .add-to-cart-button:hover {
+    --button-color: {{ block.settings.accent_text_color }};
+    --button-background-color: {{ block.settings.button_hover_color }};
+    --button-border-color: {{ block.settings.button_hover_color }};
+  }
   {%- if block.settings.hide_quantity_stepper %}
     #shopify-section-{{ section.id }} .buy-buttons-block .quantity-selector-wrapper { display: none !important; }
   {%- endif %}
@@ -492,6 +506,7 @@
     { "type": "header", "content": "Cores" },
     { "type": "color", "id": "accent_color", "label": "Destaque (seleção e selos)", "default": "#0094F6" },
     { "type": "color", "id": "accent_text_color", "label": "Texto sobre o destaque", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_hover_color", "label": "Botão de compra ao passar o mouse", "default": "#0077C8" },
     { "type": "color", "id": "card_background", "label": "Fundo dos cards", "default": "#FFFFFF" },
     { "type": "color", "id": "card_selected_background", "label": "Fundo do card selecionado", "default": "#F2F9FF" },
     { "type": "color", "id": "border_color", "label": "Borda", "default": "#D9D6CF" },

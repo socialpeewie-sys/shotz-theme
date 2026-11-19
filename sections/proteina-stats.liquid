@@ -139,6 +139,59 @@
     opacity: 0.88;
   }
 
+  .proteina-stats-highlight-{{ section.id }} {
+    color: {{ section.settings.highlight_color }};
+  }
+
+  {% unless section.settings.show_dividers %}
+    .proteina-stats-item-{{ section.id }} {
+      border-bottom: none;
+    }
+  {% endunless %}
+
+  /* Estilo "Tópicos": subtítulo curto + texto corrido (em vez de número grande) */
+  .proteina-stats--topics.proteina-stats-{{ section.id }} .proteina-stats-headline-{{ section.id }} {
+    font-size: clamp(40px, 4.6vw, 60px);
+    letter-spacing: -0.045em;
+    line-height: 1;
+    text-wrap: balance;
+  }
+
+  .proteina-stats--topics .proteina-stats-list-{{ section.id }} {
+    margin-top: 40px;
+  }
+
+  .proteina-stats--topics .proteina-stats-item-{{ section.id }} {
+    padding: 18px 0;
+  }
+
+  .proteina-stats--topics .proteina-stats-number-{{ section.id }} {
+    font-size: 21px;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  .proteina-stats--topics .proteina-stats-stat-title-{{ section.id }} {
+    margin-top: 8px;
+    max-width: 46ch;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  .proteina-stats--topics .proteina-stats-stat-description-{{ section.id }} {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .proteina-stats--topics .proteina-stats-cta-{{ section.id }} {
+    min-height: 56px;
+    padding: 18px 34px;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    border-radius: 14px;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .proteina-stats-cta-{{ section.id }} {
       transition: none;
@@ -206,7 +259,29 @@
 
     .proteina-stats-cta-{{ section.id }} {
       margin-top: 28px;
-      width: 100%;
+      {% if section.settings.button_full_width_mobile %}width: 100%;{% endif %}
+    }
+
+    .proteina-stats--topics.proteina-stats-{{ section.id }} .proteina-stats-headline-{{ section.id }} {
+      font-size: 40px;
+      line-height: 1;
+    }
+
+    .proteina-stats--topics .proteina-stats-list-{{ section.id }} {
+      margin-top: 28px;
+    }
+
+    .proteina-stats--topics .proteina-stats-item-{{ section.id }} {
+      padding: 14px 0;
+    }
+
+    .proteina-stats--topics .proteina-stats-number-{{ section.id }} {
+      font-size: 20px;
+    }
+
+    .proteina-stats--topics .proteina-stats-stat-title-{{ section.id }} {
+      margin-top: 6px;
+      font-size: 16px;
     }
   }
 {% endstyle %}
@@ -220,7 +295,7 @@
   endif
 -%}
 
-<div class="proteina-stats proteina-stats-{{ section.id }}" {{ section.shopify_attributes }}>
+<div class="proteina-stats proteina-stats-{{ section.id }}{% if section.settings.list_style == 'topics' %} proteina-stats--topics{% endif %}" {{ section.shopify_attributes }}>
   <div class="proteina-stats-container-{{ section.id }}">
     <div class="proteina-stats-image-col-{{ section.id }}{{ rv }}">
       {% if section.settings.image %}
@@ -247,7 +322,15 @@
 
     <div class="proteina-stats-content-col-{{ section.id }}">
       {% if section.settings.heading != blank %}
-        <h2 class="proteina-stats-headline-{{ section.id }}{{ rv }}">{{ section.settings.heading }}</h2>
+        {%- liquid
+          assign headline = section.settings.heading | escape
+          assign highlight = section.settings.heading_highlight | escape
+          if highlight != blank and headline contains highlight
+            assign highlight_html = '<span class="proteina-stats-highlight-' | append: section.id | append: '">' | append: highlight | append: '</span>'
+            assign headline = headline | replace_first: highlight, highlight_html
+          endif
+        -%}
+        <h2 class="proteina-stats-headline-{{ section.id }}{{ rv }}">{{ headline }}</h2>
       {% endif %}
 
       {% if section.settings.paragraph != blank %}
@@ -316,6 +399,28 @@
       "default": "PROTEÍNA SEM A PARTE CHATA"
     },
     {
+      "type": "text",
+      "id": "heading_highlight",
+      "label": "Trecho da headline em destaque",
+      "info": "Escreva exatamente o trecho da headline que deve ficar colorido (ex.: sua rotina)."
+    },
+    {
+      "type": "select",
+      "id": "list_style",
+      "label": "Estilo da lista",
+      "options": [
+        { "value": "numbers", "label": "Números grandes" },
+        { "value": "topics", "label": "Tópicos (subtítulo + texto)" }
+      ],
+      "default": "numbers"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dividers",
+      "label": "Mostrar linhas entre os itens",
+      "default": true
+    },
+    {
       "type": "richtext",
       "id": "paragraph",
       "label": "Parágrafo",
@@ -336,6 +441,12 @@
       "id": "heading_color",
       "label": "Cor da headline",
       "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Cor do trecho em destaque",
+      "default": "#005B9C"
     },
     {
       "type": "color",
@@ -387,6 +498,12 @@
       "id": "button_text_color",
       "label": "Cor do texto do botão",
       "default": "#FFFFFF"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_full_width_mobile",
+      "label": "Botão com largura total no celular",
+      "default": true
     },
     {
       "type": "header",

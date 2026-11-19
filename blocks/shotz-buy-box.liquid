@@ -123,6 +123,10 @@
     --sz-muted: {{ block.settings.muted_color }};
     --sz-ship-bg: {{ block.settings.shipping_badge_background }};
     --sz-ship-text: {{ block.settings.shipping_badge_text }};
+    --sz-save-bg: {{ block.settings.save_badge_background }};
+    --sz-save-text: {{ block.settings.save_badge_text_color }};
+    --sz-flag-bg: {{ block.settings.subscribe_badge_background }};
+    --sz-flag-text: {{ block.settings.subscribe_badge_text_color }};
   }
 
   /* O seletor nativo continua funcionando, apenas fica invisível */
@@ -507,6 +511,10 @@
     { "type": "color", "id": "accent_color", "label": "Destaque (seleção e selos)", "default": "#0094F6" },
     { "type": "color", "id": "accent_text_color", "label": "Texto sobre o destaque", "default": "#FFFFFF" },
     { "type": "color", "id": "button_hover_color", "label": "Botão de compra ao passar o mouse", "default": "#0077C8" },
+    { "type": "color", "id": "save_badge_background", "label": "Selo de economia (quantidade): fundo", "default": "#DFF3E6" },
+    { "type": "color", "id": "save_badge_text_color", "label": "Selo de economia (quantidade): texto", "default": "#135C33" },
+    { "type": "color", "id": "subscribe_badge_background", "label": "Selo da assinatura: fundo", "default": "#141A2A" },
+    { "type": "color", "id": "subscribe_badge_text_color", "label": "Selo da assinatura: texto", "default": "#FFFFFF" },
     { "type": "color", "id": "card_background", "label": "Fundo dos cards", "default": "#FFFFFF" },
     { "type": "color", "id": "card_selected_background", "label": "Fundo do card selecionado", "default": "#F2F9FF" },
     { "type": "color", "id": "border_color", "label": "Borda", "default": "#D9D6CF" },

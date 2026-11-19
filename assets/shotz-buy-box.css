@@ -159,7 +159,7 @@
   font-weight: 700;
   line-height: 1.2;
   overflow-wrap: break-word;
-  hyphens: auto;
+  hyphens: manual; /* evita "experimenta-ção" */
 }
 .sz-bb__flavor-sub {
   font-size: 12px;
@@ -189,15 +189,13 @@
   gap: 4px;
   padding: 4px 10px;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.2;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
   white-space: nowrap;
-  color: var(--sz-accent-contrast);
-  background: var(--sz-accent);
+  color: var(--sz-flag-text);
+  background: var(--sz-flag-bg);
   border-radius: 999px;
-  box-shadow: 0 2px 8px rgba(0, 148, 246, 0.35);
+  box-shadow: 0 2px 8px rgba(20, 26, 42, 0.25);
   pointer-events: none;
 }
 .sz-bb__flag[hidden] { display: none; }
@@ -350,13 +348,11 @@
   align-items: center;
   padding: 3px 8px;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.2;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
   white-space: nowrap;
-  color: var(--sz-accent-contrast);
-  background: var(--sz-accent);
+  color: var(--sz-save-text);
+  background: var(--sz-save-bg);
   border-radius: 6px;
 }
 .sz-bb__badge[hidden] { display: none; }

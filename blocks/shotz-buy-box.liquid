@@ -8,7 +8,8 @@
   - Sabor  = 1ª opção do produto. Miniatura: metacampo da variante
     custom.imagem_fruta → imagem da variante → imagem do produto.
   - Quantidade = 2ª opção do produto. Nº de shots vem da "Medida total do
-    produto" (Preço unitário da variante).
+    produto" (Preço unitário da variante); se ela estiver vazia, é calculado
+    pelo número no nome da opção ("2 caixas" → 2) × "Shots por caixa".
   - Frequência = planos de venda (Shopify Subscriptions). O plano escolhido
     entra no formulário de compra via <input name="selling_plan">.
   - O seletor nativo do Horizon continua na página (oculto) e é acionado a
@@ -354,6 +355,10 @@
               endfor
             endif
             assign shots = qv.unit_price_measurement.quantity_value | default: 0 | round
+            if shots == 0 and block.settings.shots_per_box > 0
+              assign boxes = value.name | strip | split: ' ' | first | plus: 0
+              assign shots = boxes | times: block.settings.shots_per_box
+            endif
             assign pct = 0
             if qv.compare_at_price > qv.price
               assign pct = qv.compare_at_price | minus: qv.price | times: 100.0 | divided_by: qv.compare_at_price | round
@@ -434,7 +439,14 @@
             "options": {{ v.options | json }},
             "price": {{ v.price }},
             "compare": {{ v.compare_at_price | default: 0 }},
-            "shots": {{ v.unit_price_measurement.quantity_value | default: 0 }},
+            {%- liquid
+              assign v_shots = v.unit_price_measurement.quantity_value | default: 0 | round
+              if v_shots == 0 and block.settings.shots_per_box > 0 and qty_index >= 0
+                assign v_boxes = v.options[qty_index] | strip | split: ' ' | first | plus: 0
+                assign v_shots = v_boxes | times: block.settings.shots_per_box
+              endif
+            -%}
+            "shots": {{ v_shots }},
             "plans": {
               {%- for a in v.selling_plan_allocations -%}
                 "{{ a.selling_plan.id }}": {{ a.price }}{%- unless forloop.last -%},{%- endunless -%}
@@ -495,6 +507,7 @@
     { "type": "text", "id": "quantity_label", "label": "Título", "default": "Escolha a quantidade:" },
     { "type": "text", "id": "unit_singular", "label": "Unidade (singular)", "default": "shot" },
     { "type": "text", "id": "unit_plural", "label": "Unidade (plural)", "default": "shots" },
+    { "type": "number", "id": "shots_per_box", "label": "Shots por caixa", "default": 6, "info": "Usado quando a variante não tem preço unitário cadastrado. O número de caixas vem do nome da opção (ex.: \"2 caixas\"). Use 0 para desligar." },
     { "type": "text", "id": "each_text", "label": "Texto \"cada\"", "default": "cada" },
     { "type": "text", "id": "save_badge_text", "label": "Selo de economia", "default": "Economize [pct]%", "info": "[pct] vira a % de desconto" },
     { "type": "text", "id": "free_shipping_text", "label": "Selo de frete grátis", "default": "Frete grátis" },
